@@ -191,6 +191,7 @@ let focusedPath = "root";
 let discussionNodeKey = "";
 let savedPathways = [];
 let discussionOpen = false;
+let expandedRationaleIndex = null;
 let reportPath = "";
 let pathwayChatOpen = false;
 let pathwayChatPath = "";
@@ -804,9 +805,6 @@ function stakeholderViewpointTree(p){
   return STAKEHOLDER_VIEWPOINTS[String(p.stakeholder_type || "").toLowerCase()]
     || String(p.stakeholder_type || "stakeholder").replaceAll("_", " ");
 }
-function articleForTree(label){
-  return /^[aeiou]/i.test(label) ? "an" : "a";
-}
 function summarySentencesTree(text){
   const decimalMark = "\uE000";
   const protectedText = String(text || "")
@@ -815,95 +813,8 @@ function summarySentencesTree(text){
   return (protectedText.match(/[^.!?。]+[.!?。]+|[^.!?。]+$/g) || [])
     .map(sentence=>sentence.replaceAll(decimalMark, ".").trim());
 }
-function cleanSummaryClauseTree(sentence){
-  let value = String(sentence || "").trim()
-    .replace(/^As [^,]+,\s*/i, "")
-    .replace(/^From my perspective as [^,]+,\s*/i, "")
-    .replace(/^I (see|expect|believe|view|anticipate)\s+/i, "")
-    .replace(/^the transition from [^:]+:\s*/i, "")
-    .replace(/^the transition from .*? as /i, "")
-    .replace(/^the (key )?bottleneck (here )?(is|comes from) (that )?/i, "")
-    .replace(/^the (central|primary) (causal )?mechanism (is|at this phase is) (that )?/i, "")
-    .replace(/^the downstream implication is that\s*/i, "")
-    .replace(/^downstream,\s*/i, "")
-    .replace(/[,;]\s*(consistent with|according to|as noted by)\s+[^,;.]+[.]?$/i, "")
-    .replace(/\bthe enforcement budget as insufficient\b/i, "the enforcement budget is insufficient")
-    .replace(/\s*[—–]\s*\$[\d,.]+\s*(million|billion)?[^.]*[.]?$/i, "")
-    .replace(/\b(enforcement budget)\s+(of|at|around)\s+\$[\d,.]+\s*(million|billion)?\b/gi, "$1")
-    .replace(/\bthe enforcement budget\s*[—–-]\s*enough\b/i, "the enforcement budget is enough")
-    .replace(/\s+[—–]\s+/g, " ")
-    .replace(/\s{2,}/g, " ")
-    .replace(/\s+([,.;:])/g, "$1")
-    .trim();
-  if(!/^(I|I've|I'm)\b/.test(value)){
-    value = value.charAt(0).toLowerCase() + value.slice(1);
-  }
-  return value;
-}
-function clipSummaryTree(text, max=210){
-  const value = String(text || "").trim();
-  if(value.length <= max) return value;
-  const clipped = value.slice(0, max);
-  const boundary = Math.max(clipped.lastIndexOf(","), clipped.lastIndexOf(";"), clipped.lastIndexOf(" "));
-  return `${clipped.slice(0, boundary > max * .65 ? boundary : max).replace(/[,:;\s]+$/, "")}…`;
-}
-function completeSummarySentenceTree(text){
-  const value = String(text || "").replace(/…/g, "").trim().replace(/[,:;\s]+$/, "");
-  return /[.!?]$/.test(value) ? value : `${value}.`;
-}
-function pathwayConsequenceTree(p){
-  const keys = Object.keys(p.prediction_values || {});
-  if(currentPolicyKey === "usa/chi_ctc"){
-    if(keys.some(key=>key.includes("administrative_budget") || key.includes("staff_allocated") || key.includes("outreach_budget"))){
-      return "Together, these resources set the reach and reliability of implementation.";
-    }
-    if(keys.some(key=>key.includes("disbursement") || key.includes("portal") || key.includes("sign_up"))){
-      return "This shapes whether eligible families are identified and paid without interruption.";
-    }
-    if(keys.some(key=>key.includes("families_receiving") || key.includes("households_receiving") || key.includes("payment_per_child"))){
-      return "This determines payment adequacy and whether hard-to-reach households receive support.";
-    }
-    if(keys.some(key=>key.includes("poverty") || key.includes("food_insufficiency"))){
-      return "This changes the scale and distribution of near-term material hardship reduction.";
-    }
-    return "This affects whether short-term income support translates into durable child well-being.";
-  }
-  if(keys.some(key=>key.includes("enforcement_budget") || key.includes("certified_idr") || key.includes("qpa_ready"))){
-    return "Together, these limits make implementation uneven from the outset.";
-  }
-  if(keys.some(key=>key.includes("qpa_calculations") || key.includes("idr_cases") || key.includes("initial_payment"))){
-    return "This increases processing delays and sends more disputes into IDR.";
-  }
-  if(keys.some(key=>key.includes("correctly_processed") || key.includes("notice_compliance") || key.includes("idr_determination"))){
-    return "This weakens claim accuracy, notice compliance, and timely dispute resolution.";
-  }
-  if(keys.some(key=>key.includes("prevalence_reduction") || key.includes("patient_savings"))){
-    return "This reduces patient savings and leaves non-emergency protections especially vulnerable.";
-  }
-  return "This limits durable reductions in out-of-network billing and can create pressure elsewhere in the health system.";
-}
-function constraintInSentenceTree(label){
-  const value = String(label || "");
-  return /^[A-Z]{2,}/.test(value) ? value : `${value.charAt(0).toLowerCase()}${value.slice(1)}`;
-}
 function stakeholderSummaryTree(p){
-  const narrative = stakeholderTakeTree(p);
-  const sentences = summarySentencesTree(narrative);
-  const role = stakeholderViewpointTree(p);
-  const mechanismPattern = /\b(bottleneck|mechanism|weaken|offset|substitution|constraint|failure|insufficient|limited|shortage|delay|gap|risk)\b/i;
-  const mechanism = sentences.find(sentence=>
-    mechanismPattern.test(sentence) && !/\d/.test(sentence)
-  ) || sentences.find(sentence=>
-    mechanismPattern.test(sentence)
-  ) || sentences[0] || "";
-  // Keep every stakeholder rationale comparable in the discussion layout.
-  const mechanismClause = clipSummaryTree(cleanSummaryClauseTree(mechanism), 145);
-  const opening = completeSummarySentenceTree(`As ${articleForTree(role)} ${role}, ${mechanismClause}`);
-  const constraints = cleanConstraintTagsTree(p, 2);
-  const primary = constraints[0]
-    ? `I see ${constraintInSentenceTree(constraints[0])} as the primary constraint shaping this pathway.`
-    : "I see limited implementation capacity as the primary constraint shaping this pathway.";
-  return [opening, primary, pathwayConsequenceTree(p)].join(" ");
+  return sentenceTree(stakeholderTakeTree(p), 4);
 }
 function stakeholderOpinionTree(p){
   return stakeholderSummaryTree(p);
@@ -1460,6 +1371,7 @@ function renderDiscussionModal(){
   const currentKey = nodeId(node);
   if(discussionNodeKey !== currentKey){
     discussionNodeKey = currentKey;
+    expandedRationaleIndex = null;
   }
   const phase = node.phase || {};
   const tone = node.col === 0 ? TREE_STANCES.baseline : (TREE_STANCES[node.stance] || TREE_STANCES.baseline);
@@ -1476,10 +1388,25 @@ function renderDiscussionModal(){
     const constraintClass = constraintTags.length ? "has-constraints" : "no-constraints";
     return `<article class="discussion-card ${constraintClass} card-${i}" style="--bubble:${seat?.color || PIXEL_COLORS[i % PIXEL_COLORS.length]};--delay:${i*.68}s">
       <b>${escTree(stakeholderViewpointTree(p))}</b>
-      <p>${escTree(opinion)}</p>
       ${constraintPillsForPostTree(p, constraintTags)}
+      <p>${escTree(opinion)}</p>
+      <button class="discussion-rationale-toggle" data-rationale-index="${i}" type="button">Show full rationale</button>
     </article>`;
   }).join("");
+  const expandedEntry = Number.isInteger(expandedRationaleIndex) ? entries[expandedRationaleIndex] : null;
+  const expandedPost = expandedEntry?.post;
+  const expandedConstraints = expandedPost ? cleanConstraintTagsTree(expandedPost, 1) : [];
+  const rationaleReader = expandedPost ? `<aside class="discussion-rationale-reader" style="--bubble:${expandedEntry?.seat?.color || PIXEL_COLORS[expandedRationaleIndex % PIXEL_COLORS.length]}">
+    <div class="discussion-rationale-head">
+      <div>
+        <span>${escTree(stakeholderViewpointTree(expandedPost))}</span>
+        <h3>${escTree(expandedPost.persona_name || "Stakeholder")}</h3>
+      </div>
+      <button data-close-rationale="1" type="button">Hide full rationale</button>
+    </div>
+    ${constraintPillsForPostTree(expandedPost, expandedConstraints)}
+    <p>${escTree(stakeholderTakeTree(expandedPost))}</p>
+  </aside>` : "";
   return `<div class="tree-modal-backdrop" data-close-discussion="1">
     <section class="tree-discussion-modal" style="--lane:${tone.color}" role="dialog" aria-modal="true" aria-label="Stakeholder discussion">
       <div class="tree-modal-head">
@@ -1498,6 +1425,7 @@ function renderDiscussionModal(){
         </svg>
         ${people}
         ${speechCards}
+        ${rationaleReader}
       </div>
     </section>
   </div>`;
@@ -1695,6 +1623,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     if(pathwayChatOpen) closeTimedPanel("chat");
     if(reportPath) closeTimedPanel("report");
     discussionOpen = true;
+    expandedRationaleIndex = null;
     reportPath = "";
     pathwayChatOpen = false;
     discussionOpenedAt = performance.now();
@@ -1726,6 +1655,23 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     if(event.target !== el && !el.matches("button")) return;
     closeTimedPanel("discussion");
     discussionOpen = false;
+    expandedRationaleIndex = null;
+    renderTree();
+  });
+  root.querySelectorAll("[data-rationale-index]").forEach(btn=>btn.onclick=()=>{
+    expandedRationaleIndex = Number(btn.dataset.rationaleIndex);
+    logTreeEvent("stakeholder_rationale_expanded", {
+      path:discussionNodeKey,
+      persona_index:expandedRationaleIndex,
+    });
+    renderTree();
+  });
+  root.querySelectorAll("[data-close-rationale]").forEach(btn=>btn.onclick=()=>{
+    logTreeEvent("stakeholder_rationale_collapsed", {
+      path:discussionNodeKey,
+      persona_index:expandedRationaleIndex,
+    });
+    expandedRationaleIndex = null;
     renderTree();
   });
   root.querySelectorAll("[data-close-report]").forEach(el=>el.onclick=(event)=>{
