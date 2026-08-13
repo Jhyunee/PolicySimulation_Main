@@ -1,7 +1,6 @@
 const consent = document.getElementById("studyConsent");
 const startButton = document.getElementById("startStudy");
 const status = document.getElementById("startStatus");
-const previewButton = document.getElementById("previewStudy");
 const variantSummary = document.getElementById("studyVariantSummary");
 const pageParams = new URLSearchParams(location.search);
 const variantId = pageParams.get("variant") || "";
@@ -33,16 +32,10 @@ startButton.addEventListener("click", async ()=>{
   }
 });
 
-previewButton.addEventListener("click", ()=>{
-  if(!selectedVariant?.ready) return;
-  location.href = `task_instructions.html?previewStudy=1&variant=${encodeURIComponent(variantId)}`;
-});
-
 async function loadVariant(){
   if(!variantId){
     startButton.disabled = true;
-    previewButton.disabled = true;
-    status.textContent = "Open a study variant from the manager before starting.";
+    status.textContent = "This study link is incomplete. Please return to Prolific and contact the researcher.";
     return;
   }
   const response = await fetch(`/api/study/variants/${encodeURIComponent(variantId)}`);
@@ -51,18 +44,15 @@ async function loadVariant(){
   variantSummary.innerHTML = `<span>${selectedVariant.domain_label} · ${selectedVariant.condition_label}</span><b>${selectedVariant.order_label}</b><small>${selectedVariant.variant_id}</small>`;
   if(!selectedVariant.ready){
     startButton.disabled = true;
-    previewButton.disabled = true;
-    status.textContent = "This variant is configured but its policy result artifacts are not complete yet.";
+    status.textContent = "This study condition is not currently available. Please return to Prolific and contact the researcher.";
   }else{
-    previewButton.disabled = false;
     startButton.disabled = !consent.checked;
   }
 }
 
 loadVariant().catch(error=>{
   startButton.disabled = true;
-  previewButton.disabled = true;
-  status.textContent = `The study variant could not be loaded: ${error.message}`;
+  status.textContent = "This study link could not be loaded. Please return to Prolific and contact the researcher.";
 });
 
 if(window.lucide) lucide.createIcons();
