@@ -65,6 +65,15 @@ const TREE_FIELD_LABELS = {
   irs_administrative_budget_usd:"IRS administrative budget",
   irs_staff_allocated_ftes:"IRS staff allocated",
   non_filer_outreach_budget_usd:"Non-filer outreach budget",
+  irs_advance_payment_administration_funding:"IRS implementation funding",
+  maximum_advance_payment_share:"Maximum advance-payment share",
+  maximum_credit_per_child_under_age_6:"Maximum credit for children under 6",
+  maximum_credit_per_child_age_6_to_17:"Maximum credit for children ages 6–17",
+  bureau_of_fiscal_service_implementation_funding:"Fiscal Service implementation funding",
+  advance_payment_period:"Advance-payment period",
+  tribal_minimum_subgrant_percentage:"Minimum tribal subgrant share",
+  obligation_deadline:"Fund obligation deadline",
+  liquidation_deadline:"Fund liquidation deadline",
   advance_payment_disbursements_count:"Advance payments disbursed",
   portal_account_updates_processed:"Portal updates processed",
   non_filer_sign_up_tool_submissions_processed:"Non-filer registrations processed",
@@ -574,6 +583,17 @@ function phaseValuesTree(phase){
   return Object.fromEntries(Object.entries(out).map(([k,arr])=>[k, arr.reduce((a,b)=>a+b,0)/arr.length]));
 }
 function fieldTree(k){ return TREE_FIELD_LABELS[k] || String(k || "").replaceAll("_"," "); }
+const TREE_SOURCE_LABELS = {
+  "ARPA_Sec9611_plus_IRS_2021_Child_Tax_Credit_Toolkit.pdf":"American Rescue Plan Act §9611 and IRS 2021 Child Tax Credit Toolkit",
+  "us_ccdf.pdf":"ARP Act Child Care Stabilization Grants Guidance",
+};
+function groundedSourcesTree(phase){
+  const parameterEvidence = (phase?.grounded_policy_parameters || []).flatMap(item=>item?.evidence || []);
+  return [...new Set([...(phase?.grounded_evidence || []), ...parameterEvidence]
+    .map(item=>String(item?.source || "").trim())
+    .filter(Boolean))]
+    .map(source=>TREE_SOURCE_LABELS[source] || source.replace(/\.pdf$/i, "").replaceAll("_", " "));
+}
 function sentenceTree(s, n=1){
   return summarySentencesTree(s).slice(0,n).join(" ");
 }
@@ -730,6 +750,42 @@ function metricRowsTree(phase, limit=3, compactInput=false, compactNodeLabel=fal
     return `<span class="tree-metric"><small title="${escTree(fieldTree(k))}">${escTree(label)}</small><b>${compactInput ? compactInputValueTree(k, v) : escTree(predictionValueTree(k, v))}</b></span>`;
   }).join("");
 }
+function verifiedInputRowsTree(phase, limit=6){
+  const fields = Object.entries(phase?.grounded_values || {}).map(([key,value])=>({key,value}));
+  const seen = new Set(fields.map(item=>item.key));
+  (phase?.grounded_policy_parameters || [])
+    .filter(item=>item?.validation_status === "validated" && !seen.has(item.name))
+    .slice(0, Math.max(0, limit - fields.length))
+    .forEach(item=>{
+      seen.add(item.name);
+      fields.push({key:item.name, value:item.value});
+    });
+  const capacityFields = new Set([
+    "irs_advance_payment_administration_funding",
+    "bureau_of_fiscal_service_implementation_funding",
+    "total_stabilization_funding",
+    "tribal_base_amount",
+  ]);
+  const timelineFields = new Set([
+    "advance_payment_period",
+    "arp_act_enactment_date",
+    "obligation_deadline",
+    "liquidation_deadline",
+  ]);
+  const groups = [
+    {label:"Implementation capacity", items:[]},
+    {label:"Policy design", items:[]},
+    {label:"Implementation timeline", items:[]},
+  ];
+  fields.slice(0, limit).forEach(item=>{
+    const group = capacityFields.has(item.key) ? groups[0] : timelineFields.has(item.key) ? groups[2] : groups[1];
+    group.items.push(item);
+  });
+  return groups.filter(group=>group.items.length).map(group=>`<section class="verified-input-group">
+    <h4>${escTree(group.label)}</h4>
+    ${group.items.map(({key,value})=>`<span class="tree-metric"><small title="${escTree(fieldTree(key))}">${escTree(fieldTree(key))}</small><b>${escTree(predictionValueTree(key, value))}</b></span>`).join("")}
+  </section>`).join("");
+}
 function hideNodeMetricsTree(phase){
   return ["Activities","Outputs"].includes(String(phase?.phase || ""));
 }
@@ -864,7 +920,8 @@ function constraintPillsForPostTree(p, preparedTags=null){
 function predictionValueTree(key, value){
   if(!Number.isFinite(Number(value))) return String(value ?? "-");
   const numeric = fmtTree(Number(value));
-  if(["monthly_cost_sharing_cap","total_stabilization_funding","tribal_base_amount"].includes(key)) return `$${numeric}`;
+  if(["monthly_cost_sharing_cap","total_stabilization_funding","tribal_base_amount","irs_advance_payment_administration_funding","maximum_credit_per_child_under_age_6","maximum_credit_per_child_age_6_to_17","bureau_of_fiscal_service_implementation_funding"].includes(key)) return `$${numeric}`;
+  if(key === "maximum_advance_payment_share") return `${numeric}%`;
   if(["additional_compliance_burden_for_business","one_time_transition_cost_for_business","additional_administrative_compliance_cost"].includes(key)) return `€${numeric}`;
   if(key === "annual_program_budget_million_krw") return `${numeric} million KRW`;
   if(key === "max_co_funding_per_project_sgd") return `S$${numeric}`;
@@ -1086,12 +1143,17 @@ function renderSelectedSummaryTree(){
   const node = focusedTreeNode();
   const phase = node.phase || {};
   const tone = TREE_STANCES[node.stance] || TREE_STANCES.neutral;
+  const verifiedInput = phase.phase === "Inputs" && phase.state_type === "document_grounded";
+  const groundedSources = groundedSourcesTree(phase);
   return `<section class="storage-summary" style="--lane:${tone.color}">
     <span>${node.col === 0 ? "Selected phase" : tone.label}</span>
     <h3>${node.col+1}. ${escTree(TREE_PHASE_KO[phase.phase] || phase.phase)}</h3>
     <div class="toc-phase-focus"><b>What this phase examines</b><p>${escTree(TREE_PHASE_FOCUS[phase.phase] || "")}</p></div>
-    <p>${escTree(phase.phase_summary || "")}</p>
-    <div class="storage-summary-values">${metricRowsTree(phase, 5)}</div>
+    ${verifiedInput
+      ? `<div class="verified-input-heading input-use-heading"><b>How these inputs are used</b><p>These values define the policy’s initial resources, policy rules, and implementation timeline. Subsequent pathways explore how implementation conditions and stakeholder responses shape their translation into outcomes.</p></div>`
+      : `<p>${escTree(phase.phase_summary || "")}</p>`}
+    <div class="storage-summary-values ${verifiedInput ? "verified-input-slots" : ""}">${verifiedInput ? verifiedInputRowsTree(phase, 6) : metricRowsTree(phase, 5)}</div>
+    ${verifiedInput ? `<div class="verified-input-heading verified-input-evidence"><b>Verified from Official Policy Document</b><p>Structured through the framework’s document-processing pipeline and verified against the cited text.</p>${groundedSources.length ? `<p class="verified-input-source"><b>Source</b> ${groundedSources.map(escTree).join("; ")}</p>` : ""}</div>` : ""}
   </section>`;
 }
 function renderPhaseInspector(nodes, layout){

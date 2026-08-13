@@ -4,28 +4,28 @@
       "phase": "Inputs",
       "prediction_fields": [
         {
-          "name": "irs_administrative_budget_usd",
-          "unit": "dollars",
+          "name": "irs_advance_payment_administration_funding",
+          "unit": "USD",
           "type": "int",
-          "description": "Total appropriated budget for IRS administration of the expanded Child Tax Credit, including advance payment administration, as specified in the policy."
+          "description": "Supplemental fiscal year 2021 appropriation for IRS expenses required to implement the advance Child Tax Credit provisions."
         },
         {
-          "name": "irs_staff_allocated_ftes",
-          "unit": "full-time equivalent",
+          "name": "maximum_advance_payment_share",
+          "unit": "percent",
           "type": "int",
-          "description": "Number of full-time equivalent IRS staff allocated to implement the expanded Child Tax Credit, including processing, portal maintenance, and taxpayer support."
+          "description": "Maximum share of the estimated 2021 Child Tax Credit delivered through advance payments."
         },
         {
-          "name": "non_filer_outreach_budget_usd",
-          "unit": "dollars",
+          "name": "maximum_credit_per_child_under_age_6",
+          "unit": "USD_per_child",
           "type": "int",
-          "description": "Portion of IRS administrative funding explicitly dedicated to outreach and sign-up assistance for non-filer households."
+          "description": "Maximum 2021 Child Tax Credit amount for a qualifying child under age six."
         }
       ],
       "discussion_points": [
-        "How does the total IRS administrative budget constrain the scale and quality of outreach to non-filer households?",
-        "Does the IRS staff allocation reflect sufficient capacity to handle taxpayer inquiries and non-filer registrations?",
-        "How does the allocated IRS administrative budget affect the speed and accuracy of payment disbursement and portal operations?"
+        "How does the documented input 'irs_advance_payment_administration_funding' condition downstream implementation activities? The documented implementation appropriation conditions the IRS's capacity to establish, administer, and communicate the advance-payment program.",
+        "How does the documented input 'maximum_advance_payment_share' condition downstream implementation activities? The advance share determines how much of the annual benefit can reach households before tax filing and shapes both near-term support and later reconciliation.",
+        "How does the documented input 'maximum_credit_per_child_under_age_6' condition downstream implementation activities? The statutory benefit ceiling sets the maximum household-level transfer for young children and anchors the scale of potential poverty and material-hardship effects."
       ]
     },
     {

@@ -1,0 +1,142 @@
+{
+  "policy_name": "2021 Expanded Child Tax Credit",
+  "state_type": "document_grounded",
+  "fields": [
+    {
+      "name": "irs_advance_payment_administration_funding",
+      "value": 397200000,
+      "unit": "USD",
+      "type": "int",
+      "description": "Supplemental fiscal year 2021 appropriation for IRS expenses required to implement the advance Child Tax Credit provisions.",
+      "effective_date": "2021-03-11",
+      "scope": "Internal Revenue Service",
+      "causal_relevance": "The documented implementation appropriation conditions the IRS's capacity to establish, administer, and communicate the advance-payment program.",
+      "kg_links": [],
+      "evidence": [
+        {
+          "source": "ARPA_Sec9611_plus_IRS_2021_Child_Tax_Credit_Toolkit.pdf",
+          "page": 7,
+          "evidence_quote": "(A) $397,200,000 to remain available until September 30, 2022, for necessary expenses for the Internal Revenue Service to carry out this section (and the amendments made by this section), which shall supplement and not supplant any other appropriations that may be available for this purpose"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "maximum_advance_payment_share",
+      "value": 50,
+      "unit": "percent",
+      "type": "int",
+      "description": "Maximum share of the estimated 2021 Child Tax Credit delivered through advance payments.",
+      "effective_date": "2021-07-01",
+      "scope": "Eligible taxpayers receiving advance payments",
+      "causal_relevance": "The advance share determines how much of the annual benefit can reach households before tax filing and shapes both near-term support and later reconciliation.",
+      "kg_links": [],
+      "evidence": [
+        {
+          "source": "ARPA_Sec9611_plus_IRS_2021_Child_Tax_Credit_Toolkit.pdf",
+          "page": 3,
+          "evidence_quote": "with respect to any taxpayer for any calendar year, the amount (if any) which is estimated by the Secretary as being equal to 50 percent of the amount which would be treated as allowed"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "maximum_credit_per_child_under_age_6",
+      "value": 3600,
+      "unit": "USD_per_child",
+      "type": "int",
+      "description": "Maximum 2021 Child Tax Credit amount for a qualifying child under age six.",
+      "effective_date": "2021-01-01",
+      "scope": "Qualifying children under age six",
+      "causal_relevance": "The statutory benefit ceiling sets the maximum household-level transfer for young children and anchors the scale of potential poverty and material-hardship effects.",
+      "kg_links": [],
+      "evidence": [
+        {
+          "source": "ARPA_Sec9611_plus_IRS_2021_Child_Tax_Credit_Toolkit.pdf",
+          "page": 2,
+          "evidence_quote": "subsection (a) shall be applied by substituting '$3,000 ($3,600 in the case of a qualifying child who has not attained age 6 as of the close of the calendar year in which the taxable year of the taxpayer begins)' for '$1,000'"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    }
+  ],
+  "policy_parameters": [
+    {
+      "name": "maximum_credit_per_child_age_6_to_17",
+      "value": 3000,
+      "unit": "USD_per_child",
+      "description": "Maximum 2021 Child Tax Credit amount for a qualifying child aged six through seventeen.",
+      "effective_date": "2021-01-01",
+      "evidence": [
+        {
+          "source": "ARPA_Sec9611_plus_IRS_2021_Child_Tax_Credit_Toolkit.pdf",
+          "page": 2,
+          "evidence_quote": "subsection (a) shall be applied by substituting '$3,000 ($3,600 in the case of a qualifying child who has not attained age 6 as of the close of the calendar year in which the taxable year of the taxpayer begins)' for '$1,000'"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "bureau_of_fiscal_service_implementation_funding",
+      "value": 16200000,
+      "unit": "USD",
+      "description": "Supplemental appropriation for Bureau of the Fiscal Service expenses required to implement the advance-payment provisions.",
+      "effective_date": "2021-03-11",
+      "evidence": [
+        {
+          "source": "ARPA_Sec9611_plus_IRS_2021_Child_Tax_Credit_Toolkit.pdf",
+          "page": 7,
+          "evidence_quote": "(B) $16,200,000 to remain available until September 30, 2022, for necessary expenses for the Bureau of the Fiscal Service to carry out this section (and the amendments made by this section)"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "advance_payment_period",
+      "value": "July through December 2021",
+      "unit": "calendar_period",
+      "description": "The six-month period during which advance Child Tax Credit payments were scheduled in 2021.",
+      "effective_date": "2021-07-01",
+      "evidence": [
+        {
+          "source": "ARPA_Sec9611_plus_IRS_2021_Child_Tax_Credit_Toolkit.pdf",
+          "page": 11,
+          "evidence_quote": "receive advance payments July through December 2021."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    }
+  ],
+  "summary": "Document-grounded initial state. Inputs: IRS advance-payment administration funding of USD 397,200,000; a maximum advance-payment share of 50 percent; and a maximum credit of USD 3,600 per qualifying child under age six. Fixed policy parameters preserve the USD 3,000 maximum for children aged 6-17, USD 16,200,000 for Bureau of the Fiscal Service implementation, and the July-December 2021 advance-payment period.",
+  "source_documents": [
+    "ARPA_Sec9611_plus_IRS_2021_Child_Tax_Credit_Toolkit.pdf"
+  ],
+  "excluded_candidates": [
+    {
+      "name": "irs_staff_allocated",
+      "reason": "The supplied official document does not specify a staffing level for implementing the advance Child Tax Credit."
+    },
+    {
+      "name": "non_filer_outreach_budget",
+      "reason": "The supplied official document does not identify a distinct non-filer outreach appropriation."
+    },
+    {
+      "name": "eligible_or_participating_household_count",
+      "reason": "Participation is an implementation outcome rather than a document-grounded initial input."
+    }
+  ],
+  "unresolved_candidates": [],
+  "extraction_metadata": {
+    "method": "manual_document_validation",
+    "max_fields": 3,
+    "validated_field_count": 3,
+    "validated_parameter_count": 3,
+    "policy_graph": "outputs/usa/chi_ctc/stage1/20260707141033_deepseek-chat_result_local_kg/policy_graph.json"
+  }
+}

@@ -78,7 +78,14 @@ def _raw_tree(policy_key: str) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _phase_payload(result: dict | None) -> dict | None:
+def _grounded_input_state(policy_key: str) -> dict:
+    path = _config(policy_key)["scenario_dir"] / "grounded_input_state.json"
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _phase_payload(result: dict | None, grounded_input_state: dict | None = None) -> dict | None:
     if not result:
         return None
     posts = result.get("revised_posts") or result.get("initial_posts") or []
@@ -90,13 +97,15 @@ def _phase_payload(result: dict | None) -> dict | None:
         "state_type": result.get("state_type"),
         "grounded_values": result.get("grounded_values") if document_grounded else {},
         "grounded_evidence": result.get("grounded_evidence") if document_grounded else [],
+        "grounded_policy_parameters": (grounded_input_state or {}).get("policy_parameters", []) if document_grounded else [],
         "posts": posts,
     }
 
 
 def get_tree(policy_key: str) -> dict:
     config, raw = _config(policy_key), _raw_tree(policy_key)
-    nodes = [{"node_id": node["node_id"], "parent_id": node.get("parent_id"), "transition_mode": node.get("transition_mode"), "phase_index": node["phase_index"], "parent_context_hash": node.get("parent_context_hash"), "phase": _phase_payload(node.get("phase_result"))} for node in raw["nodes"].values()]
+    grounded_input_state = _grounded_input_state(policy_key)
+    nodes = [{"node_id": node["node_id"], "parent_id": node.get("parent_id"), "transition_mode": node.get("transition_mode"), "phase_index": node["phase_index"], "parent_context_hash": node.get("parent_context_hash"), "phase": _phase_payload(node.get("phase_result"), grounded_input_state)} for node in raw["nodes"].values()]
     available = [phase for phase in raw.get("phases", []) if any(node.get("phase", {}).get("phase") == phase for node in nodes if node.get("phase"))]
     return {"policy": {"key":policy_key,"label":config["label"],"short_label":config["short_label"],"title":config["title"],"description":config["description"],"roles":config["roles"]}, "format_version":raw.get("format_version"), "generation_mode":raw.get("generation_mode"), "scenario_id":raw.get("scenario_id"), "simulation_target":raw.get("simulation_target"), "branch_inputs":raw.get("branch_inputs",False), "mechanism_planner_enabled":bool(raw.get("mechanism_planner_enabled",False)), "transitions":raw.get("transitions",[]), "phases":raw.get("phases",[]), "available_phases":available, "complete":len(available) >= len(raw.get("phases") or []), "nodes":nodes}
 
