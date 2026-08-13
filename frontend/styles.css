@@ -737,9 +737,9 @@ label { color:var(--muted); font-size:12px; }
 .storage-summary-values.verified-input-slots { gap:7px; margin-top:8px; }
 .storage-summary-values.verified-input-slots .verified-input-group { display:flex; flex-direction:column; gap:5px; }
 .storage-summary-values.verified-input-slots .verified-input-group h4 { margin:3px 1px 0; color:var(--lane); font-size:10px; font-weight:900; line-height:1.25; letter-spacing:.04em; text-transform:uppercase; }
-.storage-summary-values.verified-input-slots .tree-metric { min-height:42px; padding:8px 9px; border-color:color-mix(in srgb,var(--lane),#fff 72%); background:color-mix(in srgb,var(--lane),#fff 96%); }
-.storage-summary-values.verified-input-slots .tree-metric small { color:var(--text); font-size:11px; font-weight:750; }
-.storage-summary-values.verified-input-slots .tree-metric b { color:var(--lane); font-size:13px; }
+.storage-summary-values.verified-input-slots .tree-metric { min-width:0; min-height:42px; align-items:center; gap:10px; padding:8px 9px; border-color:color-mix(in srgb,var(--lane),#fff 72%); background:color-mix(in srgb,var(--lane),#fff 96%); }
+.storage-summary-values.verified-input-slots .tree-metric small { flex:1 1 42%; min-width:0; color:var(--text); font-size:11px; font-weight:750; }
+.storage-summary-values.verified-input-slots .tree-metric b { flex:1 1 58%; min-width:0; max-width:62%; overflow:visible; color:var(--lane); font-size:13px; line-height:1.2; text-align:right; white-space:normal; overflow-wrap:anywhere; text-overflow:clip; }
 .storage-summary p.verified-input-source { margin-top:6px; color:var(--faint); font-size:9.5px; line-height:1.35; }
 .storage-summary p.verified-input-source b { margin-right:4px; color:var(--muted); font-size:9.5px; font-weight:850; letter-spacing:0; text-transform:none; }
 .mini-path { display:flex; align-items:center; gap:4px; }
