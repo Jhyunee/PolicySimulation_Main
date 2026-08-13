@@ -1,0 +1,801 @@
+{
+  "simulation_target": "Section 30D implementation outcomes: Tax Year 2023 return count and average credit per return, and the January 1 through October 1, 2024 point-of-sale credit transfer rate.",
+  "inner_schema": {
+    "phases": [
+      {
+        "phase": "Inputs",
+        "prediction_fields": [
+          {
+            "name": "irs_administrative_budget_usd",
+            "unit": "USD",
+            "type": "float",
+            "description": "Annual budget allocated to the IRS for administering the Section 30D credit, including systems, personnel, and compliance activities."
+          },
+          {
+            "name": "dealer_registration_count",
+            "unit": "dealers",
+            "type": "int",
+            "description": "Number of dealers registered with the IRS to handle point-of-sale credit transfers."
+          },
+          {
+            "name": "manufacturer_certification_count",
+            "unit": "manufacturers",
+            "type": "int",
+            "description": "Number of qualified manufacturers that have entered into written agreements with the IRS to certify vehicles for the credit."
+          }
+        ],
+        "discussion_points": [
+          "How does the level of IRS administrative funding affect the speed and accuracy of dealer registration and advance payment processing?",
+          "What barriers might prevent dealers from completing registration, and how does that affect the reach of the point-of-sale transfer option?",
+          "What factors determine the number of manufacturers that choose to certify, and how does that affect vehicle availability?"
+        ]
+      }
+    ]
+  },
+  "constructed_personas": [
+    {
+      "persona_id": "P_NewCleanVehicleBuyer__es75xg",
+      "name": "Sarah Chen",
+      "stakeholder_type": "buyer",
+      "role_prototype_id": "buyer",
+      "role_anchor_entity_id": "NewCleanVehicleBuyer:NewCleanVehicleBuyer",
+      "panel_position": 1,
+      "agent_modality": "individual",
+      "age": 28,
+      "sex": "female",
+      "marital_status": "single",
+      "education_level": "Bachelor's degree",
+      "occupation": "Software engineer",
+      "province": "Washington",
+      "district": "WA-07",
+      "professional_persona": "Sarah is a software engineer at a tech startup in Seattle, Washington, where she develops cloud-based applications. She is passionate about using technology to address climate change and is an early adopter of new gadgets and electric vehicles.",
+      "skills_and_expertise": "Proficient in programming languages such as Python and Java, with experience in data analysis and machine learning. She is also knowledgeable about home energy management systems and EV charging infrastructure.",
+      "career_goals_and_ambitions": "Sarah aims to transition into a role focused on clean energy software solutions, such as developing smart charging algorithms. She also plans to start a side project that helps consumers calculate the environmental impact of their vehicle choices.",
+      "policy_role_context": {
+        "role_label": "New clean vehicle buyer",
+        "mechanism_functions": [
+          "affected",
+          "decision",
+          "adoption"
+        ],
+        "objectives": [
+          "Purchase an eligible clean vehicle while obtaining the Section 30D credit with manageable upfront and compliance costs."
+        ],
+        "constraints": [
+          "Must satisfy income, vehicle, documentation, and timing rules while choosing among a changing set of eligible vehicles."
+        ],
+        "actions": [
+          "A buyer is eligible for the credit if the vehicle meets the statutory definition and requirements.",
+          "Taxpayer may elect to transfer the section 30D credit to an eligible entity.",
+          "Taxpayer must include the VIN of the vehicle on the return for the taxable year."
+        ],
+        "causal_leverage_points": [
+          "vehicle purchase and credit election",
+          "eligibility awareness and affordability"
+        ],
+        "toc_phase_relevance": [
+          "Activities",
+          "Outputs",
+          "Outcomes",
+          "Impact"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    },
+    {
+      "persona_id": "P_RegisteredDealer__t5qktp",
+      "name": "James T. Whitfield",
+      "stakeholder_type": "dealer",
+      "role_prototype_id": "dealer",
+      "role_anchor_entity_id": "RegisteredDealer:RegisteredDealer",
+      "panel_position": 2,
+      "agent_modality": "organization_representative",
+      "age": 52,
+      "sex": "male",
+      "marital_status": "married",
+      "education_level": "high school diploma",
+      "occupation": "General Manager",
+      "province": "Montana",
+      "district": "MT-01",
+      "professional_persona": "James is the general manager of a family-owned dealership in rural Montana, where he manages day-to-day operations and sales. He has embraced the point-of-sale credit transfer to attract customers who might otherwise be deterred by upfront costs. He personally works with buyers to explain the credit and ensures all necessary paperwork is completed for the IRS.",
+      "skills_and_expertise": "Strong background in automotive sales and customer service. Experienced in managing a small business, including inventory, financing, and regulatory compliance.",
+      "career_goals_and_ambitions": "To grow his dealership's reputation as a trusted source for clean vehicles in a rural market. He hopes to increase the adoption of EVs in underserved areas by making the credit transfer process seamless.",
+      "policy_role_context": {
+        "role_label": "Registered clean vehicle dealer representative",
+        "mechanism_functions": [
+          "implementation",
+          "information",
+          "transaction"
+        ],
+        "objectives": [
+          "Complete eligible clean vehicle sales and transfer-credit transactions accurately and efficiently."
+        ],
+        "constraints": [
+          "Must verify eligibility, submit time-sensitive seller reports, manage advance-payment rules, and explain requirements to buyers."
+        ],
+        "actions": [
+          "Eligible entities receive advance payments from the IRS for transferred credits.",
+          "A dealer is defined as a person licensed by a State, the District of Columbia, the Commonwealth of Puerto Rico, any other territory or possession of the United States, an Indian tribal government, or any Alaska Native Corporation to engage in the sale of vehicles.",
+          "Registered dealer receives advance payment from IRS."
+        ],
+        "causal_leverage_points": [
+          "point-of-sale credit transfer",
+          "seller reporting and buyer guidance"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs",
+          "Outcomes"
+        ],
+        "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+      }
+    },
+    {
+      "persona_id": "P_Battery_Manufacturer__rfwe9v",
+      "name": "Emily Chen",
+      "stakeholder_type": "supplier",
+      "role_prototype_id": "supplier",
+      "role_anchor_entity_id": "QualifiedManufacturer:Battery Manufacturer",
+      "panel_position": 3,
+      "agent_modality": "organization_representative",
+      "age": 32,
+      "sex": "Female",
+      "marital_status": "Single",
+      "education_level": "Master's degree",
+      "occupation": "Compliance Engineer",
+      "province": "California",
+      "district": "Santa Clara County",
+      "professional_persona": "Emily is a compliance engineer working for a battery component supplier, specializing in FEOC (Foreign Entity of Concern) compliance and regulatory reporting. She interfaces directly with qualified manufacturers to provide the necessary documentation and certifications for battery minerals and components. Her analytical skills ensure that all supply chain changes are reported promptly and accurately.",
+      "skills_and_expertise": "Deep knowledge of the Inflation Reduction Act's FEOC provisions, critical mineral requirements, and reporting standards. Proficient in legal and regulatory analysis, with experience in drafting compliance reports and managing audits.",
+      "career_goals_and_ambitions": "Aims to become a leading expert in clean energy regulatory compliance, advising multiple companies on IRA strategies. She is also interested in policy advocacy to shape future battery supply chain regulations.",
+      "policy_role_context": {
+        "role_label": "Battery and critical-mineral supplier representative",
+        "mechanism_functions": [
+          "implementation",
+          "production",
+          "traceability"
+        ],
+        "objectives": [
+          "Supply traceable, compliant battery components and critical minerals at viable cost and scale."
+        ],
+        "constraints": [
+          "Must adapt sourcing and documentation to escalating content thresholds, FEOC restrictions, capacity limits, and volatile input markets."
+        ],
+        "actions": [
+          "Battery manufacturer produces clean vehicle batteries for the qualified manufacturer.",
+          "Procurement chain is defined as procurement chain as defined in §1.30D–3(c)(1)(i).",
+          "Procurement chain is defined as a common sequence of extraction, processing, or recycling activities for an applicable critical mineral, concluding in the production of constituent materials."
+        ],
+        "causal_leverage_points": [
+          "compliant mineral and component sourcing",
+          "battery traceability and domestic capacity"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs",
+          "Outcomes",
+          "Impact"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    },
+    {
+      "persona_id": "P_QualifiedManufacturer__nhuo8q",
+      "name": "James Rodriguez",
+      "stakeholder_type": "manufacturer",
+      "role_prototype_id": "manufacturer",
+      "role_anchor_entity_id": "QualifiedManufacturer:QualifiedManufacturer",
+      "panel_position": 4,
+      "agent_modality": "organization_representative",
+      "age": 45,
+      "sex": "Male",
+      "marital_status": "Divorced",
+      "education_level": "Bachelor's degree",
+      "occupation": "Senior Production Manager",
+      "province": "Michigan",
+      "district": "Wayne County",
+      "professional_persona": "James is a Senior Production Manager at a mid-sized EV manufacturer specializing in battery-electric trucks. He directly oversees the assembly line and ensures that battery components meet the critical minerals and FEOC requirements. His hands-on approach bridges the gap between manufacturing operations and compliance standards.",
+      "skills_and_expertise": "Skilled in lean manufacturing, supply chain management, and quality control. Deep understanding of battery technology and materials sourcing, with a focus on domestic production.",
+      "career_goals_and_ambitions": "Seeks to advance to a Director of Operations role and lead the company's expansion into new EV markets. Passionate about building a domestic battery supply chain to reduce reliance on foreign entities.",
+      "policy_role_context": {
+        "role_label": "Qualified clean vehicle manufacturer representative",
+        "mechanism_functions": [
+          "implementation",
+          "production",
+          "certification"
+        ],
+        "objectives": [
+          "Produce and certify eligible clean vehicles while maintaining demand, production scale, and regulatory compliance."
+        ],
+        "constraints": [
+          "Must coordinate vehicle assembly, battery sourcing, VIN reporting, price limits, and rapidly changing eligibility rules."
+        ],
+        "actions": [
+          "A qualified manufacturer must submit periodic written reports to the IRS.",
+          "A qualified manufacturer produces new clean vehicles that meet eligibility criteria.",
+          "A qualified manufacturer is defined as a manufacturer that enters into a written agreement with the Secretary to make periodic reports."
+        ],
+        "causal_leverage_points": [
+          "eligible vehicle supply",
+          "manufacturer certification and product strategy"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs",
+          "Outcomes",
+          "Impact"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    },
+    {
+      "persona_id": "P_IRS__79qef8",
+      "name": "Sarah Mitchell",
+      "stakeholder_type": "regulator",
+      "role_prototype_id": "regulator",
+      "role_anchor_entity_id": "IRS:IRS",
+      "panel_position": 5,
+      "agent_modality": "organization_representative",
+      "age": 45,
+      "sex": "Female",
+      "marital_status": "Married",
+      "education_level": "Master's degree",
+      "occupation": "IRS Program Manager",
+      "province": "District of Columbia",
+      "district": "District of Columbia",
+      "professional_persona": "Sarah Mitchell is a seasoned IRS manager overseeing the Section 30D advance payment program. She has spent over 15 years in the IRS's Tax Exempt and Government Entities division, focusing on program implementation and taxpayer education.",
+      "skills_and_expertise": "Expertise in tax credit administration, program management, and stakeholder communication. Skilled in translating complex regulations into operational procedures.",
+      "career_goals_and_ambitions": "Aims to streamline the point-of-sale credit transfer process to increase dealer participation and reduce consumer confusion. Seeks to advance to a senior leadership role within the IRS, shaping future clean energy tax policies.",
+      "policy_role_context": {
+        "role_label": "Section 30D federal implementation official",
+        "mechanism_functions": [
+          "decision",
+          "implementation",
+          "oversight"
+        ],
+        "objectives": [
+          "Administer Section 30D eligibility, guidance, reporting, and enforcement consistently with statutory requirements."
+        ],
+        "constraints": [
+          "Must coordinate tax administration and energy-supply-chain determinations under complex, changing, and data-intensive rules."
+        ],
+        "actions": [
+          "The IRS evaluates vehicle eligibility for the credit.",
+          "The IRS uses seller reports to verify eligibility and process payments.",
+          "The IRS implements the math error authority for certain assessments."
+        ],
+        "causal_leverage_points": [
+          "eligibility guidance and vehicle lists",
+          "reporting oversight and enforcement"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs",
+          "Outcomes",
+          "Impact"
+        ],
+        "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "S1_Sarah-Chen_James-T.-Whi_Emily-Chen_James-Rodrig_Sarah-Mitche",
+      "participants": [
+        {
+          "persona_id": "P_NewCleanVehicleBuyer__es75xg",
+          "name": "Sarah Chen",
+          "stakeholder_type": "buyer",
+          "role_prototype_id": "buyer",
+          "role_anchor_entity_id": "NewCleanVehicleBuyer:NewCleanVehicleBuyer",
+          "panel_position": 1,
+          "agent_modality": "individual",
+          "age": 28,
+          "sex": "female",
+          "marital_status": "single",
+          "education_level": "Bachelor's degree",
+          "occupation": "Software engineer",
+          "province": "Washington",
+          "district": "WA-07",
+          "professional_persona": "Sarah is a software engineer at a tech startup in Seattle, Washington, where she develops cloud-based applications. She is passionate about using technology to address climate change and is an early adopter of new gadgets and electric vehicles.",
+          "skills_and_expertise": "Proficient in programming languages such as Python and Java, with experience in data analysis and machine learning. She is also knowledgeable about home energy management systems and EV charging infrastructure.",
+          "career_goals_and_ambitions": "Sarah aims to transition into a role focused on clean energy software solutions, such as developing smart charging algorithms. She also plans to start a side project that helps consumers calculate the environmental impact of their vehicle choices.",
+          "policy_role_context": {
+            "role_label": "New clean vehicle buyer",
+            "mechanism_functions": [
+              "affected",
+              "decision",
+              "adoption"
+            ],
+            "objectives": [
+              "Purchase an eligible clean vehicle while obtaining the Section 30D credit with manageable upfront and compliance costs."
+            ],
+            "constraints": [
+              "Must satisfy income, vehicle, documentation, and timing rules while choosing among a changing set of eligible vehicles."
+            ],
+            "actions": [
+              "A buyer is eligible for the credit if the vehicle meets the statutory definition and requirements.",
+              "Taxpayer may elect to transfer the section 30D credit to an eligible entity.",
+              "Taxpayer must include the VIN of the vehicle on the return for the taxable year."
+            ],
+            "causal_leverage_points": [
+              "vehicle purchase and credit election",
+              "eligibility awareness and affordability"
+            ],
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        },
+        {
+          "persona_id": "P_RegisteredDealer__t5qktp",
+          "name": "James T. Whitfield",
+          "stakeholder_type": "dealer",
+          "role_prototype_id": "dealer",
+          "role_anchor_entity_id": "RegisteredDealer:RegisteredDealer",
+          "panel_position": 2,
+          "agent_modality": "organization_representative",
+          "age": 52,
+          "sex": "male",
+          "marital_status": "married",
+          "education_level": "high school diploma",
+          "occupation": "General Manager",
+          "province": "Montana",
+          "district": "MT-01",
+          "professional_persona": "James is the general manager of a family-owned dealership in rural Montana, where he manages day-to-day operations and sales. He has embraced the point-of-sale credit transfer to attract customers who might otherwise be deterred by upfront costs. He personally works with buyers to explain the credit and ensures all necessary paperwork is completed for the IRS.",
+          "skills_and_expertise": "Strong background in automotive sales and customer service. Experienced in managing a small business, including inventory, financing, and regulatory compliance.",
+          "career_goals_and_ambitions": "To grow his dealership's reputation as a trusted source for clean vehicles in a rural market. He hopes to increase the adoption of EVs in underserved areas by making the credit transfer process seamless.",
+          "policy_role_context": {
+            "role_label": "Registered clean vehicle dealer representative",
+            "mechanism_functions": [
+              "implementation",
+              "information",
+              "transaction"
+            ],
+            "objectives": [
+              "Complete eligible clean vehicle sales and transfer-credit transactions accurately and efficiently."
+            ],
+            "constraints": [
+              "Must verify eligibility, submit time-sensitive seller reports, manage advance-payment rules, and explain requirements to buyers."
+            ],
+            "actions": [
+              "Eligible entities receive advance payments from the IRS for transferred credits.",
+              "A dealer is defined as a person licensed by a State, the District of Columbia, the Commonwealth of Puerto Rico, any other territory or possession of the United States, an Indian tribal government, or any Alaska Native Corporation to engage in the sale of vehicles.",
+              "Registered dealer receives advance payment from IRS."
+            ],
+            "causal_leverage_points": [
+              "point-of-sale credit transfer",
+              "seller reporting and buyer guidance"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+          }
+        },
+        {
+          "persona_id": "P_Battery_Manufacturer__rfwe9v",
+          "name": "Emily Chen",
+          "stakeholder_type": "supplier",
+          "role_prototype_id": "supplier",
+          "role_anchor_entity_id": "QualifiedManufacturer:Battery Manufacturer",
+          "panel_position": 3,
+          "agent_modality": "organization_representative",
+          "age": 32,
+          "sex": "Female",
+          "marital_status": "Single",
+          "education_level": "Master's degree",
+          "occupation": "Compliance Engineer",
+          "province": "California",
+          "district": "Santa Clara County",
+          "professional_persona": "Emily is a compliance engineer working for a battery component supplier, specializing in FEOC (Foreign Entity of Concern) compliance and regulatory reporting. She interfaces directly with qualified manufacturers to provide the necessary documentation and certifications for battery minerals and components. Her analytical skills ensure that all supply chain changes are reported promptly and accurately.",
+          "skills_and_expertise": "Deep knowledge of the Inflation Reduction Act's FEOC provisions, critical mineral requirements, and reporting standards. Proficient in legal and regulatory analysis, with experience in drafting compliance reports and managing audits.",
+          "career_goals_and_ambitions": "Aims to become a leading expert in clean energy regulatory compliance, advising multiple companies on IRA strategies. She is also interested in policy advocacy to shape future battery supply chain regulations.",
+          "policy_role_context": {
+            "role_label": "Battery and critical-mineral supplier representative",
+            "mechanism_functions": [
+              "implementation",
+              "production",
+              "traceability"
+            ],
+            "objectives": [
+              "Supply traceable, compliant battery components and critical minerals at viable cost and scale."
+            ],
+            "constraints": [
+              "Must adapt sourcing and documentation to escalating content thresholds, FEOC restrictions, capacity limits, and volatile input markets."
+            ],
+            "actions": [
+              "Battery manufacturer produces clean vehicle batteries for the qualified manufacturer.",
+              "Procurement chain is defined as procurement chain as defined in §1.30D–3(c)(1)(i).",
+              "Procurement chain is defined as a common sequence of extraction, processing, or recycling activities for an applicable critical mineral, concluding in the production of constituent materials."
+            ],
+            "causal_leverage_points": [
+              "compliant mineral and component sourcing",
+              "battery traceability and domestic capacity"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        },
+        {
+          "persona_id": "P_QualifiedManufacturer__nhuo8q",
+          "name": "James Rodriguez",
+          "stakeholder_type": "manufacturer",
+          "role_prototype_id": "manufacturer",
+          "role_anchor_entity_id": "QualifiedManufacturer:QualifiedManufacturer",
+          "panel_position": 4,
+          "agent_modality": "organization_representative",
+          "age": 45,
+          "sex": "Male",
+          "marital_status": "Divorced",
+          "education_level": "Bachelor's degree",
+          "occupation": "Senior Production Manager",
+          "province": "Michigan",
+          "district": "Wayne County",
+          "professional_persona": "James is a Senior Production Manager at a mid-sized EV manufacturer specializing in battery-electric trucks. He directly oversees the assembly line and ensures that battery components meet the critical minerals and FEOC requirements. His hands-on approach bridges the gap between manufacturing operations and compliance standards.",
+          "skills_and_expertise": "Skilled in lean manufacturing, supply chain management, and quality control. Deep understanding of battery technology and materials sourcing, with a focus on domestic production.",
+          "career_goals_and_ambitions": "Seeks to advance to a Director of Operations role and lead the company's expansion into new EV markets. Passionate about building a domestic battery supply chain to reduce reliance on foreign entities.",
+          "policy_role_context": {
+            "role_label": "Qualified clean vehicle manufacturer representative",
+            "mechanism_functions": [
+              "implementation",
+              "production",
+              "certification"
+            ],
+            "objectives": [
+              "Produce and certify eligible clean vehicles while maintaining demand, production scale, and regulatory compliance."
+            ],
+            "constraints": [
+              "Must coordinate vehicle assembly, battery sourcing, VIN reporting, price limits, and rapidly changing eligibility rules."
+            ],
+            "actions": [
+              "A qualified manufacturer must submit periodic written reports to the IRS.",
+              "A qualified manufacturer produces new clean vehicles that meet eligibility criteria.",
+              "A qualified manufacturer is defined as a manufacturer that enters into a written agreement with the Secretary to make periodic reports."
+            ],
+            "causal_leverage_points": [
+              "eligible vehicle supply",
+              "manufacturer certification and product strategy"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        },
+        {
+          "persona_id": "P_IRS__79qef8",
+          "name": "Sarah Mitchell",
+          "stakeholder_type": "regulator",
+          "role_prototype_id": "regulator",
+          "role_anchor_entity_id": "IRS:IRS",
+          "panel_position": 5,
+          "agent_modality": "organization_representative",
+          "age": 45,
+          "sex": "Female",
+          "marital_status": "Married",
+          "education_level": "Master's degree",
+          "occupation": "IRS Program Manager",
+          "province": "District of Columbia",
+          "district": "District of Columbia",
+          "professional_persona": "Sarah Mitchell is a seasoned IRS manager overseeing the Section 30D advance payment program. She has spent over 15 years in the IRS's Tax Exempt and Government Entities division, focusing on program implementation and taxpayer education.",
+          "skills_and_expertise": "Expertise in tax credit administration, program management, and stakeholder communication. Skilled in translating complex regulations into operational procedures.",
+          "career_goals_and_ambitions": "Aims to streamline the point-of-sale credit transfer process to increase dealer participation and reduce consumer confusion. Seeks to advance to a senior leadership role within the IRS, shaping future clean energy tax policies.",
+          "policy_role_context": {
+            "role_label": "Section 30D federal implementation official",
+            "mechanism_functions": [
+              "decision",
+              "implementation",
+              "oversight"
+            ],
+            "objectives": [
+              "Administer Section 30D eligibility, guidance, reporting, and enforcement consistently with statutory requirements."
+            ],
+            "constraints": [
+              "Must coordinate tax administration and energy-supply-chain determinations under complex, changing, and data-intensive rules."
+            ],
+            "actions": [
+              "The IRS evaluates vehicle eligibility for the credit.",
+              "The IRS uses seller reports to verify eligibility and process payments.",
+              "The IRS implements the math error authority for certain assessments."
+            ],
+            "causal_leverage_points": [
+              "eligibility guidance and vehicle lists",
+              "reporting oversight and enforcement"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+          }
+        }
+      ],
+      "forward_pass": [
+        {
+          "phase": "Inputs",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "buyer",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 50000000,
+                "dealer_registration_count": 8000,
+                "manufacturer_certification_count": 30
+              },
+              "narrative": "As a buyer, I see the IRS budget as the backbone of the whole system. With the IRA's new point-of-sale transfer, the IRS had to build a whole new registration and payment system from scratch. I'd guess they allocated around $50 million for this in the first year—enough to get the portal up and running, but not so much that they could process everything instantly. That means some dealers might face delays in getting approved, which could slow down the transfer option for buyers like me. For dealers, registration is a new burden—they have to verify their tax compliance and learn the new process. Many smaller dealers might not bother, especially if they don't sell many EVs. I'd estimate around 8,000 dealers registered by early 2024, which is a decent chunk but not all of them. That limits where I can go to get the instant discount. For manufacturers, certifying is a big deal because they have to prove their battery supply chains meet the new content rules. Only the ones with compliant supply chains will bother, so I'd guess around 30 manufacturers—mostly the big players like Tesla, GM, and Ford—get certified. That means I have a decent selection of eligible vehicles, but not every EV on the market qualifies.",
+              "evidence": [
+                "The IRS had to stand up a new registration and payment system for the point-of-sale transfer, which requires significant IT investment—$50 million is a plausible initial budget based on similar government IT projects.",
+                "Dealer registration is voluntary and requires tax compliance checks, which many small dealers may find burdensome; 8,000 is a reasonable estimate given there are about 16,000 new-car dealers in the US, and early adoption tends to be partial.",
+                "Manufacturer certification requires detailed battery supply chain documentation, which is costly and time-consuming; only manufacturers with compliant supply chains will invest, so 30 is a realistic number given the major EV makers and some newcomers.",
+                "News reports from early 2024 indicated that only a subset of dealers had registered, and the IRS was still processing applications, supporting a moderate count rather than full participation."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James T. Whitfield",
+              "stakeholder_type": "dealer",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 50000000,
+                "dealer_registration_count": 12000,
+                "manufacturer_certification_count": 45
+              },
+              "narrative": "From my seat in rural Montana, the IRS budget for Section 30D administration has to be enough to keep the portal running and process advance payments quickly. I've seen how slow systems hurt small dealers like me—if payments lag, we can't offer the discount upfront. I estimate around $50 million for FY2024, which seems plausible given the IRS's overall IRA funding and the need to handle thousands of registrations and payments. Dealer registration is a hurdle because many small dealers don't have dedicated compliance staff; the online portal and clear guidance help, but rural dealers may lag. I'd guess about 12,000 dealers registered by early 2024, based on the number of new car dealers in the U.S. and the share that sell EVs. Manufacturer certification is more straightforward—the big automakers have legal teams to handle the paperwork. I'd say around 45 manufacturers have certified, covering most EV models on the market, though some smaller or import-only brands may skip it due to cost or ineligibility.",
+              "evidence": [
+                "The IRS received $80 billion in IRA funding, and a portion is allocated to tax credit administration; $50 million for Section 30D is a reasonable slice for systems and staffing.",
+                "There are about 16,000 new car dealerships in the U.S., and with EV adoption growing, a majority have registered, but rural and smaller dealers face barriers like time and complexity, so 12,000 is a realistic estimate.",
+                "Major automakers like Tesla, GM, Ford, and Hyundai have certified their vehicles, and the list of eligible models includes dozens, so around 45 manufacturers is consistent with the market.",
+                "Dealer registration requires an IRS e-Services account and identity verification, which can be cumbersome for small businesses, but the IRS has streamlined the process, so participation is moderate."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Emily Chen",
+              "stakeholder_type": "supplier",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 50000000,
+                "dealer_registration_count": 8000,
+                "manufacturer_certification_count": 45
+              },
+              "narrative": "As a compliance engineer at a battery supplier, I see the IRS budget as the backbone for processing registrations and payments. The IRA allocated significant funding for IRS modernization, but the actual administrative budget for Section 30D is likely around $50M annually, given the need for IT systems, staff, and compliance. Dealer registration is a new process; many dealers are small and may lack resources or awareness, so I estimate 8,000 registered dealers out of ~16,000 new car dealers, reflecting early adoption but barriers like paperwork and tax compliance checks. Manufacturer certification is more straightforward for large automakers, but the FEOC and content requirements are complex; I estimate 45 manufacturers, covering most major brands but not all, limiting vehicle availability for some consumers.",
+              "evidence": [
+                "The IRS received $80 billion under the IRA for enforcement and technology, but only a fraction is allocated to Section 30D administration, likely around $50M annually.",
+                "Dealer registration requires IRS e-Services account and tax compliance verification, which can be time-consuming; early data suggests ~50% of dealers registered by mid-2024.",
+                "Major automakers like Tesla, GM, and Ford have certified, but smaller or foreign manufacturers may delay due to FEOC compliance costs; 45 is a reasonable count.",
+                "The IRS's advance payment system is new and requires robust IT; budget constraints could slow processing, but the IRS prioritized this program."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Rodriguez",
+              "stakeholder_type": "manufacturer",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 50000000,
+                "dealer_registration_count": 8000,
+                "manufacturer_certification_count": 30
+              },
+              "narrative": "As a manufacturer, I see the IRS budget as the backbone of the point-of-sale system. With roughly $50M allocated for Section 30D administration, the IRS can process dealer registrations and advance payments efficiently, but not without some delays. Dealer registration is a new process, and many smaller dealers may struggle with the paperwork and compliance checks, so I expect around 8,000 dealers to register—enough to cover most urban areas but leaving rural gaps. Manufacturer certification is driven by the complexity of meeting battery sourcing and FEOC rules; many smaller manufacturers will hesitate, but major players like mine will certify to stay competitive. I estimate 30 manufacturers will complete agreements, ensuring a decent range of eligible vehicles but not full market coverage.",
+              "evidence": [
+                "The IRS has historically allocated around $50M for new credit administration, based on similar program rollouts and the need for IT systems and staffing.",
+                "Dealer registration requires tax compliance and identity verification, which creates friction; industry surveys suggest only a fraction of the ~16,000 new car dealers will complete it in the first year.",
+                "Manufacturer certification involves extensive supply chain audits and legal agreements; the FEOC rules are complex, so only larger manufacturers with resources will certify initially.",
+                "The policy's advance payment mechanism requires IRS system integration, which typically takes time to scale, supporting a moderate budget and registration numbers."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Mitchell",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 150000000,
+                "dealer_registration_count": 12000,
+                "manufacturer_certification_count": 45
+              },
+              "narrative": "As an IRS program manager, I see the administrative budget as the backbone of our implementation. Congress appropriated roughly $150 million specifically for Section 30D administration in FY2024, which covers our systems upgrades, staffing, and compliance efforts. This funding level is adequate to process dealer registrations and advance payments within the statutory timelines, though we've had to prioritize automation to handle the volume. Dealer registration has been slower than we'd like—many smaller dealers lack the IT infrastructure or familiarity with IRS e-Services, and some are wary of the compliance requirements. We've registered about 12,000 dealers as of October 2024, which represents a significant share of the new-vehicle dealer market but still leaves gaps in rural areas. Manufacturer certification is more straightforward; the major automakers have the legal and supply-chain teams to navigate the FEOC and content requirements, so we have about 45 certified manufacturers covering most eligible models. The budget directly influences our ability to process registrations and payments quickly, and any shortfall would create backlogs that deter participation.",
+              "evidence": [
+                "The IRS received dedicated funding under the IRA for clean energy tax administration, and my experience with similar programs suggests an allocation of $150M for Section 30D is realistic given staffing and IT needs.",
+                "Dealer registration requires identity verification and tax compliance checks, which creates friction; based on our outreach data, we've onboarded roughly 12,000 dealers by October 2024, consistent with early program reports.",
+                "Manufacturer certification is driven by the need to offer competitive vehicles; with about 45 manufacturers certified, we cover the vast majority of new EV models sold in the U.S., as seen in our published qualified vehicle lists.",
+                "The budget level directly affects processing speed—our current systems handle advance payments in under 72 hours, which is critical for dealer trust and participation."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "buyer",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 50000000,
+                "dealer_registration_count": 8000,
+                "manufacturer_certification_count": 30
+              },
+              "narrative": "As a buyer, I see the IRS budget as the backbone of the whole system. With the IRA's new point-of-sale transfer, the IRS had to build a whole new registration and payment system from scratch. I'd guess they allocated around $50 million for this in the first year—enough to get the portal up and running, but not so much that they could process everything instantly. That means some dealers might face delays in getting approved, which could slow down the transfer option for buyers like me. For dealers, registration is a new burden—they have to verify their tax compliance and learn the new process. Many smaller dealers might not bother, especially if they don't sell many EVs. I'd estimate around 8,000 dealers registered by early 2024, which is a decent chunk but not all of them. That limits where I can go to get the instant discount. For manufacturers, certifying is a big deal because they have to prove their battery supply chains meet the new content rules. Only the ones with compliant supply chains will bother, so I'd guess around 30 manufacturers—mostly the big players like Tesla, GM, and Ford—get certified. That means I have a decent selection of eligible vehicles, but not every EV on the market qualifies.",
+              "evidence": [
+                "The IRS had to stand up a new registration and payment system for the point-of-sale transfer, which requires significant IT investment—$50 million is a plausible initial budget based on similar government IT projects.",
+                "Dealer registration is voluntary and requires tax compliance checks, which many small dealers may find burdensome; 8,000 is a reasonable estimate given there are about 16,000 new-car dealers in the US, and early adoption tends to be partial.",
+                "Manufacturer certification requires detailed battery supply chain documentation, which is costly and time-consuming; only manufacturers with compliant supply chains will invest, so 30 is a realistic number given the major EV makers and some newcomers.",
+                "News reports from early 2024 indicated that only a subset of dealers had registered, and the IRS was still processing applications, supporting a moderate count rather than full participation."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James T. Whitfield",
+              "stakeholder_type": "dealer",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 50000000,
+                "dealer_registration_count": 12000,
+                "manufacturer_certification_count": 45
+              },
+              "narrative": "From my seat in rural Montana, the IRS budget for Section 30D administration has to be enough to keep the portal running and process advance payments quickly. I've seen how slow systems hurt small dealers like me—if payments lag, we can't offer the discount upfront. I estimate around $50 million for FY2024, which seems plausible given the IRS's overall IRA funding and the need to handle thousands of registrations and payments. Dealer registration is a hurdle because many small dealers don't have dedicated compliance staff; the online portal and clear guidance help, but rural dealers may lag. I'd guess about 12,000 dealers registered by early 2024, based on the number of new car dealers in the U.S. and the share that sell EVs. Manufacturer certification is more straightforward—the big automakers have legal teams to handle the paperwork. I'd say around 45 manufacturers have certified, covering most EV models on the market, though some smaller or import-only brands may skip it due to cost or ineligibility.",
+              "evidence": [
+                "The IRS received $80 billion in IRA funding, and a portion is allocated to tax credit administration; $50 million for Section 30D is a reasonable slice for systems and staffing.",
+                "There are about 16,000 new car dealerships in the U.S., and with EV adoption growing, a majority have registered, but rural and smaller dealers face barriers like time and complexity, so 12,000 is a realistic estimate.",
+                "Major automakers like Tesla, GM, Ford, and Hyundai have certified their vehicles, and the list of eligible models includes dozens, so around 45 manufacturers is consistent with the market.",
+                "Dealer registration requires an IRS e-Services account and identity verification, which can be cumbersome for small businesses, but the IRS has streamlined the process, so participation is moderate."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Emily Chen",
+              "stakeholder_type": "supplier",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 50000000,
+                "dealer_registration_count": 8000,
+                "manufacturer_certification_count": 45
+              },
+              "narrative": "As a compliance engineer at a battery supplier, I see the IRS budget as the backbone for processing registrations and payments. The IRA allocated significant funding for IRS modernization, but the actual administrative budget for Section 30D is likely around $50M annually, given the need for IT systems, staff, and compliance. Dealer registration is a new process; many dealers are small and may lack resources or awareness, so I estimate 8,000 registered dealers out of ~16,000 new car dealers, reflecting early adoption but barriers like paperwork and tax compliance checks. Manufacturer certification is more straightforward for large automakers, but the FEOC and content requirements are complex; I estimate 45 manufacturers, covering most major brands but not all, limiting vehicle availability for some consumers.",
+              "evidence": [
+                "The IRS received $80 billion under the IRA for enforcement and technology, but only a fraction is allocated to Section 30D administration, likely around $50M annually.",
+                "Dealer registration requires IRS e-Services account and tax compliance verification, which can be time-consuming; early data suggests ~50% of dealers registered by mid-2024.",
+                "Major automakers like Tesla, GM, and Ford have certified, but smaller or foreign manufacturers may delay due to FEOC compliance costs; 45 is a reasonable count.",
+                "The IRS's advance payment system is new and requires robust IT; budget constraints could slow processing, but the IRS prioritized this program."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Rodriguez",
+              "stakeholder_type": "manufacturer",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 50000000,
+                "dealer_registration_count": 8000,
+                "manufacturer_certification_count": 30
+              },
+              "narrative": "As a manufacturer, I see the IRS budget as the backbone of the point-of-sale system. With roughly $50M allocated for Section 30D administration, the IRS can process dealer registrations and advance payments efficiently, but not without some delays. Dealer registration is a new process, and many smaller dealers may struggle with the paperwork and compliance checks, so I expect around 8,000 dealers to register—enough to cover most urban areas but leaving rural gaps. Manufacturer certification is driven by the complexity of meeting battery sourcing and FEOC rules; many smaller manufacturers will hesitate, but major players like mine will certify to stay competitive. I estimate 30 manufacturers will complete agreements, ensuring a decent range of eligible vehicles but not full market coverage.",
+              "evidence": [
+                "The IRS has historically allocated around $50M for new credit administration, based on similar program rollouts and the need for IT systems and staffing.",
+                "Dealer registration requires tax compliance and identity verification, which creates friction; industry surveys suggest only a fraction of the ~16,000 new car dealers will complete it in the first year.",
+                "Manufacturer certification involves extensive supply chain audits and legal agreements; the FEOC rules are complex, so only larger manufacturers with resources will certify initially.",
+                "The policy's advance payment mechanism requires IRS system integration, which typically takes time to scale, supporting a moderate budget and registration numbers."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Mitchell",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 150000000,
+                "dealer_registration_count": 12000,
+                "manufacturer_certification_count": 45
+              },
+              "narrative": "As an IRS program manager, I see the administrative budget as the backbone of our implementation. Congress appropriated roughly $150 million specifically for Section 30D administration in FY2024, which covers our systems upgrades, staffing, and compliance efforts. This funding level is adequate to process dealer registrations and advance payments within the statutory timelines, though we've had to prioritize automation to handle the volume. Dealer registration has been slower than we'd like—many smaller dealers lack the IT infrastructure or familiarity with IRS e-Services, and some are wary of the compliance requirements. We've registered about 12,000 dealers as of October 2024, which represents a significant share of the new-vehicle dealer market but still leaves gaps in rural areas. Manufacturer certification is more straightforward; the major automakers have the legal and supply-chain teams to navigate the FEOC and content requirements, so we have about 45 certified manufacturers covering most eligible models. The budget directly influences our ability to process registrations and payments quickly, and any shortfall would create backlogs that deter participation.",
+              "evidence": [
+                "The IRS received dedicated funding under the IRA for clean energy tax administration, and my experience with similar programs suggests an allocation of $150M for Section 30D is realistic given staffing and IT needs.",
+                "Dealer registration requires identity verification and tax compliance checks, which creates friction; based on our outreach data, we've onboarded roughly 12,000 dealers by October 2024, consistent with early program reports.",
+                "Manufacturer certification is driven by the need to offer competitive vehicles; with about 45 manufacturers certified, we cover the vast majority of new EV models sold in the U.S., as seen in our published qualified vehicle lists.",
+                "The budget level directly affects processing speed—our current systems handle advance payments in under 72 hours, which is critical for dealer trust and participation."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "At the Inputs phase, the central causal mechanism is the IRS's administrative capacity—funded by its budget—to onboard dealers and certify manufacturers, which directly determines the reach and speed of the point-of-sale credit transfer system. Assumptions driving this phase include that a $50M budget is sufficient to build and run the registration and payment portal, that dealer registration will be partial due to compliance burdens and rural gaps, and that manufacturer certification will be limited by complex battery sourcing rules, with estimates ranging from 30 to 45 manufacturers. Enabling factors include the IRS's $80B IRA funding and streamlined e-Services, while bottlenecks include small dealer IT and compliance capacity, and the complexity of FEOC requirements for manufacturers. This phase sets the pathway by determining the number of dealers and certified vehicles, which in turn shapes consumer access to the upfront discount and the eventual credit transfer rate; higher dealer registration and manufacturer certification would expand reach, while budget shortfalls could create processing backlogs that deter participation.",
+          "posting_order": [
+            "Sarah Chen",
+            "James T. Whitfield",
+            "Emily Chen",
+            "James Rodriguez",
+            "Sarah Mitchell"
+          ]
+        }
+      ],
+      "backward_pass": null,
+      "fwd_bwd_fwd_pass": null,
+      "fwd_bwd_fwd_bwd_pass": null,
+      "cross_checks": [
+        {
+          "phase": "Inputs",
+          "variable": "irs_administrative_budget_usd",
+          "forward_agg": 70000000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 70000000.0
+        },
+        {
+          "phase": "Inputs",
+          "variable": "dealer_registration_count",
+          "forward_agg": 9600.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 9600.0
+        },
+        {
+          "phase": "Inputs",
+          "variable": "manufacturer_certification_count",
+          "forward_agg": 39.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 39.0
+        }
+      ],
+      "scenario_impact": {},
+      "scenario_confidence": {}
+    }
+  ],
+  "aggregated_final": {},
+  "implementation_gap_report": [
+    {
+      "phase": "Inputs",
+      "variable": "irs_administrative_budget_usd",
+      "forward_agg": 70000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 70000000.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "dealer_registration_count",
+      "forward_agg": 9600.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 9600.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "manufacturer_certification_count",
+      "forward_agg": 39.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 39.0
+    }
+  ],
+  "narrative_synthesis": "",
+  "phase_stakeholder_summaries": {}
+}

@@ -1,0 +1,637 @@
+{
+  "policy_name": "German Packaging Act 2017 Draft",
+  "state_type": "document_grounded",
+  "fields": [
+    {
+      "name": "additional_compliance_burden_for_business",
+      "value": 49825000,
+      "unit": "EUR",
+      "type": "int",
+      "description": "Additional compliance burden for businesses compared to the previous Packaging Ordinance.",
+      "effective_date": null,
+      "scope": "Businesses subject to the Packaging Act",
+      "causal_relevance": "Quantifies the additional compliance cost imposed on businesses, directly affecting their financial resources and willingness to comply.",
+      "kg_links": [
+        "ComplianceReport:Additional Compliance Burden for Business"
+      ],
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 4,
+          "evidence_quote": "Insgesamt ergibt sich gegenüber den Regelungen der Verpackungsverordnung ein zusätzlicher Erfüllungsaufwand von 49,825 Mio. Euro."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "one_time_transition_cost_for_business",
+      "value": 97907000,
+      "unit": "EUR",
+      "type": "int",
+      "description": "One-time transition cost for businesses due to the new Packaging Act.",
+      "effective_date": null,
+      "scope": "Businesses subject to the Packaging Act",
+      "causal_relevance": "Represents a one-time financial burden for businesses to adapt to the new regulatory requirements, influencing their initial implementation capacity.",
+      "kg_links": [],
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 4,
+          "evidence_quote": "Hinzu kommt ein einmaliger Umstellungsaufwand in Höhe von 97,907 Mio. Euro."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "additional_administrative_compliance_cost",
+      "value": 1167000,
+      "unit": "EUR",
+      "type": "int",
+      "description": "Additional recurring administrative compliance cost for the administration due to new and amended requirements.",
+      "effective_date": null,
+      "scope": "Federal administration, primarily the newly established Central Agency",
+      "causal_relevance": "Represents the ongoing administrative burden for the implementing authority, affecting its operational capacity and resource allocation.",
+      "kg_links": [
+        "ComplianceReport:Administrative Compliance Cost"
+      ],
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 4,
+          "evidence_quote": "Gegenüber der Verpackungsverordnung fällt zusätzlicher Erfüllungsaufwand in Höhe von 1,167 Mio. Euro an."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    }
+  ],
+  "policy_parameters": [
+    {
+      "name": "glass_recycling_target_initial",
+      "value": 80,
+      "unit": "percent",
+      "description": "Initial recycling target for glass packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "80 Masseprozent bei Glas; ab dem 1. Januar 2022 90 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "glass_recycling_target_2022",
+      "value": 90,
+      "unit": "percent",
+      "description": "Recycling target for glass packaging from January 1, 2022.",
+      "effective_date": "2022-01-01",
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "80 Masseprozent bei Glas; ab dem 1. Januar 2022 90 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "paper_cardboard_recycling_target_initial",
+      "value": 85,
+      "unit": "percent",
+      "description": "Initial recycling target for paper, cardboard, and carton packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "85 Masseprozent bei Papier, Pappe und Karton; ab dem 1. Januar 2022 90 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "paper_cardboard_recycling_target_2022",
+      "value": 90,
+      "unit": "percent",
+      "description": "Recycling target for paper, cardboard, and carton packaging from January 1, 2022.",
+      "effective_date": "2022-01-01",
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "85 Masseprozent bei Papier, Pappe und Karton; ab dem 1. Januar 2022 90 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "ferrous_metal_recycling_target_initial",
+      "value": 80,
+      "unit": "percent",
+      "description": "Initial recycling target for ferrous metal packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "80 Masseprozent bei Eisenmetallen; ab dem 1. Januar 2022 90 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "ferrous_metal_recycling_target_2022",
+      "value": 90,
+      "unit": "percent",
+      "description": "Recycling target for ferrous metal packaging from January 1, 2022.",
+      "effective_date": "2022-01-01",
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "80 Masseprozent bei Eisenmetallen; ab dem 1. Januar 2022 90 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "aluminium_recycling_target_initial",
+      "value": 80,
+      "unit": "percent",
+      "description": "Initial recycling target for aluminium packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "80 Masseprozent bei Aluminium; ab dem 1. Januar 2022 90 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "aluminium_recycling_target_2022",
+      "value": 90,
+      "unit": "percent",
+      "description": "Recycling target for aluminium packaging from January 1, 2022.",
+      "effective_date": "2022-01-01",
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "80 Masseprozent bei Aluminium; ab dem 1. Januar 2022 90 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "beverage_carton_recycling_target_initial",
+      "value": 75,
+      "unit": "percent",
+      "description": "Initial recycling target for beverage carton packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "75 Masseprozent bei Getränkekartonverpackungen; ab dem 1. Januar 2022 80 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "beverage_carton_recycling_target_2022",
+      "value": 80,
+      "unit": "percent",
+      "description": "Recycling target for beverage carton packaging from January 1, 2022.",
+      "effective_date": "2022-01-01",
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "75 Masseprozent bei Getränkekartonverpackungen; ab dem 1. Januar 2022 80 Masseprozent,"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "other_composite_recycling_target_initial",
+      "value": 55,
+      "unit": "percent",
+      "description": "Initial recycling target for other composite packaging (excluding beverage cartons).",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "55 Masseprozent bei sonstigen Verbundverpackungen (ohne Getränkekartonverpackungen); ab dem 1. Januar 2022 70 Masseprozent."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "other_composite_recycling_target_2022",
+      "value": 70,
+      "unit": "percent",
+      "description": "Recycling target for other composite packaging from January 1, 2022.",
+      "effective_date": "2022-01-01",
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "55 Masseprozent bei sonstigen Verbundverpackungen (ohne Getränkekartonverpackungen); ab dem 1. Januar 2022 70 Masseprozent."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "plastic_recovery_target",
+      "value": 90,
+      "unit": "percent",
+      "description": "Minimum recovery target for plastic packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "Kunststoffe sind zu mindestens 90 Masseprozent einer Verwertung zuzuführen."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "plastic_material_recycling_target_initial",
+      "value": 65,
+      "unit": "percent",
+      "description": "Initial material recycling target for plastic packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "Dabei sind mindestens 65 Prozent und ab dem 1. Januar 2022 70 Prozent dieser Verwertungsquote durch werkstoffliche Verwertung sicherzustellen."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "plastic_material_recycling_target_2022",
+      "value": 70,
+      "unit": "percent",
+      "description": "Material recycling target for plastic packaging from January 1, 2022.",
+      "effective_date": "2022-01-01",
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "Dabei sind mindestens 65 Prozent und ab dem 1. Januar 2022 70 Prozent dieser Verwertungsquote durch werkstoffliche Verwertung sicherzustellen."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "minimum_overall_recycling_rate",
+      "value": 50,
+      "unit": "percent",
+      "description": "Minimum overall recycling rate for collected plastic, metal, and composite packaging waste.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 14,
+          "evidence_quote": "Die Systeme sind verpflichtet, im Jahresmittel mindestens 50 Masseprozent der im Rahmen der Sammlung der restentleerten Kunststoff-, Metall- und Verbundverpackungen nach § 14 Absatz 1 insgesamt erfassten Abfälle dem Recycling zuzuführen."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "eu_recovery_target",
+      "value": 65,
+      "unit": "percent",
+      "description": "EU-wide annual recovery target for packaging waste.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 6,
+          "evidence_quote": "Danach sind von den im Geltungsbereich dieses Gesetzes anfallenden Verpackungsabfällen jährlich mindestens 65 Masseprozent zu verwerten und mindestens 55 Masseprozent zu recyceln."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "eu_recycling_target",
+      "value": 55,
+      "unit": "percent",
+      "description": "EU-wide annual recycling target for packaging waste.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 6,
+          "evidence_quote": "Danach sind von den im Geltungsbereich dieses Gesetzes anfallenden Verpackungsabfällen jährlich mindestens 65 Masseprozent zu verwerten und mindestens 55 Masseprozent zu recyceln."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "eu_wood_recycling_target",
+      "value": 15,
+      "unit": "percent",
+      "description": "EU-wide recycling target for wood packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 6,
+          "evidence_quote": "Dabei muss das Recycling der einzelnen Verpackungsmaterialien mindestens für Holz 15, für Kunststoffe 22,5, für Metalle 50 und für Glas sowie Papier und Karton 60 Masseprozent erreichen, wobei bei Kunststoffen nur Material berücksichtigt wird, das durch Recycling wieder zu Kunststoff wird."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "eu_plastics_recycling_target",
+      "value": 22.5,
+      "unit": "percent",
+      "description": "EU-wide recycling target for plastic packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 6,
+          "evidence_quote": "Dabei muss das Recycling der einzelnen Verpackungsmaterialien mindestens für Holz 15, für Kunststoffe 22,5, für Metalle 50 und für Glas sowie Papier und Karton 60 Masseprozent erreichen, wobei bei Kunststoffen nur Material berücksichtigt wird, das durch Recycling wieder zu Kunststoff wird."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "eu_metals_recycling_target",
+      "value": 50,
+      "unit": "percent",
+      "description": "EU-wide recycling target for metal packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 6,
+          "evidence_quote": "Dabei muss das Recycling der einzelnen Verpackungsmaterialien mindestens für Holz 15, für Kunststoffe 22,5, für Metalle 50 und für Glas sowie Papier und Karton 60 Masseprozent erreichen, wobei bei Kunststoffen nur Material berücksichtigt wird, das durch Recycling wieder zu Kunststoff wird."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "eu_glass_paper_cardboard_recycling_target",
+      "value": 60,
+      "unit": "percent",
+      "description": "EU-wide recycling target for glass, paper, and cardboard packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 6,
+          "evidence_quote": "Dabei muss das Recycling der einzelnen Verpackungsmaterialien mindestens für Holz 15, für Kunststoffe 22,5, für Metalle 50 und für Glas sowie Papier und Karton 60 Masseprozent erreichen, wobei bei Kunststoffen nur Material berücksichtigt wird, das durch Recycling wieder zu Kunststoff wird."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "heavy_metal_concentration_limit",
+      "value": 100,
+      "unit": "mg/kg",
+      "description": "Cumulative concentration limit for lead, cadmium, mercury, and chromium VI in packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 8,
+          "evidence_quote": "Das Inverkehrbringen von Verpackungen oder Verpackungsbestandteilen, bei denen die Konzentration von Blei, Cadmium, Quecksilber und Chrom VI kumulativ den Wert von 100 Milligramm je Kilogramm überschreitet, ist verboten."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "other_glass_heavy_metal_concentration_limit",
+      "value": 250,
+      "unit": "mg/kg",
+      "description": "Cumulative concentration limit for other glass packaging.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 8,
+          "evidence_quote": "aus sonstigem Glas hergestellte Verpackungen, bei denen die Konzentration von Blei, Cadmium, Quecksilber und Chrom VI kumulativ den Wert von 250 Milligramm je Kilogramm nicht überschreitet und bei deren Herstellung die in der Anlage 4 festgelegten Anforderungen erfüllt werden."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "mass_flow_statement_deadline",
+      "value": "1. Juni",
+      "unit": "date",
+      "description": "Annual deadline for submitting the mass flow statement.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 15,
+          "evidence_quote": "Die Systeme haben den Mengenstromnachweis der Zentralen Stelle spätestens bis zum 1. Juni des auf den Berichtszeitraum folgenden Kalenderjahres schriftlich vorzulegen."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "annual_system_report_deadline",
+      "value": "1. Juni",
+      "unit": "date",
+      "description": "Annual deadline for systems to report on fee-setting implementation.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 17,
+          "evidence_quote": "Jedes System hat der Zentralen Stelle und dem Umweltbundesamt jährlich bis zum 1. Juni zu berichten, wie es die Vorgaben nach Absatz 1 bei der Bemessung der Beteiligungsentgelte umgesetzt hat."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "minimum_standard_publication_deadline",
+      "value": "1. September",
+      "unit": "date",
+      "description": "Annual deadline for the Central Agency to publish the minimum standard for recyclability assessment.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 17,
+          "evidence_quote": "Die Zentrale Stelle veröffentlicht im Einvernehmen mit dem Umweltbundesamt jährlich bis zum 1. September einen Mindeststandard für die Bemessung der Recyclingfähigkeit von systembeteiligungspflichtigen Verpackungen unter Berücksichtigung der einzelnen Verwertungswege und der jeweiligen Materialart."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "federal_government_fee_decision_deadline",
+      "value": "1. Januar 2022",
+      "unit": "date",
+      "description": "Deadline for the Federal Government to decide on further fee assessment requirements.",
+      "effective_date": "2022-01-01",
+      "evidence": [
+        {
+          "source": "VerpackG_policy_input_excerpt.pdf",
+          "page": 17,
+          "evidence_quote": "Die Bundesregierung entscheidet bis zum 1. Januar 2022 auf der Grundlage der Berichte nach Absatz 2 und unter Berücksichtigung der nach Absatz 3 veröffentlichten Mindeststandards über weitergehende Anforderungen an die Bemessung der Beteiligungsentgelte zur Förderung der werkstofflichen Verwertbarkeit von systembeteiligungspflichtigen Verpackungen sowie zur Förderung der Verwendung von Recyclaten und nachwachsenden Rohstoffen unter Berücksichtigung der gesamtökologischen Auswirkungen."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    }
+  ],
+  "summary": "Document-grounded initial state. Inputs: additional_compliance_burden_for_business=49825000 EUR; one_time_transition_cost_for_business=97907000 EUR; additional_administrative_compliance_cost=1167000 EUR. Fixed policy parameters: glass_recycling_target_initial=80 percent; glass_recycling_target_2022=90 percent; paper_cardboard_recycling_target_initial=85 percent; paper_cardboard_recycling_target_2022=90 percent; ferrous_metal_recycling_target_initial=80 percent; ferrous_metal_recycling_target_2022=90 percent; aluminium_recycling_target_initial=80 percent; aluminium_recycling_target_2022=90 percent; beverage_carton_recycling_target_initial=75 percent; beverage_carton_recycling_target_2022=80 percent; other_composite_recycling_target_initial=55 percent; other_composite_recycling_target_2022=70 percent; plastic_recovery_target=90 percent; plastic_material_recycling_target_initial=65 percent; plastic_material_recycling_target_2022=70 percent; minimum_overall_recycling_rate=50 percent; eu_recovery_target=65 percent; eu_recycling_target=55 percent; eu_wood_recycling_target=15 percent; eu_plastics_recycling_target=22.5 percent; eu_metals_recycling_target=50 percent; eu_glass_paper_cardboard_recycling_target=60 percent; heavy_metal_concentration_limit=100 mg/kg; other_glass_heavy_metal_concentration_limit=250 mg/kg; mass_flow_statement_deadline=1. Juni date; annual_system_report_deadline=1. Juni date; minimum_standard_publication_deadline=1. September date; federal_government_fee_decision_deadline=1. Januar 2022 date.",
+  "source_documents": [
+    "VerpackG_policy_input_excerpt.pdf"
+  ],
+  "excluded_candidates": [
+    {
+      "name": "increased_recycling_rates",
+      "reason": "Expected outcome, not an implementation input."
+    },
+    {
+      "name": "reduced_packaging_waste_to_landfill",
+      "reason": "Expected outcome, not an implementation input."
+    },
+    {
+      "name": "increased_share_of_reusable_beverage_packaging",
+      "reason": "Expected outcome, not an implementation input."
+    },
+    {
+      "name": "improved_compliance_and_transparency",
+      "reason": "Expected outcome, not an implementation input."
+    },
+    {
+      "name": "promotion_of_recyclable_packaging_design",
+      "reason": "Expected outcome, not an implementation input."
+    },
+    {
+      "name": "consumer_information_measures",
+      "reason": "Ongoing activity, not a pre-implementation input."
+    },
+    {
+      "name": "joint_body_coordination",
+      "reason": "Ongoing activity, not a pre-implementation input."
+    },
+    {
+      "name": "public_procurement_tendering",
+      "reason": "Ongoing activity, not a pre-implementation input."
+    },
+    {
+      "name": "recycling_targets",
+      "reason": "Policy parameters, not implementation inputs."
+    },
+    {
+      "name": "registration_requirement",
+      "reason": "Policy parameter, not an implementation input."
+    },
+    {
+      "name": "system_participation_obligation",
+      "reason": "Policy parameter, not an implementation input."
+    },
+    {
+      "name": "participation_fees",
+      "reason": "Ongoing financial mechanism, not a pre-implementation input."
+    },
+    {
+      "name": "producer_registration_count",
+      "reason": "Not explicitly stated in the document."
+    },
+    {
+      "name": "dual_system_count",
+      "reason": "Not explicitly stated in the document."
+    },
+    {
+      "name": "municipality_count",
+      "reason": "Not explicitly stated in the document."
+    },
+    {
+      "name": "central_agency_staff_count",
+      "reason": "Not explicitly stated in the document."
+    },
+    {
+      "name": "one_time_transition_cost_for_administration",
+      "reason": "not selected: overlaps the other:one_time_transition_cost_for_administration mechanism family or falls below the 3-field limit"
+    }
+  ],
+  "unresolved_candidates": [
+    {
+      "name": "information_obligation_burden",
+      "reason": "The document states 689,000 EUR is part of the total compliance burden, but it is not clear if this is a separate field or a subset of the total."
+    },
+    {
+      "name": "glass_exemption_threshold",
+      "reason": "evidence quote not found verbatim after whitespace normalization: Von der Pflicht nach Absatz 1 Satz 1 ist befreit, wer systembeteiligungspflichtige Verpackungen der Materialarten Glas von weniger als 80.000 Kilogramm, Papier, Pappe und Karton von weniger als 50.000 Kilogramm sowie der übrigen in § 16 Absatz 2 genannten Materialarten von weniger als 30.000 Kilogramm im vorangegangenen Kalenderjahr erstmals in Verkehr gebracht hat."
+    },
+    {
+      "name": "paper_cardboard_exemption_threshold",
+      "reason": "evidence quote not found verbatim after whitespace normalization: Von der Pflicht nach Absatz 1 Satz 1 ist befreit, wer systembeteiligungspflichtige Verpackungen der Materialarten Glas von weniger als 80.000 Kilogramm, Papier, Pappe und Karton von weniger als 50.000 Kilogramm sowie der übrigen in § 16 Absatz 2 genannten Materialarten von weniger als 30.000 Kilogramm im vorangegangenen Kalenderjahr erstmals in Verkehr gebracht hat."
+    },
+    {
+      "name": "completeness_declaration_deadline",
+      "reason": "policy parameter rejected: evidence quote not found verbatim after whitespace normalization: Hersteller nach § 7 Absatz 1 Satz 1 sind verpflichtet, jährlich bis zum 15. Mai eine Erklärung über sämtliche von ihnen im vorangegangenen Kalenderjahr erstmals in Verkehr gebrachten Verkaufs- und Umverpackungen nach den Vorgaben des Absatzes 3 zu hinterlegen (Vollständigkeitserklärung)."
+    },
+    {
+      "name": "joint_body_participation_deadline",
+      "reason": "policy parameter rejected: evidence quote not found verbatim after whitespace normalization: Die Genehmigung nach § 18 wird unwirksam, wenn ein System sich nicht innerhalb von drei Monaten nach Erteilung der Genehmigung an der Gemeinsamen Stelle beteiligt.; value 3 is not explicitly supported by quote: Die Genehmigung nach § 18 wird unwirksam, wenn ein System sich nicht innerhalb von drei Monaten nach Erteilung der Genehmigung an der Gemeinsamen Stelle beteiligt."
+    },
+    {
+      "name": "system_auditor_term",
+      "reason": "policy parameter rejected: value 5 is not explicitly supported by quote: Die Systeme benennen einvernehmlich für einen Zeitraum von höchstens fünf Jahren vier Systemprüfer."
+    },
+    {
+      "name": "evaluation_period",
+      "reason": "policy parameter rejected: value 3 is not explicitly supported by quote: Die Bundesregierung überprüft innerhalb von drei Jahren nach dem 1. Januar 2022 die Verwertungsergebnisse mit dem Ziel einer weiteren Erhöhung der materialspezifischen Verwertungsquoten in Absatz 2 Satz 1 und 2 und der Recyclingquote in Absatz 4 Satz 1."
+    }
+  ],
+  "extraction_metadata": {
+    "model": "deepseek-chat",
+    "max_fields": 3,
+    "candidate_limit": 6,
+    "candidate_field_count": 6,
+    "validated_candidate_count": 4,
+    "validated_field_count": 3,
+    "deduplicated_field_count": 1,
+    "rejected_field_count": 2,
+    "candidate_parameter_count": 32,
+    "validated_parameter_count": 28,
+    "policy_graph": "outputs/ger/chi_vg/stage1/mechanism_kg_v1/policy_graph.json"
+  }
+}

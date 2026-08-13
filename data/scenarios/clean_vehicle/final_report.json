@@ -1,0 +1,38 @@
+{
+  "simulation_target": "Section 30D implementation outcomes: Tax Year 2023 return count and average credit per return, and the January 1 through October 1, 2024 point-of-sale credit transfer rate.",
+  "aggregated_final": {},
+  "implementation_gap_report": [
+    {
+      "phase": "Inputs",
+      "variable": "irs_administrative_budget_usd",
+      "forward_agg": 70000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 70000000.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "dealer_registration_count",
+      "forward_agg": 9600.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 9600.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "manufacturer_certification_count",
+      "forward_agg": 39.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 39.0
+    }
+  ],
+  "narrative_synthesis": "",
+  "phase_stakeholder_summaries": {}
+}

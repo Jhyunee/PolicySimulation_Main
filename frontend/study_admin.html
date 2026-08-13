@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study Variant Manager</title>
+<link rel="stylesheet" href="styles.css?v=domain-variants-20260811a" />
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="study-admin-page">
+<header class="study-admin-header">
+  <a href="study.html"><i data-lucide="waypoints"></i><span>POLICY EXPLORATION STUDY</span></a>
+  <div><span>Administration</span><b>Variant manager</b></div>
+  <nav class="study-admin-nav"><a href="study_results.html">Results</a><button id="refreshVariants" type="button" title="Refresh variant status"><i data-lucide="refresh-cw"></i></button></nav>
+</header>
+<main class="study-admin-shell">
+  <section class="study-admin-intro">
+    <div><span>Domain study configuration</span><h1>Study variants</h1><p>Manage five domains across Baseline and Framework interfaces with both policy orders.</p></div>
+    <dl id="variantSummary"><div><dt>Domains</dt><dd>5</dd></div><div><dt>Variants</dt><dd>20</dd></div><div><dt>Ready</dt><dd id="readyVariantCount">–</dd></div></dl>
+  </section>
+  <section class="study-admin-legend" aria-label="Variant legend">
+    <span><i class="ready"></i> Ready to launch</span><span><i class="incomplete"></i> Policy artifact incomplete</span>
+  </section>
+  <div id="variantDomains" class="variant-domains"><div class="dashboard-loading">Loading study variants...</div></div>
+</main>
+<script src="study_admin.js?v=domain-variants-20260811c"></script>
+</body>
+</html>

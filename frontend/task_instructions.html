@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study Task Instructions</title>
+<script>
+if(location.protocol === "file:"){
+  const params = new URLSearchParams(location.search);
+  if(!params.has("participant") && !params.has("variant")){
+    params.set("previewStudy", "1");
+    params.set("variant", "public_health--framework--ab");
+  }
+  location.replace(`http://127.0.0.1:8001/task_instructions.html?${params.toString()}${location.hash}`);
+}
+</script>
+<link rel="stylesheet" href="styles.css?v=task-instructions-20260813g" />
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="task-instructions-page">
+<main class="task-instructions-shell">
+  <section class="task-instructions-hero">
+    <span>Before the policy cases</span>
+    <h1 id="taskTitle">Your policy review task</h1>
+    <p>Imagine that you are conducting an early-stage review of an unfamiliar policy. Use the interface to examine how the policy may unfold and explore the issues and stakeholder perspectives that you consider relevant.</p>
+  </section>
+
+  <section class="task-instructions-layout">
+    <article class="task-instructions-card task-primary-card">
+      <header>
+        <span id="taskModeLabel">How to complete each case</span>
+        <h2 id="taskModeTitle">Review the policy analysis</h2>
+      </header>
+      <ol id="taskSteps" class="task-instructions-list"></ol>
+    </article>
+
+    <aside class="task-instructions-card task-feature-card">
+      <span>Available after reaching Impact</span>
+      <h2>Final Report and stakeholder conversation</h2>
+      <p id="taskFeatureCopy"></p>
+      <div class="task-feature-flow" aria-label="Interaction sequence">
+        <b><i data-lucide="route"></i> Complete pathway</b>
+        <i data-lucide="arrow-right"></i>
+        <b><i data-lucide="file-text"></i> Final Report</b>
+        <i data-lucide="arrow-right"></i>
+        <b><i data-lucide="messages-square"></i> Persona chat</b>
+      </div>
+    </aside>
+    <div class="task-chat-notice">
+      <i data-lucide="info"></i>
+      <p><strong>Chat use</strong>You may ask up to five questions in each policy case. Your questions and the persona responses will be recorded for research analysis. Please use the chat only for this study task.</p>
+    </div>
+  </section>
+
+  <section class="task-instructions-footer">
+    <div>
+      <span>About the information shown</span>
+      <p>The interface presents policy-analysis results generated through an AI-based simulation. Please review the information as you normally would when evaluating an unfamiliar policy-analysis tool.</p>
+    </div>
+    <button id="continueTask" type="button">Continue to background questions <i data-lucide="arrow-right"></i></button>
+  </section>
+  <p id="taskStatus" class="task-instructions-status" aria-live="polite"></p>
+</main>
+<script src="study_progress.js?v=task-instructions-20260813a"></script>
+<script src="study_logger.js?v=task-instructions-20260813a"></script>
+<script src="task_instructions.js?v=task-instructions-20260813b"></script>
+</body>
+</html>

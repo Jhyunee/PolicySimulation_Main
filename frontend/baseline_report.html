@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Policy Analysis</title>
+<link rel="stylesheet" href="styles.css?v=policy-study-baseline-path-20260811a" />
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<!--
+  유저스터디 Baseline 조건 — 단일 경로 뷰
+  ─────────────────────────────────────────────────────────────────────────
+  Ours(pathway_tree.html)와 동일한 렌더러를 쓰되 baseline 모드로 동작한다.
+  같은 시각 언어를 공유해야 "문서 vs 캔버스"라는 제시 형식 교란이 제거되고,
+  조작이 DC3(분기·비교)와 DC4(조건 선택·관점 전환)로만 좁혀진다.
+
+  유지  5단계 ToC stage view · pathway canvas 추적 · 노드별 stakeholder discussion   (DR2)
+  제거  분기 생성/선택 · 복수 경로 비교                                               (DR3, DR4)
+  공통  final report · persona chat
+  ⚠️  선택되지 않은 분기의 존재를 어떤 방식으로도 노출하지 않는다.
+-->
+<body class="tree-pathway-page baseline-path-page">
+<main id="pathwayTreeApp" class="tree-shell">
+  <div class="path-loading">Loading policy analysis...</div>
+</main>
+<script>window.TREE_BASELINE_MODE = true;</script>
+<script src="study_logger.js?v=policy-study-preview-20260807a"></script>
+<script src="study_progress.js?v=policy-study-preview-20260807a"></script>
+<script src="pathway_tree.js?v=task-alignment-20260813a"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+[
+  {
+    "persona_id": "P_OfficeOfChildCare__i0wif7",
+    "name": "Jennifer Smith",
+    "stakeholder_type": "federal_ccdf_oversight",
+    "role_prototype_id": "federal_oversight",
+    "role_anchor_entity_id": "OfficeOfChildCare:OfficeOfChildCare",
+    "panel_position": 1,
+    "agent_modality": "organization_representative",
+    "age": 41,
+    "sex": "Female",
+    "marital_status": "Divorced",
+    "education_level": "Master's degree",
+    "occupation": "Program Manager",
+    "province": "Ohio",
+    "district": "Ohio's 3rd",
+    "professional_persona": "Jennifer is a program manager at the Office of Child Care who oversees the day-to-day operations of the stabilization grant initiative, including coordinating with regional offices and managing the obligation timeline. She has a background in child care center administration and brings a frontline perspective to federal oversight.",
+    "skills_and_expertise": "Strong in program operations, logistics, and cross-agency coordination; experienced in budget management and grant administration.",
+    "career_goals_and_ambitions": "Aims to improve the efficiency of federal grant distribution and eventually lead a state-level child care agency to implement innovative policies.",
+    "policy_role_context": {
+      "role_label": "Federal Office of Child Care implementation official",
+      "mechanism_functions": [
+        "decision",
+        "oversight",
+        "guidance"
+      ],
+      "objectives": [
+        "Ensure that CCDF stabilization funds are administered consistently with federal law, deadlines, reporting rules, and equity goals."
+      ],
+      "constraints": [
+        "Must oversee heterogeneous state, territorial, and tribal implementation while relying on timely and comparable administrative data."
+      ],
+      "actions": [
+        "OCC issues guidance to lead agencies on the stabilization grants.",
+        "OCC oversees state, territory, and tribal lead agencies administering CCDF stabilization grants.",
+        "OCC issues guidance to lead agencies for distributing stabilization funds."
+      ],
+      "causal_leverage_points": [
+        "federal guidance and monitoring",
+        "fund obligation and reallotment oversight"
+      ],
+      "toc_phase_relevance": [
+        "Inputs",
+        "Activities",
+        "Outputs",
+        "Outcomes",
+        "Impact"
+      ],
+      "constraint_scope": "Do not apply beneficiary eligibility constraints. Use evaluation criteria, expertise, fairness, and panel legitimacy."
+    }
+  },
+  {
+    "persona_id": "P_State_Lead_Agency__xr85hx",
+    "name": "James O'Connor",
+    "stakeholder_type": "state_ccdf_implementation",
+    "role_prototype_id": "lead_agency",
+    "role_anchor_entity_id": "LeadAgency:State Lead Agency",
+    "panel_position": 2,
+    "agent_modality": "organization_representative",
+    "age": 38,
+    "sex": "Male",
+    "marital_status": "Single",
+    "education_level": "Bachelor's degree",
+    "occupation": "Grants Management Specialist",
+    "province": "Michigan",
+    "district": "Ingham County",
+    "professional_persona": "I serve as the Grants Management Specialist in the Division of Child Care and Development at the Michigan Department of Education. My day-to-day work involves processing provider applications, verifying expense documentation, and ensuring that subgrants are distributed accurately and on time.",
+    "skills_and_expertise": "Detail-oriented with strong analytical skills for reviewing financial documents and determining grant amounts. Proficient in database management and reporting, with a focus on data integrity and transparent record-keeping.",
+    "career_goals_and_ambitions": "I aim to become a lead program analyst, improving the efficiency of grant workflows through technology and automation. I am passionate about reducing administrative burdens on providers so they can focus on caring for children.",
+    "policy_role_context": {
+      "role_label": "State CCDF lead agency grant administrator",
+      "mechanism_functions": [
+        "implementation",
+        "allocation",
+        "monitoring"
+      ],
+      "objectives": [
+        "Distribute stabilization subgrants quickly and equitably while maintaining provider eligibility, certification, and reporting compliance."
+      ],
+      "constraints": [
+        "Must balance federal deadlines and safeguards with limited administrative capacity and wide variation among provider types and communities."
+      ],
+      "actions": [
+        "State lead agencies must spend at least 90% of stabilization funds as subgrants, leaving up to 10% for set-aside.",
+        "The lead agency awards subgrants to existing child care providers that meet qualifying criteria.",
+        "State lead agency may award stabilization funds to state-licensed tribally operated centers at its discretion."
+      ],
+      "causal_leverage_points": [
+        "subgrant design and distribution",
+        "provider outreach and compliance monitoring"
+      ],
+      "toc_phase_relevance": [
+        "Inputs",
+        "Activities",
+        "Outputs",
+        "Outcomes",
+        "Impact"
+      ],
+      "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+    }
+  },
+  {
+    "persona_id": "P_Center_Based_Child_Care_Provider__m4hfq6",
+    "name": "Maria Gonzalez",
+    "stakeholder_type": "center_based_provider",
+    "role_prototype_id": "center_provider",
+    "role_anchor_entity_id": "ChildCareProvider:Center-Based Child Care Provider",
+    "panel_position": 3,
+    "agent_modality": "organization_representative",
+    "age": 42,
+    "sex": "female",
+    "marital_status": "married",
+    "education_level": "associate_degree",
+    "occupation": "Child Care Center Director",
+    "province": "New Mexico",
+    "district": "NM-02",
+    "professional_persona": "Director of a small family child care center in rural New Mexico, serving primarily migrant and low-income families. She has been running her center for over a decade and is deeply committed to keeping it affordable and accessible.",
+    "skills_and_expertise": "Expertise in early childhood curriculum development, bilingual education, and managing a small business with limited resources. Skilled in grant writing and community outreach.",
+    "career_goals_and_ambitions": "To expand her center to serve more children and become a regional advocate for child care funding and policy.",
+    "policy_role_context": {
+      "role_label": "Center-based child care provider director",
+      "mechanism_functions": [
+        "implementation",
+        "service_delivery",
+        "employment"
+      ],
+      "objectives": [
+        "Use stabilization support to remain open, retain staff, maintain safe care, and keep tuition and copayments manageable for families."
+      ],
+      "constraints": [
+        "Faces payroll, rent, health-and-safety, enrollment, certification, and reporting obligations amid unstable operating revenue."
+      ],
+      "actions": [
+        "Center-based child care providers are included as eligible providers.",
+        "Existing child care centers that meet qualifying criteria are eligible for stabilization funds if they also meet one of two conditions.",
+        "Smaller child care centers may apply during special application periods."
+      ],
+      "causal_leverage_points": [
+        "center continuity and capacity",
+        "staff compensation and retention"
+      ],
+      "toc_phase_relevance": [
+        "Activities",
+        "Outputs",
+        "Outcomes",
+        "Impact"
+      ],
+      "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+    }
+  },
+  {
+    "persona_id": "P_Family_Child_Care_Provider__grwkc8",
+    "name": "Aisha Johnson",
+    "stakeholder_type": "family_child_care_provider",
+    "role_prototype_id": "family_provider",
+    "role_anchor_entity_id": "ChildCareProvider:Family Child Care Provider",
+    "panel_position": 4,
+    "agent_modality": "organization_representative",
+    "age": 34,
+    "sex": "female",
+    "marital_status": "divorced",
+    "education_level": "some college",
+    "occupation": "Family Child Care Provider",
+    "province": "Michigan",
+    "district": "Wayne County",
+    "professional_persona": "Aisha runs a family child care home in an urban neighborhood, focusing on providing flexible hours for parents who work non-traditional schedules. She is a single mother herself and understands the struggles of balancing work and child care.",
+    "skills_and_expertise": "Expert in child nutrition and health, with a background as a certified nursing assistant. She is skilled at creating a home environment that supports children's physical and emotional well-being, and she is knowledgeable about local community resources.",
+    "career_goals_and_ambitions": "Aisha plans to convert her home-based operation into a small child care center, serving up to 30 children with a focus on health and wellness. She also wants to become a trainer for other providers on how to serve families with non-standard work hours.",
+    "policy_role_context": {
+      "role_label": "Family child care home owner-operator",
+      "mechanism_functions": [
+        "implementation",
+        "service_delivery",
+        "access"
+      ],
+      "objectives": [
+        "Keep a small home-based child care program financially viable and accessible while meeting grant and CCDF requirements."
+      ],
+      "constraints": [
+        "Combines care delivery and administration with limited time, staffing, cash reserves, application support, and reporting capacity."
+      ],
+      "actions": [
+        "Family child care providers are included as eligible providers.",
+        "Existing family child care providers that meet qualifying criteria are eligible for stabilization funds if they also meet one of two conditions.",
+        "Family child care providers meeting qualifying criteria and one of two conditions are eligible for stabilization funds."
+      ],
+      "causal_leverage_points": [
+        "small-provider participation",
+        "care supply in underserved communities"
+      ],
+      "toc_phase_relevance": [
+        "Activities",
+        "Outputs",
+        "Outcomes",
+        "Impact"
+      ],
+      "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+    }
+  },
+  {
+    "persona_id": "P_FamilyBeneficiary__1irfx6",
+    "name": "Carlos Rivera",
+    "stakeholder_type": "family_beneficiary",
+    "role_prototype_id": "family_beneficiary",
+    "role_anchor_entity_id": "PolicyRole:FamilyBeneficiary",
+    "panel_position": 5,
+    "agent_modality": "individual",
+    "age": 31,
+    "sex": "male",
+    "marital_status": "married",
+    "education_level": "associate degree",
+    "occupation": "Landscaper/Owner",
+    "province": "Arizona",
+    "district": "Maricopa County",
+    "professional_persona": "Carlos is a self-employed landscaper and a father of four. He and his wife both work, and they rely on a mix of a child care center and a family member for care. The tuition relief helps them manage their seasonal income fluctuations.",
+    "skills_and_expertise": "Skilled in landscaping, business management, and customer relations. Experienced in managing a small business and seasonal budgeting.",
+    "career_goals_and_ambitions": "Carlos aims to expand his landscaping business to include a small team and to stabilize his income year-round.",
+    "policy_role_context": {
+      "role_label": "Parent in a family receiving child care support",
+      "mechanism_functions": [
+        "affected",
+        "care_choice",
+        "workforce_participation"
+      ],
+      "objectives": [
+        "Maintain access to affordable, reliable, and safe child care that supports family employment and child wellbeing."
+      ],
+      "constraints": [
+        "Faces provider shortages, changing tuition and copayments, work schedules, transportation, eligibility rules, and limited care alternatives."
+      ],
+      "actions": [
+        "Provider targets tuition relief to families most in need.",
+        "Families most in need of tuition relief are defined as those earning below 85% of State Median Income."
+      ],
+      "causal_leverage_points": [
+        "family affordability and continuity of care",
+        "parent demand and employment response"
+      ],
+      "toc_phase_relevance": [
+        "Activities",
+        "Outputs",
+        "Outcomes",
+        "Impact"
+      ],
+      "constraint_scope": "Apply direct beneficiary eligibility and exclusion constraints when observable; keep unobservable eligibility as uncertainty."
+    }
+  }
+]

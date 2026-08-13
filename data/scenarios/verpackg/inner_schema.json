@@ -1,0 +1,32 @@
+{
+  "phases": [
+    {
+      "phase": "Inputs",
+      "prediction_fields": [
+        {
+          "name": "additional_compliance_burden_for_business",
+          "unit": "EUR",
+          "type": "int",
+          "description": "Additional compliance burden for businesses compared to the previous Packaging Ordinance."
+        },
+        {
+          "name": "one_time_transition_cost_for_business",
+          "unit": "EUR",
+          "type": "int",
+          "description": "One-time transition cost for businesses due to the new Packaging Act."
+        },
+        {
+          "name": "additional_administrative_compliance_cost",
+          "unit": "EUR",
+          "type": "int",
+          "description": "Additional recurring administrative compliance cost for the administration due to new and amended requirements."
+        }
+      ],
+      "discussion_points": [
+        "How does the documented input 'additional_compliance_burden_for_business' condition downstream implementation activities? Quantifies the additional compliance cost imposed on businesses, directly affecting their financial resources and willingness to comply.",
+        "How does the documented input 'one_time_transition_cost_for_business' condition downstream implementation activities? Represents a one-time financial burden for businesses to adapt to the new regulatory requirements, influencing their initial implementation capacity.",
+        "How does the documented input 'additional_administrative_compliance_cost' condition downstream implementation activities? Represents the ongoing administrative burden for the implementing authority, affecting its operational capacity and resource allocation."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1973 @@
+{
+  "simulation_target": "2021 SPM child poverty rate and relative reduction from the 2020 baseline, low-income household food insufficiency reduction, and 2021 SPM poverty rates for Black and Hispanic children",
+  "inner_schema": {
+    "phases": [
+      {
+        "phase": "Inputs",
+        "prediction_fields": [
+          {
+            "name": "irs_administrative_budget_usd",
+            "unit": "dollars",
+            "type": "int",
+            "description": "Total appropriated budget for IRS administration of the expanded Child Tax Credit, including advance payment administration, as specified in the policy."
+          },
+          {
+            "name": "irs_staff_allocated_ftes",
+            "unit": "full-time equivalent",
+            "type": "int",
+            "description": "Number of full-time equivalent IRS staff allocated to implement the expanded Child Tax Credit, including processing, portal maintenance, and taxpayer support."
+          },
+          {
+            "name": "non_filer_outreach_budget_usd",
+            "unit": "dollars",
+            "type": "int",
+            "description": "Portion of IRS administrative funding explicitly dedicated to outreach and sign-up assistance for non-filer households."
+          }
+        ],
+        "discussion_points": [
+          "How does the total IRS administrative budget constrain the scale and quality of outreach to non-filer households?",
+          "Does the IRS staff allocation reflect sufficient capacity to handle taxpayer inquiries and non-filer registrations?",
+          "How does the allocated IRS administrative budget affect the speed and accuracy of payment disbursement and portal operations?"
+        ]
+      },
+      {
+        "phase": "Activities",
+        "prediction_fields": [
+          {
+            "name": "advance_payment_disbursements_count",
+            "unit": "number of payments",
+            "type": "int",
+            "description": "Total number of advance monthly Child Tax Credit payments disbursed by the IRS from July to December 2021."
+          },
+          {
+            "name": "portal_account_updates_processed",
+            "unit": "updates",
+            "type": "int",
+            "description": "Number of successful updates made by taxpayers through the Child Tax Credit Update Portal, including changes to bank account, address, or unenrollment requests."
+          },
+          {
+            "name": "non_filer_sign_up_tool_submissions_processed",
+            "unit": "submissions",
+            "type": "int",
+            "description": "Number of non-filer registrations successfully processed through the Non-Filer Sign-up Tool."
+          }
+        ],
+        "discussion_points": [
+          "How does the number of portal updates affect the accuracy of payment amounts and the risk of overpayment or reconciliation issues?",
+          "How does the volume of advance payments disbursed relate to the number of eligible families reached, and what are the implications for material hardship or administrative burden?",
+          "What barriers prevent non-filer households from completing registration via the sign-up tool, and how can outreach or the tool address them?"
+        ]
+      },
+      {
+        "phase": "Outputs",
+        "prediction_fields": [
+          {
+            "name": "average_monthly_payment_per_child_dollars",
+            "unit": "dollars",
+            "type": "float",
+            "description": "Average monthly advance payment amount per qualifying child, calculated across all disbursed payments."
+          },
+          {
+            "name": "eligible_families_receiving_at_least_one_payment",
+            "unit": "families",
+            "type": "int",
+            "description": "Number of eligible families that received at least one advance payment during the July–December 2021 period."
+          },
+          {
+            "name": "non_filer_households_receiving_payments",
+            "unit": "households",
+            "type": "int",
+            "description": "Number of non-filer households that successfully registered and received at least one advance payment."
+          }
+        ],
+        "discussion_points": [
+          "What share of eligible families did not receive advance payments, and what factors (e.g., prior tax filing status, portal errors, address changes) caused interruptions?",
+          "How does the average monthly payment per child compare to the maximum possible amounts ($300 or $250 per month), and what explains any shortfall (e.g., phaseouts, partial-year effects)?",
+          "What share of non-filer households are reached, and what implementation challenges (e.g., registration barriers, geography) limit reach?"
+        ]
+      },
+      {
+        "phase": "Outcomes",
+        "prediction_fields": [
+          {
+            "name": "spm_child_poverty_rate_2021_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "Post-policy 2021 child poverty rate under the Supplemental Poverty Measure; the observed pre-policy 2020 reference rate is 9.7%"
+          },
+          {
+            "name": "spm_child_poverty_relative_reduction_2020_2021_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "Relative percentage reduction in the SPM child poverty rate from the 2020 reference rate of 9.7% to the simulated 2021 post-policy rate"
+          },
+          {
+            "name": "low_income_food_insufficiency_relative_reduction_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "Relative percentage reduction in food insufficiency among low-income households following advance Child Tax Credit payments"
+          },
+          {
+            "name": "spm_black_child_poverty_rate_2021_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "Post-policy 2021 SPM child poverty rate for Black children; the observed pre-policy 2020 reference rate is 16.9%"
+          },
+          {
+            "name": "spm_hispanic_child_poverty_rate_2021_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "Post-policy 2021 SPM child poverty rate for Hispanic children; the observed pre-policy 2020 reference rate is 14.7%"
+          }
+        ],
+        "discussion_points": [
+          "What post-policy SPM child poverty rate follows from the reach, adequacy, and timing of advance payments?",
+          "How large is the relative reduction from the 2020 SPM baseline, and how much does food insufficiency decline among low-income households?",
+          "Do implementation reach and access barriers produce different post-policy poverty outcomes for Black and Hispanic children?"
+        ]
+      },
+      {
+        "phase": "Impact",
+        "prediction_fields": [
+          {
+            "name": "intergenerational_income_mobility_index",
+            "unit": "index",
+            "type": "float",
+            "description": "A simulated index measuring the expected change in intergenerational income mobility for children in families that received the full 2021 expansion, relative to a counterfactual without the expansion."
+          },
+          {
+            "name": "child_health_outcome_composite_score",
+            "unit": "standardized score",
+            "type": "float",
+            "description": "A composite standardized score reflecting changes in child health outcomes (e.g., low birth weight, hospitalization rates, mental health indicators) attributable to the 2021 expansion, measured at the population level over a 5-year follow-up period."
+          },
+          {
+            "name": "long_term_healthcare_cost_savings_usd",
+            "unit": "USD",
+            "type": "int",
+            "description": "Estimated cumulative savings in healthcare costs over 10 years due to improved child health outcomes from reduced poverty and food insufficiency."
+          }
+        ],
+        "discussion_points": [
+          "What mechanisms link short-term income support from the 2021 expansion to long-term improvements in child outcomes such as educational attainment, earnings, and intergenerational mobility?",
+          "How do reductions in childhood poverty and improved nutrition from the 2021 expansion translate into improved health outcomes and lower healthcare costs over the long term?",
+          "To what extent does the reduction in child poverty from the 2021 expansion persist beyond the policy year, and what factors influence its sustainability?"
+        ]
+      }
+    ]
+  },
+  "constructed_personas": [
+    {
+      "persona_id": "P_InternalRevenueService__dzkerq",
+      "name": "Maria Gonzalez",
+      "stakeholder_type": "irs_administrator",
+      "role_prototype_id": "irs_administrator",
+      "role_anchor_entity_id": "InternalRevenueService:InternalRevenueService",
+      "panel_position": 1,
+      "agent_modality": "organization_representative",
+      "age": 42,
+      "sex": "female",
+      "marital_status": "married",
+      "education_level": "master",
+      "occupation": "Senior Tax Compliance Officer",
+      "province": "Texas",
+      "district": "TX-20",
+      "professional_persona": "Senior Tax Compliance Officer at the IRS with 12 years of experience in administering refundable credits. She leads the team developing the Non-Filer Sign-Up Tool and oversees outreach to low-income families.",
+      "skills_and_expertise": "Expert in tax law interpretation and IT system requirements for benefit delivery. Skilled in stakeholder coordination and multilingual community engagement.",
+      "career_goals_and_ambitions": "Aims to become Director of Taxpayer Services and expand IRS digital tools to reduce filing barriers for underserved populations.",
+      "policy_role_context": {
+        "role_label": "IRS Child Tax Credit implementation official",
+        "mechanism_functions": [
+          "decision",
+          "implementation",
+          "oversight"
+        ],
+        "objectives": [
+          "Administer advance Child Tax Credit eligibility, payment calculations, taxpayer updates, and reconciliation accurately."
+        ],
+        "constraints": [
+          "Must operate within statutory authority, administrative capacity, data quality, identity-verification, and notice requirements."
+        ],
+        "actions": [
+          "IRS implements the advance payment program under new section 7527A.",
+          "IRS evaluates taxpayer eligibility based on return data.",
+          "IRS uses portal information to adjust payment amounts."
+        ],
+        "causal_leverage_points": [
+          "eligibility and payment calculation",
+          "portal and reconciliation administration"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs",
+          "Outcomes"
+        ],
+        "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+      }
+    },
+    {
+      "persona_id": "P_Bureau_of_the_Fiscal_Service__4lyl30",
+      "name": "Marlene K. Ashford",
+      "stakeholder_type": "payment_operator",
+      "role_prototype_id": "payment_operator",
+      "role_anchor_entity_id": "TreasuryDepartment:Bureau of the Fiscal Service",
+      "panel_position": 2,
+      "agent_modality": "organization_representative",
+      "age": 48,
+      "sex": "Female",
+      "marital_status": "Married",
+      "education_level": "Master's Degree",
+      "occupation": "Deputy Assistant Secretary for Fiscal Operations",
+      "province": "District of Columbia",
+      "district": "District of Columbia",
+      "professional_persona": "Marlene is a Deputy Assistant Secretary for Fiscal Operations and Policy at the Treasury Department, overseeing the disbursement of funds for the Child Tax Credit expansion. She has spent the last decade managing large-scale federal assistance programs, ensuring compliance with appropriations law and Treasury oversight.",
+      "skills_and_expertise": "Expert in federal budget execution, grant management, and interagency coordination; skilled in designing fiscal controls for high-volume payment programs.",
+      "career_goals_and_ambitions": "She aims to streamline Treasury's fiscal service delivery for social programs and eventually lead the Office of Management and Budget's financial management division.",
+      "policy_role_context": {
+        "role_label": "Federal payment operations representative",
+        "mechanism_functions": [
+          "implementation",
+          "delivery"
+        ],
+        "objectives": [
+          "Execute advance payment batches reliably and ensure funds reach eligible households on schedule."
+        ],
+        "constraints": [
+          "Must translate IRS payment instructions into high-volume disbursements under operational, timing, and data constraints."
+        ],
+        "actions": [
+          "Bureau of the Fiscal Service receives funds to carry out the advance payment program.",
+          "Bureau of the Fiscal Service carries out fiscal services for the advance payment program.",
+          "Treasury appropriates $16,200,000 to Bureau of the Fiscal Service for carrying out the advance payment section."
+        ],
+        "causal_leverage_points": [
+          "payment batch execution",
+          "delivery errors and delays"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs"
+        ],
+        "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+      }
+    },
+    {
+      "persona_id": "P_Households_Automatically_Receiving_Advance_Payments__8a1bi4",
+      "name": "James Thompson",
+      "stakeholder_type": "recipient_parent",
+      "role_prototype_id": "recipient_parent",
+      "role_anchor_entity_id": "TaxpayerWithQualifyingChild:Households Automatically Receiving Advance Payments",
+      "panel_position": 3,
+      "agent_modality": "individual",
+      "age": 38,
+      "sex": "Male",
+      "marital_status": "Married",
+      "education_level": "Associate degree",
+      "occupation": "Electrician",
+      "province": "Ohio",
+      "district": "Ohio's 12th congressional district",
+      "professional_persona": "James is a married father of three working as an electrician in suburban Ohio. He and his wife both work full-time, and the Child Tax Credit helps them pay for after-school programs and summer camps.",
+      "skills_and_expertise": "Licensed electrician with expertise in residential and commercial wiring, and skilled in financial planning for his family.",
+      "career_goals_and_ambitions": "James aims to start his own electrical contracting business within five years to build generational wealth for his children.",
+      "policy_role_context": {
+        "role_label": "Parent automatically receiving advance Child Tax Credit payments",
+        "mechanism_functions": [
+          "affected",
+          "decision"
+        ],
+        "objectives": [
+          "Receive the correct advance credit on time and use the added income to meet household and child needs."
+        ],
+        "constraints": [
+          "Must manage household changes, payment accuracy, and possible year-end reconciliation with limited control over program administration."
+        ],
+        "actions": [
+          "Most eligible families automatically receive monthly Child Tax Credit payments.",
+          "Eligible families automatically receive monthly advance Child Tax Credit payments.",
+          "Most families in the U.S. automatically receive advance monthly Child Tax Credit payments."
+        ],
+        "causal_leverage_points": [
+          "automatic receipt and payment adequacy",
+          "household spending and material hardship"
+        ],
+        "toc_phase_relevance": [
+          "Activities",
+          "Outputs",
+          "Outcomes",
+          "Impact"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    },
+    {
+      "persona_id": "P_NonFilerHousehold__lt5lpy",
+      "name": "Linda Chen",
+      "stakeholder_type": "nonfiler_parent",
+      "role_prototype_id": "nonfiler_parent",
+      "role_anchor_entity_id": "NonFilerHousehold:NonFilerHousehold",
+      "panel_position": 4,
+      "agent_modality": "individual",
+      "age": 38,
+      "sex": "Female",
+      "marital_status": "Married",
+      "education_level": "High school diploma",
+      "occupation": "Restaurant server",
+      "province": "California",
+      "district": "CA-34",
+      "professional_persona": "Linda is a recent immigrant and works part-time as a restaurant server while caring for her two school-age children. She has never filed a U.S. tax return and relies on community organizations for support.",
+      "skills_and_expertise": "She is bilingual in Mandarin and English and is adept at customer service, but is unfamiliar with the U.S. tax system and online IRS tools.",
+      "career_goals_and_ambitions": "Linda aspires to become a certified interpreter or translator, and she wants to ensure her children have opportunities for higher education.",
+      "policy_role_context": {
+        "role_label": "Eligible non-filer parent or caregiver",
+        "mechanism_functions": [
+          "affected",
+          "access",
+          "decision"
+        ],
+        "objectives": [
+          "Learn about eligibility, complete registration, and receive the full credit despite not normally filing a tax return."
+        ],
+        "constraints": [
+          "May face information, documentation, identity-verification, language, digital-access, and institutional-trust barriers."
+        ],
+        "actions": [
+          "Non-filer household must use the Non-Filer Sign-up Tool to register for advance payments.",
+          "Non-filer household receives advance Child Tax Credit payments after registration.",
+          "Non-filer household with qualifying child is eligible for the refundable credit if they meet residency requirements."
+        ],
+        "causal_leverage_points": [
+          "awareness and registration",
+          "digital and documentation access"
+        ],
+        "toc_phase_relevance": [
+          "Activities",
+          "Outputs",
+          "Outcomes",
+          "Impact"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    },
+    {
+      "persona_id": "P_CommunityOutreachPartner__iq3h88",
+      "name": "James Thompson (iq3h88)",
+      "stakeholder_type": "outreach_navigator",
+      "role_prototype_id": "outreach_navigator",
+      "role_anchor_entity_id": "OutreachIntermediary:CommunityOutreachPartner",
+      "panel_position": 5,
+      "agent_modality": "organization_representative",
+      "age": 45,
+      "sex": "Male",
+      "marital_status": "Divorced",
+      "education_level": "Associate Degree",
+      "occupation": "Tax Preparer and Financial Coach",
+      "province": "Mississippi",
+      "district": "MS-02",
+      "professional_persona": "James is a tax preparer and financial coach at a Volunteer Income Tax Assistance (VITA) site in rural Mississippi. He works directly with low-income families and seniors, helping them file taxes and claim credits like the Child Tax Credit. His calm demeanor and patience make him a trusted figure in his community.",
+      "skills_and_expertise": "Certified tax preparer with deep knowledge of IRS forms and eligibility rules. He excels at using IRS online tools to help clients check their advance payment status and resolve issues.",
+      "career_goals_and_ambitions": "James wants to open his own community tax center to provide year-round financial literacy services. He hopes to train other volunteers to expand outreach across the Delta region.",
+      "policy_role_context": {
+        "role_label": "Community Child Tax Credit outreach navigator",
+        "mechanism_functions": [
+          "implementation",
+          "information",
+          "access"
+        ],
+        "objectives": [
+          "Identify underserved eligible families and help them understand and access advance Child Tax Credit payments."
+        ],
+        "constraints": [
+          "Must work with limited outreach capacity, uneven community trust, language needs, and changing federal guidance."
+        ],
+        "actions": [
+          "IRS partners use the toolkit to share information.",
+          "Community outreach partners can subscribe to the Outreach Connection for Individuals page to get announcements about Child Tax Credit tools and materials.",
+          "Community outreach partners receive alerts when IRS posts outreach materials, Tax Tips, news releases and more."
+        ],
+        "causal_leverage_points": [
+          "trusted information diffusion",
+          "hands-on enrollment assistance"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs",
+          "Outcomes"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "S1_Maria-Gonzal_Marlene-K.-A_James-Thomps_Linda-Chen_James-Thomps",
+      "participants": [
+        {
+          "persona_id": "P_InternalRevenueService__dzkerq",
+          "name": "Maria Gonzalez",
+          "stakeholder_type": "irs_administrator",
+          "role_prototype_id": "irs_administrator",
+          "role_anchor_entity_id": "InternalRevenueService:InternalRevenueService",
+          "panel_position": 1,
+          "agent_modality": "organization_representative",
+          "age": 42,
+          "sex": "female",
+          "marital_status": "married",
+          "education_level": "master",
+          "occupation": "Senior Tax Compliance Officer",
+          "province": "Texas",
+          "district": "TX-20",
+          "professional_persona": "Senior Tax Compliance Officer at the IRS with 12 years of experience in administering refundable credits. She leads the team developing the Non-Filer Sign-Up Tool and oversees outreach to low-income families.",
+          "skills_and_expertise": "Expert in tax law interpretation and IT system requirements for benefit delivery. Skilled in stakeholder coordination and multilingual community engagement.",
+          "career_goals_and_ambitions": "Aims to become Director of Taxpayer Services and expand IRS digital tools to reduce filing barriers for underserved populations.",
+          "policy_role_context": {
+            "role_label": "IRS Child Tax Credit implementation official",
+            "mechanism_functions": [
+              "decision",
+              "implementation",
+              "oversight"
+            ],
+            "objectives": [
+              "Administer advance Child Tax Credit eligibility, payment calculations, taxpayer updates, and reconciliation accurately."
+            ],
+            "constraints": [
+              "Must operate within statutory authority, administrative capacity, data quality, identity-verification, and notice requirements."
+            ],
+            "actions": [
+              "IRS implements the advance payment program under new section 7527A.",
+              "IRS evaluates taxpayer eligibility based on return data.",
+              "IRS uses portal information to adjust payment amounts."
+            ],
+            "causal_leverage_points": [
+              "eligibility and payment calculation",
+              "portal and reconciliation administration"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+          }
+        },
+        {
+          "persona_id": "P_Bureau_of_the_Fiscal_Service__4lyl30",
+          "name": "Marlene K. Ashford",
+          "stakeholder_type": "payment_operator",
+          "role_prototype_id": "payment_operator",
+          "role_anchor_entity_id": "TreasuryDepartment:Bureau of the Fiscal Service",
+          "panel_position": 2,
+          "agent_modality": "organization_representative",
+          "age": 48,
+          "sex": "Female",
+          "marital_status": "Married",
+          "education_level": "Master's Degree",
+          "occupation": "Deputy Assistant Secretary for Fiscal Operations",
+          "province": "District of Columbia",
+          "district": "District of Columbia",
+          "professional_persona": "Marlene is a Deputy Assistant Secretary for Fiscal Operations and Policy at the Treasury Department, overseeing the disbursement of funds for the Child Tax Credit expansion. She has spent the last decade managing large-scale federal assistance programs, ensuring compliance with appropriations law and Treasury oversight.",
+          "skills_and_expertise": "Expert in federal budget execution, grant management, and interagency coordination; skilled in designing fiscal controls for high-volume payment programs.",
+          "career_goals_and_ambitions": "She aims to streamline Treasury's fiscal service delivery for social programs and eventually lead the Office of Management and Budget's financial management division.",
+          "policy_role_context": {
+            "role_label": "Federal payment operations representative",
+            "mechanism_functions": [
+              "implementation",
+              "delivery"
+            ],
+            "objectives": [
+              "Execute advance payment batches reliably and ensure funds reach eligible households on schedule."
+            ],
+            "constraints": [
+              "Must translate IRS payment instructions into high-volume disbursements under operational, timing, and data constraints."
+            ],
+            "actions": [
+              "Bureau of the Fiscal Service receives funds to carry out the advance payment program.",
+              "Bureau of the Fiscal Service carries out fiscal services for the advance payment program.",
+              "Treasury appropriates $16,200,000 to Bureau of the Fiscal Service for carrying out the advance payment section."
+            ],
+            "causal_leverage_points": [
+              "payment batch execution",
+              "delivery errors and delays"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs"
+            ],
+            "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+          }
+        },
+        {
+          "persona_id": "P_Households_Automatically_Receiving_Advance_Payments__8a1bi4",
+          "name": "James Thompson",
+          "stakeholder_type": "recipient_parent",
+          "role_prototype_id": "recipient_parent",
+          "role_anchor_entity_id": "TaxpayerWithQualifyingChild:Households Automatically Receiving Advance Payments",
+          "panel_position": 3,
+          "agent_modality": "individual",
+          "age": 38,
+          "sex": "Male",
+          "marital_status": "Married",
+          "education_level": "Associate degree",
+          "occupation": "Electrician",
+          "province": "Ohio",
+          "district": "Ohio's 12th congressional district",
+          "professional_persona": "James is a married father of three working as an electrician in suburban Ohio. He and his wife both work full-time, and the Child Tax Credit helps them pay for after-school programs and summer camps.",
+          "skills_and_expertise": "Licensed electrician with expertise in residential and commercial wiring, and skilled in financial planning for his family.",
+          "career_goals_and_ambitions": "James aims to start his own electrical contracting business within five years to build generational wealth for his children.",
+          "policy_role_context": {
+            "role_label": "Parent automatically receiving advance Child Tax Credit payments",
+            "mechanism_functions": [
+              "affected",
+              "decision"
+            ],
+            "objectives": [
+              "Receive the correct advance credit on time and use the added income to meet household and child needs."
+            ],
+            "constraints": [
+              "Must manage household changes, payment accuracy, and possible year-end reconciliation with limited control over program administration."
+            ],
+            "actions": [
+              "Most eligible families automatically receive monthly Child Tax Credit payments.",
+              "Eligible families automatically receive monthly advance Child Tax Credit payments.",
+              "Most families in the U.S. automatically receive advance monthly Child Tax Credit payments."
+            ],
+            "causal_leverage_points": [
+              "automatic receipt and payment adequacy",
+              "household spending and material hardship"
+            ],
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        },
+        {
+          "persona_id": "P_NonFilerHousehold__lt5lpy",
+          "name": "Linda Chen",
+          "stakeholder_type": "nonfiler_parent",
+          "role_prototype_id": "nonfiler_parent",
+          "role_anchor_entity_id": "NonFilerHousehold:NonFilerHousehold",
+          "panel_position": 4,
+          "agent_modality": "individual",
+          "age": 38,
+          "sex": "Female",
+          "marital_status": "Married",
+          "education_level": "High school diploma",
+          "occupation": "Restaurant server",
+          "province": "California",
+          "district": "CA-34",
+          "professional_persona": "Linda is a recent immigrant and works part-time as a restaurant server while caring for her two school-age children. She has never filed a U.S. tax return and relies on community organizations for support.",
+          "skills_and_expertise": "She is bilingual in Mandarin and English and is adept at customer service, but is unfamiliar with the U.S. tax system and online IRS tools.",
+          "career_goals_and_ambitions": "Linda aspires to become a certified interpreter or translator, and she wants to ensure her children have opportunities for higher education.",
+          "policy_role_context": {
+            "role_label": "Eligible non-filer parent or caregiver",
+            "mechanism_functions": [
+              "affected",
+              "access",
+              "decision"
+            ],
+            "objectives": [
+              "Learn about eligibility, complete registration, and receive the full credit despite not normally filing a tax return."
+            ],
+            "constraints": [
+              "May face information, documentation, identity-verification, language, digital-access, and institutional-trust barriers."
+            ],
+            "actions": [
+              "Non-filer household must use the Non-Filer Sign-up Tool to register for advance payments.",
+              "Non-filer household receives advance Child Tax Credit payments after registration.",
+              "Non-filer household with qualifying child is eligible for the refundable credit if they meet residency requirements."
+            ],
+            "causal_leverage_points": [
+              "awareness and registration",
+              "digital and documentation access"
+            ],
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        },
+        {
+          "persona_id": "P_CommunityOutreachPartner__iq3h88",
+          "name": "James Thompson (iq3h88)",
+          "stakeholder_type": "outreach_navigator",
+          "role_prototype_id": "outreach_navigator",
+          "role_anchor_entity_id": "OutreachIntermediary:CommunityOutreachPartner",
+          "panel_position": 5,
+          "agent_modality": "organization_representative",
+          "age": 45,
+          "sex": "Male",
+          "marital_status": "Divorced",
+          "education_level": "Associate Degree",
+          "occupation": "Tax Preparer and Financial Coach",
+          "province": "Mississippi",
+          "district": "MS-02",
+          "professional_persona": "James is a tax preparer and financial coach at a Volunteer Income Tax Assistance (VITA) site in rural Mississippi. He works directly with low-income families and seniors, helping them file taxes and claim credits like the Child Tax Credit. His calm demeanor and patience make him a trusted figure in his community.",
+          "skills_and_expertise": "Certified tax preparer with deep knowledge of IRS forms and eligibility rules. He excels at using IRS online tools to help clients check their advance payment status and resolve issues.",
+          "career_goals_and_ambitions": "James wants to open his own community tax center to provide year-round financial literacy services. He hopes to train other volunteers to expand outreach across the Delta region.",
+          "policy_role_context": {
+            "role_label": "Community Child Tax Credit outreach navigator",
+            "mechanism_functions": [
+              "implementation",
+              "information",
+              "access"
+            ],
+            "objectives": [
+              "Identify underserved eligible families and help them understand and access advance Child Tax Credit payments."
+            ],
+            "constraints": [
+              "Must work with limited outreach capacity, uneven community trust, language needs, and changing federal guidance."
+            ],
+            "actions": [
+              "IRS partners use the toolkit to share information.",
+              "Community outreach partners can subscribe to the Outreach Connection for Individuals page to get announcements about Child Tax Credit tools and materials.",
+              "Community outreach partners receive alerts when IRS posts outreach materials, Tax Tips, news releases and more."
+            ],
+            "causal_leverage_points": [
+              "trusted information diffusion",
+              "hands-on enrollment assistance"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        }
+      ],
+      "forward_pass": [
+        {
+          "phase": "Inputs",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "As the IRS administrator overseeing the Non-Filer Sign-Up Tool and outreach, I estimate the total IRS administrative budget at $1.4645 billion per the policy's resource logic. This budget constrains our ability to scale outreach: we must balance IT development, payment processing, and taxpayer support. I allocate 5,000 FTEs based on our experience with similar large-scale credit expansions—this is sufficient for core operations but tight for comprehensive non-filer outreach. The $20 million outreach budget is explicitly capped by the policy, limiting our ability to reach the hardest-to-reach households through community partners and media campaigns. This budget directly affects payment speed and accuracy: with adequate IT investment, we can maintain the monthly payment schedule, but any delays in portal development or staff training could cause errors.",
+              "evidence": [
+                "The policy's resource logic explicitly states $1,464,500,000 for IRS administration, which I take as ground truth.",
+                "Based on past refundable credit expansions (e.g., 2008 stimulus), we needed roughly 4,000-6,000 FTEs for similar workloads; 5,000 is a reasonable mid-point.",
+                "The policy allows up to $20 million for outreach to non-filers, which is a small fraction of the total budget, reflecting a focus on online self-service rather than intensive in-person assistance.",
+                "Our experience with the 2020 Economic Impact Payments showed that portal and payment system reliability depends on dedicated IT staff; the budget must prioritize that over outreach."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations, the IRS administrative budget of $1.4645 billion is a fixed appropriation that must cover all IT systems, payment processing, and taxpayer support. The $20 million outreach cap is a policy constraint, not a technical one—it limits the scale of non-filer engagement. The 5,000 FTEs seem reasonable for core operations, but I worry that without sufficient staff, the IRS may struggle to process non-filer registrations quickly, which could delay our payment batches. I agree with Maria's estimates because they align with the policy's resource logic and my experience with large-scale disbursements.",
+              "evidence": [
+                "The policy explicitly appropriates $1,464,500,000 to IRS for administration, so this is a fixed input.",
+                "The $20 million outreach budget is capped by the policy's resource logic, limiting non-filer outreach to that amount.",
+                "5,000 FTEs is a plausible allocation based on prior large-scale credit expansions and the need to balance IT, processing, and support.",
+                "Any underinvestment in IT or staff could delay payment batch execution, which I would see as a downstream risk."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "As a parent automatically receiving advance payments, I see the IRS budget as a fixed number set by Congress. The $1.4645 billion total seems like a lot, but I know from news and my own experience that the IRS has to cover IT, payment processing, and taxpayer support. The $20 million for non-filer outreach is tiny compared to the need—I've heard about families who don't file taxes struggling to sign up. The 5,000 FTEs sound reasonable for core operations, but I worry that without enough staff, the portal might crash or payments could be delayed. I agree with Maria and Marlene that these numbers match the policy, but I think the outreach budget is too low to reach all eligible families, which could leave some kids out.",
+              "evidence": [
+                "The policy explicitly states $1,464,500,000 for IRS administration, so that's the ground truth for the total budget.",
+                "The $20 million outreach cap is a policy constraint, not a technical estimate, and it's clearly too small to reach millions of non-filer households effectively.",
+                "5,000 FTEs is consistent with IRS experience with large-scale credit expansions, but as a recipient, I know that even small delays in portal updates or phone support can cause real stress for families relying on the monthly payments.",
+                "The budget allocation directly affects payment speed and accuracy: if IT development is underfunded, the monthly schedule could slip, and if staff are stretched, errors in registration processing could delay payments for non-filers."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "As a non-filer parent, I see the IRS budget as a fixed amount set by Congress—$1.4645 billion total. The $20 million for outreach to non-filers like me is way too small. I've heard from my community center that many families don't even know about the credit, and the outreach money is barely enough for a few ads and partner events. The 5,000 staff sounds like a lot, but I worry they'll be overwhelmed with calls and portal issues, especially for people like me who need help in other languages. I agree with Maria and Marlene that these numbers match the policy, but I think the outreach budget is too low to reach all eligible families, which could leave some kids out.",
+              "evidence": [
+                "The policy explicitly states the IRS administrative budget is $1,464,500,000, so I accept that as fixed.",
+                "The $20 million outreach cap is stated in the policy, and from my experience, that's not enough to reach many non-filer families like mine.",
+                "5,000 FTEs seems reasonable for core operations, but I worry about capacity for non-filer support based on news about IRS staffing issues.",
+                "My community organization says outreach funding is limited, so many families may miss out on the credit."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "As a community outreach navigator working directly with low-income families in rural Mississippi, I see the IRS budget as a fixed legislative appropriation that sets the boundaries for what we can do. The $1.4645 billion total is what Congress gave, and it has to cover IT, payment processing, and taxpayer support. The $20 million for non-filer outreach is a policy cap, not a technical limit—it's tiny compared to the need. I've seen families in my VITA site who don't know about the credit, and that money barely covers a few ads and partner events. The 5,000 FTEs sound reasonable for core operations, but from my experience, the IRS will be overwhelmed with calls and portal issues, especially for non-filers who need help in other languages. I agree with Maria and Marlene that these numbers match the policy, but I think the outreach budget is too low to reach all eligible families, which could leave some kids out. My own estimate matches the other participants because the policy explicitly states these figures, but I emphasize that the outreach budget is a critical constraint that will limit our ability to reach the hardest-to-reach households.",
+              "evidence": [
+                "The policy's resource_logic explicitly states the IRS administrative budget as $1,464,500,000, which is a fixed appropriation that I must accept as ground truth.",
+                "The resource_logic also caps non-filer outreach at $20,000,000, which from my community experience is far too small to reach all eligible non-filer families in rural areas like mine.",
+                "The 5,000 FTEs are consistent with IRS estimates for similar large-scale credit expansions, but my work with VITA shows that frontline staff will be stretched thin handling inquiries and registrations.",
+                "The outreach budget constraint directly affects my ability to conduct hands-on enrollment assistance, as I rely on IRS-funded materials and partner events to reach families who don't file taxes."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "As the IRS administrator overseeing the Non-Filer Sign-Up Tool and outreach, I estimate the total IRS administrative budget at $1.4645 billion per the policy's resource logic. This budget constrains our ability to scale outreach: we must balance IT development, payment processing, and taxpayer support. I allocate 5,000 FTEs based on our experience with similar large-scale credit expansions—this is sufficient for core operations but tight for comprehensive non-filer outreach. The $20 million outreach budget is explicitly capped by the policy, limiting our ability to reach the hardest-to-reach households through community partners and media campaigns. This budget directly affects payment speed and accuracy: with adequate IT investment, we can maintain the monthly payment schedule, but any delays in portal development or staff training could cause errors.",
+              "evidence": [
+                "The policy's resource logic explicitly states $1,464,500,000 for IRS administration, which I take as ground truth.",
+                "Based on past refundable credit expansions (e.g., 2008 stimulus), we needed roughly 4,000-6,000 FTEs for similar workloads; 5,000 is a reasonable mid-point.",
+                "The policy allows up to $20 million for outreach to non-filers, which is a small fraction of the total budget, reflecting a focus on online self-service rather than intensive in-person assistance.",
+                "Our experience with the 2020 Economic Impact Payments showed that portal and payment system reliability depends on dedicated IT staff; the budget must prioritize that over outreach."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations, the IRS administrative budget of $1.4645 billion is a fixed appropriation that must cover all IT systems, payment processing, and taxpayer support. The $20 million outreach cap is a policy constraint, not a technical one—it limits the scale of non-filer engagement. The 5,000 FTEs seem reasonable for core operations, but I worry that without sufficient staff, the IRS may struggle to process non-filer registrations quickly, which could delay our payment batches. I agree with Maria's estimates because they align with the policy's resource logic and my experience with large-scale disbursements.",
+              "evidence": [
+                "The policy explicitly appropriates $1,464,500,000 to IRS for administration, so this is a fixed input.",
+                "The $20 million outreach budget is capped by the policy's resource logic, limiting non-filer outreach to that amount.",
+                "5,000 FTEs is a plausible allocation based on prior large-scale credit expansions and the need to balance IT, processing, and support.",
+                "Any underinvestment in IT or staff could delay payment batch execution, which I would see as a downstream risk."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "As a parent automatically receiving advance payments, I see the IRS budget as a fixed number set by Congress. The $1.4645 billion total seems like a lot, but I know from news and my own experience that the IRS has to cover IT, payment processing, and taxpayer support. The $20 million for non-filer outreach is tiny compared to the need—I've heard about families who don't file taxes struggling to sign up. The 5,000 FTEs sound reasonable for core operations, but I worry that without enough staff, the portal might crash or payments could be delayed. I agree with Maria and Marlene that these numbers match the policy, but I think the outreach budget is too low to reach all eligible families, which could leave some kids out.",
+              "evidence": [
+                "The policy explicitly states $1,464,500,000 for IRS administration, so that's the ground truth for the total budget.",
+                "The $20 million outreach cap is a policy constraint, not a technical estimate, and it's clearly too small to reach millions of non-filer households effectively.",
+                "5,000 FTEs is consistent with IRS experience with large-scale credit expansions, but as a recipient, I know that even small delays in portal updates or phone support can cause real stress for families relying on the monthly payments.",
+                "The budget allocation directly affects payment speed and accuracy: if IT development is underfunded, the monthly schedule could slip, and if staff are stretched, errors in registration processing could delay payments for non-filers."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "As a non-filer parent, I see the IRS budget as a fixed amount set by Congress—$1.4645 billion total. The $20 million for outreach to non-filers like me is way too small. I've heard from my community center that many families don't even know about the credit, and the outreach money is barely enough for a few ads and partner events. The 5,000 staff sounds like a lot, but I worry they'll be overwhelmed with calls and portal issues, especially for people like me who need help in other languages. I agree with Maria and Marlene that these numbers match the policy, but I think the outreach budget is too low to reach all eligible families, which could leave some kids out.",
+              "evidence": [
+                "The policy explicitly states the IRS administrative budget is $1,464,500,000, so I accept that as fixed.",
+                "The $20 million outreach cap is stated in the policy, and from my experience, that's not enough to reach many non-filer families like mine.",
+                "5,000 FTEs seems reasonable for core operations, but I worry about capacity for non-filer support based on news about IRS staffing issues.",
+                "My community organization says outreach funding is limited, so many families may miss out on the credit."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "irs_administrative_budget_usd": 1464500000,
+                "irs_staff_allocated_ftes": 5000,
+                "non_filer_outreach_budget_usd": 20000000
+              },
+              "narrative": "As a community outreach navigator working directly with low-income families in rural Mississippi, I see the IRS budget as a fixed legislative appropriation that sets the boundaries for what we can do. The $1.4645 billion total is what Congress gave, and it has to cover IT, payment processing, and taxpayer support. The $20 million for non-filer outreach is a policy cap, not a technical limit—it's tiny compared to the need. I've seen families in my VITA site who don't know about the credit, and that money barely covers a few ads and partner events. The 5,000 FTEs sound reasonable for core operations, but from my experience, the IRS will be overwhelmed with calls and portal issues, especially for non-filers who need help in other languages. I agree with Maria and Marlene that these numbers match the policy, but I think the outreach budget is too low to reach all eligible families, which could leave some kids out. My own estimate matches the other participants because the policy explicitly states these figures, but I emphasize that the outreach budget is a critical constraint that will limit our ability to reach the hardest-to-reach households.",
+              "evidence": [
+                "The policy's resource_logic explicitly states the IRS administrative budget as $1,464,500,000, which is a fixed appropriation that I must accept as ground truth.",
+                "The resource_logic also caps non-filer outreach at $20,000,000, which from my community experience is far too small to reach all eligible non-filer families in rural areas like mine.",
+                "The 5,000 FTEs are consistent with IRS estimates for similar large-scale credit expansions, but my work with VITA shows that frontline staff will be stretched thin handling inquiries and registrations.",
+                "The outreach budget constraint directly affects my ability to conduct hands-on enrollment assistance, as I rely on IRS-funded materials and partner events to reach families who don't file taxes."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "The central causal mechanism at this phase is the fixed IRS administrative budget of $1.4645 billion, which constrains the allocation of 5,000 FTEs and a $20 million outreach cap, directly limiting the scale of non-filer engagement and payment processing capacity. The key assumption is that the policy's resource logic is ground truth, with the outreach budget being a binding constraint that bottlenecks the transition to the next phase by restricting the ability to reach hard-to-reach households, potentially reducing enrollment and payment speed. This phase sets a downstream pathway where underinvestment in outreach and staff may cause delays in payment batches and errors in non-filer registrations, ultimately affecting child poverty reduction targets. The $20 million outreach cap is a critical bottleneck that, if unchanged, will likely limit the program's reach and effectiveness for non-filer families.",
+          "posting_order": [
+            "Maria Gonzalez",
+            "Marlene K. Ashford",
+            "James Thompson",
+            "Linda Chen",
+            "James Thompson (iq3h88)"
+          ]
+        },
+        {
+          "phase": "Activities",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "Given the fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs, I estimate that the IRS will disburse approximately 175 million advance monthly payments from July to December 2021. This is based on the IRS's capacity to process payments for roughly 36 million eligible children per month, with some families receiving multiple payments. The portal will process about 6 million updates, as the system is designed to handle high volumes but is constrained by IT development and staff training. The Non-Filer Sign-Up Tool will process around 2.5 million submissions, reflecting the $20 million outreach cap and the difficulty of reaching hard-to-reach households. The portal updates are critical for payment accuracy; without them, overpayments could occur, increasing reconciliation burdens. The volume of advance payments directly affects material hardship reduction, but the outreach cap limits non-filer enrollment, potentially leaving many eligible families unserved. Barriers for non-filers include lack of internet access, language barriers, and distrust of government systems; the tool's online-only design and limited in-person assistance exacerbate these issues.",
+              "evidence": [
+                "Based on IRS data from the 2020 Economic Impact Payments, the IRS processed about 160 million payments in the first round; with 5,000 FTEs and similar IT capacity, 175 million advance payments is a reasonable estimate for the 6-month period.",
+                "The portal update volume of 6 million is consistent with IRS estimates that about 10% of eligible families would need to update information, given the 36 million child count and potential address or bank changes.",
+                "The Non-Filer Sign-Up Tool submission estimate of 2.5 million is derived from the $20 million outreach budget, which limits media campaigns and community partner engagement, and from historical data showing that about 5-7 million non-filer households were eligible, but only a fraction would register without intensive outreach.",
+                "The $20 million outreach cap is a binding constraint; without it, we could have reached more non-filers, but the policy explicitly limits this, so the tool's submissions are capped accordingly."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations, the fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs set a clear ceiling on what the IRS can achieve. The $20 million outreach cap is a binding constraint that limits non-filer engagement. I estimate 175 million advance payments will be disbursed, consistent with the IRS's capacity to process monthly payments for roughly 36 million eligible children over six months. The portal will handle about 6 million updates, reflecting the system's design capacity and the reality that many families will need to update bank accounts or addresses. The Non-Filer Sign-Up Tool will process around 2.5 million submissions, as the outreach cap and barriers like lack of internet access and language issues limit enrollment. I agree with Maria's estimates because they align with the resource constraints and my experience with large-scale disbursements. Portal updates are critical for payment accuracy; without them, overpayments could occur, increasing reconciliation burdens. The volume of advance payments directly affects material hardship reduction, but the outreach cap limits non-filer enrollment, potentially leaving many eligible families unserved.",
+              "evidence": [
+                "The fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs constrain the scale of payment processing and portal operations, making 175 million payments a plausible upper bound based on 36 million eligible children over six months.",
+                "The $20 million outreach cap limits non-filer engagement, so the Non-Filer Sign-Up Tool will process only about 2.5 million submissions, as reaching hard-to-reach households requires significant resources.",
+                "The portal is designed to handle high volumes, but IT development and staff training constraints limit updates to about 6 million, which is consistent with the IRS's capacity and the need for accuracy.",
+                "My experience with large-scale federal assistance programs confirms that resource constraints directly affect operational outputs, and these estimates align with the policy's resource logic."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "As a parent automatically receiving advance payments, I see the IRS budget and staff as fixed constraints that directly shape what happens. The $1.4645 billion and 5,000 FTEs mean the IRS can process about 175 million payments over six months—that's roughly 36 million kids per month, which matches what I've read in the news. The portal updates at 6 million seem reasonable because many families like mine need to update bank info or addresses, but I know from experience that the portal can be slow and stressful. The non-filer tool at 2.5 million is low because the $20 million outreach cap is a huge bottleneck—I've heard from neighbors who don't file taxes that they don't even know about the tool, or they lack internet access. Maria and Marlene's estimates align with my own reasoning because the resource constraints are clear, but I worry that the outreach cap will leave many eligible families out, especially in rural areas like parts of Ohio. Portal updates are critical for accuracy; if families don't update, they risk overpayments and a big tax bill at reconciliation, which would hurt families like mine.",
+              "evidence": [
+                "The fixed IRS budget of $1.4645 billion and 5,000 FTEs limit payment processing capacity to about 175 million payments over six months, consistent with IRS experience and my own observation of monthly payments arriving on time.",
+                "The $20 million outreach cap is a binding constraint that restricts non-filer enrollment to around 2.5 million submissions, as many hard-to-reach households lack internet access or awareness of the tool.",
+                "Portal updates at 6 million reflect the system's design capacity and the reality that many families need to update bank accounts or addresses, but I've personally experienced delays and frustration with the portal, which could reduce actual updates.",
+                "Maria and Marlene's estimates match my own because the resource constraints are well-documented in policy documents and news reports, and my family's experience confirms the payment volume and portal usage patterns."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "As a non-filer parent, I see the IRS budget and staff as fixed constraints that limit what can be done. The $1.4645 billion and 5,000 FTEs mean the IRS can process about 175 million advance payments over six months—that's roughly 36 million kids per month, which matches what I've heard from community workers. The portal updates at 6 million seem reasonable because many families need to update bank info or addresses, but I know from my own experience that the portal can be confusing and slow, especially for non-native English speakers. The non-filer tool at 2.5 million is low because the $20 million outreach cap is a huge bottleneck—I've seen firsthand at my community center that many families like mine don't even know about the tool, or they lack internet access or trust the government. Maria and Marlene's estimates align with my own reasoning because the resource constraints are clear, but I worry that the outreach cap will leave many eligible families out, especially in immigrant communities like mine. Portal updates are critical for accuracy; if families don't update, they risk overpayments and a big tax bill at reconciliation, which would hurt families like mine. The volume of advance payments directly affects material hardship reduction, but the outreach cap limits non-filer enrollment, potentially leaving many eligible families unserved.",
+              "evidence": [
+                "The fixed IRS budget of $1.4645 billion and 5,000 FTEs set a clear ceiling on payment processing capacity, leading to an estimated 175 million payments over six months.",
+                "The portal's design capacity and the need for families to update bank accounts or addresses support an estimate of 6 million updates, though language and digital barriers may reduce actual usage.",
+                "The $20 million outreach cap is a binding constraint that limits non-filer awareness and registration, resulting in only about 2.5 million submissions via the Non-Filer Sign-Up Tool.",
+                "Community organizations report that many non-filer families lack internet access, face language barriers, or distrust government systems, which further suppresses registration numbers."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "As a community outreach navigator in rural Mississippi, I see the fixed IRS budget of $1.4645 billion and 5,000 FTEs as the hard ceiling for what the IRS can do. The $20 million outreach cap is a tiny fraction of what's needed to reach non-filers in areas like mine, where internet access is spotty and trust in government is low. I estimate 175 million advance payments will be disbursed, matching the IRS's capacity to process payments for roughly 36 million eligible children per month over six months. The portal will handle about 6 million updates, as many families need to update bank accounts or addresses, but the system can be slow and confusing, especially for non-native English speakers. The Non-Filer Sign-Up Tool will process around 2.5 million submissions, constrained by the outreach budget and barriers like lack of internet, language issues, and distrust. I agree with Maria and Marlene's estimates because they align with the resource constraints I see on the ground, but I worry that the outreach cap will leave many eligible families unserved. Portal updates are critical for payment accuracy; without them, overpayments could occur, increasing reconciliation burdens. The volume of advance payments directly affects material hardship reduction, but the outreach cap limits non-filer enrollment, potentially leaving many eligible families unserved.",
+              "evidence": [
+                "The fixed IRS budget of $1.4645 billion and 5,000 FTEs set a clear ceiling on payment processing capacity, leading to an estimated 175 million advance payments over six months, consistent with IRS capacity for 36 million children per month.",
+                "The $20 million outreach cap is a binding constraint that limits non-filer engagement, resulting in only 2.5 million non-filer submissions, as many eligible families in rural areas lack internet access or awareness.",
+                "Portal updates are estimated at 6 million based on the system's design capacity and the reality that many families need to update bank accounts or addresses, but the portal's complexity and language barriers reduce usage.",
+                "My experience with VITA shows that frontline staff will be stretched thin handling inquiries and registrations, reinforcing the estimates that align with the resource constraints."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "Given the fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs, I estimate that the IRS will disburse approximately 175 million advance monthly payments from July to December 2021. This is based on the IRS's capacity to process payments for roughly 36 million eligible children per month, with some families receiving multiple payments. The portal will process about 6 million updates, as the system is designed to handle high volumes but is constrained by IT development and staff training. The Non-Filer Sign-Up Tool will process around 2.5 million submissions, reflecting the $20 million outreach cap and the difficulty of reaching hard-to-reach households. The portal updates are critical for payment accuracy; without them, overpayments could occur, increasing reconciliation burdens. The volume of advance payments directly affects material hardship reduction, but the outreach cap limits non-filer enrollment, potentially leaving many eligible families unserved. Barriers for non-filers include lack of internet access, language barriers, and distrust of government systems; the tool's online-only design and limited in-person assistance exacerbate these issues.",
+              "evidence": [
+                "Based on IRS data from the 2020 Economic Impact Payments, the IRS processed about 160 million payments in the first round; with 5,000 FTEs and similar IT capacity, 175 million advance payments is a reasonable estimate for the 6-month period.",
+                "The portal update volume of 6 million is consistent with IRS estimates that about 10% of eligible families would need to update information, given the 36 million child count and potential address or bank changes.",
+                "The Non-Filer Sign-Up Tool submission estimate of 2.5 million is derived from the $20 million outreach budget, which limits media campaigns and community partner engagement, and from historical data showing that about 5-7 million non-filer households were eligible, but only a fraction would register without intensive outreach.",
+                "The $20 million outreach cap is a binding constraint; without it, we could have reached more non-filers, but the policy explicitly limits this, so the tool's submissions are capped accordingly."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations, the fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs set a clear ceiling on what the IRS can achieve. The $20 million outreach cap is a binding constraint that limits non-filer engagement. I estimate 175 million advance payments will be disbursed, consistent with the IRS's capacity to process monthly payments for roughly 36 million eligible children over six months. The portal will handle about 6 million updates, reflecting the system's design capacity and the reality that many families will need to update bank accounts or addresses. The Non-Filer Sign-Up Tool will process around 2.5 million submissions, as the outreach cap and barriers like lack of internet access and language issues limit enrollment. I agree with Maria's estimates because they align with the resource constraints and my experience with large-scale disbursements. Portal updates are critical for payment accuracy; without them, overpayments could occur, increasing reconciliation burdens. The volume of advance payments directly affects material hardship reduction, but the outreach cap limits non-filer enrollment, potentially leaving many eligible families unserved.",
+              "evidence": [
+                "The fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs constrain the scale of payment processing and portal operations, making 175 million payments a plausible upper bound based on 36 million eligible children over six months.",
+                "The $20 million outreach cap limits non-filer engagement, so the Non-Filer Sign-Up Tool will process only about 2.5 million submissions, as reaching hard-to-reach households requires significant resources.",
+                "The portal is designed to handle high volumes, but IT development and staff training constraints limit updates to about 6 million, which is consistent with the IRS's capacity and the need for accuracy.",
+                "My experience with large-scale federal assistance programs confirms that resource constraints directly affect operational outputs, and these estimates align with the policy's resource logic."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "As a parent automatically receiving advance payments, I see the IRS budget and staff as fixed constraints that directly shape what happens. The $1.4645 billion and 5,000 FTEs mean the IRS can process about 175 million payments over six months—that's roughly 36 million kids per month, which matches what I've read in the news. The portal updates at 6 million seem reasonable because many families like mine need to update bank info or addresses, but I know from experience that the portal can be slow and stressful. The non-filer tool at 2.5 million is low because the $20 million outreach cap is a huge bottleneck—I've heard from neighbors who don't file taxes that they don't even know about the tool, or they lack internet access. Maria and Marlene's estimates align with my own reasoning because the resource constraints are clear, but I worry that the outreach cap will leave many eligible families out, especially in rural areas like parts of Ohio. Portal updates are critical for accuracy; if families don't update, they risk overpayments and a big tax bill at reconciliation, which would hurt families like mine.",
+              "evidence": [
+                "The fixed IRS budget of $1.4645 billion and 5,000 FTEs limit payment processing capacity to about 175 million payments over six months, consistent with IRS experience and my own observation of monthly payments arriving on time.",
+                "The $20 million outreach cap is a binding constraint that restricts non-filer enrollment to around 2.5 million submissions, as many hard-to-reach households lack internet access or awareness of the tool.",
+                "Portal updates at 6 million reflect the system's design capacity and the reality that many families need to update bank accounts or addresses, but I've personally experienced delays and frustration with the portal, which could reduce actual updates.",
+                "Maria and Marlene's estimates match my own because the resource constraints are well-documented in policy documents and news reports, and my family's experience confirms the payment volume and portal usage patterns."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "As a non-filer parent, I see the IRS budget and staff as fixed constraints that limit what can be done. The $1.4645 billion and 5,000 FTEs mean the IRS can process about 175 million advance payments over six months—that's roughly 36 million kids per month, which matches what I've heard from community workers. The portal updates at 6 million seem reasonable because many families need to update bank info or addresses, but I know from my own experience that the portal can be confusing and slow, especially for non-native English speakers. The non-filer tool at 2.5 million is low because the $20 million outreach cap is a huge bottleneck—I've seen firsthand at my community center that many families like mine don't even know about the tool, or they lack internet access or trust the government. Maria and Marlene's estimates align with my own reasoning because the resource constraints are clear, but I worry that the outreach cap will leave many eligible families out, especially in immigrant communities like mine. Portal updates are critical for accuracy; if families don't update, they risk overpayments and a big tax bill at reconciliation, which would hurt families like mine. The volume of advance payments directly affects material hardship reduction, but the outreach cap limits non-filer enrollment, potentially leaving many eligible families unserved.",
+              "evidence": [
+                "The fixed IRS budget of $1.4645 billion and 5,000 FTEs set a clear ceiling on payment processing capacity, leading to an estimated 175 million payments over six months.",
+                "The portal's design capacity and the need for families to update bank accounts or addresses support an estimate of 6 million updates, though language and digital barriers may reduce actual usage.",
+                "The $20 million outreach cap is a binding constraint that limits non-filer awareness and registration, resulting in only about 2.5 million submissions via the Non-Filer Sign-Up Tool.",
+                "Community organizations report that many non-filer families lack internet access, face language barriers, or distrust government systems, which further suppresses registration numbers."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "advance_payment_disbursements_count": 175000000,
+                "portal_account_updates_processed": 6000000,
+                "non_filer_sign_up_tool_submissions_processed": 2500000
+              },
+              "narrative": "As a community outreach navigator in rural Mississippi, I see the fixed IRS budget of $1.4645 billion and 5,000 FTEs as the hard ceiling for what the IRS can do. The $20 million outreach cap is a tiny fraction of what's needed to reach non-filers in areas like mine, where internet access is spotty and trust in government is low. I estimate 175 million advance payments will be disbursed, matching the IRS's capacity to process payments for roughly 36 million eligible children per month over six months. The portal will handle about 6 million updates, as many families need to update bank accounts or addresses, but the system can be slow and confusing, especially for non-native English speakers. The Non-Filer Sign-Up Tool will process around 2.5 million submissions, constrained by the outreach budget and barriers like lack of internet, language issues, and distrust. I agree with Maria and Marlene's estimates because they align with the resource constraints I see on the ground, but I worry that the outreach cap will leave many eligible families unserved. Portal updates are critical for payment accuracy; without them, overpayments could occur, increasing reconciliation burdens. The volume of advance payments directly affects material hardship reduction, but the outreach cap limits non-filer enrollment, potentially leaving many eligible families unserved.",
+              "evidence": [
+                "The fixed IRS budget of $1.4645 billion and 5,000 FTEs set a clear ceiling on payment processing capacity, leading to an estimated 175 million advance payments over six months, consistent with IRS capacity for 36 million children per month.",
+                "The $20 million outreach cap is a binding constraint that limits non-filer engagement, resulting in only 2.5 million non-filer submissions, as many eligible families in rural areas lack internet access or awareness.",
+                "Portal updates are estimated at 6 million based on the system's design capacity and the reality that many families need to update bank accounts or addresses, but the portal's complexity and language barriers reduce usage.",
+                "My experience with VITA shows that frontline staff will be stretched thin handling inquiries and registrations, reinforcing the estimates that align with the resource constraints."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "At the Activities phase, the central causal mechanism is that fixed IRS administrative resources ($1.4645 billion budget, 5,000 FTEs) and a $20 million outreach cap directly constrain the volume of advance payments (175 million), portal updates (6 million), and non-filer sign-ups (2.5 million). The key assumption is that these resource ceilings are binding, limiting the reach of the Child Tax Credit to approximately 36 million eligible children per month and capping non-filer enrollment at 2.5 million submissions. The primary bottleneck is the outreach cap, which restricts non-filer awareness and registration, especially among hard-to-reach populations lacking internet access or facing language barriers, thereby reducing the potential for poverty reduction among the most vulnerable. This phase sets a downstream pathway where payment accuracy depends on portal updates to avoid overpayments, while the limited non-filer enrollment may leave many eligible families unserved, weakening the intended impact on child poverty and food insufficiency.",
+          "posting_order": [
+            "Maria Gonzalez",
+            "Marlene K. Ashford",
+            "James Thompson",
+            "Linda Chen",
+            "James Thompson (iq3h88)"
+          ]
+        },
+        {
+          "phase": "Outputs",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 275.0,
+                "eligible_families_receiving_at_least_one_payment": 35000000,
+                "non_filer_households_receiving_payments": 1500000
+              },
+              "narrative": "Given the fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs, I estimate that the average monthly payment per child will be around $275, below the maximum of $300/$250 due to income phaseouts and partial-year effects for families who register late or have children aging out. The $20 million outreach cap limits non-filer engagement, so only about 1.5 million non-filer households will receive payments, representing roughly 25% of the estimated 6 million eligible non-filer households. The 175 million advance payments disbursed and 2.5 million non-filer sign-ups from the Activities phase support these estimates. Many eligible families will not receive payments due to prior tax filing status (e.g., those who didn't file in 2019 or 2020), portal errors, or address changes that the IRS cannot update without proactive reporting. The outreach budget is a binding constraint, preventing us from reaching the hardest-to-reach households through community partners and media campaigns.",
+              "evidence": [
+                "The average monthly payment per child is $275 because income phaseouts reduce payments for higher-income families, and partial-year effects (e.g., children turning 6 or 18 mid-year) lower the average below the maximum $300/$250.",
+                "Approximately 35 million eligible families will receive at least one payment, based on the 175 million payments disbursed over 6 months (175M/6 ≈ 29 million families per month, but some families receive multiple payments, so total unique families is higher).",
+                "Only 1.5 million non-filer households will receive payments, as the $20 million outreach cap limits registration to about 60% of the 2.5 million sign-up submissions, with many submissions incomplete or ineligible.",
+                "The IRS's prior experience with the 2020 Economic Impact Payments showed that about 10-15% of eligible families did not receive payments due to address changes or bank account errors, and similar issues will affect the CTC advance payments."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 270.0,
+                "eligible_families_receiving_at_least_one_payment": 34000000,
+                "non_filer_households_receiving_payments": 1200000
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations, the fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs constrain the scale of payment processing. The $20 million outreach cap is a binding constraint that limits non-filer engagement. I estimate the average monthly payment per child will be around $270, below the maximum of $300/$250 due to income phaseouts and partial-year effects for families who register late or have children aging out. The 175 million advance payments disbursed and 2.5 million non-filer sign-ups from the Activities phase support these estimates. Many eligible families will not receive payments due to prior tax filing status (e.g., those who didn't file in 2019 or 2020), portal errors, or address changes that the IRS cannot update without proactive reporting. The outreach budget is a binding constraint, preventing us from reaching the hardest-to-reach households through community partners and media campaigns. Maria's estimate of 1.5 million non-filer households seems optimistic given the $20 million outreach cap; I think 1.2 million is more realistic based on the 2.5 million sign-ups and conversion rates from prior programs.",
+              "evidence": [
+                "The $20 million outreach cap limits non-filer engagement, so only about 1.2 million non-filer households will receive payments, representing roughly 20% of the estimated 6 million eligible non-filer households.",
+                "The average monthly payment per child is reduced to $270 due to income phaseouts and partial-year effects for families who register late or have children aging out, consistent with the IRS's processing of 175 million advance payments.",
+                "Many eligible families will not receive payments due to prior tax filing status, portal errors, or address changes that the IRS cannot update without proactive reporting, limiting the number of families receiving at least one payment to 34 million.",
+                "My experience with large-scale federal assistance programs confirms that resource constraints directly affect operational outputs, and these estimates align with the policy's resource logic and the Activities phase outputs."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 270.0,
+                "eligible_families_receiving_at_least_one_payment": 34000000,
+                "non_filer_households_receiving_payments": 1200000
+              },
+              "narrative": "As a parent automatically receiving payments, I see the fixed IRS budget and staff as the main constraints. The $1.4645 billion and 5,000 FTEs limit how many payments can be processed and how many non-filers can be reached. The $20 million outreach cap is a huge bottleneck—it's just not enough to reach the millions of non-filer households, especially in rural areas like parts of Ohio. From my own experience, the portal can be slow and stressful, and I've heard from neighbors who don't file taxes that they don't even know about the sign-up tool or lack internet access. That's why I think only about 1.2 million non-filer households will actually get payments, similar to Marlene's estimate. The average payment per child will be around $270, below the $300/$250 maximum, because of income phaseouts and families who register late or have children aging out. Many eligible families won't get payments because they didn't file in 2019 or 2020, or because of portal errors or address changes. Maria's estimate of 1.5 million non-filer households seems a bit optimistic given the outreach cap—I think 1.2 million is more realistic based on the 2.5 million sign-ups and conversion rates from past programs.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer enrollment to about 1.2 million households, as many hard-to-reach families lack internet access or awareness of the tool.",
+                "The average payment per child is around $270 because of income phaseouts and partial-year effects for families who register late or have children aging out, consistent with IRS data on similar credits.",
+                "Many eligible families don't receive payments due to prior tax filing status (e.g., no 2019 or 2020 return), portal errors, or address changes that the IRS can't update without proactive reporting.",
+                "My own experience with the portal and news reports confirm that the system is strained, leading to delays and errors that reduce the number of families reached."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 260.0,
+                "eligible_families_receiving_at_least_one_payment": 33000000,
+                "non_filer_households_receiving_payments": 1000000
+              },
+              "narrative": "As a non-filer parent, I see the fixed IRS budget and staff as the main constraints. The $1.4645 billion and 5,000 FTEs limit how many payments can be processed and how many non-filers can be reached. The $20 million outreach cap is a huge bottleneck—it's just not enough to reach the millions of non-filer households, especially in immigrant communities like mine. From my own experience, many families at my community center don't even know about the sign-up tool, lack internet access, or distrust the government. That's why I think only about 1 million non-filer households will actually get payments, lower than Maria's 1.5 million or Marlene's 1.2 million. The average payment per child will be around $260, below the $300/$250 maximum, because of income phaseouts, families who register late, and children aging out mid-year. Many eligible families won't get payments because they didn't file in 2019 or 2020, or because of portal errors or address changes. Marlene and James's estimates of 1.2 million non-filer households seem a bit optimistic given the outreach cap and the barriers I see every day—I think 1 million is more realistic based on the 2.5 million sign-ups and the fact that many sign-ups may not convert to successful payments due to verification issues.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer awareness and registration, and from my community center experience, many families like mine never hear about the credit or face language and digital barriers.",
+                "The 2.5 million non-filer sign-ups from the Activities phase likely overstate actual payments because many registrations fail due to identity verification issues or incomplete information, especially for immigrant families.",
+                "Income phaseouts starting at $75,000 (single) and partial-year effects for families who register late or have children aging out will reduce the average monthly payment below the $300/$250 maximum, to around $260.",
+                "Prior tax filing status is a major barrier—families who didn't file in 2019 or 2020 are automatically excluded unless they use the non-filer tool, and many eligible families, especially in immigrant communities, are unaware of this option."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 265.0,
+                "eligible_families_receiving_at_least_one_payment": 33500000,
+                "non_filer_households_receiving_payments": 1100000
+              },
+              "narrative": "From my work as a tax preparer in rural Mississippi, I see the fixed IRS budget and $20 million outreach cap as hard constraints that limit how many families we can reach. The 175 million advance payments and 2.5 million non-filer sign-ups from the Activities phase show the system's capacity, but many eligible families won't get payments because they didn't file in 2019 or 2020, or because of portal errors and address changes. The average payment per child will be around $265, below the $300/$250 maximum, due to income phaseouts and partial-year effects for families who register late or have children aging out. I estimate 33.5 million eligible families will receive at least one payment, slightly lower than Maria's 35 million, because I've seen many families in my VITA site who are eligible but miss out due to lack of awareness or portal issues. For non-filer households, I think only about 1.1 million will receive payments, lower than Maria's 1.5 million and Marlene's 1.2 million, because the outreach cap is too small to reach the hardest-to-reach families in rural areas with limited internet access and trust issues. Linda's estimate of 1 million is close, but I think a few more will convert from the 2.5 million sign-ups due to some outreach efforts.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer engagement, and my experience in rural Mississippi shows that many eligible families lack internet access or awareness, so only about 1.1 million non-filer households will receive payments out of the 2.5 million sign-ups.",
+                "The average monthly payment per child will be around $265, below the maximum, because income phaseouts and partial-year effects (late registration, children aging out) reduce the amount for many families, as I've seen in my VITA site.",
+                "Many eligible families won't receive payments because they didn't file in 2019 or 2020, or because of portal errors and address changes that the IRS cannot update without proactive reporting, leading to about 33.5 million families receiving at least one payment.",
+                "The 175 million advance payments disbursed and 2.5 million non-filer sign-ups from the Activities phase set a ceiling, but conversion to successful payments is lower due to verification issues and outreach limitations, consistent with my hands-on experience."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 275.0,
+                "eligible_families_receiving_at_least_one_payment": 35000000,
+                "non_filer_households_receiving_payments": 1500000
+              },
+              "narrative": "Given the fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs, I estimate that the average monthly payment per child will be around $275, below the maximum of $300/$250 due to income phaseouts and partial-year effects for families who register late or have children aging out. The $20 million outreach cap limits non-filer engagement, so only about 1.5 million non-filer households will receive payments, representing roughly 25% of the estimated 6 million eligible non-filer households. The 175 million advance payments disbursed and 2.5 million non-filer sign-ups from the Activities phase support these estimates. Many eligible families will not receive payments due to prior tax filing status (e.g., those who didn't file in 2019 or 2020), portal errors, or address changes that the IRS cannot update without proactive reporting. The outreach budget is a binding constraint, preventing us from reaching the hardest-to-reach households through community partners and media campaigns.",
+              "evidence": [
+                "The average monthly payment per child is $275 because income phaseouts reduce payments for higher-income families, and partial-year effects (e.g., children turning 6 or 18 mid-year) lower the average below the maximum $300/$250.",
+                "Approximately 35 million eligible families will receive at least one payment, based on the 175 million payments disbursed over 6 months (175M/6 ≈ 29 million families per month, but some families receive multiple payments, so total unique families is higher).",
+                "Only 1.5 million non-filer households will receive payments, as the $20 million outreach cap limits registration to about 60% of the 2.5 million sign-up submissions, with many submissions incomplete or ineligible.",
+                "The IRS's prior experience with the 2020 Economic Impact Payments showed that about 10-15% of eligible families did not receive payments due to address changes or bank account errors, and similar issues will affect the CTC advance payments."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 270.0,
+                "eligible_families_receiving_at_least_one_payment": 34000000,
+                "non_filer_households_receiving_payments": 1200000
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations, the fixed IRS administrative budget of $1.4645 billion and 5,000 FTEs constrain the scale of payment processing. The $20 million outreach cap is a binding constraint that limits non-filer engagement. I estimate the average monthly payment per child will be around $270, below the maximum of $300/$250 due to income phaseouts and partial-year effects for families who register late or have children aging out. The 175 million advance payments disbursed and 2.5 million non-filer sign-ups from the Activities phase support these estimates. Many eligible families will not receive payments due to prior tax filing status (e.g., those who didn't file in 2019 or 2020), portal errors, or address changes that the IRS cannot update without proactive reporting. The outreach budget is a binding constraint, preventing us from reaching the hardest-to-reach households through community partners and media campaigns. Maria's estimate of 1.5 million non-filer households seems optimistic given the $20 million outreach cap; I think 1.2 million is more realistic based on the 2.5 million sign-ups and conversion rates from prior programs.",
+              "evidence": [
+                "The $20 million outreach cap limits non-filer engagement, so only about 1.2 million non-filer households will receive payments, representing roughly 20% of the estimated 6 million eligible non-filer households.",
+                "The average monthly payment per child is reduced to $270 due to income phaseouts and partial-year effects for families who register late or have children aging out, consistent with the IRS's processing of 175 million advance payments.",
+                "Many eligible families will not receive payments due to prior tax filing status, portal errors, or address changes that the IRS cannot update without proactive reporting, limiting the number of families receiving at least one payment to 34 million.",
+                "My experience with large-scale federal assistance programs confirms that resource constraints directly affect operational outputs, and these estimates align with the policy's resource logic and the Activities phase outputs."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 270.0,
+                "eligible_families_receiving_at_least_one_payment": 34000000,
+                "non_filer_households_receiving_payments": 1200000
+              },
+              "narrative": "As a parent automatically receiving payments, I see the fixed IRS budget and staff as the main constraints. The $1.4645 billion and 5,000 FTEs limit how many payments can be processed and how many non-filers can be reached. The $20 million outreach cap is a huge bottleneck—it's just not enough to reach the millions of non-filer households, especially in rural areas like parts of Ohio. From my own experience, the portal can be slow and stressful, and I've heard from neighbors who don't file taxes that they don't even know about the sign-up tool or lack internet access. That's why I think only about 1.2 million non-filer households will actually get payments, similar to Marlene's estimate. The average payment per child will be around $270, below the $300/$250 maximum, because of income phaseouts and families who register late or have children aging out. Many eligible families won't get payments because they didn't file in 2019 or 2020, or because of portal errors or address changes. Maria's estimate of 1.5 million non-filer households seems a bit optimistic given the outreach cap—I think 1.2 million is more realistic based on the 2.5 million sign-ups and conversion rates from past programs.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer enrollment to about 1.2 million households, as many hard-to-reach families lack internet access or awareness of the tool.",
+                "The average payment per child is around $270 because of income phaseouts and partial-year effects for families who register late or have children aging out, consistent with IRS data on similar credits.",
+                "Many eligible families don't receive payments due to prior tax filing status (e.g., no 2019 or 2020 return), portal errors, or address changes that the IRS can't update without proactive reporting.",
+                "My own experience with the portal and news reports confirm that the system is strained, leading to delays and errors that reduce the number of families reached."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 260.0,
+                "eligible_families_receiving_at_least_one_payment": 33000000,
+                "non_filer_households_receiving_payments": 1000000
+              },
+              "narrative": "As a non-filer parent, I see the fixed IRS budget and staff as the main constraints. The $1.4645 billion and 5,000 FTEs limit how many payments can be processed and how many non-filers can be reached. The $20 million outreach cap is a huge bottleneck—it's just not enough to reach the millions of non-filer households, especially in immigrant communities like mine. From my own experience, many families at my community center don't even know about the sign-up tool, lack internet access, or distrust the government. That's why I think only about 1 million non-filer households will actually get payments, lower than Maria's 1.5 million or Marlene's 1.2 million. The average payment per child will be around $260, below the $300/$250 maximum, because of income phaseouts, families who register late, and children aging out mid-year. Many eligible families won't get payments because they didn't file in 2019 or 2020, or because of portal errors or address changes. Marlene and James's estimates of 1.2 million non-filer households seem a bit optimistic given the outreach cap and the barriers I see every day—I think 1 million is more realistic based on the 2.5 million sign-ups and the fact that many sign-ups may not convert to successful payments due to verification issues.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer awareness and registration, and from my community center experience, many families like mine never hear about the credit or face language and digital barriers.",
+                "The 2.5 million non-filer sign-ups from the Activities phase likely overstate actual payments because many registrations fail due to identity verification issues or incomplete information, especially for immigrant families.",
+                "Income phaseouts starting at $75,000 (single) and partial-year effects for families who register late or have children aging out will reduce the average monthly payment below the $300/$250 maximum, to around $260.",
+                "Prior tax filing status is a major barrier—families who didn't file in 2019 or 2020 are automatically excluded unless they use the non-filer tool, and many eligible families, especially in immigrant communities, are unaware of this option."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "average_monthly_payment_per_child_dollars": 265.0,
+                "eligible_families_receiving_at_least_one_payment": 33500000,
+                "non_filer_households_receiving_payments": 1100000
+              },
+              "narrative": "From my work as a tax preparer in rural Mississippi, I see the fixed IRS budget and $20 million outreach cap as hard constraints that limit how many families we can reach. The 175 million advance payments and 2.5 million non-filer sign-ups from the Activities phase show the system's capacity, but many eligible families won't get payments because they didn't file in 2019 or 2020, or because of portal errors and address changes. The average payment per child will be around $265, below the $300/$250 maximum, due to income phaseouts and partial-year effects for families who register late or have children aging out. I estimate 33.5 million eligible families will receive at least one payment, slightly lower than Maria's 35 million, because I've seen many families in my VITA site who are eligible but miss out due to lack of awareness or portal issues. For non-filer households, I think only about 1.1 million will receive payments, lower than Maria's 1.5 million and Marlene's 1.2 million, because the outreach cap is too small to reach the hardest-to-reach families in rural areas with limited internet access and trust issues. Linda's estimate of 1 million is close, but I think a few more will convert from the 2.5 million sign-ups due to some outreach efforts.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer engagement, and my experience in rural Mississippi shows that many eligible families lack internet access or awareness, so only about 1.1 million non-filer households will receive payments out of the 2.5 million sign-ups.",
+                "The average monthly payment per child will be around $265, below the maximum, because income phaseouts and partial-year effects (late registration, children aging out) reduce the amount for many families, as I've seen in my VITA site.",
+                "Many eligible families won't receive payments because they didn't file in 2019 or 2020, or because of portal errors and address changes that the IRS cannot update without proactive reporting, leading to about 33.5 million families receiving at least one payment.",
+                "The 175 million advance payments disbursed and 2.5 million non-filer sign-ups from the Activities phase set a ceiling, but conversion to successful payments is lower due to verification issues and outreach limitations, consistent with my hands-on experience."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "The Outputs phase centers on the causal mechanism that fixed administrative resources—a $1.4645 billion IRS budget, 5,000 FTEs, and a $20 million outreach cap—directly constrain the scale and equity of advance payment delivery. Key assumptions include that income phaseouts and partial-year effects will reduce the average monthly payment per child to between $260 and $275, and that only 1 to 1.5 million non-filer households will convert from 2.5 million sign-ups due to verification failures and outreach limits. The outreach cap is the primary bottleneck, limiting reach to hard-to-reach families and creating a downstream risk of lower-than-targeted child poverty reductions, especially for Black and Hispanic children. This phase narrows the pathway by establishing that even with high activity outputs, resource constraints will cap the number of families reached and the average benefit amount, shifting the focus to enrollment conversion and payment accuracy in the next phase.",
+          "posting_order": [
+            "Maria Gonzalez",
+            "Marlene K. Ashford",
+            "James Thompson",
+            "Linda Chen",
+            "James Thompson (iq3h88)"
+          ]
+        },
+        {
+          "phase": "Outcomes",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.2,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 36.1,
+                "low_income_food_insufficiency_relative_reduction_pct": 25.0,
+                "spm_black_child_poverty_rate_2021_pct": 11.5,
+                "spm_hispanic_child_poverty_rate_2021_pct": 9.8
+              },
+              "narrative": "As the IRS administrator overseeing implementation, I reason from the prior phases that the fixed $1.4645 billion budget, 5,000 FTEs, and $20 million outreach cap constrain reach and payment amounts. With 35 million families receiving payments averaging $275 per child per month, the policy will substantially reduce child poverty from the 2020 SPM baseline of 9.7%. However, the outreach cap limits non-filer enrollment to 1.5 million households, leaving many eligible families—especially Black and Hispanic children—unserved. The average payment of $275 is below the maximum due to phaseouts and partial-year effects, but still provides meaningful income support. Food insufficiency among low-income households should decline by about 25% due to the monthly cash infusion. For Black children, the 2020 baseline of 16.9% is higher, and the outreach cap and access barriers (e.g., lack of internet, language) mean fewer are reached, so their post-policy rate falls to 11.5%. Hispanic children start at 14.7% and face similar barriers, dropping to 9.8%. These estimates reflect my operational perspective: the resource constraints are binding, but the policy still achieves significant reductions.",
+              "evidence": [
+                "The average monthly payment of $275 per child, combined with 35 million families receiving payments, will lift many children above the SPM poverty line, reducing the overall rate from 9.7% to about 6.2%—a 36% relative reduction, consistent with CBPP estimates of a 40% reduction for the full credit.",
+                "Food insufficiency among low-income households is expected to decline by roughly 25% based on Census Household Pulse Survey data showing that advance CTC payments reduced food insufficiency by 20-30% among recipients.",
+                "Black and Hispanic children face higher baseline poverty rates and are disproportionately non-filers; the $20 million outreach cap limits their enrollment, so their post-policy rates (11.5% and 9.8%) are higher than the overall rate, reflecting a 32% and 33% relative reduction respectively.",
+                "The prior phases show that only 1.5 million non-filer households received payments out of 6 million eligible, meaning many Black and Hispanic children in non-filer families miss out, dampening the poverty reduction for these groups."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.5,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 33.0,
+                "low_income_food_insufficiency_relative_reduction_pct": 22.0,
+                "spm_black_child_poverty_rate_2021_pct": 12.0,
+                "spm_hispanic_child_poverty_rate_2021_pct": 10.2
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations at the Bureau of the Fiscal Service, I focus on the operational reality of disbursing payments. The prior phases show that the fixed IRS budget of $1.4645 billion, 5,000 FTEs, and $20 million outreach cap constrain reach and payment amounts. With 34 million families receiving an average of $270 per child per month, the policy will reduce child poverty from the 2020 baseline of 9.7%, but not as dramatically as some might hope. The outreach cap limits non-filer enrollment to about 1.2 million households, leaving many eligible families—especially Black and Hispanic children—unserved. The average payment of $270 is below the maximum due to phaseouts and partial-year effects, but still provides meaningful income support. Food insufficiency among low-income households should decline by about 22% due to the monthly cash infusion, though the reduction is tempered by the limited reach to the most vulnerable. For Black children, the 2020 baseline of 16.9% is higher, and the outreach cap and access barriers (e.g., lack of internet, language) mean fewer are reached, so their post-policy rate falls to 12.0%. Hispanic children start at 14.7% and face similar barriers, dropping to 10.2%. Maria Gonzalez's estimates are slightly more optimistic, but I believe the resource constraints are more binding, especially given the $20 million outreach cap and the operational challenges we at Fiscal Service see in processing payments for non-filers. My estimates reflect a cautious operational perspective: the policy achieves significant reductions, but the outreach cap and administrative constraints limit the full potential.",
+              "evidence": [
+                "The $20 million outreach cap limits non-filer engagement to about 1.2 million households, reducing the overall poverty impact compared to a scenario with full reach.",
+                "The average monthly payment of $270 per child, due to phaseouts and partial-year effects, provides less income support than the maximum, limiting the poverty reduction effect.",
+                "Black and Hispanic children face higher baseline poverty rates and additional barriers (e.g., lack of internet, language) that the outreach cap cannot fully address, leading to smaller reductions.",
+                "My experience with large-scale disbursements at Fiscal Service confirms that operational delays and data errors can reduce the effective reach of payments, especially for non-filer households."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.5,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 33.0,
+                "low_income_food_insufficiency_relative_reduction_pct": 22.0,
+                "spm_black_child_poverty_rate_2021_pct": 12.0,
+                "spm_hispanic_child_poverty_rate_2021_pct": 10.2
+              },
+              "narrative": "As a parent automatically receiving payments, I see the fixed IRS budget and outreach cap as the main constraints. The prior phases show that with 175 million payments, 6 million portal updates, and only 2.5 million non-filer sign-ups, the reach is limited. The $20 million outreach cap means many hard-to-reach families, especially Black and Hispanic children, are left out. My own experience with the portal and news reports confirm that the system is strained. I think the overall child poverty rate will drop to about 6.5%, a 33% relative reduction from 9.7%, because the average payment of $270 per child per month provides meaningful support but not enough to reach everyone. Food insufficiency among low-income households will decline by about 22% due to the monthly cash, but the limited reach to the most vulnerable tempers the reduction. For Black children, the higher baseline of 16.9% and access barriers mean their rate falls to 12.0%, and for Hispanic children, from 14.7% to 10.2%. Maria's estimates are a bit more optimistic, but I think the outreach cap is more binding, so I align more with Marlene's cautious view.",
+              "evidence": [
+                "The $20 million outreach cap limits non-filer enrollment to about 1.2 million households, leaving many eligible Black and Hispanic families unserved, which raises their poverty rates relative to the overall reduction.",
+                "The average payment of $270 per child per month, below the maximum due to phaseouts and partial-year effects, provides meaningful income support but cannot fully close the poverty gap for all families.",
+                "My own experience with the portal and news reports confirm that the system is strained, leading to delays and errors that reduce the number of families reached, especially among those without internet access.",
+                "The prior phases show that only 34 million families received at least one payment, and the outreach cap is a binding constraint that limits the program's ability to reach the most vulnerable, consistent with Marlene's operational perspective."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.8,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 29.9,
+                "low_income_food_insufficiency_relative_reduction_pct": 20.0,
+                "spm_black_child_poverty_rate_2021_pct": 12.5,
+                "spm_hispanic_child_poverty_rate_2021_pct": 10.5
+              },
+              "narrative": "As a non-filer parent, I see the fixed IRS budget and $20 million outreach cap as the main constraints. The prior phases show that only 1 million non-filer households actually receive payments, and the average payment is $260 per child per month. This means many eligible families like mine are left out, especially Black and Hispanic children who face language, digital, and trust barriers. The overall child poverty rate drops to about 6.8%, a 29.9% relative reduction from 9.7%, because the payments help but don't reach everyone. Food insufficiency declines by about 20% because the monthly cash helps, but the limited reach to the most vulnerable tempers the reduction. For Black children, the higher baseline of 16.9% and greater barriers mean their rate falls to 12.5%, and for Hispanic children, from 14.7% to 10.5%. Maria's estimates are too optimistic because she underestimates the outreach cap's impact; Marlene and James are closer but still a bit optimistic. My own experience at the community center shows that many families never even hear about the credit, so the reductions are smaller.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer awareness and registration; from my community center experience, many families like mine never hear about the credit or face language and digital barriers.",
+                "Only 1 million non-filer households actually receive payments (from my Outputs estimate), which is far below the total eligible non-filer population, leaving many Black and Hispanic children unserved.",
+                "The average monthly payment of $260 per child is below the $300/$250 maximum due to phaseouts and partial-year effects, reducing the overall poverty impact.",
+                "Prior tax filing status and verification issues exclude many eligible families, especially immigrant and non-English-speaking households, further limiting the poverty reduction for Black and Hispanic children."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.8,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 29.9,
+                "low_income_food_insufficiency_relative_reduction_pct": 20.0,
+                "spm_black_child_poverty_rate_2021_pct": 12.5,
+                "spm_hispanic_child_poverty_rate_2021_pct": 10.5
+              },
+              "narrative": "From my work as a tax preparer in rural Mississippi, I see the fixed IRS budget and $20 million outreach cap as hard constraints that limit how many families we can reach. The prior phases show that only 1.1 million non-filer households actually receive payments, and the average payment is $265 per child per month. This means many eligible families like those I serve are left out, especially Black and Hispanic children who face language, digital, and trust barriers. The overall child poverty rate drops to about 6.8%, a 29.9% relative reduction from 9.7%, because the payments help but don't reach everyone. Food insufficiency declines by about 20% because the monthly cash helps, but the limited reach to the most vulnerable tempers the reduction. For Black children, the higher baseline of 16.9% and greater barriers mean their rate falls to 12.5%, and for Hispanic children, from 14.7% to 10.5%. Maria's estimates are too optimistic because she underestimates the outreach cap's impact; Marlene and James are closer but still a bit optimistic. My own experience at the VITA site shows that many families never even hear about the credit, so the reductions are smaller.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer engagement, and my experience in rural Mississippi shows that many eligible families lack internet access or awareness, so only about 1.1 million non-filer households will receive payments out of the 2.5 million sign-ups.",
+                "The average monthly payment per child will be around $265, below the maximum, because income phaseouts and partial-year effects (late registration, children aging out) reduce the amount for many families, as I've seen in my VITA site.",
+                "Many eligible families won't receive payments because they didn't file in 2019 or 2020, or because of portal errors and address changes that the IRS cannot update without proactive reporting, leading to about 33.5 million families receiving at least one payment.",
+                "The 175 million advance payments disbursed and 2.5 million non-filer sign-ups from the Activities phase set a ceiling, but conversion to successful payments is lower due to verification issues and outreach limitations, consistent with my hands-on experience."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.2,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 36.1,
+                "low_income_food_insufficiency_relative_reduction_pct": 25.0,
+                "spm_black_child_poverty_rate_2021_pct": 11.5,
+                "spm_hispanic_child_poverty_rate_2021_pct": 9.8
+              },
+              "narrative": "As the IRS administrator overseeing implementation, I reason from the prior phases that the fixed $1.4645 billion budget, 5,000 FTEs, and $20 million outreach cap constrain reach and payment amounts. With 35 million families receiving payments averaging $275 per child per month, the policy will substantially reduce child poverty from the 2020 SPM baseline of 9.7%. However, the outreach cap limits non-filer enrollment to 1.5 million households, leaving many eligible families—especially Black and Hispanic children—unserved. The average payment of $275 is below the maximum due to phaseouts and partial-year effects, but still provides meaningful income support. Food insufficiency among low-income households should decline by about 25% due to the monthly cash infusion. For Black children, the 2020 baseline of 16.9% is higher, and the outreach cap and access barriers (e.g., lack of internet, language) mean fewer are reached, so their post-policy rate falls to 11.5%. Hispanic children start at 14.7% and face similar barriers, dropping to 9.8%. These estimates reflect my operational perspective: the resource constraints are binding, but the policy still achieves significant reductions.",
+              "evidence": [
+                "The average monthly payment of $275 per child, combined with 35 million families receiving payments, will lift many children above the SPM poverty line, reducing the overall rate from 9.7% to about 6.2%—a 36% relative reduction, consistent with CBPP estimates of a 40% reduction for the full credit.",
+                "Food insufficiency among low-income households is expected to decline by roughly 25% based on Census Household Pulse Survey data showing that advance CTC payments reduced food insufficiency by 20-30% among recipients.",
+                "Black and Hispanic children face higher baseline poverty rates and are disproportionately non-filers; the $20 million outreach cap limits their enrollment, so their post-policy rates (11.5% and 9.8%) are higher than the overall rate, reflecting a 32% and 33% relative reduction respectively.",
+                "The prior phases show that only 1.5 million non-filer households received payments out of 6 million eligible, meaning many Black and Hispanic children in non-filer families miss out, dampening the poverty reduction for these groups."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.5,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 33.0,
+                "low_income_food_insufficiency_relative_reduction_pct": 22.0,
+                "spm_black_child_poverty_rate_2021_pct": 12.0,
+                "spm_hispanic_child_poverty_rate_2021_pct": 10.2
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations at the Bureau of the Fiscal Service, I focus on the operational reality of disbursing payments. The prior phases show that the fixed IRS budget of $1.4645 billion, 5,000 FTEs, and $20 million outreach cap constrain reach and payment amounts. With 34 million families receiving an average of $270 per child per month, the policy will reduce child poverty from the 2020 baseline of 9.7%, but not as dramatically as some might hope. The outreach cap limits non-filer enrollment to about 1.2 million households, leaving many eligible families—especially Black and Hispanic children—unserved. The average payment of $270 is below the maximum due to phaseouts and partial-year effects, but still provides meaningful income support. Food insufficiency among low-income households should decline by about 22% due to the monthly cash infusion, though the reduction is tempered by the limited reach to the most vulnerable. For Black children, the 2020 baseline of 16.9% is higher, and the outreach cap and access barriers (e.g., lack of internet, language) mean fewer are reached, so their post-policy rate falls to 12.0%. Hispanic children start at 14.7% and face similar barriers, dropping to 10.2%. Maria Gonzalez's estimates are slightly more optimistic, but I believe the resource constraints are more binding, especially given the $20 million outreach cap and the operational challenges we at Fiscal Service see in processing payments for non-filers. My estimates reflect a cautious operational perspective: the policy achieves significant reductions, but the outreach cap and administrative constraints limit the full potential.",
+              "evidence": [
+                "The $20 million outreach cap limits non-filer engagement to about 1.2 million households, reducing the overall poverty impact compared to a scenario with full reach.",
+                "The average monthly payment of $270 per child, due to phaseouts and partial-year effects, provides less income support than the maximum, limiting the poverty reduction effect.",
+                "Black and Hispanic children face higher baseline poverty rates and additional barriers (e.g., lack of internet, language) that the outreach cap cannot fully address, leading to smaller reductions.",
+                "My experience with large-scale disbursements at Fiscal Service confirms that operational delays and data errors can reduce the effective reach of payments, especially for non-filer households."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.5,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 33.0,
+                "low_income_food_insufficiency_relative_reduction_pct": 22.0,
+                "spm_black_child_poverty_rate_2021_pct": 12.0,
+                "spm_hispanic_child_poverty_rate_2021_pct": 10.2
+              },
+              "narrative": "As a parent automatically receiving payments, I see the fixed IRS budget and outreach cap as the main constraints. The prior phases show that with 175 million payments, 6 million portal updates, and only 2.5 million non-filer sign-ups, the reach is limited. The $20 million outreach cap means many hard-to-reach families, especially Black and Hispanic children, are left out. My own experience with the portal and news reports confirm that the system is strained. I think the overall child poverty rate will drop to about 6.5%, a 33% relative reduction from 9.7%, because the average payment of $270 per child per month provides meaningful support but not enough to reach everyone. Food insufficiency among low-income households will decline by about 22% due to the monthly cash, but the limited reach to the most vulnerable tempers the reduction. For Black children, the higher baseline of 16.9% and access barriers mean their rate falls to 12.0%, and for Hispanic children, from 14.7% to 10.2%. Maria's estimates are a bit more optimistic, but I think the outreach cap is more binding, so I align more with Marlene's cautious view.",
+              "evidence": [
+                "The $20 million outreach cap limits non-filer enrollment to about 1.2 million households, leaving many eligible Black and Hispanic families unserved, which raises their poverty rates relative to the overall reduction.",
+                "The average payment of $270 per child per month, below the maximum due to phaseouts and partial-year effects, provides meaningful income support but cannot fully close the poverty gap for all families.",
+                "My own experience with the portal and news reports confirm that the system is strained, leading to delays and errors that reduce the number of families reached, especially among those without internet access.",
+                "The prior phases show that only 34 million families received at least one payment, and the outreach cap is a binding constraint that limits the program's ability to reach the most vulnerable, consistent with Marlene's operational perspective."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.8,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 29.9,
+                "low_income_food_insufficiency_relative_reduction_pct": 20.0,
+                "spm_black_child_poverty_rate_2021_pct": 12.5,
+                "spm_hispanic_child_poverty_rate_2021_pct": 10.5
+              },
+              "narrative": "As a non-filer parent, I see the fixed IRS budget and $20 million outreach cap as the main constraints. The prior phases show that only 1 million non-filer households actually receive payments, and the average payment is $260 per child per month. This means many eligible families like mine are left out, especially Black and Hispanic children who face language, digital, and trust barriers. The overall child poverty rate drops to about 6.8%, a 29.9% relative reduction from 9.7%, because the payments help but don't reach everyone. Food insufficiency declines by about 20% because the monthly cash helps, but the limited reach to the most vulnerable tempers the reduction. For Black children, the higher baseline of 16.9% and greater barriers mean their rate falls to 12.5%, and for Hispanic children, from 14.7% to 10.5%. Maria's estimates are too optimistic because she underestimates the outreach cap's impact; Marlene and James are closer but still a bit optimistic. My own experience at the community center shows that many families never even hear about the credit, so the reductions are smaller.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer awareness and registration; from my community center experience, many families like mine never hear about the credit or face language and digital barriers.",
+                "Only 1 million non-filer households actually receive payments (from my Outputs estimate), which is far below the total eligible non-filer population, leaving many Black and Hispanic children unserved.",
+                "The average monthly payment of $260 per child is below the $300/$250 maximum due to phaseouts and partial-year effects, reducing the overall poverty impact.",
+                "Prior tax filing status and verification issues exclude many eligible families, especially immigrant and non-English-speaking households, further limiting the poverty reduction for Black and Hispanic children."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "spm_child_poverty_rate_2021_pct": 6.8,
+                "spm_child_poverty_relative_reduction_2020_2021_pct": 29.9,
+                "low_income_food_insufficiency_relative_reduction_pct": 20.0,
+                "spm_black_child_poverty_rate_2021_pct": 12.5,
+                "spm_hispanic_child_poverty_rate_2021_pct": 10.5
+              },
+              "narrative": "From my work as a tax preparer in rural Mississippi, I see the fixed IRS budget and $20 million outreach cap as hard constraints that limit how many families we can reach. The prior phases show that only 1.1 million non-filer households actually receive payments, and the average payment is $265 per child per month. This means many eligible families like those I serve are left out, especially Black and Hispanic children who face language, digital, and trust barriers. The overall child poverty rate drops to about 6.8%, a 29.9% relative reduction from 9.7%, because the payments help but don't reach everyone. Food insufficiency declines by about 20% because the monthly cash helps, but the limited reach to the most vulnerable tempers the reduction. For Black children, the higher baseline of 16.9% and greater barriers mean their rate falls to 12.5%, and for Hispanic children, from 14.7% to 10.5%. Maria's estimates are too optimistic because she underestimates the outreach cap's impact; Marlene and James are closer but still a bit optimistic. My own experience at the VITA site shows that many families never even hear about the credit, so the reductions are smaller.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limits non-filer engagement, and my experience in rural Mississippi shows that many eligible families lack internet access or awareness, so only about 1.1 million non-filer households will receive payments out of the 2.5 million sign-ups.",
+                "The average monthly payment per child will be around $265, below the maximum, because income phaseouts and partial-year effects (late registration, children aging out) reduce the amount for many families, as I've seen in my VITA site.",
+                "Many eligible families won't receive payments because they didn't file in 2019 or 2020, or because of portal errors and address changes that the IRS cannot update without proactive reporting, leading to about 33.5 million families receiving at least one payment.",
+                "The 175 million advance payments disbursed and 2.5 million non-filer sign-ups from the Activities phase set a ceiling, but conversion to successful payments is lower due to verification issues and outreach limitations, consistent with my hands-on experience."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "At the Outcomes phase, the central causal mechanism is that the fixed IRS budget, 5,000 FTEs, and a $20 million outreach cap constrain the reach and average payment amount of the advance Child Tax Credit, thereby limiting the reduction in child poverty and food insufficiency. Key assumptions include that the average payment of $260–$275 per child per month and the enrollment of only 1–1.5 million non-filer households are sufficient to achieve a 30–36% relative reduction in overall child poverty, but that Black and Hispanic children face higher baseline poverty and additional barriers (e.g., language, digital access) that result in smaller reductions (e.g., Black child poverty rate falls to 11.5–12.5%). The primary bottleneck is the outreach cap, which prevents many eligible non-filer families from receiving payments, dampening the poverty reduction for marginalized groups. This phase shifts the downstream pathway by establishing that resource constraints will limit the program's equity impact, making it likely that subsequent phases will need to address outreach and enrollment gaps to achieve deeper reductions for Black and Hispanic children.",
+          "posting_order": [
+            "Maria Gonzalez",
+            "Marlene K. Ashford",
+            "James Thompson",
+            "Linda Chen",
+            "James Thompson (iq3h88)"
+          ]
+        },
+        {
+          "phase": "Impact",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.03,
+                "child_health_outcome_composite_score": 0.15,
+                "long_term_healthcare_cost_savings_usd": 5000000000
+              },
+              "narrative": "As the IRS administrator overseeing the 2021 expansion, I reason from the prior phases that the fixed $1.4645 billion budget, 5,000 FTEs, and $20 million outreach cap constrained reach and payment amounts. With 35 million families receiving an average of $275 per child per month, the policy reduced child poverty by about 36% (from 9.7% to 6.2% SPM) and food insufficiency by 25% among low-income households. These short-term gains in income and nutrition are the foundation for long-term improvements. The intergenerational income mobility index improves by 0.03 because children in families that received the full expansion experience better educational attainment and higher future earnings, driven by reduced poverty and improved family stability during childhood. The child health outcome composite score rises by 0.15 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship. Long-term healthcare cost savings reach $5 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization. However, the outreach cap limited non-filer enrollment to 1.5 million households, meaning many Black and Hispanic children missed out, which dampens the equity of these long-term gains. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist.",
+              "evidence": [
+                "The 36% reduction in child poverty and 25% reduction in food insufficiency from the Outcomes phase provide the direct causal pathway: improved family income and nutrition in childhood are well-documented predictors of higher educational attainment, earnings, and intergenerational mobility.",
+                "Research on the Earned Income Tax Credit and other cash transfer programs shows that a 1 standard deviation increase in family income during early childhood leads to a 0.03-0.05 increase in intergenerational income mobility, consistent with my estimate of 0.03 given the one-year nature of the expansion.",
+                "Improved nutrition and reduced stress from poverty are linked to better birth outcomes and lower hospitalization rates; the 0.15 standard deviation improvement in child health composite is supported by studies of the Supplemental Nutrition Assistance Program showing similar effect sizes.",
+                "Healthcare cost savings of $5 billion over 10 years are derived from estimates that each dollar of cash transfer reduces future healthcare costs by $0.50-$1.00, applied to the roughly $10 billion in advance payments disbursed to families with children."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.02,
+                "child_health_outcome_composite_score": 0.1,
+                "long_term_healthcare_cost_savings_usd": 3000000000
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations, the prior phases show that the fixed IRS budget of $1.4645 billion, 5,000 FTEs, and $20 million outreach cap constrained reach and payment amounts. With 34 million families receiving an average of $270 per child per month, the policy reduced child poverty by about 33% (from 9.7% to 6.5% SPM) and food insufficiency by 22% among low-income households. These short-term gains are the foundation for long-term improvements, but the outreach cap limited non-filer enrollment to 1.2 million households, meaning many Black and Hispanic children missed out, which dampens the equity of long-term gains. The intergenerational income mobility index improves by 0.02 because children in families that received the full expansion experience better educational attainment and higher future earnings, but the effect is modest due to the limited reach and the fact that the expansion was only for one year. The child health outcome composite score rises by 0.1 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship, but again the effect is tempered by the limited reach. Long-term healthcare cost savings reach $3 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization, but the savings are lower than Maria's estimate because the outreach cap means fewer children benefit. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist for those who received it.",
+              "evidence": [
+                "The $20 million outreach cap limited non-filer enrollment to 1.2 million households, reducing the number of children who benefit from the long-term effects of the expansion.",
+                "The average monthly payment of $270 per child, due to phaseouts and partial-year effects, provides less income support than the maximum, limiting the magnitude of improvements in child health and future earnings.",
+                "My experience with large-scale disbursements at Fiscal Service confirms that operational delays and data errors can reduce the effective reach of payments, especially for non-filer households, dampening long-term outcomes.",
+                "The one-year nature of the expansion means that the income boost is temporary, which limits the persistence of poverty reduction and the magnitude of intergenerational mobility gains compared to a permanent expansion."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.02,
+                "child_health_outcome_composite_score": 0.1,
+                "long_term_healthcare_cost_savings_usd": 3000000000
+              },
+              "narrative": "As a parent automatically receiving payments, I see the fixed IRS budget and outreach cap as the main constraints from the prior phases. With 34 million families receiving an average of $270 per child per month, the policy reduced child poverty by about 33% and food insufficiency by 22%. These short-term gains in income and nutrition are the foundation for long-term improvements, but the outreach cap limited non-filer enrollment to 1.2 million households, meaning many Black and Hispanic children missed out, which dampens the equity of long-term gains. The intergenerational income mobility index improves by 0.02 because children in families that received the full expansion experience better educational attainment and higher future earnings, but the effect is modest due to the limited reach and the fact that the expansion was only for one year. The child health outcome composite score rises by 0.1 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship, but again the effect is tempered by the limited reach. Long-term healthcare cost savings reach $3 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization, but the savings are lower than Maria's estimate because the outreach cap means fewer children benefit. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist for those who received it. I align more with Marlene's cautious estimates because my own experience with the portal and news reports confirm that the system is strained and the outreach cap is a binding constraint.",
+              "evidence": [
+                "The $20 million outreach cap limited non-filer enrollment to about 1.2 million households, meaning many eligible Black and Hispanic families missed out, which dampens the equity of long-term gains in mobility and health.",
+                "The average payment of $270 per child per month, below the maximum due to phaseouts and partial-year effects, provides meaningful income support but cannot fully close the poverty gap for all families, limiting the magnitude of long-term improvements.",
+                "My own experience with the portal and news reports confirm that the system is strained, leading to delays and errors that reduce the number of families reached, especially among those without internet access, which tempers the health and mobility benefits.",
+                "The prior phases show that only 34 million families received at least one payment, and the outreach cap is a binding constraint that limits the program's ability to reach the most vulnerable, consistent with Marlene's operational perspective and my own cautious view."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.02,
+                "child_health_outcome_composite_score": 0.1,
+                "long_term_healthcare_cost_savings_usd": 3000000000
+              },
+              "narrative": "As a non-filer parent, I see the fixed IRS budget and $20 million outreach cap as the main constraints from the prior phases. With only 1 million non-filer households receiving payments and an average payment of $260 per child per month, the policy reduced child poverty by about 30% and food insufficiency by 20%. These short-term gains in income and nutrition are the foundation for long-term improvements, but the outreach cap limited non-filer enrollment to 1 million households, meaning many Black and Hispanic children like mine missed out, which dampens the equity of long-term gains. The intergenerational income mobility index improves by 0.02 because children in families that received the full expansion experience better educational attainment and higher future earnings, but the effect is modest due to the limited reach and the fact that the expansion was only for one year. The child health outcome composite score rises by 0.1 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship, but again the effect is tempered by the limited reach. Long-term healthcare cost savings reach $3 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization, but the savings are lower than Maria's estimate because the outreach cap means fewer children benefit. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist for those who received it. I align more with Marlene and James's cautious estimates because my own experience at the community center confirms that many families never even hear about the credit, so the long-term impacts are smaller.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limited non-filer enrollment to only 1 million households, meaning many eligible Black and Hispanic children like mine missed out on the income boost needed for long-term mobility and health gains.",
+                "The average monthly payment of $260 per child is below the $300/$250 maximum due to phaseouts and partial-year effects, reducing the overall impact on family income and thus the magnitude of long-term improvements in child outcomes.",
+                "Research shows that even a single year of increased family income during childhood can improve educational attainment and future earnings, but the effect is modest (0.02 index change) because the expansion was only for one year and did not reach all eligible families.",
+                "Improved nutrition and reduced poverty from the payments lower rates of low birth weight and hospitalizations, leading to $3 billion in healthcare cost savings over 10 years, but the savings are limited because the outreach cap left many vulnerable children unserved."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.02,
+                "child_health_outcome_composite_score": 0.1,
+                "long_term_healthcare_cost_savings_usd": 3000000000
+              },
+              "narrative": "From my work as a tax preparer in rural Mississippi, I see the fixed IRS budget and $20 million outreach cap as hard constraints that limited reach and payment amounts. The prior phases show that only about 1.1 million non-filer households received payments, and the average payment was $265 per child per month. This means many eligible families like those I serve were left out, especially Black and Hispanic children who face language, digital, and trust barriers. The short-term gains in income and nutrition from the 2021 expansion are real but modest for the most vulnerable. The intergenerational income mobility index improves by 0.02 because children in families that received the full expansion experience better educational attainment and higher future earnings, but the effect is modest due to the limited reach and the fact that the expansion was only for one year. The child health outcome composite score rises by 0.1 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship, but again the effect is tempered by the limited reach. Long-term healthcare cost savings reach $3 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization, but the savings are lower than Maria's estimate because the outreach cap means fewer children benefit. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist for those who received it. I align more with Marlene, James, and Linda's cautious estimates because my own experience at the VITA site confirms that many families never even hear about the credit, so the long-term impacts are smaller.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limited non-filer enrollment to about 1.1 million households, meaning many eligible Black and Hispanic children missed out, which dampens the equity and magnitude of long-term gains.",
+                "The average monthly payment of $265 per child, below the maximum, reduces the income boost for families, leading to more modest improvements in child health and educational outcomes compared to a scenario with full payments.",
+                "The one-year duration of the expansion limits the persistence of poverty reduction and the cumulative effect on child development, so intergenerational mobility improves only modestly (0.02 index) and healthcare savings are capped at $3 billion over 10 years.",
+                "My hands-on experience at the VITA site in rural Mississippi shows that many eligible families never even hear about the credit, so the long-term impacts are smaller than optimistic estimates that assume universal reach."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "irs_administrator",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.03,
+                "child_health_outcome_composite_score": 0.15,
+                "long_term_healthcare_cost_savings_usd": 5000000000
+              },
+              "narrative": "As the IRS administrator overseeing the 2021 expansion, I reason from the prior phases that the fixed $1.4645 billion budget, 5,000 FTEs, and $20 million outreach cap constrained reach and payment amounts. With 35 million families receiving an average of $275 per child per month, the policy reduced child poverty by about 36% (from 9.7% to 6.2% SPM) and food insufficiency by 25% among low-income households. These short-term gains in income and nutrition are the foundation for long-term improvements. The intergenerational income mobility index improves by 0.03 because children in families that received the full expansion experience better educational attainment and higher future earnings, driven by reduced poverty and improved family stability during childhood. The child health outcome composite score rises by 0.15 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship. Long-term healthcare cost savings reach $5 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization. However, the outreach cap limited non-filer enrollment to 1.5 million households, meaning many Black and Hispanic children missed out, which dampens the equity of these long-term gains. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist.",
+              "evidence": [
+                "The 36% reduction in child poverty and 25% reduction in food insufficiency from the Outcomes phase provide the direct causal pathway: improved family income and nutrition in childhood are well-documented predictors of higher educational attainment, earnings, and intergenerational mobility.",
+                "Research on the Earned Income Tax Credit and other cash transfer programs shows that a 1 standard deviation increase in family income during early childhood leads to a 0.03-0.05 increase in intergenerational income mobility, consistent with my estimate of 0.03 given the one-year nature of the expansion.",
+                "Improved nutrition and reduced stress from poverty are linked to better birth outcomes and lower hospitalization rates; the 0.15 standard deviation improvement in child health composite is supported by studies of the Supplemental Nutrition Assistance Program showing similar effect sizes.",
+                "Healthcare cost savings of $5 billion over 10 years are derived from estimates that each dollar of cash transfer reduces future healthcare costs by $0.50-$1.00, applied to the roughly $10 billion in advance payments disbursed to families with children."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Marlene K. Ashford",
+              "stakeholder_type": "payment_operator",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.02,
+                "child_health_outcome_composite_score": 0.1,
+                "long_term_healthcare_cost_savings_usd": 3000000000
+              },
+              "narrative": "From my perspective as Deputy Assistant Secretary for Fiscal Operations, the prior phases show that the fixed IRS budget of $1.4645 billion, 5,000 FTEs, and $20 million outreach cap constrained reach and payment amounts. With 34 million families receiving an average of $270 per child per month, the policy reduced child poverty by about 33% (from 9.7% to 6.5% SPM) and food insufficiency by 22% among low-income households. These short-term gains are the foundation for long-term improvements, but the outreach cap limited non-filer enrollment to 1.2 million households, meaning many Black and Hispanic children missed out, which dampens the equity of long-term gains. The intergenerational income mobility index improves by 0.02 because children in families that received the full expansion experience better educational attainment and higher future earnings, but the effect is modest due to the limited reach and the fact that the expansion was only for one year. The child health outcome composite score rises by 0.1 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship, but again the effect is tempered by the limited reach. Long-term healthcare cost savings reach $3 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization, but the savings are lower than Maria's estimate because the outreach cap means fewer children benefit. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist for those who received it.",
+              "evidence": [
+                "The $20 million outreach cap limited non-filer enrollment to 1.2 million households, reducing the number of children who benefit from the long-term effects of the expansion.",
+                "The average monthly payment of $270 per child, due to phaseouts and partial-year effects, provides less income support than the maximum, limiting the magnitude of improvements in child health and future earnings.",
+                "My experience with large-scale disbursements at Fiscal Service confirms that operational delays and data errors can reduce the effective reach of payments, especially for non-filer households, dampening long-term outcomes.",
+                "The one-year nature of the expansion means that the income boost is temporary, which limits the persistence of poverty reduction and the magnitude of intergenerational mobility gains compared to a permanent expansion."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson",
+              "stakeholder_type": "recipient_parent",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.02,
+                "child_health_outcome_composite_score": 0.1,
+                "long_term_healthcare_cost_savings_usd": 3000000000
+              },
+              "narrative": "As a parent automatically receiving payments, I see the fixed IRS budget and outreach cap as the main constraints from the prior phases. With 34 million families receiving an average of $270 per child per month, the policy reduced child poverty by about 33% and food insufficiency by 22%. These short-term gains in income and nutrition are the foundation for long-term improvements, but the outreach cap limited non-filer enrollment to 1.2 million households, meaning many Black and Hispanic children missed out, which dampens the equity of long-term gains. The intergenerational income mobility index improves by 0.02 because children in families that received the full expansion experience better educational attainment and higher future earnings, but the effect is modest due to the limited reach and the fact that the expansion was only for one year. The child health outcome composite score rises by 0.1 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship, but again the effect is tempered by the limited reach. Long-term healthcare cost savings reach $3 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization, but the savings are lower than Maria's estimate because the outreach cap means fewer children benefit. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist for those who received it. I align more with Marlene's cautious estimates because my own experience with the portal and news reports confirm that the system is strained and the outreach cap is a binding constraint.",
+              "evidence": [
+                "The $20 million outreach cap limited non-filer enrollment to about 1.2 million households, meaning many eligible Black and Hispanic families missed out, which dampens the equity of long-term gains in mobility and health.",
+                "The average payment of $270 per child per month, below the maximum due to phaseouts and partial-year effects, provides meaningful income support but cannot fully close the poverty gap for all families, limiting the magnitude of long-term improvements.",
+                "My own experience with the portal and news reports confirm that the system is strained, leading to delays and errors that reduce the number of families reached, especially among those without internet access, which tempers the health and mobility benefits.",
+                "The prior phases show that only 34 million families received at least one payment, and the outreach cap is a binding constraint that limits the program's ability to reach the most vulnerable, consistent with Marlene's operational perspective and my own cautious view."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Linda Chen",
+              "stakeholder_type": "nonfiler_parent",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.02,
+                "child_health_outcome_composite_score": 0.1,
+                "long_term_healthcare_cost_savings_usd": 3000000000
+              },
+              "narrative": "As a non-filer parent, I see the fixed IRS budget and $20 million outreach cap as the main constraints from the prior phases. With only 1 million non-filer households receiving payments and an average payment of $260 per child per month, the policy reduced child poverty by about 30% and food insufficiency by 20%. These short-term gains in income and nutrition are the foundation for long-term improvements, but the outreach cap limited non-filer enrollment to 1 million households, meaning many Black and Hispanic children like mine missed out, which dampens the equity of long-term gains. The intergenerational income mobility index improves by 0.02 because children in families that received the full expansion experience better educational attainment and higher future earnings, but the effect is modest due to the limited reach and the fact that the expansion was only for one year. The child health outcome composite score rises by 0.1 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship, but again the effect is tempered by the limited reach. Long-term healthcare cost savings reach $3 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization, but the savings are lower than Maria's estimate because the outreach cap means fewer children benefit. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist for those who received it. I align more with Marlene and James's cautious estimates because my own experience at the community center confirms that many families never even hear about the credit, so the long-term impacts are smaller.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limited non-filer enrollment to only 1 million households, meaning many eligible Black and Hispanic children like mine missed out on the income boost needed for long-term mobility and health gains.",
+                "The average monthly payment of $260 per child is below the $300/$250 maximum due to phaseouts and partial-year effects, reducing the overall impact on family income and thus the magnitude of long-term improvements in child outcomes.",
+                "Research shows that even a single year of increased family income during childhood can improve educational attainment and future earnings, but the effect is modest (0.02 index change) because the expansion was only for one year and did not reach all eligible families.",
+                "Improved nutrition and reduced poverty from the payments lower rates of low birth weight and hospitalizations, leading to $3 billion in healthcare cost savings over 10 years, but the savings are limited because the outreach cap left many vulnerable children unserved."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "James Thompson (iq3h88)",
+              "stakeholder_type": "outreach_navigator",
+              "prediction_values": {
+                "intergenerational_income_mobility_index": 0.02,
+                "child_health_outcome_composite_score": 0.1,
+                "long_term_healthcare_cost_savings_usd": 3000000000
+              },
+              "narrative": "From my work as a tax preparer in rural Mississippi, I see the fixed IRS budget and $20 million outreach cap as hard constraints that limited reach and payment amounts. The prior phases show that only about 1.1 million non-filer households received payments, and the average payment was $265 per child per month. This means many eligible families like those I serve were left out, especially Black and Hispanic children who face language, digital, and trust barriers. The short-term gains in income and nutrition from the 2021 expansion are real but modest for the most vulnerable. The intergenerational income mobility index improves by 0.02 because children in families that received the full expansion experience better educational attainment and higher future earnings, but the effect is modest due to the limited reach and the fact that the expansion was only for one year. The child health outcome composite score rises by 0.1 standard deviations due to lower rates of low birth weight, fewer hospitalizations, and better mental health outcomes from reduced material hardship, but again the effect is tempered by the limited reach. Long-term healthcare cost savings reach $3 billion over 10 years, as improved child health reduces chronic disease burden and healthcare utilization, but the savings are lower than Maria's estimate because the outreach cap means fewer children benefit. The sustainability of poverty reduction beyond 2021 depends on whether the expansion is extended; without it, some gains may erode, but the health and mobility benefits from the 2021 income boost are likely to persist for those who received it. I align more with Marlene, James, and Linda's cautious estimates because my own experience at the VITA site confirms that many families never even hear about the credit, so the long-term impacts are smaller.",
+              "evidence": [
+                "The $20 million outreach cap is a binding constraint that limited non-filer enrollment to about 1.1 million households, meaning many eligible Black and Hispanic children missed out, which dampens the equity and magnitude of long-term gains.",
+                "The average monthly payment of $265 per child, below the maximum, reduces the income boost for families, leading to more modest improvements in child health and educational outcomes compared to a scenario with full payments.",
+                "The one-year duration of the expansion limits the persistence of poverty reduction and the cumulative effect on child development, so intergenerational mobility improves only modestly (0.02 index) and healthcare savings are capped at $3 billion over 10 years.",
+                "My hands-on experience at the VITA site in rural Mississippi shows that many eligible families never even hear about the credit, so the long-term impacts are smaller than optimistic estimates that assume universal reach."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "At the Impact phase, the central causal mechanism posits that the 2021 expansion's short-term reductions in child poverty and food insufficiency translate into lasting improvements in intergenerational income mobility, child health, and healthcare cost savings. The dominant assumption is that a one-year income boost, even when constrained by a $20 million outreach cap and limited non-filer enrollment, can produce modest but persistent gains (e.g., a 0.02–0.03 index increase in mobility and $3–5 billion in healthcare savings). Key bottlenecks include the outreach cap and one-year duration, which limit the program's reach to vulnerable populations and dampen the magnitude of long-term effects, particularly for Black and Hispanic children. This phase shifts the downstream pathway from a focus on immediate poverty reduction to a more cautious assessment of durable benefits, with the sustainability of gains hinging on whether the expansion is extended.",
+          "posting_order": [
+            "Maria Gonzalez",
+            "Marlene K. Ashford",
+            "James Thompson",
+            "Linda Chen",
+            "James Thompson (iq3h88)"
+          ]
+        }
+      ],
+      "backward_pass": null,
+      "fwd_bwd_fwd_pass": null,
+      "fwd_bwd_fwd_bwd_pass": null,
+      "cross_checks": [
+        {
+          "phase": "Inputs",
+          "variable": "irs_administrative_budget_usd",
+          "forward_agg": 1464500000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 1464500000.0
+        },
+        {
+          "phase": "Inputs",
+          "variable": "irs_staff_allocated_ftes",
+          "forward_agg": 5000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 5000.0
+        },
+        {
+          "phase": "Inputs",
+          "variable": "non_filer_outreach_budget_usd",
+          "forward_agg": 20000000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 20000000.0
+        },
+        {
+          "phase": "Activities",
+          "variable": "advance_payment_disbursements_count",
+          "forward_agg": 175000000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 175000000.0
+        },
+        {
+          "phase": "Activities",
+          "variable": "portal_account_updates_processed",
+          "forward_agg": 6000000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 6000000.0
+        },
+        {
+          "phase": "Activities",
+          "variable": "non_filer_sign_up_tool_submissions_processed",
+          "forward_agg": 2500000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 2500000.0
+        },
+        {
+          "phase": "Outputs",
+          "variable": "average_monthly_payment_per_child_dollars",
+          "forward_agg": 268.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 268.0
+        },
+        {
+          "phase": "Outputs",
+          "variable": "eligible_families_receiving_at_least_one_payment",
+          "forward_agg": 33900000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 33900000.0
+        },
+        {
+          "phase": "Outputs",
+          "variable": "non_filer_households_receiving_payments",
+          "forward_agg": 1200000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 1200000.0
+        },
+        {
+          "phase": "Outcomes",
+          "variable": "spm_child_poverty_rate_2021_pct",
+          "forward_agg": 6.56,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 6.56
+        },
+        {
+          "phase": "Outcomes",
+          "variable": "spm_child_poverty_relative_reduction_2020_2021_pct",
+          "forward_agg": 32.38,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 32.38
+        },
+        {
+          "phase": "Outcomes",
+          "variable": "low_income_food_insufficiency_relative_reduction_pct",
+          "forward_agg": 21.8,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 21.8
+        },
+        {
+          "phase": "Outcomes",
+          "variable": "spm_black_child_poverty_rate_2021_pct",
+          "forward_agg": 12.1,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 12.1
+        },
+        {
+          "phase": "Outcomes",
+          "variable": "spm_hispanic_child_poverty_rate_2021_pct",
+          "forward_agg": 10.24,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 10.24
+        },
+        {
+          "phase": "Impact",
+          "variable": "intergenerational_income_mobility_index",
+          "forward_agg": 0.022000000000000002,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 0.022000000000000002
+        },
+        {
+          "phase": "Impact",
+          "variable": "child_health_outcome_composite_score",
+          "forward_agg": 0.10999999999999999,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 0.10999999999999999
+        },
+        {
+          "phase": "Impact",
+          "variable": "long_term_healthcare_cost_savings_usd",
+          "forward_agg": 3400000000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 3400000000.0
+        }
+      ],
+      "scenario_impact": {
+        "intergenerational_income_mobility_index": 0.022000000000000002,
+        "child_health_outcome_composite_score": 0.10999999999999999,
+        "long_term_healthcare_cost_savings_usd": 3400000000.0
+      },
+      "scenario_confidence": {
+        "intergenerational_income_mobility_index": null,
+        "child_health_outcome_composite_score": null,
+        "long_term_healthcare_cost_savings_usd": null
+      }
+    }
+  ],
+  "aggregated_final": {
+    "intergenerational_income_mobility_index": 0.022000000000000002,
+    "child_health_outcome_composite_score": 0.10999999999999999,
+    "long_term_healthcare_cost_savings_usd": 3400000000.0
+  },
+  "implementation_gap_report": [
+    {
+      "phase": "Inputs",
+      "variable": "irs_administrative_budget_usd",
+      "forward_agg": 1464500000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 1464500000.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "irs_staff_allocated_ftes",
+      "forward_agg": 5000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 5000.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "non_filer_outreach_budget_usd",
+      "forward_agg": 20000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 20000000.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "advance_payment_disbursements_count",
+      "forward_agg": 175000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 175000000.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "portal_account_updates_processed",
+      "forward_agg": 6000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 6000000.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "non_filer_sign_up_tool_submissions_processed",
+      "forward_agg": 2500000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 2500000.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "average_monthly_payment_per_child_dollars",
+      "forward_agg": 268.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 268.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "eligible_families_receiving_at_least_one_payment",
+      "forward_agg": 33900000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 33900000.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "non_filer_households_receiving_payments",
+      "forward_agg": 1200000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 1200000.0
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "spm_child_poverty_rate_2021_pct",
+      "forward_agg": 6.56,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 6.56
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "spm_child_poverty_relative_reduction_2020_2021_pct",
+      "forward_agg": 32.38,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 32.38
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "low_income_food_insufficiency_relative_reduction_pct",
+      "forward_agg": 21.8,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 21.8
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "spm_black_child_poverty_rate_2021_pct",
+      "forward_agg": 12.1,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 12.1
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "spm_hispanic_child_poverty_rate_2021_pct",
+      "forward_agg": 10.24,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 10.24
+    },
+    {
+      "phase": "Impact",
+      "variable": "intergenerational_income_mobility_index",
+      "forward_agg": 0.022000000000000002,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 0.022000000000000002
+    },
+    {
+      "phase": "Impact",
+      "variable": "child_health_outcome_composite_score",
+      "forward_agg": 0.10999999999999999,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 0.10999999999999999
+    },
+    {
+      "phase": "Impact",
+      "variable": "long_term_healthcare_cost_savings_usd",
+      "forward_agg": 3400000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 3400000000.0
+    }
+  ],
+  "narrative_synthesis": "",
+  "phase_stakeholder_summaries": {}
+}

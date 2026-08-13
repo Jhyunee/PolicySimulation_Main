@@ -1,0 +1,6 @@
+field,label,ground_truth,max_mape_pct,max_mape_prediction,max_mape_path,baseline_mape_pct,baseline_prediction,baseline_path,min_mape_pct,min_mape_prediction,min_mape_path
+spm_child_poverty_rate_2021_pct,SPM child poverty rate (2021),5.2,88.0769,9.78,root/enabling/enabling/constraining,47.3077,7.66,root/baseline/baseline/baseline,18.4615,6.16,root/enabling/constraining/enabling
+spm_child_poverty_relative_reduction_2020_2021_pct,SPM relative reduction (2020-2021),46.0,101.7826,-0.82,root/enabling/enabling/constraining,54.2174,21.06,root/baseline/baseline/baseline,20.6522,36.5,root/enabling/constraining/enabling
+low_income_food_insufficiency_relative_reduction_pct,Low-income food insufficiency reduction,26.0,93.0769,1.8,root/enabling/enabling/constraining,15.3846,22.0,root/baseline/baseline/baseline,0.0,26.0,root/baseline/constraining/enabling
+spm_black_child_poverty_rate_2021_pct,Black child SPM poverty rate (2021),8.1,109.6296,16.98,root/enabling/enabling/constraining,65.4321,13.4,root/baseline/baseline/baseline,33.8272,10.84,root/enabling/enabling/enabling
+spm_hispanic_child_poverty_rate_2021_pct,Hispanic child SPM poverty rate (2021),8.4,73.3333,14.56,root/enabling/enabling/constraining,37.381,11.54,root/baseline/baseline/baseline,10.9524,9.32,root/enabling/constraining/enabling

@@ -1,0 +1,362 @@
+{
+  "command": "stage2-toc",
+  "model": "deepseek-chat",
+  "config_url": "https://api.deepseek.com/v1/chat/completions",
+  "config_path": "config/usa_chi_ctc_branch_panel.yaml",
+  "started_at": "2026-07-29T11:16:26",
+  "ended_at": "2026-07-29T11:19:03",
+  "duration_seconds": 157.45,
+  "usage": {
+    "llm_calls": 30,
+    "llm_calls_with_usage": 30,
+    "prompt_tokens": 145362,
+    "completion_tokens": 13898,
+    "total_tokens": 159260,
+    "call_count": 30,
+    "elapsed_sec": 0.0
+  },
+  "config": {
+    "llm": {
+      "url": "https://api.deepseek.com/v1/chat/completions",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "auth_header": "bearer",
+      "model": "deepseek-chat",
+      "temperature": 0.3,
+      "max_tokens": 8192,
+      "request_timeout": 180,
+      "max_retries": 3
+    },
+    "paths": {
+      "background_dir": "dataset/kor/background",
+      "input_policy_dir": "dataset/usa/chi_ctc/input_policy",
+      "past_policy_dir": "dataset/usa/chi_ctc/input_policy",
+      "processed_dir": "dataset/processed",
+      "outputs": {
+        "stage1": "outputs/usa/chi_ctc/stage1",
+        "stage2_toc": "outputs/usa/chi_ctc/stage2_toc"
+      }
+    },
+    "pdf": {
+      "parser": "opendataloader",
+      "fallback_to_pypdf": true,
+      "cache_dir": "dataset/processed/pdf_cache",
+      "output_formats": [
+        "markdown",
+        "json"
+      ],
+      "use_struct_tree": true,
+      "table_method": "cluster",
+      "reading_order": "xycut",
+      "keep_line_breaks": false,
+      "include_header_footer": false,
+      "markdown_page_separator": "\n\n--- page %page-number% ---\n\n"
+    },
+    "zep": {
+      "api_key_env": "ZEP_API_KEY",
+      "chunk_size": 500,
+      "chunk_overlap": 50,
+      "batch_size": 3,
+      "wait_timeout": 600
+    },
+    "kg": {
+      "use_iad_ig_ontology": true,
+      "chunk_size": 1200,
+      "chunk_overlap": 200,
+      "max_node_pool_context": 120,
+      "max_edges_per_chunk": 20,
+      "enable_validation_recovery": true
+    },
+    "stage1": {
+      "personas_per_category": 5,
+      "use_economic_context": false,
+      "use_economic_context_in_persona": false,
+      "use_policy_plan": false,
+      "use_policy_plan_in_context": false,
+      "output_file": "stage1_result.json",
+      "non_actor_types": [
+        "Program",
+        "Organization",
+        "Person"
+      ]
+    },
+    "persona": {
+      "selection_mode": "mechanism_panel",
+      "sampler": "kg_gen",
+      "simulation_sample_seed": 42,
+      "max_simulation_participants": 5,
+      "fallback_to_llm": true,
+      "mechanism_panel": {
+        "panel_id": "ctc_primary_mechanism_panel_v1",
+        "candidates_per_role": 5,
+        "strict_role_coverage": true,
+        "roles": [
+          {
+            "prototype_id": "irs_administrator",
+            "label": "IRS Child Tax Credit implementation official",
+            "domain_role": "irs_administrator",
+            "keywords": [
+              "internal revenue service",
+              "irs",
+              "secretary of the treasury"
+            ],
+            "node_types": [
+              "InternalRevenueService"
+            ],
+            "anchor_keywords": [
+              "internalrevenueservice",
+              "internal revenue service"
+            ],
+            "mechanism_functions": [
+              "decision",
+              "implementation",
+              "oversight"
+            ],
+            "role_family": "policy_administrator",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "objectives": [
+              "Administer advance Child Tax Credit eligibility, payment calculations, taxpayer updates, and reconciliation accurately."
+            ],
+            "constraints": [
+              "Must operate within statutory authority, administrative capacity, data quality, identity-verification, and notice requirements."
+            ],
+            "causal_leverage_points": [
+              "eligibility and payment calculation",
+              "portal and reconciliation administration"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "payment_operator",
+            "label": "Federal payment operations representative",
+            "domain_role": "payment_operator",
+            "keywords": [
+              "bureau of the fiscal service",
+              "fiscal service",
+              "treasury department"
+            ],
+            "node_types": [
+              "TreasuryDepartment"
+            ],
+            "anchor_keywords": [
+              "bureau of the fiscal service"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "delivery"
+            ],
+            "role_family": "implementation_intermediary",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs"
+            ],
+            "objectives": [
+              "Execute advance payment batches reliably and ensure funds reach eligible households on schedule."
+            ],
+            "constraints": [
+              "Must translate IRS payment instructions into high-volume disbursements under operational, timing, and data constraints."
+            ],
+            "causal_leverage_points": [
+              "payment batch execution",
+              "delivery errors and delays"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "recipient_parent",
+            "label": "Parent automatically receiving advance Child Tax Credit payments",
+            "domain_role": "recipient_parent",
+            "keywords": [
+              "automatically receiving advance payments",
+              "taxpayer with qualifying child",
+              "people with qualifying children"
+            ],
+            "node_types": [
+              "TaxpayerWithQualifyingChild"
+            ],
+            "anchor_keywords": [
+              "households automatically receiving advance payments"
+            ],
+            "mechanism_functions": [
+              "affected",
+              "decision"
+            ],
+            "role_family": "direct_beneficiary",
+            "agent_modality": "individual",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Receive the correct advance credit on time and use the added income to meet household and child needs."
+            ],
+            "constraints": [
+              "Must manage household changes, payment accuracy, and possible year-end reconciliation with limited control over program administration."
+            ],
+            "causal_leverage_points": [
+              "automatic receipt and payment adequacy",
+              "household spending and material hardship"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "nonfiler_parent",
+            "label": "Eligible non-filer parent or caregiver",
+            "domain_role": "nonfiler_parent",
+            "keywords": [
+              "nonfilerhousehold",
+              "non-filer",
+              "nonfiler"
+            ],
+            "node_types": [
+              "NonFilerHousehold"
+            ],
+            "anchor_keywords": [
+              "nonfilerhousehold",
+              "non-filer household"
+            ],
+            "mechanism_functions": [
+              "affected",
+              "access",
+              "decision"
+            ],
+            "role_family": "pipeline_actor",
+            "agent_modality": "individual",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Learn about eligibility, complete registration, and receive the full credit despite not normally filing a tax return."
+            ],
+            "constraints": [
+              "May face information, documentation, identity-verification, language, digital-access, and institutional-trust barriers."
+            ],
+            "causal_leverage_points": [
+              "awareness and registration",
+              "digital and documentation access"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "outreach_navigator",
+            "label": "Community Child Tax Credit outreach navigator",
+            "domain_role": "outreach_navigator",
+            "keywords": [
+              "community outreach partner",
+              "outreachintermediary",
+              "small business employer"
+            ],
+            "node_types": [
+              "OutreachIntermediary"
+            ],
+            "anchor_keywords": [
+              "communityoutreachpartner",
+              "community outreach partner"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "information",
+              "access"
+            ],
+            "role_family": "implementation_intermediary",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "objectives": [
+              "Identify underserved eligible families and help them understand and access advance Child Tax Credit payments."
+            ],
+            "constraints": [
+              "Must work with limited outreach capacity, uneven community trust, language needs, and changing federal guidance."
+            ],
+            "causal_leverage_points": [
+              "trusted information diffusion",
+              "hands-on enrollment assistance"
+            ],
+            "required": true
+          }
+        ],
+        "anchor_overrides": {
+          "irs_administrator": "InternalRevenueService:InternalRevenueService",
+          "payment_operator": "TreasuryDepartment:Bureau of the Fiscal Service",
+          "recipient_parent": "TaxpayerWithQualifyingChild:Households Automatically Receiving Advance Payments",
+          "nonfiler_parent": "NonFilerHousehold:NonFilerHousehold",
+          "outreach_navigator": "OutreachIntermediary:CommunityOutreachPartner"
+        }
+      },
+      "kg_gen": {
+        "country": "usa",
+        "personas_per_entity": 5,
+        "temperature": 0.7
+      },
+      "role_actions": {
+        "enabled": true
+      },
+      "refiner": {
+        "enabled": false
+      },
+      "actor_anchor_policy": "persona_eligible",
+      "simulation_sampling_strategy": "role_stratified_weighted",
+      "simulation_role_gate": {
+        "enabled": false
+      },
+      "scope_definer": {
+        "parquet_glob": "dataset/processed/nemotron_usa/Nemotron-Personas-USA/data/*.parquet",
+        "values_module": "dataset.processed.nemotron_usa"
+      }
+    },
+    "stage2_toc": {
+      "prompt_variant": "en_natural",
+      "max_scenarios": 1,
+      "run_forward": true,
+      "run_backward": false,
+      "final_forward_refinement": false,
+      "phase_interaction_mode": "sequential",
+      "fixed_posting_order": [
+        "irs_administrator",
+        "payment_operator",
+        "recipient_parent",
+        "nonfiler_parent",
+        "outreach_navigator"
+      ],
+      "branch_mechanism_planner": {
+        "enabled": false,
+        "mode": "per_transition",
+        "coverage_level_override": null
+      },
+      "fwd_bwd_fwd_seq": false,
+      "fwd_bwd_fwd_bwd_seq": false,
+      "quantitative_target_only": false,
+      "sequential_backward": false,
+      "use_economic_context_in_simulation": false,
+      "inner_schema_file": "inner_schema.json",
+      "output_file": "stage2_toc_result.json",
+      "parallel_forward_backward": false,
+      "parallel_scenarios": false
+    }
+  },
+  "simulation_target": "2021 SPM child poverty rate and relative reduction from the 2020 baseline, low-income household food insufficiency reduction, and 2021 SPM poverty rates for Black and Hispanic children",
+  "run_tag": "ebc_compact_baseline_v1",
+  "stage1_result": "outputs/usa/chi_ctc/stage1/20260729111417_deepseek-chat_result_ebc_compact_panel_v1/stage1_result.json",
+  "simulation_personas": "outputs/usa/chi_ctc/stage1/20260729111417_deepseek-chat_result_ebc_compact_panel_v1/simulation_personas.json",
+  "scenario_count": 1,
+  "outputs": {
+    "stage2_toc_result": "stage2_toc_result.json",
+    "final_report": "final_report.json"
+  }
+}

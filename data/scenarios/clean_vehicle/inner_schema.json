@@ -1,0 +1,32 @@
+{
+  "phases": [
+    {
+      "phase": "Inputs",
+      "prediction_fields": [
+        {
+          "name": "irs_administrative_budget_usd",
+          "unit": "USD",
+          "type": "float",
+          "description": "Annual budget allocated to the IRS for administering the Section 30D credit, including systems, personnel, and compliance activities."
+        },
+        {
+          "name": "dealer_registration_count",
+          "unit": "dealers",
+          "type": "int",
+          "description": "Number of dealers registered with the IRS to handle point-of-sale credit transfers."
+        },
+        {
+          "name": "manufacturer_certification_count",
+          "unit": "manufacturers",
+          "type": "int",
+          "description": "Number of qualified manufacturers that have entered into written agreements with the IRS to certify vehicles for the credit."
+        }
+      ],
+      "discussion_points": [
+        "How does the level of IRS administrative funding affect the speed and accuracy of dealer registration and advance payment processing?",
+        "What barriers might prevent dealers from completing registration, and how does that affect the reach of the point-of-sale transfer option?",
+        "What factors determine the number of manufacturers that choose to certify, and how does that affect vehicle availability?"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,399 @@
+{
+  "command": "stage2-toc",
+  "model": "deepseek-chat",
+  "config_url": "https://api.deepseek.com/v1/chat/completions",
+  "config_path": "config/usa_chi_clean_vehicle_ebc.yaml",
+  "started_at": "2026-08-03T11:08:46",
+  "ended_at": "2026-08-03T11:09:22",
+  "duration_seconds": 35.76,
+  "usage": {
+    "llm_calls": 6,
+    "llm_calls_with_usage": 6,
+    "prompt_tokens": 17659,
+    "completion_tokens": 2285,
+    "total_tokens": 19944,
+    "call_count": 6,
+    "elapsed_sec": 0.0
+  },
+  "config": {
+    "llm": {
+      "url": "https://api.deepseek.com/v1/chat/completions",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "auth_header": "bearer",
+      "model": "deepseek-chat",
+      "temperature": 0.3,
+      "max_tokens": 8192,
+      "request_timeout": 180,
+      "max_retries": 3
+    },
+    "paths": {
+      "background_dir": "dataset/kor/background",
+      "input_policy_dir": "dataset/usa/chi_clean_vehicle/input_policy",
+      "past_policy_dir": "dataset/usa/chi_clean_vehicle/input_policy",
+      "processed_dir": "dataset/processed",
+      "outputs": {
+        "stage1": "outputs/usa/chi_clean_vehicle/stage1",
+        "stage2_toc": "outputs/usa/chi_clean_vehicle/stage2_toc"
+      }
+    },
+    "pdf": {
+      "parser": "opendataloader",
+      "fallback_to_pypdf": true,
+      "cache_dir": "dataset/processed/pdf_cache",
+      "output_formats": [
+        "markdown",
+        "json"
+      ],
+      "use_struct_tree": true,
+      "table_method": "cluster",
+      "reading_order": "xycut",
+      "keep_line_breaks": false,
+      "include_header_footer": false,
+      "markdown_page_separator": "\n\n--- page %page-number% ---\n\n"
+    },
+    "zep": {
+      "api_key_env": "ZEP_API_KEY",
+      "chunk_size": 500,
+      "chunk_overlap": 50,
+      "batch_size": 3,
+      "wait_timeout": 600
+    },
+    "kg": {
+      "use_iad_ig_ontology": true,
+      "chunk_size": 1200,
+      "chunk_overlap": 200,
+      "max_node_pool_context": 120,
+      "max_edges_per_chunk": 20,
+      "enable_validation_recovery": true
+    },
+    "stage1": {
+      "personas_per_category": 5,
+      "use_economic_context": false,
+      "use_economic_context_in_persona": false,
+      "use_policy_plan": false,
+      "use_policy_plan_in_context": false,
+      "output_file": "stage1_result.json",
+      "non_actor_types": [
+        "Program",
+        "Organization",
+        "Person"
+      ]
+    },
+    "persona": {
+      "selection_mode": "mechanism_panel",
+      "sampler": "kg_gen",
+      "simulation_sample_seed": 42,
+      "max_simulation_participants": 5,
+      "fallback_to_llm": true,
+      "mechanism_panel": {
+        "panel_id": "section30d_primary_mechanism_panel_v1",
+        "candidates_per_role": 5,
+        "strict_role_coverage": true,
+        "roles": [
+          {
+            "prototype_id": "buyer",
+            "label": "New clean vehicle buyer",
+            "domain_role": "buyer",
+            "keywords": [
+              "newcleanvehiclebuyer",
+              "new clean vehicle buyer",
+              "electing taxpayer",
+              "taxpayer claiming credit"
+            ],
+            "node_types": [
+              "NewCleanVehicleBuyer"
+            ],
+            "anchor_keywords": [
+              "newcleanvehiclebuyer",
+              "new clean vehicle buyer"
+            ],
+            "mechanism_functions": [
+              "affected",
+              "decision",
+              "adoption"
+            ],
+            "role_family": "direct_beneficiary",
+            "agent_modality": "individual",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Purchase an eligible clean vehicle while obtaining the Section 30D credit with manageable upfront and compliance costs."
+            ],
+            "constraints": [
+              "Must satisfy income, vehicle, documentation, and timing rules while choosing among a changing set of eligible vehicles."
+            ],
+            "causal_leverage_points": [
+              "vehicle purchase and credit election",
+              "eligibility awareness and affordability"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "dealer",
+            "label": "Registered clean vehicle dealer representative",
+            "domain_role": "dealer",
+            "keywords": [
+              "registereddealer",
+              "registered dealer",
+              "eligible entity",
+              "dealer"
+            ],
+            "node_types": [
+              "RegisteredDealer"
+            ],
+            "anchor_keywords": [
+              "registereddealer",
+              "registered dealer"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "information",
+              "transaction"
+            ],
+            "role_family": "implementation_intermediary",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "objectives": [
+              "Complete eligible clean vehicle sales and transfer-credit transactions accurately and efficiently."
+            ],
+            "constraints": [
+              "Must verify eligibility, submit time-sensitive seller reports, manage advance-payment rules, and explain requirements to buyers."
+            ],
+            "causal_leverage_points": [
+              "point-of-sale credit transfer",
+              "seller reporting and buyer guidance"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "supplier",
+            "label": "Battery and critical-mineral supplier representative",
+            "domain_role": "supplier",
+            "keywords": [
+              "qualifiedmanufacturer:battery manufacturer",
+              "battery manufacturer",
+              "third-party manufacturer or supplier",
+              "supplier",
+              "procurement chain",
+              "domestic battery supply chain"
+            ],
+            "node_types": [
+              "QualifiedManufacturer",
+              "DomesticBatterySupplyChain"
+            ],
+            "anchor_keywords": [
+              "battery manufacturer",
+              "supplier"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "production",
+              "traceability"
+            ],
+            "role_family": "upstream_implementation_actor",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Supply traceable, compliant battery components and critical minerals at viable cost and scale."
+            ],
+            "constraints": [
+              "Must adapt sourcing and documentation to escalating content thresholds, FEOC restrictions, capacity limits, and volatile input markets."
+            ],
+            "causal_leverage_points": [
+              "compliant mineral and component sourcing",
+              "battery traceability and domestic capacity"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "manufacturer",
+            "label": "Qualified clean vehicle manufacturer representative",
+            "domain_role": "manufacturer",
+            "keywords": [
+              "qualifiedmanufacturer",
+              "qualified manufacturer",
+              "epa manufacturer definition",
+              "manufacturer"
+            ],
+            "node_types": [
+              "QualifiedManufacturer"
+            ],
+            "anchor_keywords": [
+              "qualifiedmanufacturer",
+              "qualified manufacturer"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "production",
+              "certification"
+            ],
+            "role_family": "implementation_actor",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Produce and certify eligible clean vehicles while maintaining demand, production scale, and regulatory compliance."
+            ],
+            "constraints": [
+              "Must coordinate vehicle assembly, battery sourcing, VIN reporting, price limits, and rapidly changing eligibility rules."
+            ],
+            "causal_leverage_points": [
+              "eligible vehicle supply",
+              "manufacturer certification and product strategy"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "regulator",
+            "label": "Section 30D federal implementation official",
+            "domain_role": "regulator",
+            "keywords": [
+              "irs",
+              "internal revenue",
+              "department of energy",
+              "doe"
+            ],
+            "node_types": [
+              "IRS"
+            ],
+            "anchor_keywords": [
+              "irs",
+              "internal revenue"
+            ],
+            "mechanism_functions": [
+              "decision",
+              "implementation",
+              "oversight"
+            ],
+            "role_family": "policy_administrator",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Administer Section 30D eligibility, guidance, reporting, and enforcement consistently with statutory requirements."
+            ],
+            "constraints": [
+              "Must coordinate tax administration and energy-supply-chain determinations under complex, changing, and data-intensive rules."
+            ],
+            "causal_leverage_points": [
+              "eligibility guidance and vehicle lists",
+              "reporting oversight and enforcement"
+            ],
+            "required": true
+          }
+        ],
+        "anchor_overrides": {
+          "buyer": "NewCleanVehicleBuyer:NewCleanVehicleBuyer",
+          "dealer": "RegisteredDealer:RegisteredDealer",
+          "supplier": "QualifiedManufacturer:Battery Manufacturer",
+          "manufacturer": "QualifiedManufacturer:QualifiedManufacturer",
+          "regulator": "IRS:IRS"
+        },
+        "selection_preferences": {
+          "manufacturer": {
+            "preferred_occupation_terms": [
+              "operations",
+              "production",
+              "manufacturing",
+              "plant",
+              "factory",
+              "assembly"
+            ],
+            "deprioritized_occupation_terms": [
+              "government relations",
+              "regulatory",
+              "compliance",
+              "tax",
+              "policy"
+            ],
+            "preferred_occupation_weight": 1.5,
+            "deprioritized_occupation_weight": 1.0
+          }
+        }
+      },
+      "kg_gen": {
+        "country": "usa",
+        "personas_per_entity": 5,
+        "temperature": 0.7
+      },
+      "role_actions": {
+        "enabled": true
+      },
+      "refiner": {
+        "enabled": false
+      },
+      "actor_anchor_policy": "persona_eligible",
+      "simulation_sampling_strategy": "role_stratified_weighted",
+      "simulation_role_gate": {
+        "enabled": false
+      },
+      "scope_definer": {
+        "parquet_glob": "dataset/processed/nemotron_usa/Nemotron-Personas-USA/data/*.parquet",
+        "values_module": "dataset.processed.nemotron_usa"
+      }
+    },
+    "stage2_toc": {
+      "prompt_variant": "en_natural",
+      "max_scenarios": 1,
+      "run_forward": true,
+      "run_backward": false,
+      "final_forward_refinement": false,
+      "phase_interaction_mode": "independent",
+      "fixed_posting_order": [
+        "buyer",
+        "dealer",
+        "supplier",
+        "manufacturer",
+        "regulator"
+      ],
+      "branch_mechanism_planner": {
+        "enabled": false,
+        "mode": "per_transition",
+        "coverage_level_override": null
+      },
+      "fwd_bwd_fwd_seq": false,
+      "fwd_bwd_fwd_bwd_seq": false,
+      "quantitative_target_only": false,
+      "sequential_backward": false,
+      "use_economic_context_in_simulation": false,
+      "inner_schema_file": "inner_schema.json",
+      "output_file": "stage2_toc_result.json",
+      "parallel_forward_backward": false,
+      "parallel_scenarios": false
+    }
+  },
+  "simulation_target": "Section 30D implementation outcomes: Tax Year 2023 return count and average credit per return, and the January 1 through October 1, 2024 point-of-sale credit transfer rate.",
+  "run_tag": "ebc_inputs_bootstrap_v1",
+  "stage1_result": "outputs/usa/chi_clean_vehicle/stage1/20260803105931_deepseek-chat_result_mechanism_panel_v3_userstudy_final/stage1_result.json",
+  "simulation_personas": "outputs/usa/chi_clean_vehicle/stage1/20260803105931_deepseek-chat_result_mechanism_panel_v3_userstudy_final/simulation_personas.json",
+  "scenario_count": 1,
+  "outputs": {
+    "stage2_toc_result": "stage2_toc_result.json",
+    "final_report": "final_report.json"
+  }
+}

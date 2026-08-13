@@ -1,0 +1,337 @@
+{
+  "command": "stage2-toc",
+  "model": "deepseek-chat",
+  "config_url": "https://api.deepseek.com/v1/chat/completions",
+  "config_path": "config/ger_chi_vg_ebc.yaml",
+  "started_at": "2026-08-10T15:16:13",
+  "ended_at": "2026-08-10T15:16:14",
+  "duration_seconds": 0.21,
+  "usage": {
+    "llm_calls": 0,
+    "llm_calls_with_usage": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "call_count": 0,
+    "elapsed_sec": 0.0
+  },
+  "config": {
+    "llm": {
+      "url": "https://api.deepseek.com/v1/chat/completions",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "auth_header": "bearer",
+      "model": "deepseek-chat",
+      "temperature": 0.3,
+      "max_tokens": 8192,
+      "request_timeout": 180,
+      "max_retries": 3
+    },
+    "paths": {
+      "background_dir": "dataset/ger/background",
+      "input_policy_dir": "dataset/ger/chi_vg/input_policy",
+      "past_policy_dir": "dataset/ger/chi_vg/input_policy",
+      "processed_dir": "dataset/processed",
+      "outputs": {
+        "stage1": "outputs/ger/chi_vg/stage1",
+        "stage2_toc": "outputs/ger/chi_vg/stage2_toc"
+      }
+    },
+    "pdf": {
+      "parser": "opendataloader",
+      "fallback_to_pypdf": true,
+      "cache_dir": "dataset/processed/pdf_cache",
+      "output_formats": [
+        "markdown",
+        "json"
+      ],
+      "use_struct_tree": true,
+      "table_method": "cluster",
+      "reading_order": "xycut",
+      "keep_line_breaks": false,
+      "include_header_footer": false,
+      "markdown_page_separator": "\n\n--- page %page-number% ---\n\n"
+    },
+    "kg": {
+      "use_iad_ig_ontology": true,
+      "chunk_size": 1800,
+      "chunk_overlap": 250,
+      "max_workers": 4,
+      "max_node_pool_context": 120,
+      "max_edges_per_chunk": 24,
+      "enable_validation_recovery": true
+    },
+    "stage1": {
+      "personas_per_category": 5,
+      "use_economic_context": false,
+      "use_economic_context_in_persona": false,
+      "use_policy_plan": false,
+      "use_policy_plan_in_context": false,
+      "output_file": "stage1_result.json",
+      "non_actor_types": [
+        "Program",
+        "Organization",
+        "Person"
+      ]
+    },
+    "persona": {
+      "selection_mode": "mechanism_panel",
+      "sampler": "kg_gen",
+      "simulation_sample_seed": 42,
+      "max_simulation_participants": 5,
+      "fallback_to_llm": true,
+      "mechanism_panel": {
+        "panel_id": "verpackg_primary_mechanism_panel_v1",
+        "candidates_per_role": 5,
+        "strict_role_coverage": true,
+        "roles": [
+          {
+            "prototype_id": "producer",
+            "label": "Packaging producer representative",
+            "domain_role": "packaging_producer",
+            "keywords": [
+              "producer:producer"
+            ],
+            "node_types": [
+              "Producer"
+            ],
+            "anchor_keywords": [
+              "producer:producer"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "compliance",
+              "packaging_design"
+            ],
+            "role_family": "regulated_producer",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Place packaging on the market while meeting registration, system-participation, reporting, and design obligations at viable cost."
+            ],
+            "constraints": [
+              "Must coordinate registration, participation fees, packaging volumes, recyclability, and evidence requirements across product lines."
+            ],
+            "causal_leverage_points": [
+              "producer compliance and packaging design",
+              "system participation and fee response"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "dual_system",
+            "label": "Dual-system operations manager",
+            "domain_role": "dual_system_operator",
+            "keywords": [
+              "dualsystem:dualsystem"
+            ],
+            "node_types": [
+              "DualSystem"
+            ],
+            "anchor_keywords": [
+              "dualsystem:dualsystem"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "coordination",
+              "financing"
+            ],
+            "role_family": "implementation_intermediary",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Operate compliant, financially sustainable collection and recovery services while meeting material-specific recycling targets."
+            ],
+            "constraints": [
+              "Must coordinate producers, municipalities, contractors, reporting, fee design, and volatile material flows."
+            ],
+            "causal_leverage_points": [
+              "collection-system design and contracting",
+              "fee incentives and recycling performance"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "municipality",
+            "label": "Municipal waste-management official",
+            "domain_role": "municipal_waste_authority",
+            "keywords": [
+              "municipalwasteauthority:municipalwasteauthority"
+            ],
+            "node_types": [
+              "MunicipalWasteAuthority"
+            ],
+            "anchor_keywords": [
+              "municipalwasteauthority:municipalwasteauthority"
+            ],
+            "mechanism_functions": [
+              "coordination",
+              "local_governance",
+              "collection_oversight"
+            ],
+            "role_family": "local_policy_implementer",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Secure accessible and locally appropriate collection arrangements while protecting municipal service quality and accountability."
+            ],
+            "constraints": [
+              "Must reconcile local collection conditions, dual-system coordination, procurement, resident needs, and administrative capacity."
+            ],
+            "causal_leverage_points": [
+              "local collection requirements",
+              "municipal-system coordination"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "recycling_operator",
+            "label": "Packaging recycling facility manager",
+            "domain_role": "collection_recycling_operator",
+            "keywords": [
+              "collectionrecyclingoperator:collectionrecyclingoperator"
+            ],
+            "node_types": [
+              "CollectionRecyclingOperator"
+            ],
+            "anchor_keywords": [
+              "collectionrecyclingoperator:collectionrecyclingoperator"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "sorting",
+              "recycling"
+            ],
+            "role_family": "operational_implementer",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Convert collected packaging into verifiable recycled material while maintaining throughput, quality, and commercial viability."
+            ],
+            "constraints": [
+              "Must manage contamination, sorting yield, processing capacity, material quality, contract terms, and end-market demand."
+            ],
+            "causal_leverage_points": [
+              "sorting quality and process yield",
+              "recycling capacity and recovered-material markets"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "consumer",
+            "label": "Household packaging consumer",
+            "domain_role": "private_end_consumer",
+            "keywords": [
+              "privateendconsumer:privateendconsumer"
+            ],
+            "node_types": [
+              "PrivateEndConsumer"
+            ],
+            "anchor_keywords": [
+              "privateendconsumer:privateendconsumer"
+            ],
+            "mechanism_functions": [
+              "affected",
+              "separation_behavior",
+              "purchase_decision"
+            ],
+            "role_family": "affected_actor",
+            "agent_modality": "individual",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Dispose of packaging conveniently and correctly while making affordable and understandable reusable or single-use choices."
+            ],
+            "constraints": [
+              "Faces uneven local collection arrangements, labeling complexity, limited time and storage, and product-price tradeoffs."
+            ],
+            "causal_leverage_points": [
+              "household separation quality",
+              "reusable-packaging choice and participation"
+            ],
+            "required": true
+          }
+        ],
+        "anchor_overrides": {
+          "producer": "Producer:Producer",
+          "dual_system": "DualSystem:DualSystem",
+          "municipality": "MunicipalWasteAuthority:MunicipalWasteAuthority",
+          "recycling_operator": "CollectionRecyclingOperator:CollectionRecyclingOperator",
+          "consumer": "PrivateEndConsumer:PrivateEndConsumer"
+        },
+        "candidate_overrides": {
+          "producer": "Producer | KG-Gen-8ur8qn",
+          "dual_system": "DualSystem | KG-Gen-qn6nqn",
+          "municipality": "MunicipalWasteAuthority | KG-Gen-6hbge0",
+          "recycling_operator": "CollectionRecyclingOperator | KG-Gen-g4vtve",
+          "consumer": "PrivateEndConsumer | KG-Gen-jt0m9m"
+        }
+      },
+      "kg_gen": {
+        "country": "ger",
+        "personas_per_entity": 5,
+        "temperature": 0.7
+      },
+      "role_actions": {
+        "enabled": true
+      },
+      "refiner": {
+        "enabled": false
+      },
+      "actor_anchor_policy": "persona_eligible",
+      "simulation_sampling_strategy": "role_stratified_weighted",
+      "simulation_role_gate": {
+        "enabled": false
+      }
+    },
+    "stage2_toc": {
+      "prompt_variant": "en_natural",
+      "max_scenarios": 1,
+      "run_forward": true,
+      "run_backward": false,
+      "final_forward_refinement": false,
+      "phase_interaction_mode": "independent",
+      "grounded_inputs": {
+        "enabled": true,
+        "max_fields": 3,
+        "candidate_limit": 6,
+        "strict": true,
+        "policy_graph": "outputs/ger/chi_vg/stage1/mechanism_kg_v1/policy_graph.json",
+        "state_file": "outputs/ger/chi_vg/stage2_toc/grounded_input_state_v1.json",
+        "output_file": "grounded_input_state.json"
+      }
+    }
+  },
+  "simulation_target": "Given the documented implementation costs and policy parameters of Germany's Packaging Act (VerpackG), predict Germany's 2024 overall LVP recycling rate, glass recycling rate, and plastic material recycling rate.",
+  "run_tag": "ebc_verpackg_inputs_bootstrap_v1_sc1-1",
+  "stage1_result": "outputs/ger/chi_vg/stage1/20260810144930_deepseek-chat_result_mechanism_panel_v2_germany/stage1_result.json",
+  "simulation_personas": "outputs/ger/chi_vg/stage1/20260810144930_deepseek-chat_result_mechanism_panel_v2_germany/simulation_personas.json",
+  "scenario_count": 1,
+  "outputs": {
+    "stage2_toc_result": "stage2_toc_result.json",
+    "final_report": "final_report.json"
+  }
+}

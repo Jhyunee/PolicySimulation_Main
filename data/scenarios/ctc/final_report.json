@@ -1,0 +1,182 @@
+{
+  "simulation_target": "2021 SPM child poverty rate and relative reduction from the 2020 baseline, low-income household food insufficiency reduction, and 2021 SPM poverty rates for Black and Hispanic children",
+  "aggregated_final": {
+    "intergenerational_income_mobility_index": 0.022000000000000002,
+    "child_health_outcome_composite_score": 0.10999999999999999,
+    "long_term_healthcare_cost_savings_usd": 3400000000.0
+  },
+  "implementation_gap_report": [
+    {
+      "phase": "Inputs",
+      "variable": "irs_administrative_budget_usd",
+      "forward_agg": 1464500000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 1464500000.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "irs_staff_allocated_ftes",
+      "forward_agg": 5000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 5000.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "non_filer_outreach_budget_usd",
+      "forward_agg": 20000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 20000000.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "advance_payment_disbursements_count",
+      "forward_agg": 175000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 175000000.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "portal_account_updates_processed",
+      "forward_agg": 6000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 6000000.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "non_filer_sign_up_tool_submissions_processed",
+      "forward_agg": 2500000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 2500000.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "average_monthly_payment_per_child_dollars",
+      "forward_agg": 268.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 268.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "eligible_families_receiving_at_least_one_payment",
+      "forward_agg": 33900000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 33900000.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "non_filer_households_receiving_payments",
+      "forward_agg": 1200000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 1200000.0
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "spm_child_poverty_rate_2021_pct",
+      "forward_agg": 6.56,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 6.56
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "spm_child_poverty_relative_reduction_2020_2021_pct",
+      "forward_agg": 32.38,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 32.38
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "low_income_food_insufficiency_relative_reduction_pct",
+      "forward_agg": 21.8,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 21.8
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "spm_black_child_poverty_rate_2021_pct",
+      "forward_agg": 12.1,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 12.1
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "spm_hispanic_child_poverty_rate_2021_pct",
+      "forward_agg": 10.24,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 10.24
+    },
+    {
+      "phase": "Impact",
+      "variable": "intergenerational_income_mobility_index",
+      "forward_agg": 0.022000000000000002,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 0.022000000000000002
+    },
+    {
+      "phase": "Impact",
+      "variable": "child_health_outcome_composite_score",
+      "forward_agg": 0.10999999999999999,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 0.10999999999999999
+    },
+    {
+      "phase": "Impact",
+      "variable": "long_term_healthcare_cost_savings_usd",
+      "forward_agg": 3400000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 3400000000.0
+    }
+  ],
+  "narrative_synthesis": "",
+  "phase_stakeholder_summaries": {}
+}

@@ -1,0 +1,32 @@
+{
+  "phases": [
+    {
+      "phase": "Inputs",
+      "prediction_fields": [
+        {
+          "name": "total_stabilization_funding",
+          "unit": "USD",
+          "type": "int",
+          "description": "Total federal appropriation for child care stabilization grants under Section 2202 of the ARP Act."
+        },
+        {
+          "name": "tribal_base_amount",
+          "unit": "USD",
+          "type": "int",
+          "description": "Base amount awarded to each individual tribal lead agency (not part of a consortium) for stabilization grants."
+        },
+        {
+          "name": "state_minimum_subgrant_percentage",
+          "unit": "percent",
+          "type": "int",
+          "description": "Minimum percentage of stabilization funds that states and territories must spend as subgrants to qualified child care providers."
+        }
+      ],
+      "discussion_points": [
+        "How does the documented input 'total_stabilization_funding' condition downstream implementation activities? Total funding available determines the scale of subgrants and set-aside activities that lead agencies can implement.",
+        "How does the documented input 'tribal_base_amount' condition downstream implementation activities? Base amount provides a minimum funding level for each tribal lead agency, affecting their ability to administer the program.",
+        "How does the documented input 'state_minimum_subgrant_percentage' condition downstream implementation activities? This requirement determines the minimum amount of funding that must flow directly to providers as subgrants."
+      ]
+    }
+  ]
+}

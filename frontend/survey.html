@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Policy Pathway Study Survey</title>
+<link rel="stylesheet" href="styles.css?v=section-pagination-20260813a" />
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="survey-page">
+<main class="survey-shell">
+  <header class="survey-hero">
+    <span id="surveyKicker">Study questionnaire</span>
+    <h1 id="surveyTitle">Loading questionnaire...</h1>
+    <p id="surveyIntro">Please wait while your assigned study session is loaded.</p>
+  </header>
+  <form id="studySurvey" class="survey-form">
+    <div id="surveyPageProgress" class="survey-page-progress" hidden>
+      <div><span id="surveyPageLabel">Section 1 of 1</span><b id="surveyPageTitle"></b></div>
+      <i><span id="surveyPageBar"></span></i>
+    </div>
+    <div id="surveySections"></div>
+    <div class="survey-submit">
+      <p id="surveyStatus" aria-live="polite">Please answer every required item.</p>
+      <button id="surveyPrevious" class="survey-nav-secondary" type="button" hidden><i data-lucide="arrow-left"></i> Previous</button>
+      <button id="surveyNext" type="button" hidden>Next section <i data-lucide="arrow-right"></i></button>
+      <button id="surveySubmit" type="submit">Submit and continue <i data-lucide="arrow-right"></i></button>
+    </div>
+  </form>
+</main>
+<script src="study_logger.js?v=policy-study-preview-20260807a"></script>
+<script src="study_progress.js?v=policy-study-preview-20260807a"></script>
+<script src="survey.js?v=attention-checks-20260813a"></script>
+</body>
+</html>

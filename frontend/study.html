@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Policy Pathway Exploration Study</title>
+<script>
+if(location.protocol === "file:"){
+  location.replace(`http://127.0.0.1:8002/study.html${location.search}${location.hash}`);
+}
+</script>
+<link rel="stylesheet" href="styles.css?v=policy-study-preview-20260807a" />
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="study-start-page">
+<main class="study-start-shell">
+  <section class="study-start-layout">
+    <div class="study-start-copy">
+      <span>Interactive policy simulation study</span>
+      <h1>Explore how policies unfold under changing conditions.</h1>
+      <p>You will examine two policy cases presented through two policy-analysis formats.</p>
+      <div class="study-step-list" aria-label="Study overview">
+        <article><b>01</b><div><strong>Review two policy cases</strong><span>Your cases and their order are assigned automatically.</span></div></article>
+        <article><b>02</b><div><strong>Examine each policy analysis</strong><span>Review the conditions, projected effects, and constraints presented for each case.</span></div></article>
+        <article><b>03</b><div><strong>Share your assessment</strong><span>Answer questions about causal understanding, usefulness, trust, and limitations.</span></div></article>
+      </div>
+    </div>
+    <section class="study-start-panel">
+      <span>Before you begin</span>
+      <h2>Study session</h2>
+      <div id="studyVariantSummary" class="study-variant-summary"><span>Study variant</span><b>Select a domain condition from the admin dashboard.</b></div>
+      <p>A random participant ID will be created when you start. Please keep this browser tab open until you finish.</p>
+      <label class="study-confirm">
+        <input id="studyConsent" type="checkbox" />
+        <span>I am ready to begin the study and understand that my interactions will be recorded for research analysis.</span>
+      </label>
+      <button id="startStudy" type="button" disabled>Start study <i data-lucide="arrow-right"></i></button>
+      <button id="previewStudy" class="study-preview-button" type="button"><i data-lucide="eye"></i> Preview without recording</button>
+      <small class="study-preview-note">For interface review only. Required responses and completion checks are disabled.</small>
+      <a class="study-admin-link" href="study_admin.html"><i data-lucide="settings-2"></i> Open study variant manager</a>
+      <p id="startStatus" class="study-start-status" aria-live="polite"></p>
+    </section>
+  </section>
+</main>
+<script src="study_progress.js?v=policy-study-preview-20260807a"></script>
+<script src="study.js?v=task-instructions-20260813a"></script>
+</body>
+</html>

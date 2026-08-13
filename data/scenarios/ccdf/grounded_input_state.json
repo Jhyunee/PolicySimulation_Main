@@ -1,0 +1,339 @@
+{
+  "policy_name": "ARP Act Child Care Stabilization Grants",
+  "state_type": "document_grounded",
+  "fields": [
+    {
+      "name": "total_stabilization_funding",
+      "value": 23975000000,
+      "unit": "USD",
+      "type": "int",
+      "description": "Total federal appropriation for child care stabilization grants under Section 2202 of the ARP Act.",
+      "effective_date": null,
+      "scope": "Federal",
+      "causal_relevance": "Total funding available determines the scale of subgrants and set-aside activities that lead agencies can implement.",
+      "kg_links": [
+        "StabilizationSubgrant:Child Care Stabilization Grants"
+      ],
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 1,
+          "evidence_quote": "Section 2202.  $23,975,000,000 for child care stabilization grants,  available until September 30, 2023."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "tribal_base_amount",
+      "value": 30000,
+      "unit": "USD",
+      "type": "int",
+      "description": "Base amount awarded to each individual tribal lead agency (not part of a consortium) for stabilization grants.",
+      "effective_date": null,
+      "scope": "Individual tribal lead agencies",
+      "causal_relevance": "Base amount provides a minimum funding level for each tribal lead agency, affecting their ability to administer the program.",
+      "kg_links": [
+        "LeadAgency:Tribal Lead Agency"
+      ],
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 3,
+          "evidence_quote": "The base amount for individual tribes (not  part of a consortium) is $30,000."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "state_minimum_subgrant_percentage",
+      "value": 90,
+      "unit": "percent",
+      "type": "int",
+      "description": "Minimum percentage of stabilization funds that states and territories must spend as subgrants to qualified child care providers.",
+      "effective_date": null,
+      "scope": "States and territories",
+      "causal_relevance": "This requirement determines the minimum amount of funding that must flow directly to providers as subgrants.",
+      "kg_links": [
+        "LeadAgency:State, Territory, and Tribal Lead Agencies"
+      ],
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 2,
+          "evidence_quote": "Lead agencies must spend most stabilization funds (at least 90 percent for states  and territories and at least 80 percent for tribes) as subgrants to qualified child care providers to support the stability of the child care sector during and after the  COVID-19 public health emergency."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    }
+  ],
+  "policy_parameters": [
+    {
+      "name": "tribal_minimum_subgrant_percentage",
+      "value": 80,
+      "unit": "percent",
+      "description": "Minimum percentage of stabilization funds that tribes must spend as subgrants to qualified child care providers.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 2,
+          "evidence_quote": "Lead agencies must spend most stabilization funds (at least 90 percent for states  and territories and at least 80 percent for tribes) as subgrants to qualified child care providers to support the stability of the child care sector during and after the  COVID-19 public health emergency."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "arp_act_enactment_date",
+      "value": "2021-03-11",
+      "unit": "date",
+      "description": "Date the American Rescue Plan Act was signed into law, used as a reference date for provider eligibility and non-supplantation baseline.",
+      "effective_date": "2021-03-11",
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 1,
+          "evidence_quote": "Child Care Stabilization Grants Appropriated in the American Rescue Plan  (ARP) Act (Public Law 117-2) signed into law on March 11, 2021."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "obligation_deadline",
+      "value": "2022-09-30",
+      "unit": "date",
+      "description": "Deadline by which all stabilization funds must be obligated by states, territories, and tribes.",
+      "effective_date": "2022-09-30",
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 23,
+          "evidence_quote": "September 30, 2022 – All stabilization funds must be obligated by states,  territories, and tribes."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "liquidation_deadline",
+      "value": "2023-09-30",
+      "unit": "date",
+      "description": "Deadline by which all stabilization funds must be liquidated by states, territories, and tribes.",
+      "effective_date": "2023-09-30",
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 23,
+          "evidence_quote": "September 30, 2023 – All stabilization funds must be liquidated by  states, territories, and tribes."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "interim_obligation_milestone",
+      "value": "2021-12-11",
+      "unit": "date",
+      "description": "Date by which lead agencies are strongly encouraged to obligate at least 50% of subgrant funds.",
+      "effective_date": "2021-12-11",
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 23,
+          "evidence_quote": "December 11, 2021 – A state, territory, or tribe must notify ACF if it is  unable to obligate 50 percent of the CCDF stabilization funds it received  under the ARP Act by December 11, 2021."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "tuition_relief_income_threshold",
+      "value": 85,
+      "unit": "percent of State Median Income",
+      "description": "Income threshold below which families should be prioritized for tuition and copayment relief.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 12,
+          "evidence_quote": "If a provider is unable to provide relief from copayments and tuition payments for all families enrolled in the program, they should prioritize doing so for families most in need of relief and target families earning below 85 percent of the State Median Income."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "provider_licensing_cutoff_date",
+      "value": "2021-03-11",
+      "unit": "date",
+      "description": "Date by which providers must have obtained licensing, regulation, or registration to qualify under one eligibility condition.",
+      "effective_date": "2021-03-11",
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 8,
+          "evidence_quote": "A licensed, regulated, or registered child care provider in the state,  territory, or tribe that obtained such certification no later than March 11,  2021, and meets applicable state and local health and safety requirements  at the time of application for a subgrant."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "waiver_expiration_date",
+      "value": "2021-09-30",
+      "unit": "date",
+      "description": "Date by which temporary CCDBG waivers expire, after which providers must meet health and safety and background check requirements.",
+      "effective_date": "2021-09-30",
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 9,
+          "evidence_quote": "We remind lead agencies that these temporary waivers expire on  September 30, 2021, after which lead agencies will need to support CCDF  providers in meeting health and safety and background checks."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "reimbursement_start_date",
+      "value": "2020-01-31",
+      "unit": "date",
+      "description": "Start date for expenses that can be reimbursed with stabilization funds for past costs.",
+      "effective_date": "2020-01-31",
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 21,
+          "evidence_quote": "lead agencies are strongly encouraged to make subgrant funds  available to qualified child care providers to reimburse them for their costs  incurred after the declaration of the public health emergency on January 31,  2020, for any of the uses of funds outlined above, as long as those uses were  made in response to the COVID-19 public health emergency"
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "small_provider_employee_threshold",
+      "value": 20,
+      "unit": "employees",
+      "description": "Employee count threshold for defining small child care providers eligible for special application periods.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 16,
+          "evidence_quote": "For example, lead agencies can  limit applications in the first 2 weeks after the application is posted to  child care providers with fewer than 20 employees and those that have  501(c)(3) non-profit status."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "reallotment_minimum_amount",
+      "value": 25000,
+      "unit": "USD",
+      "description": "Minimum amount of funds available for reallotment; below this amount, funds revert to the federal government.",
+      "effective_date": null,
+      "evidence": [
+        {
+          "source": "us_ccdf.pdf",
+          "page": 24,
+          "evidence_quote": "45 C.F.R. 98.64(b)(2)(ii) says that funds will not be realloted (but will instead revert to the federal government) if  the amount available for reallotment is less than $25,000."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    }
+  ],
+  "summary": "Document-grounded initial state. Inputs: total_stabilization_funding=23975000000 USD; tribal_base_amount=30000 USD; state_minimum_subgrant_percentage=90 percent. Fixed policy parameters: tribal_minimum_subgrant_percentage=80 percent; arp_act_enactment_date=2021-03-11 date; obligation_deadline=2022-09-30 date; liquidation_deadline=2023-09-30 date; interim_obligation_milestone=2021-12-11 date; tuition_relief_income_threshold=85 percent of State Median Income; provider_licensing_cutoff_date=2021-03-11 date; waiver_expiration_date=2021-09-30 date; reimbursement_start_date=2020-01-31 date; small_provider_employee_threshold=20 employees; reallotment_minimum_amount=25000 USD.",
+  "source_documents": [
+    "us_ccdf.pdf"
+  ],
+  "excluded_candidates": [
+    {
+      "name": "ccdf_supplemental_discretionary_funding",
+      "reason": "This is a separate funding stream under Section 2201 of the ARP Act, not part of the Section 2202 stabilization grants."
+    },
+    {
+      "name": "ccdf_mandatory_and_matching_funding",
+      "reason": "This is a separate funding stream under Section 9801 of the ARP Act, not part of the Section 2202 stabilization grants."
+    },
+    {
+      "name": "number_of_subgrant_applications_received",
+      "reason": "This is a post-implementation outcome metric, not a pre-implementation input."
+    },
+    {
+      "name": "number_of_subgrants_awarded",
+      "reason": "This is a post-implementation outcome metric, not a pre-implementation input."
+    },
+    {
+      "name": "amount_of_subgrant_awards",
+      "reason": "This is a post-implementation outcome metric, not a pre-implementation input."
+    },
+    {
+      "name": "number_of_providers_receiving_subgrants",
+      "reason": "This is a post-implementation outcome metric, not a pre-implementation input."
+    },
+    {
+      "name": "provider_zip_code",
+      "reason": "This is a data element collected from providers, not a quantitative input for implementation."
+    },
+    {
+      "name": "provider_race_ethnicity",
+      "reason": "This is a data element collected from providers, not a quantitative input for implementation."
+    },
+    {
+      "name": "provider_sex",
+      "reason": "This is a data element collected from providers, not a quantitative input for implementation."
+    },
+    {
+      "name": "provider_fund_usage",
+      "reason": "This is a post-implementation reporting metric, not a pre-implementation input."
+    },
+    {
+      "name": "state_stabilization_funding",
+      "reason": "not selected: overlaps the budget_capacity mechanism family or falls below the 3-field limit"
+    },
+    {
+      "name": "territory_stabilization_funding",
+      "reason": "not selected: overlaps the budget_capacity mechanism family or falls below the 3-field limit"
+    },
+    {
+      "name": "tribal_stabilization_funding",
+      "reason": "not selected: overlaps the budget_capacity mechanism family or falls below the 3-field limit"
+    }
+  ],
+  "unresolved_candidates": [
+    {
+      "name": "tribal_consortium_base_amount",
+      "reason": "The document states a base amount of $30,000 per consortium member but does not specify the number of consortium members, so a total value cannot be determined."
+    },
+    {
+      "name": "tribal_per_child_amount",
+      "reason": "The document states that a per-child amount is distributed based on the number of children under age 13, but the specific per-child dollar amount is not provided."
+    },
+    {
+      "name": "state_territory_set_aside_cap",
+      "reason": "policy parameter rejected: evidence quote not found verbatim after whitespace normalization: Lead agencies may spend remaining funds (up to 10 percent for states and territories and up to 20  percent for tribes) on administrative activities, supply-building activities, and  certain types of technical assistance."
+    },
+    {
+      "name": "tribal_set_aside_cap",
+      "reason": "policy parameter rejected: evidence quote not found verbatim after whitespace normalization: Lead agencies may spend remaining funds (up to 10 percent for states and territories and up to 20  percent for tribes) on administrative activities, supply-building activities, and  certain types of technical assistance."
+    }
+  ],
+  "extraction_metadata": {
+    "model": "deepseek-chat",
+    "max_fields": 3,
+    "candidate_limit": 6,
+    "candidate_field_count": 6,
+    "validated_candidate_count": 6,
+    "validated_field_count": 3,
+    "deduplicated_field_count": 3,
+    "rejected_field_count": 0,
+    "candidate_parameter_count": 13,
+    "validated_parameter_count": 11,
+    "policy_graph": "outputs/usa/chi_ccdf/20260710105445_deepseek-chat_result_local_kg/policy_graph.json"
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "phases": [
+    {
+      "phase": "Inputs",
+      "prediction_fields": [
+        {
+          "name": "irs_administrative_budget_usd",
+          "unit": "dollars",
+          "type": "int",
+          "description": "Total appropriated budget for IRS administration of the expanded Child Tax Credit, including advance payment administration, as specified in the policy."
+        },
+        {
+          "name": "irs_staff_allocated_ftes",
+          "unit": "full-time equivalent",
+          "type": "int",
+          "description": "Number of full-time equivalent IRS staff allocated to implement the expanded Child Tax Credit, including processing, portal maintenance, and taxpayer support."
+        },
+        {
+          "name": "non_filer_outreach_budget_usd",
+          "unit": "dollars",
+          "type": "int",
+          "description": "Portion of IRS administrative funding explicitly dedicated to outreach and sign-up assistance for non-filer households."
+        }
+      ],
+      "discussion_points": [
+        "How does the total IRS administrative budget constrain the scale and quality of outreach to non-filer households?",
+        "Does the IRS staff allocation reflect sufficient capacity to handle taxpayer inquiries and non-filer registrations?",
+        "How does the allocated IRS administrative budget affect the speed and accuracy of payment disbursement and portal operations?"
+      ]
+    },
+    {
+      "phase": "Activities",
+      "prediction_fields": [
+        {
+          "name": "advance_payment_disbursements_count",
+          "unit": "number of payments",
+          "type": "int",
+          "description": "Total number of advance monthly Child Tax Credit payments disbursed by the IRS from July to December 2021."
+        },
+        {
+          "name": "portal_account_updates_processed",
+          "unit": "updates",
+          "type": "int",
+          "description": "Number of successful updates made by taxpayers through the Child Tax Credit Update Portal, including changes to bank account, address, or unenrollment requests."
+        },
+        {
+          "name": "non_filer_sign_up_tool_submissions_processed",
+          "unit": "submissions",
+          "type": "int",
+          "description": "Number of non-filer registrations successfully processed through the Non-Filer Sign-up Tool."
+        }
+      ],
+      "discussion_points": [
+        "How does the number of portal updates affect the accuracy of payment amounts and the risk of overpayment or reconciliation issues?",
+        "How does the volume of advance payments disbursed relate to the number of eligible families reached, and what are the implications for material hardship or administrative burden?",
+        "What barriers prevent non-filer households from completing registration via the sign-up tool, and how can outreach or the tool address them?"
+      ]
+    },
+    {
+      "phase": "Outputs",
+      "prediction_fields": [
+        {
+          "name": "average_monthly_payment_per_child_dollars",
+          "unit": "dollars",
+          "type": "float",
+          "description": "Average monthly advance payment amount per qualifying child, calculated across all disbursed payments."
+        },
+        {
+          "name": "eligible_families_receiving_at_least_one_payment",
+          "unit": "families",
+          "type": "int",
+          "description": "Number of eligible families that received at least one advance payment during the July–December 2021 period."
+        },
+        {
+          "name": "non_filer_households_receiving_payments",
+          "unit": "households",
+          "type": "int",
+          "description": "Number of non-filer households that successfully registered and received at least one advance payment."
+        }
+      ],
+      "discussion_points": [
+        "What share of eligible families did not receive advance payments, and what factors (e.g., prior tax filing status, portal errors, address changes) caused interruptions?",
+        "How does the average monthly payment per child compare to the maximum possible amounts ($300 or $250 per month), and what explains any shortfall (e.g., phaseouts, partial-year effects)?",
+        "What share of non-filer households are reached, and what implementation challenges (e.g., registration barriers, geography) limit reach?"
+      ]
+    },
+    {
+      "phase": "Outcomes",
+      "prediction_fields": [
+        {
+          "name": "spm_child_poverty_rate_2021_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "Post-policy 2021 child poverty rate under the Supplemental Poverty Measure; the observed pre-policy 2020 reference rate is 9.7%"
+        },
+        {
+          "name": "spm_child_poverty_relative_reduction_2020_2021_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "Relative percentage reduction in the SPM child poverty rate from the 2020 reference rate of 9.7% to the simulated 2021 post-policy rate"
+        },
+        {
+          "name": "low_income_food_insufficiency_relative_reduction_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "Relative percentage reduction in food insufficiency among low-income households following advance Child Tax Credit payments"
+        },
+        {
+          "name": "spm_black_child_poverty_rate_2021_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "Post-policy 2021 SPM child poverty rate for Black children; the observed pre-policy 2020 reference rate is 16.9%"
+        },
+        {
+          "name": "spm_hispanic_child_poverty_rate_2021_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "Post-policy 2021 SPM child poverty rate for Hispanic children; the observed pre-policy 2020 reference rate is 14.7%"
+        }
+      ],
+      "discussion_points": [
+        "What post-policy SPM child poverty rate follows from the reach, adequacy, and timing of advance payments?",
+        "How large is the relative reduction from the 2020 SPM baseline, and how much does food insufficiency decline among low-income households?",
+        "Do implementation reach and access barriers produce different post-policy poverty outcomes for Black and Hispanic children?"
+      ]
+    },
+    {
+      "phase": "Impact",
+      "prediction_fields": [
+        {
+          "name": "intergenerational_income_mobility_index",
+          "unit": "index",
+          "type": "float",
+          "description": "A simulated index measuring the expected change in intergenerational income mobility for children in families that received the full 2021 expansion, relative to a counterfactual without the expansion."
+        },
+        {
+          "name": "child_health_outcome_composite_score",
+          "unit": "standardized score",
+          "type": "float",
+          "description": "A composite standardized score reflecting changes in child health outcomes (e.g., low birth weight, hospitalization rates, mental health indicators) attributable to the 2021 expansion, measured at the population level over a 5-year follow-up period."
+        },
+        {
+          "name": "long_term_healthcare_cost_savings_usd",
+          "unit": "USD",
+          "type": "int",
+          "description": "Estimated cumulative savings in healthcare costs over 10 years due to improved child health outcomes from reduced poverty and food insufficiency."
+        }
+      ],
+      "discussion_points": [
+        "What mechanisms link short-term income support from the 2021 expansion to long-term improvements in child outcomes such as educational attainment, earnings, and intergenerational mobility?",
+        "How do reductions in childhood poverty and improved nutrition from the 2021 expansion translate into improved health outcomes and lower healthcare costs over the long term?",
+        "To what extent does the reduction in child poverty from the 2021 expansion persist beyond the policy year, and what factors influence its sustainability?"
+      ]
+    }
+  ]
+}

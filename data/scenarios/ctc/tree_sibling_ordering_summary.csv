@@ -1,0 +1,9 @@
+phase,field,expected_direction,ordered_sibling_sets,total_sibling_sets,ordering_rate_pct
+Outcomes,low_income_food_insufficiency_relative_reduction_pct,higher_is_better,8,9,88.89
+Outcomes,spm_black_child_poverty_rate_2021_pct,lower_is_better,9,9,100.0
+Outcomes,spm_child_poverty_rate_2021_pct,lower_is_better,9,9,100.0
+Outcomes,spm_child_poverty_relative_reduction_2020_2021_pct,higher_is_better,9,9,100.0
+Outcomes,spm_hispanic_child_poverty_rate_2021_pct,lower_is_better,9,9,100.0
+Impact,child_health_outcome_composite_score,higher_is_better,21,27,77.78
+Impact,intergenerational_income_mobility_index,higher_is_better,14,27,51.85
+Impact,long_term_healthcare_cost_savings_usd,higher_is_better,15,27,55.56

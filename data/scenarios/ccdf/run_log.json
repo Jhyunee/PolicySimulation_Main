@@ -1,0 +1,376 @@
+{
+  "command": "stage2-toc",
+  "model": "deepseek-chat",
+  "config_url": "https://api.deepseek.com/v1/chat/completions",
+  "config_path": "config/usa_chi_ccdf_ebc.yaml",
+  "started_at": "2026-08-10T16:13:04",
+  "ended_at": "2026-08-10T16:13:04",
+  "duration_seconds": 0.24,
+  "usage": {
+    "llm_calls": 0,
+    "llm_calls_with_usage": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "call_count": 0,
+    "elapsed_sec": 0.0
+  },
+  "config": {
+    "llm": {
+      "url": "https://api.deepseek.com/v1/chat/completions",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "auth_header": "bearer",
+      "model": "deepseek-chat",
+      "temperature": 0.3,
+      "max_tokens": 8192,
+      "request_timeout": 180,
+      "max_retries": 3
+    },
+    "paths": {
+      "background_dir": "dataset/kor/background",
+      "input_policy_dir": "dataset/usa/chi_ccdf/input_policy",
+      "past_policy_dir": "dataset/usa/chi_ccdf/input_policy",
+      "processed_dir": "dataset/processed",
+      "outputs": {
+        "stage1": "outputs/usa/chi_ccdf/stage1",
+        "stage2_toc": "outputs/usa/chi_ccdf/stage2_toc"
+      }
+    },
+    "pdf": {
+      "parser": "opendataloader",
+      "fallback_to_pypdf": true,
+      "cache_dir": "dataset/processed/pdf_cache",
+      "output_formats": [
+        "markdown",
+        "json"
+      ],
+      "use_struct_tree": true,
+      "table_method": "cluster",
+      "reading_order": "xycut",
+      "keep_line_breaks": false,
+      "include_header_footer": false,
+      "markdown_page_separator": "\n\n--- page %page-number% ---\n\n"
+    },
+    "kg": {
+      "use_iad_ig_ontology": true,
+      "chunk_size": 1200,
+      "chunk_overlap": 200,
+      "max_node_pool_context": 120,
+      "max_edges_per_chunk": 20,
+      "enable_validation_recovery": true
+    },
+    "stage1": {
+      "personas_per_category": 5,
+      "use_economic_context": false,
+      "use_economic_context_in_persona": false,
+      "use_policy_plan": false,
+      "use_policy_plan_in_context": false,
+      "output_file": "stage1_result.json",
+      "non_actor_types": [
+        "Program",
+        "Organization",
+        "Person"
+      ]
+    },
+    "persona": {
+      "selection_mode": "mechanism_panel",
+      "sampler": "kg_gen",
+      "simulation_sample_seed": 42,
+      "max_simulation_participants": 5,
+      "fallback_to_llm": true,
+      "mechanism_panel": {
+        "panel_id": "ccdf_stabilization_primary_mechanism_panel_v1",
+        "candidates_per_role": 5,
+        "strict_role_coverage": true,
+        "roles": [
+          {
+            "prototype_id": "federal_oversight",
+            "label": "Federal Office of Child Care implementation official",
+            "domain_role": "federal_ccdf_oversight",
+            "keywords": [
+              "officeofchildcare",
+              "office of child care",
+              "occ"
+            ],
+            "node_types": [
+              "OfficeOfChildCare"
+            ],
+            "anchor_keywords": [
+              "officeofchildcare",
+              "office of child care"
+            ],
+            "mechanism_functions": [
+              "decision",
+              "oversight",
+              "guidance"
+            ],
+            "role_family": "policy_administrator",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Ensure that CCDF stabilization funds are administered consistently with federal law, deadlines, reporting rules, and equity goals."
+            ],
+            "constraints": [
+              "Must oversee heterogeneous state, territorial, and tribal implementation while relying on timely and comparable administrative data."
+            ],
+            "causal_leverage_points": [
+              "federal guidance and monitoring",
+              "fund obligation and reallotment oversight"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "lead_agency",
+            "label": "State CCDF lead agency grant administrator",
+            "domain_role": "state_ccdf_implementation",
+            "keywords": [
+              "state lead agency",
+              "state ccdf lead agency",
+              "leadagency"
+            ],
+            "node_types": [
+              "LeadAgency"
+            ],
+            "anchor_keywords": [
+              "state lead agency",
+              "state ccdf lead agency"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "allocation",
+              "monitoring"
+            ],
+            "role_family": "programme_implementer",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Distribute stabilization subgrants quickly and equitably while maintaining provider eligibility, certification, and reporting compliance."
+            ],
+            "constraints": [
+              "Must balance federal deadlines and safeguards with limited administrative capacity and wide variation among provider types and communities."
+            ],
+            "causal_leverage_points": [
+              "subgrant design and distribution",
+              "provider outreach and compliance monitoring"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "center_provider",
+            "label": "Center-based child care provider director",
+            "domain_role": "center_based_provider",
+            "keywords": [
+              "center-based child care provider",
+              "child care center",
+              "center-based"
+            ],
+            "node_types": [
+              "ChildCareProvider"
+            ],
+            "anchor_keywords": [
+              "center-based child care provider",
+              "child care center"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "service_delivery",
+              "employment"
+            ],
+            "role_family": "frontline_provider",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Use stabilization support to remain open, retain staff, maintain safe care, and keep tuition and copayments manageable for families."
+            ],
+            "constraints": [
+              "Faces payroll, rent, health-and-safety, enrollment, certification, and reporting obligations amid unstable operating revenue."
+            ],
+            "causal_leverage_points": [
+              "center continuity and capacity",
+              "staff compensation and retention"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "family_provider",
+            "label": "Family child care home owner-operator",
+            "domain_role": "family_child_care_provider",
+            "keywords": [
+              "family child care provider",
+              "family child care home",
+              "small child care provider"
+            ],
+            "node_types": [
+              "ChildCareProvider"
+            ],
+            "anchor_keywords": [
+              "family child care provider",
+              "family child care home"
+            ],
+            "mechanism_functions": [
+              "implementation",
+              "service_delivery",
+              "access"
+            ],
+            "role_family": "small_frontline_provider",
+            "agent_modality": "organization_representative",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Keep a small home-based child care program financially viable and accessible while meeting grant and CCDF requirements."
+            ],
+            "constraints": [
+              "Combines care delivery and administration with limited time, staffing, cash reserves, application support, and reporting capacity."
+            ],
+            "causal_leverage_points": [
+              "small-provider participation",
+              "care supply in underserved communities"
+            ],
+            "required": true
+          },
+          {
+            "prototype_id": "family_beneficiary",
+            "label": "Parent in a family receiving child care support",
+            "domain_role": "family_beneficiary",
+            "keywords": [
+              "familybeneficiary",
+              "family beneficiary",
+              "families enrolled",
+              "parent needs"
+            ],
+            "node_types": [
+              "PolicyRole"
+            ],
+            "anchor_keywords": [
+              "familybeneficiary",
+              "family beneficiary"
+            ],
+            "mechanism_functions": [
+              "affected",
+              "care_choice",
+              "workforce_participation"
+            ],
+            "role_family": "direct_beneficiary",
+            "agent_modality": "individual",
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "objectives": [
+              "Maintain access to affordable, reliable, and safe child care that supports family employment and child wellbeing."
+            ],
+            "constraints": [
+              "Faces provider shortages, changing tuition and copayments, work schedules, transportation, eligibility rules, and limited care alternatives."
+            ],
+            "causal_leverage_points": [
+              "family affordability and continuity of care",
+              "parent demand and employment response"
+            ],
+            "required": true
+          }
+        ],
+        "anchor_overrides": {
+          "federal_oversight": "OfficeOfChildCare:OfficeOfChildCare",
+          "lead_agency": "LeadAgency:State Lead Agency",
+          "center_provider": "ChildCareProvider:Center-Based Child Care Provider",
+          "family_provider": "ChildCareProvider:Family Child Care Provider",
+          "family_beneficiary": "PolicyRole:FamilyBeneficiary"
+        },
+        "candidate_overrides": {
+          "center_provider": "Center-Based Child Care Provider | KG-Gen-m4hfq6",
+          "family_provider": "Family Child Care Provider | KG-Gen-grwkc8"
+        }
+      },
+      "kg_gen": {
+        "country": "usa",
+        "personas_per_entity": 5,
+        "temperature": 0.7
+      },
+      "role_actions": {
+        "enabled": true
+      },
+      "refiner": {
+        "enabled": false
+      },
+      "actor_anchor_policy": "persona_eligible",
+      "simulation_sampling_strategy": "role_stratified_weighted",
+      "simulation_role_gate": {
+        "enabled": false
+      },
+      "scope_definer": {
+        "parquet_glob": "dataset/processed/nemotron_usa/Nemotron-Personas-USA/data/*.parquet",
+        "values_module": "dataset.processed.nemotron_usa"
+      }
+    },
+    "stage2_toc": {
+      "prompt_variant": "en_natural",
+      "max_scenarios": 1,
+      "run_forward": true,
+      "run_backward": false,
+      "final_forward_refinement": false,
+      "phase_interaction_mode": "independent",
+      "grounded_inputs": {
+        "enabled": true,
+        "max_fields": 3,
+        "candidate_limit": 6,
+        "strict": true,
+        "policy_graph": "outputs/usa/chi_ccdf/20260710105445_deepseek-chat_result_local_kg/policy_graph.json",
+        "state_file": "outputs/usa/chi_ccdf/stage2_toc/grounded_input_state_v1.json",
+        "output_file": "grounded_input_state.json"
+      },
+      "fixed_posting_order": [
+        "federal_oversight",
+        "lead_agency",
+        "center_provider",
+        "family_provider",
+        "family_beneficiary"
+      ],
+      "branch_mechanism_planner": {
+        "enabled": false,
+        "mode": "per_transition",
+        "coverage_level_override": null
+      },
+      "fwd_bwd_fwd_seq": false,
+      "fwd_bwd_fwd_bwd_seq": false,
+      "quantitative_target_only": false,
+      "sequential_backward": false,
+      "use_economic_context_in_simulation": false,
+      "inner_schema_file": "inner_schema.json",
+      "output_file": "stage2_toc_result.json",
+      "parallel_forward_backward": false,
+      "parallel_scenarios": false
+    }
+  },
+  "simulation_target": "Given the documented ARP CCDF stabilization funding, allocation rules, and implementation constraints, predict national child care affordability, maternal labor-force participation, child care worker wages, and child care employment outcomes approximately 18 to 24 months after funding became available.",
+  "run_tag": "ebc_ccdf_inputs_bootstrap_v1_sc1-1",
+  "stage1_result": "outputs/usa/chi_ccdf/stage1/20260810154114_deepseek-chat_result_mechanism_panel_ebc_v1/stage1_result.json",
+  "simulation_personas": "outputs/usa/chi_ccdf/stage1/20260810154114_deepseek-chat_result_mechanism_panel_ebc_v1/simulation_personas.json",
+  "scenario_count": 1,
+  "outputs": {
+    "stage2_toc_result": "stage2_toc_result.json",
+    "final_report": "final_report.json"
+  }
+}

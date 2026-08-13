@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study Results Dashboard</title>
+<link rel="stylesheet" href="styles.css?v=study-results-20260813b" />
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="study-results-page">
+<header class="results-admin-header">
+  <a href="study_admin.html"><i data-lucide="waypoints"></i><span>POLICY EXPLORATION STUDY</span></a>
+  <div><span>Administration</span><b>Study results</b></div>
+  <nav>
+    <a href="study_admin.html">Variants</a>
+    <button id="refreshResults" type="button" title="Refresh results"><i data-lucide="refresh-cw"></i></button>
+  </nav>
+</header>
+<main class="study-results-shell">
+  <section class="results-intro">
+    <div><span>User study data</span><h1>Study results</h1><p>Review survey responses by policy case and participant.</p></div>
+    <button id="exportResults" type="button"><i data-lucide="download"></i> Export JSON</button>
+  </section>
+  <section id="resultsSummary" class="results-summary"></section>
+  <section id="resultsBody"><div class="dashboard-loading">Loading study results...</div></section>
+</main>
+<script src="study_results.js?v=attention-checks-20260813a"></script>
+</body>
+</html>

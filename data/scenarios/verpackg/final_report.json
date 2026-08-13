@@ -1,0 +1,38 @@
+{
+  "simulation_target": "Given the documented implementation costs and policy parameters of Germany's Packaging Act (VerpackG), predict Germany's 2024 overall LVP recycling rate, glass recycling rate, and plastic material recycling rate.",
+  "aggregated_final": {},
+  "implementation_gap_report": [
+    {
+      "phase": "Inputs",
+      "variable": "additional_compliance_burden_for_business",
+      "forward_agg": null,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": null
+    },
+    {
+      "phase": "Inputs",
+      "variable": "one_time_transition_cost_for_business",
+      "forward_agg": null,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": null
+    },
+    {
+      "phase": "Inputs",
+      "variable": "additional_administrative_compliance_cost",
+      "forward_agg": null,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": null
+    }
+  ],
+  "narrative_synthesis": "",
+  "phase_stakeholder_summaries": {}
+}
