@@ -1089,7 +1089,7 @@ function renderSelectedSummaryTree(){
   return `<section class="storage-summary" style="--lane:${tone.color}">
     <span>${node.col === 0 ? "Selected phase" : tone.label}</span>
     <h3>${node.col+1}. ${escTree(TREE_PHASE_KO[phase.phase] || phase.phase)}</h3>
-    <div class="toc-phase-focus"><b>ToC focus</b><p>${escTree(TREE_PHASE_FOCUS[phase.phase] || "")}</p></div>
+    <div class="toc-phase-focus"><b>What this phase examines</b><p>${escTree(TREE_PHASE_FOCUS[phase.phase] || "")}</p></div>
     <p>${escTree(phase.phase_summary || "")}</p>
     <div class="storage-summary-values">${metricRowsTree(phase, 5)}</div>
   </section>`;
