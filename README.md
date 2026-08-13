@@ -10,6 +10,7 @@ Standalone deployment for the CHI policy-pathway user study. The bundled policy 
 - `DATA_DIR=/data`: optional when a Railway Volume is mounted at `/data`; the app automatically uses Railway's mount-path variable when present.
 
 Attach a Railway Volume at `/data` before collecting responses. Do not commit the SQLite database.
+The service listens on internal port `8000`; set the Railway domain target port to `8000`.
 
 ## Prolific URL pattern
 
