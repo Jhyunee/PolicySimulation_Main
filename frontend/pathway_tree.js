@@ -1,5 +1,12 @@
 let TREE_PHASES = ["Inputs","Activities","Outputs","Outcomes","Impact"];
 const TREE_PHASE_KO = {Inputs:"Inputs",Activities:"Activities",Outputs:"Outputs",Outcomes:"Outcomes",Impact:"Impact"};
+const TREE_PHASE_FOCUS = {
+  Inputs:"Resources, capacities, and assumptions available for implementation.",
+  Activities:"Actions through which policy resources are put into practice.",
+  Outputs:"Immediate and measurable products of policy implementation.",
+  Outcomes:"Near- to medium-term changes resulting from those outputs.",
+  Impact:"Long-term and broader effects on people, institutions, and society.",
+};
 let TREE_PHASE_SCHEMA = {
   Inputs:[
     ["federal_enforcement_budget_usd","Enforcement budget"],
@@ -1082,6 +1089,7 @@ function renderSelectedSummaryTree(){
   return `<section class="storage-summary" style="--lane:${tone.color}">
     <span>${node.col === 0 ? "Selected phase" : tone.label}</span>
     <h3>${node.col+1}. ${escTree(TREE_PHASE_KO[phase.phase] || phase.phase)}</h3>
+    <div class="toc-phase-focus"><b>ToC focus</b><p>${escTree(TREE_PHASE_FOCUS[phase.phase] || "")}</p></div>
     <p>${escTree(phase.phase_summary || "")}</p>
     <div class="storage-summary-values">${metricRowsTree(phase, 5)}</div>
   </section>`;
