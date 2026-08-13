@@ -11,6 +11,7 @@ Standalone deployment for the CHI policy-pathway user study. The bundled policy 
 
 Attach a Railway Volume at `/data` before collecting responses. Do not commit the SQLite database.
 The service listens on internal port `8000`; set the Railway domain target port to `8000`.
+The root domain opens the administrator variant manager. Participant-facing links must include a fixed `variant` query parameter.
 
 ## Prolific URL pattern
 

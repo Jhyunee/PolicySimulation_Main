@@ -59,7 +59,7 @@ class StudySurveyRequest(BaseModel):
 
 @app.get("/", include_in_schema=False)
 def root():
-    return RedirectResponse("/study.html")
+    return RedirectResponse("/study_admin.html")
 
 
 def _admin_access(x_admin_token: str | None) -> None:
