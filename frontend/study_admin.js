@@ -1,14 +1,25 @@
 const variantsRoot = document.getElementById("variantDomains");
 const refreshButton = document.getElementById("refreshVariants");
+const accessButton = document.getElementById("adminAccessButton");
+const accessForm = document.getElementById("adminAccessForm");
+const tokenInput = document.getElementById("adminTokenInput");
+const accessMessage = document.getElementById("adminAccessMessage");
 const ADMIN_TOKEN_KEY = "policy-study-admin-token";
 
 function adminHeaders(){
-  let token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
-  if(!token){
-    token = window.prompt("Enter the study administrator token:") || "";
-    if(token) sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
-  }
+  const token = sessionStorage.getItem(ADMIN_TOKEN_KEY) || "";
   return token ? {"X-Admin-Token":token} : {};
+}
+
+function showAccessForm(message="The token is kept only in this browser tab."){
+  accessForm.hidden = false;
+  accessMessage.textContent = message;
+  tokenInput.value = "";
+  tokenInput.focus();
+}
+
+function hideAccessForm(){
+  accessForm.hidden = true;
 }
 
 function adminEsc(value){
@@ -68,11 +79,27 @@ function renderVariants(payload){
 }
 
 async function loadVariants(){
+  if(!sessionStorage.getItem(ADMIN_TOKEN_KEY)){
+    variantsRoot.innerHTML = '<div class="dashboard-loading">Enter the administrator token to load study variants.</div>';
+    showAccessForm();
+    return;
+  }
   refreshButton.disabled = true;
   try{
     const response = await fetch("/api/study/variants", {headers:adminHeaders()});
-    if(response.status === 401){ sessionStorage.removeItem(ADMIN_TOKEN_KEY); throw new Error("Administrator token was not accepted."); }
+    if(response.status === 401){
+      sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+      variantsRoot.innerHTML = '<div class="dashboard-loading">Administrator authorization is required.</div>';
+      showAccessForm("That token was not accepted. Please try again.");
+      return;
+    }
+    if(response.status === 503){
+      variantsRoot.innerHTML = '<div class="dashboard-loading">Administrator access is not configured on this server.</div>';
+      showAccessForm("Set ADMIN_TOKEN on the server before using this page.");
+      return;
+    }
     if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    hideAccessForm();
     renderVariants(await response.json());
   }catch(error){
     variantsRoot.innerHTML = `<div class="dashboard-loading">Failed to load variants: ${adminEsc(error.message)}</div>`;
@@ -82,5 +109,19 @@ async function loadVariants(){
 }
 
 refreshButton.addEventListener("click",loadVariants);
+accessButton.addEventListener("click",()=>{
+  if(accessForm.hidden) showAccessForm();
+  else hideAccessForm();
+});
+accessForm.addEventListener("submit",event=>{
+  event.preventDefault();
+  const token = tokenInput.value.trim();
+  if(!token){
+    accessMessage.textContent = "Enter the administrator token.";
+    return;
+  }
+  sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
+  loadVariants();
+});
 loadVariants();
 if(window.lucide) lucide.createIcons();

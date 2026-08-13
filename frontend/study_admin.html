@@ -11,9 +11,18 @@
 <header class="study-admin-header">
   <a href="study.html"><i data-lucide="waypoints"></i><span>POLICY EXPLORATION STUDY</span></a>
   <div><span>Administration</span><b>Variant manager</b></div>
-  <nav class="study-admin-nav"><a href="study_results.html">Results</a><button id="refreshVariants" type="button" title="Refresh variant status"><i data-lucide="refresh-cw"></i></button></nav>
+  <nav class="study-admin-nav">
+    <a href="study_results.html">Results</a>
+    <button id="adminAccessButton" type="button" title="Administrator access"><i data-lucide="lock-keyhole"></i></button>
+    <button id="refreshVariants" type="button" title="Refresh variant status"><i data-lucide="refresh-cw"></i></button>
+  </nav>
 </header>
 <main class="study-admin-shell">
+  <form id="adminAccessForm" class="study-admin-access" hidden>
+    <label for="adminTokenInput">Administrator token</label>
+    <div><input id="adminTokenInput" name="adminToken" type="password" autocomplete="current-password" placeholder="Enter administrator token" /><button type="submit">Unlock</button></div>
+    <p id="adminAccessMessage">The token is kept only in this browser tab.</p>
+  </form>
   <section class="study-admin-intro">
     <div><span>Domain study configuration</span><h1>Study variants</h1><p>Manage five domains across Baseline and Framework interfaces with both policy orders.</p></div>
     <dl id="variantSummary"><div><dt>Domains</dt><dd>5</dd></div><div><dt>Variants</dt><dd>20</dd></div><div><dt>Ready</dt><dd id="readyVariantCount">–</dd></div></dl>
@@ -23,6 +32,6 @@
   </section>
   <div id="variantDomains" class="variant-domains"><div class="dashboard-loading">Loading study variants...</div></div>
 </main>
-<script src="study_admin.js?v=domain-variants-20260811c"></script>
+<script src="study_admin.js?v=admin-access-form-20260813a"></script>
 </body>
 </html>
