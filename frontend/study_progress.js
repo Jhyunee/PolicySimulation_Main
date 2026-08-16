@@ -11,7 +11,9 @@
   const policyNames = {
     "usa/chi_nsa": "No Surprises Act",
     "usa/chi_ctc": "Expanded Child Tax Credit",
+    "usa/chi_ccdf": "Child Care and Development Fund",
     "usa/chi_clean_vehicle": "Clean Vehicle Credit",
+    "ger/chi_vg": "German Packaging Act",
     "kor/chi_kpass": "K-Pass Public Transit Subsidy",
   };
 
@@ -30,7 +32,7 @@
       if(stage === "post" || stage === "extended") return 4;
       return 2 + policyIndex;
     }
-    if(path === "pathway_tree.html" || path === "baseline_report.html") return 2 + policyIndex;
+    if(path === "toc_intro.html" || path === "pathway_tree.html" || path === "baseline_report.html") return 2 + policyIndex;
     if(path === "dashboard.html") return 2;
     return 0;
   }

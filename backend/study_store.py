@@ -742,7 +742,7 @@ def chat_turn_status(participant_id: str, policy_key: str, framework_limit: int 
     with _connect() as connection:
         context = _trial_context(connection, participant_id, policy_key)
         condition = context.get("condition_name")
-        enabled = condition in {"framework", "full"}
+        enabled = condition in {"baseline", "framework", "full"}
         used = int(connection.execute(
             """
             SELECT COUNT(*) AS n FROM chat_turns
@@ -766,7 +766,7 @@ def start_chat_turn(turn: dict, framework_limit: int | None = None) -> dict:
         connection.execute("BEGIN IMMEDIATE")
         context = _trial_context(connection, turn["participant_id"], turn["policy_key"])
         condition = context.get("condition_name")
-        limit_enabled = condition in {"framework", "full"} and framework_limit is not None
+        limit_enabled = condition in {"baseline", "framework", "full"} and framework_limit is not None
         existing = connection.execute(
             "SELECT 1 FROM chat_turns WHERE turn_id = ?",
             (turn["turn_id"],),

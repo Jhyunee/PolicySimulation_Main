@@ -37,7 +37,7 @@ function policyLink(policyKey, policyIndex){
   query.set("policyIndex", String(policyIndex));
   if(!introduced) query.set("stage", "policy_intro");
   if(!introduced) return `survey.html?${query.toString()}`;
-  return `${trial?.condition === "baseline" ? "baseline_report.html" : "pathway_tree.html"}?${query.toString()}`;
+  return `toc_intro.html?${query.toString()}`;
 }
 function renderDashboard(policies){
   const keys = assignedKeys(policies);

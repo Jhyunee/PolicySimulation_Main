@@ -225,6 +225,12 @@ const treePreviewMode = treeQuery.get("previewStudy") === "1";
 const treeDemoMode = treeQuery.get("demo") === "1";
 let currentPolicyKey = treeQuery.get("policy") || "usa/chi_nsa";
 const currentPolicyIndex = Math.max(0, Math.min(1, Number(treeQuery.get("policyIndex") || 0)));
+const frameworkGuideStorageKey = `policy-framework-guide:${PolicyStudy.participantId || treeQuery.get("variant") || "preview"}`;
+const baselineGuideStorageKey = `policy-baseline-guide:${PolicyStudy.participantId || treeQuery.get("variant") || "preview"}`;
+let frameworkGuideStep = treeQuery.get("guide") === "1" ? 0 : -1;
+let frameworkContextGuide = "";
+const frameworkGuideIdentity = PolicyStudy.participantId || treeQuery.get("variant") || "preview";
+const frameworkContextGuideKey = kind => `policy-${TREE_BASELINE_MODE ? "baseline" : "framework"}-feature-guide:${kind}:${frameworkGuideIdentity}`;
 
 /* ── Baseline 조건 ───────────────────────────────────────────────────────────
    유저스터디 baseline은 동일한 ToC 구조를 "단일 경로"로만 제시한다.
@@ -237,10 +243,10 @@ const TREE_BASELINE_MODE = window.TREE_BASELINE_MODE === true
 const BASELINE_TRANSITION = "baseline";
 const FRAMEWORK_CHAT_LIMIT = 5;
 let frameworkChatUsage = {
-  enabled: !TREE_BASELINE_MODE,
+  enabled: true,
   used: 0,
   limit: FRAMEWORK_CHAT_LIMIT,
-  remaining: TREE_BASELINE_MODE ? null : FRAMEWORK_CHAT_LIMIT,
+  remaining: FRAMEWORK_CHAT_LIMIT,
 };
 let TREE_VIEW_SCALE = 0.72;
 const TREE_VIEW_SCALE_MIN = 0.44;
@@ -725,10 +731,18 @@ function layoutNodes(nodes){
   }
   const maxX = Math.max(...[...positions.values()].map(p=>p.x), 1040);
   if(TREE_BASELINE_MODE){
-    // baseline 조건 전용: 캔버스 하단 여백을 형제 branch 간 세로 간격만큼만 두어
-    // 콘텐츠에 꽉 맞게 자른다. Ours(framework)는 아래의 원래 여유 공간을 유지한다.
-    const maxY = Math.max(...[...positions.values()].map(p=>p.y));
-    return {positions, height:maxY + leafGap, width:maxX + 280, minY:minY + shiftY};
+    const nodeHalfHeight = 64;
+    const verticalPadding = 72;
+    const nodeTop = Math.min(...[...positions.values()].map(p=>p.y)) - nodeHalfHeight;
+    const nodeBottom = Math.max(...[...positions.values()].map(p=>p.y)) + nodeHalfHeight;
+    const baselineShift = verticalPadding - nodeTop;
+    positions.forEach((pos, path)=>positions.set(path, {...pos, y:pos.y + baselineShift}));
+    return {
+      positions,
+      height:nodeBottom + baselineShift + verticalPadding,
+      width:maxX + 280,
+      minY:verticalPadding,
+    };
   }
   const maxY = Math.max(...[...positions.values()].map(p=>p.y), 720);
   // Keep enough scrollable space below the tree for viewport anchoring when
@@ -1228,7 +1242,7 @@ function renderTreeNode(node, pos){
   const isImpact = phase.phase === "Impact";
   const nodeWidth = nodeWidthTree(node);
   return `<button class="tree-node ${hideMetrics||isImpact?"process-node":""} ${phase.phase==="Outcomes"?"outcome-node":""} ${isImpact?"impact-node":""} ${expanded?"expanded":""} ${isSelectedPath?"selected-path":""} ${isFocused?"focused":""} ${isNew?"is-new":""}"
-    data-path="${node.path}" style="--x:${pos.x}px;--y:${pos.y}px;--lane:${tone.color};--node-width:${nodeWidth}px;">
+    data-path="${node.path}" data-phase-index="${node.col}" style="--x:${pos.x}px;--y:${pos.y}px;--lane:${tone.color};--node-width:${nodeWidth}px;">
     <span class="tree-node-head">
       <em>${stanceShortTree(node)}</em>
       <i>${node.col+1}</i>
@@ -1423,7 +1437,7 @@ function renderPathwayChatModal(){
       <div class="path-chat-current" style="--persona:${selectedSeat?.color || tone.color}">
         <b>${escTree(selectedPost.persona_name || "Stakeholder")}</b>
         <span>${escTree(selectedPost.stakeholder_type || "")}</span>
-        <em>${frameworkChatUsage.used} of ${frameworkChatUsage.limit} questions used</em>
+        <em>${frameworkChatUsage.used} / ${frameworkChatUsage.limit} questions</em>
       </div>
       <div class="path-chat-starters">${starters}</div>
       <div class="path-chat-list">${turns}</div>
@@ -1530,18 +1544,193 @@ function renderProgress(){
   }).join("");
   return `<div class="tree-progress">${steps}</div>`;
 }
-function renderPhaseSchemaChain(){
-  const currentCol = focusedTreeNode().col;
-  return `<section class="tree-schema-chain" aria-label="Theory of Change prediction schema">
-    ${TREE_PHASES.map((phase, index)=>`
-      <article class="tree-schema-phase ${index===currentCol?"current":""} ${index<currentCol?"visited":""}">
-        <header><span>${index+1}</span><strong>${escTree(TREE_PHASE_KO[phase])}</strong></header>
-        <div>${(TREE_PHASE_SCHEMA[phase] || []).map(([key, label])=>
-          `<span title="${escTree(fieldTree(key))}">${escTree(label)}</span>`
-        ).join("")}</div>
-      </article>
-    `).join("")}
-  </section>`;
+const FRAMEWORK_GUIDE_STEPS = [
+  {target:'.tree-node[data-phase-index="0"]', title:"Select a node to continue", copy:"Begin with the policy input node. Selecting a node reveals the possible developments available in the next phase, while the panel on the left updates with its detailed explanation."},
+  {
+    target:'.tree-phase-inspector',
+    title:"Review the selected node summary",
+    copy:"The panel on the left summarizes the node you selected. It explains what the phase examines and shows the relevant conditions, assumptions, quantitative values, and supporting details for that point in the pathway.",
+  },
+  {
+    target:'.tree-node[data-phase-index="1"]',
+    title:"Compare three development conditions",
+    copy:"At every phase, the pathway can develop under one of three implementation conditions.",
+    details:[
+      ["Enabling", "Core implementation conditions and causal links hold or strengthen, supporting progress toward the policy goal."],
+      ["Baseline", "Implementation follows typical or expected conditions, generally continuing the current direction."],
+      ["Constraining", "Key assumptions, capacity, or causal links weaken, moving results away from the intended goal."],
+    ],
+  },
+];
+
+const BASELINE_GUIDE_STEPS = [
+  {
+    target:'.tree-node[data-phase-index="0"]',
+    title:"Follow one projected policy development",
+    copy:"This view presents one fixed development from Inputs through Impact. Select any phase node to examine what happens at that point in the policy process.",
+  },
+  {
+    target:'.tree-phase-inspector',
+    title:"Review the selected phase summary",
+    copy:"The summary panel below the pathway explains the selected node's role, assumptions, constraints, quantitative values, and supporting details. It updates whenever you select another phase.",
+  },
+];
+
+const FRAMEWORK_CONTEXT_GUIDES = {
+  discussion:{
+    target:".node-discussion-button",
+    title:"Examine stakeholder reasoning",
+    copy:"Stakeholder discussion appears above an explored node. Open it to compare how different personas interpret the selected phase, its predicted values, and its key constraints.",
+  },
+  report:{
+    target:".report-document-head",
+    title:"Review the completed pathway",
+    copy:"Reaching Impact opens a final report for the selected route. It summarizes the phase-by-phase mechanisms, quantitative estimates, and constraints without treating the result as a definitive forecast.",
+  },
+  chat:{
+    target:".pathway-chat-button",
+    title:"Question a stakeholder about this route",
+    copy:"Use Chat to ask a persona about the completed pathway. The route is also saved in the left panel, where its final report can be reopened and compared with other completed pathways.",
+  },
+};
+
+const BASELINE_CONTEXT_GUIDES = {
+  discussion:{
+    target:".node-discussion-button",
+    title:"Examine stakeholder reasoning",
+    copy:"Stakeholder discussion is available for each phase after Inputs. Open it to compare how different personas interpret the projected values, mechanisms, and constraints at the selected node.",
+  },
+  report:{
+    target:".report-document-head",
+    title:"Review the complete projected pathway",
+    copy:"The Final report summarizes the fixed pathway phase by phase, including its mechanisms, quantitative estimates, and constraints. Treat it as an exploratory policy analysis rather than a definitive forecast.",
+  },
+  chat:{
+    target:".pathway-chat-button",
+    title:"Question a stakeholder about the pathway",
+    copy:"Use Chat to ask a persona about the complete projected pathway. The persona responds from its represented stakeholder perspective using the pathway context.",
+  },
+};
+
+function activeGuideSteps(){
+  return TREE_BASELINE_MODE ? BASELINE_GUIDE_STEPS : FRAMEWORK_GUIDE_STEPS;
+}
+
+function activeContextGuides(){
+  return TREE_BASELINE_MODE ? BASELINE_CONTEXT_GUIDES : FRAMEWORK_CONTEXT_GUIDES;
+}
+
+function activeGuideStorageKey(){
+  return TREE_BASELINE_MODE ? baselineGuideStorageKey : frameworkGuideStorageKey;
+}
+
+function activeFrameworkGuide(){
+  const steps = activeGuideSteps();
+  if(frameworkGuideStep >= 0){
+    return {
+      ...steps[frameworkGuideStep],
+      kind:"initial",
+      label:`Guide ${frameworkGuideStep + 1} of ${steps.length}`,
+      action:frameworkGuideStep === steps.length - 1
+        ? (TREE_BASELINE_MODE ? "Start reviewing" : "Start exploring")
+        : "Next",
+    };
+  }
+  const guide = activeContextGuides()[frameworkContextGuide];
+  return guide ? {...guide, kind:"context", label:"Feature guide", action:"Got it"} : null;
+}
+
+function renderFrameworkGuide(){
+  const step = activeFrameworkGuide();
+  if(treeDemoMode || !step) return "";
+  return `<div class="framework-guide-layer" data-guide-layer="1">
+    <div class="framework-guide-focus" aria-hidden="true"></div>
+    <article class="framework-guide-bubble" role="dialog" aria-modal="true" aria-label="Policy analysis guide">
+      <span>${escTree(step.label)}</span>
+      <h2>${escTree(step.title)}</h2>
+      <p>${escTree(step.copy)}</p>
+      ${step.details ? `<dl class="framework-guide-conditions">${step.details.map(([label,copy])=>`<div><dt>${escTree(label)}</dt><dd>${escTree(copy)}</dd></div>`).join("")}</dl>` : ""}
+      <footer>${step.kind === "initial" ? '<button type="button" data-guide-skip="1">Skip guide</button>' : '<span></span>'}<button type="button" data-guide-next="1">${escTree(step.action)} <i data-lucide="arrow-right"></i></button></footer>
+    </article>
+  </div>`;
+}
+
+function guideTargetRect(){
+  const step = activeFrameworkGuide();
+  if(!step) return null;
+  const targets = [...document.querySelectorAll(step.target)].filter(element=>{
+    const rect = element.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
+  });
+  if(!targets.length) return null;
+  const rects = targets.map(element=>element.getBoundingClientRect());
+  return {
+    left:Math.min(...rects.map(rect=>rect.left)),
+    top:Math.min(...rects.map(rect=>rect.top)),
+    right:Math.max(...rects.map(rect=>rect.right)),
+    bottom:Math.max(...rects.map(rect=>rect.bottom)),
+  };
+}
+
+function positionFrameworkGuide(){
+  if(!activeFrameworkGuide()) return;
+  const focus = document.querySelector(".framework-guide-focus");
+  const bubble = document.querySelector(".framework-guide-bubble");
+  const target = guideTargetRect();
+  if(!focus || !bubble || !target) return;
+  const padding = 8;
+  const focusLeft = Math.max(8, target.left - padding);
+  const focusTop = Math.max(8, target.top - padding);
+  const focusRight = Math.min(innerWidth - 8, target.right + padding);
+  const focusBottom = Math.min(innerHeight - 8, target.bottom + padding);
+  focus.style.left = `${focusLeft}px`;
+  focus.style.top = `${focusTop}px`;
+  focus.style.width = `${Math.max(0, focusRight - focusLeft)}px`;
+  focus.style.height = `${Math.max(0, focusBottom - focusTop)}px`;
+  const bubbleRect = bubble.getBoundingClientRect();
+  const below = target.bottom + 18;
+  const top = below + bubbleRect.height <= innerHeight - 16
+    ? below
+    : Math.max(16, target.top - bubbleRect.height - 18);
+  const left = Math.max(16, Math.min(innerWidth - bubbleRect.width - 16, target.left + (target.right - target.left - bubbleRect.width) / 2));
+  bubble.style.left = `${left}px`;
+  bubble.style.top = `${top}px`;
+  bubble.classList.toggle("points-up", top >= target.bottom);
+}
+
+function closeFrameworkGuide(completed=false){
+  if(frameworkContextGuide){
+    const completedContext = frameworkContextGuide;
+    localStorage.setItem(frameworkContextGuideKey(completedContext), "1");
+    logTreeEvent("framework_feature_guide_completed", {feature:completedContext});
+    if(completedContext === "report"){
+      if(reportPath) closeTimedPanel("report");
+      const completedPath = reportPath;
+      reportPath = "";
+      const completedNode = treeNodes.get(completedPath) || treeNodes.get(focusedPath) || focusedTreeNode();
+      const chatAvailable = completedNode.col === TREE_PHASES.length - 1 && phasePostsTree(completedNode.phase || {}).length > 0;
+      frameworkContextGuide = chatAvailable && localStorage.getItem(frameworkContextGuideKey("chat")) !== "1" ? "chat" : "";
+    }else{
+      frameworkContextGuide = "";
+    }
+    renderTree();
+    return;
+  }
+  if(!completed){
+    Object.keys(activeContextGuides()).forEach(kind=>{
+      localStorage.setItem(frameworkContextGuideKey(kind), "1");
+    });
+  }
+  localStorage.setItem(activeGuideStorageKey(), "1");
+  logTreeEvent(completed ? "policy_guide_completed" : "policy_guide_skipped", {
+    condition:TREE_BASELINE_MODE ? "baseline" : "framework",
+    step:frameworkGuideStep + 1,
+  });
+  frameworkGuideStep = -1;
+  const cleanUrl = new URL(location.href);
+  cleanUrl.searchParams.delete("guide");
+  history.replaceState({}, "", cleanUrl);
+  renderTree();
 }
 function renderTree(preserveViewport=true, viewportAnchor=null){
   const viewport = preserveViewport ? captureTreeViewport() : null;
@@ -1551,7 +1740,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
   const canvasSection = `<section class="tree-layout">
       ${renderTreeZoomControls()}
       <div class="tree-canvas"${TREE_BASELINE_MODE ? ` style="height:${Math.ceil(layout.height * TREE_VIEW_SCALE)}px;"` : ""}>
-        <div class="tree-canvas-stage" style="width:${Math.ceil(layout.width * TREE_VIEW_SCALE)}px;height:${Math.ceil(layout.height * TREE_VIEW_SCALE)}px;">
+        <div class="tree-canvas-stage" style="width:${Math.ceil(layout.width * TREE_VIEW_SCALE)}px;height:${Math.ceil(layout.height * TREE_VIEW_SCALE)}px;--tree-scaled-width:${Math.ceil(layout.width * TREE_VIEW_SCALE)}px;">
           <div class="tree-canvas-content" style="--tree-height:${layout.height}px;--tree-width:${layout.width}px;width:${layout.width}px;height:${layout.height}px;--tree-view-scale:${TREE_VIEW_SCALE};">
             ${renderTreeLines(nodes, layout.positions, layout.height, layout.width)}
             ${nodes.map(n=>renderTreeNode(n, layout.positions.get(n.path))).join("")}
@@ -1568,7 +1757,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     ? `${canvasSection}${renderPhaseInspector(nodes, layout)}`
     : `${renderPhaseInspector(nodes, layout)}${canvasSection}`;
   const studyToolbar = treeDemoMode ? "" : `<header class="baseline-report-toolbar tree-study-toolbar"><a href="${dashboardHrefTree(false)}"><i data-lucide="layout-dashboard"></i><span>Policies</span></a><span>Policy ${currentPolicyIndex + 1} of 2</span></header>`;
-  const studyCompletion = treeDemoMode ? "" : `<section class="baseline-report-complete tree-exploration-complete"><div><span>${TREE_BASELINE_MODE ? "Analysis reviewed" : "Pathway explored"}</span><p>${TREE_BASELINE_MODE ? "Continue when you have finished examining the policy analysis." : "Continue when you have finished examining and comparing the policy pathways."}</p></div><a class="finish-link" data-finish-policy="1" href="${policySurveyHrefTree()}">${TREE_BASELINE_MODE ? "Finish Reviewing" : "Finish Exploring"} <i data-lucide="arrow-right"></i></a></section>`;
+  const studyCompletion = treeDemoMode ? "" : `<section class="baseline-report-complete tree-exploration-complete"><a class="finish-link" data-finish-policy="1" href="${policySurveyHrefTree()}">${TREE_BASELINE_MODE ? "Finish Reviewing" : "Finish Exploring"} <i data-lucide="arrow-right"></i></a></section>`;
   root.innerHTML = `${studyToolbar}
   <section class="tree-workspace">
     ${workspaceBody}
@@ -1576,7 +1765,8 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     ${renderPathReportModal()}
     ${renderPathwayChatModal()}
   </section>
-  ${studyCompletion}`;
+  ${studyCompletion}
+  ${renderFrameworkGuide()}`;
   if(reportPath && window.parent !== window){
     window.parent.postMessage({type:"policy-demo-report-open"}, window.location.origin);
   }
@@ -1616,6 +1806,13 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
       reportOpenedAt = performance.now();
       logTreeEvent("report_opened", {path});
     }
+    if(frameworkGuideStep < 0 && !frameworkContextGuide){
+      if(!TREE_BASELINE_MODE && isCompletePath && localStorage.getItem(frameworkContextGuideKey("report")) !== "1"){
+        frameworkContextGuide = "report";
+      }else if(node.col > 0 && phasePostsTree(node.phase || {}).length > 0 && localStorage.getItem(frameworkContextGuideKey("discussion")) !== "1"){
+        frameworkContextGuide = "discussion";
+      }
+    }
     renderTree(true, anchor);
   });
   const reset = root.querySelector("[data-reset-tree]");
@@ -1642,6 +1839,22 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     event.preventDefault();
     if(markPolicyCompleteTree()) location.href = policySurveyHrefTree();
   };
+  const guideNext = root.querySelector("[data-guide-next]");
+  if(guideNext) guideNext.onclick=()=>{
+    if(frameworkContextGuide){
+      closeFrameworkGuide(true);
+      return;
+    }
+    if(frameworkGuideStep >= activeGuideSteps().length - 1){
+      closeFrameworkGuide(true);
+      return;
+    }
+    frameworkGuideStep += 1;
+    logTreeEvent("framework_guide_advanced", {step:frameworkGuideStep + 1});
+    renderTree();
+  };
+  const guideSkip = root.querySelector("[data-guide-skip]");
+  if(guideSkip) guideSkip.onclick=()=>closeFrameworkGuide(false);
   const zoomOut = root.querySelector("[data-tree-zoom-out]");
   const zoomIn = root.querySelector("[data-tree-zoom-in]");
   if(zoomOut){
@@ -1659,6 +1872,9 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     reportPath = finalReport.dataset.reportNodePath || (focusedNode || focusedTreeNode()).path;
     reportOpenedAt = performance.now();
     logTreeEvent("report_opened", {path:reportPath, condition:"baseline"});
+    if(frameworkGuideStep < 0 && !frameworkContextGuide && localStorage.getItem(frameworkContextGuideKey("report")) !== "1"){
+      frameworkContextGuide = "report";
+    }
     renderTree();
   };
   root.querySelectorAll("[data-focus-path]").forEach(btn=>btn.onclick=()=>{
@@ -1782,6 +1998,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
   updateMiniMapViewport();
   if(window.lucide) lucide.createIcons();
   if(discussionOpen) requestAnimationFrame(syncDiscussionNetwork);
+  if(activeFrameworkGuide()) requestAnimationFrame(positionFrameworkGuide);
   newlyAddedPaths = new Set();
 }
 
@@ -1886,7 +2103,7 @@ async function submitPathwayChat(question){
 }
 
 async function refreshFrameworkChatUsage(){
-  if(TREE_BASELINE_MODE || !PolicyStudy.participantId) return;
+  if(!PolicyStudy.participantId) return;
   try{
     const query = new URLSearchParams({
       participant_id:PolicyStudy.participantId,
@@ -1906,6 +2123,10 @@ async function refreshFrameworkChatUsage(){
     console.warn("Unable to load stakeholder-chat usage", error);
   }
 }
+
+window.addEventListener("resize", ()=>{
+  if(activeFrameworkGuide()) positionFrameworkGuide();
+});
 
 const [treeCountry, treeProgram] = currentPolicyKey.split("/");
 fetch(`/api/pathway/${encodeURIComponent(treeCountry)}/${encodeURIComponent(treeProgram)}/precomputed`)

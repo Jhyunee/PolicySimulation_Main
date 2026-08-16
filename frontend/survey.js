@@ -476,11 +476,9 @@ document.getElementById("studySurvey").addEventListener("submit", async event=>{
     if(stage === "pre_study"){
       location.href = previewHref("policy_intro",previewParticipant.assigned_policies[0],0);
     }else if(stage === "policy_pre"){
-      const trial = previewParticipant.assigned_trials.find(item=>item.policy_key === policyKey);
-      const page = trial?.condition === "baseline" ? "baseline_report.html" : "pathway_tree.html";
       const query = new URLSearchParams({previewStudy:"1",policy:policyKey,policyIndex:String(policyIndex)});
       if(previewVariantId) query.set("variant",previewVariantId);
-      location.href = `${page}?${query.toString()}`;
+      location.href = `toc_intro.html?${query.toString()}`;
     }else if(stage === "policy"){
       location.href = policyIndex === 0
         ? previewHref("policy_intro",previewParticipant.assigned_policies[1],1)
@@ -526,9 +524,7 @@ document.getElementById("studySurvey").addEventListener("submit", async event=>{
     if(stage === "pre_study"){
       location.href = `dashboard.html?participant=${encodeURIComponent(participantId)}`;
     }else if(stage === "policy_pre"){
-      const trial = loadedParticipant?.assigned_trials?.find(item=>item.policy_key === policyKey);
-      const page = trial?.condition === "baseline" ? "baseline_report.html" : "pathway_tree.html";
-      location.href = `${page}?policy=${encodeURIComponent(policyKey)}&participant=${encodeURIComponent(participantId)}&policyIndex=${policyIndex}`;
+      location.href = `toc_intro.html?policy=${encodeURIComponent(policyKey)}&participant=${encodeURIComponent(participantId)}&policyIndex=${policyIndex}`;
     }else if(stage === "policy"){
       const participant = await fetch(`/api/study/participants/${encodeURIComponent(participantId)}`).then(item=>item.json());
       if(participant.completed_policies.length >= participant.assigned_policies.length){
