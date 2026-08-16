@@ -518,6 +518,10 @@ label { color:var(--muted); font-size:12px; }
 .study-start-panel > span { color:#4d835d; font-size:11px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
 .study-start-panel h2 { margin:7px 0 10px; font-size:24px; letter-spacing:0; }
 .study-start-panel > p { margin:0; color:#6d6c76; font-size:13.5px; line-height:1.55; }
+.study-variant-summary { display:flex; flex-direction:column; gap:3px; margin:16px 0; border-left:4px solid #5558d9; background:#f7f7fb; padding:11px 13px; }
+.study-variant-summary[hidden] { display:none; }
+.study-variant-summary span { color:#5558d9; font-size:10px; font-weight:900; text-transform:uppercase; }
+.study-variant-summary b { color:#34333b; font-size:14px; }
 .study-confirm { display:grid; grid-template-columns:20px 1fr; gap:10px; margin:24px 0; padding:14px; border:1px solid #dfdfe5; background:#f8f8f6; cursor:pointer; }
 .study-confirm input { width:17px; height:17px; margin:2px 0 0; accent-color:#5558d9; }
 .study-confirm span { color:#4f4e56; font-size:12.5px; line-height:1.5; }
@@ -529,10 +533,6 @@ label { color:var(--muted); font-size:12px; }
 .study-preview-button:hover { border-color:#8d82c9; color:#5558d9; background:#f8f7ff; }
 .study-preview-button svg { width:16px; height:16px; }
 .study-start-panel .study-preview-note { display:block; margin-top:8px; color:#888690; font-size:10.5px; line-height:1.4; text-align:center; }
-.study-variant-summary { display:flex; flex-direction:column; gap:3px; margin:16px 0; border-left:4px solid #5558d9; background:#f7f7fb; padding:11px 13px; }
-.study-variant-summary span { color:#5558d9; font-size:10px; font-weight:900; text-transform:uppercase; }
-.study-variant-summary b { color:#34333b; font-size:14px; }
-.study-variant-summary small { color:#888690; font-size:10px; }
 .study-admin-link { display:inline-flex; align-items:center; gap:6px; margin-top:16px; color:#666474; font-size:11px; font-weight:800; text-decoration:none; }
 .study-admin-link svg { width:14px; height:14px; }
 .study-preview-button:disabled { opacity:.45; cursor:not-allowed; }

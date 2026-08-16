@@ -41,7 +41,8 @@ async function loadVariant(){
   const response = await fetch(`/api/study/variants/${encodeURIComponent(variantId)}`);
   if(!response.ok) throw new Error(`Variant HTTP ${response.status}`);
   selectedVariant = await response.json();
-  variantSummary.innerHTML = `<span>${selectedVariant.domain_label} · ${selectedVariant.condition_label}</span><b>${selectedVariant.order_label}</b><small>${selectedVariant.variant_id}</small>`;
+  variantSummary.innerHTML = `<span>${selectedVariant.domain_label} · ${selectedVariant.condition_label}</span><b>${selectedVariant.order_label}</b>`;
+  variantSummary.hidden = false;
   if(!selectedVariant.ready){
     startButton.disabled = true;
     status.textContent = "This study condition is not currently available. Please return to Prolific and contact the researcher.";
