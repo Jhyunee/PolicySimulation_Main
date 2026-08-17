@@ -118,8 +118,8 @@ function matchesExportStatus(participant, policyKey, status){
   if(status==="completed") return participant.status==="completed";
   if(status==="screened_out") return participant.status==="screened_out";
   const submitted = hasPolicySubmission(participant,policyKey);
-  if(status==="submitted") return participant.status!=="completed" && participant.status!=="screened_out" && submitted;
-  if(status==="pending") return participant.status!=="completed" && participant.status!=="screened_out" && !submitted;
+  if(status==="submitted") return participant.status!=="screened_out" && submitted;
+  if(status==="pending") return participant.status!=="screened_out" && !submitted;
   return true;
 }
 
@@ -153,7 +153,7 @@ function buildFilteredExport(policyKey,status){
       status,
       status_definitions:{
         completed:"The participant completed the full study.",
-        submitted:"The selected policy survey was submitted, but the full study was not completed.",
+        submitted:"The selected policy survey was submitted, including participants who later completed the full study.",
         pending:"The selected policy survey has not been submitted and the participant was not screened out.",
         screened_out:"The participant was screened out during the background questionnaire.",
         all:"All participant states are included.",
