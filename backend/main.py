@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 from pathlib import Path
 
@@ -72,9 +73,16 @@ def _admin_access(x_admin_token: str | None) -> None:
 
 
 def _prolific_redirect_url(participant: dict, outcome: str) -> str:
+    domain = re.sub(r"[^A-Z0-9]+", "_", str(participant.get("domain_id") or "").upper()).strip("_")
     condition = str(participant.get("condition") or "").upper()
     prefix = "PROLIFIC_SCREENED_OUT_URL" if outcome == "screened_out" else "PROLIFIC_COMPLETION_URL"
-    return os.getenv(f"{prefix}_{condition}") or os.getenv(prefix, "")
+    keys = []
+    if domain and condition:
+        keys.append(f"{prefix}_{domain}_{condition}")
+    if condition:
+        keys.append(f"{prefix}_{condition}")
+    keys.append(prefix)
+    return next((os.getenv(key, "") for key in keys if os.getenv(key)), "")
 
 
 def _persona_messages(context: dict, question: str, history: list[dict]) -> list[dict]:
