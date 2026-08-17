@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Study Results Dashboard</title>
-<link rel="stylesheet" href="styles.css?v=prolific-screening-20260817a" />
+<link rel="stylesheet" href="styles.css?v=filtered-export-20260818a" />
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
 <body class="study-results-page">
@@ -19,11 +19,15 @@
 <main class="study-results-shell">
   <section class="results-intro">
     <div><span>User study data</span><h1>Study results</h1><p>Review survey responses by policy case and participant.</p></div>
-    <button id="exportResults" type="button"><i data-lucide="download"></i> Export JSON</button>
+    <div class="results-export-controls" aria-label="Export study results">
+      <label><span>Policy</span><select id="exportPolicy"><option value="">All policies</option></select></label>
+      <label><span>Status</span><select id="exportStatus"><option value="all">All</option><option value="completed">Completed</option><option value="submitted">Submitted</option><option value="pending">Pending</option><option value="screened_out">Screened out</option></select></label>
+      <button id="exportResults" type="button" disabled><i data-lucide="download"></i> Export JSON</button>
+    </div>
   </section>
   <section id="resultsSummary" class="results-summary"></section>
   <section id="resultsBody"><div class="dashboard-loading">Loading study results...</div></section>
 </main>
-<script src="study_results.js?v=prolific-screening-20260817a"></script>
+<script src="study_results.js?v=filtered-export-20260818a"></script>
 </body>
 </html>

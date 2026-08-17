@@ -1,5 +1,8 @@
 const resultsBody = document.getElementById("resultsBody");
 const refreshResults = document.getElementById("refreshResults");
+const exportPolicy = document.getElementById("exportPolicy");
+const exportStatus = document.getElementById("exportStatus");
+const exportResults = document.getElementById("exportResults");
 let resultsData = null;
 let selectedCase = "";
 let selectedCondition = "";
@@ -101,6 +104,74 @@ function answerValue(value){
   if(Array.isArray(value)) return value.join(", ");
   if(value && typeof value === "object") return JSON.stringify(value,null,2);
   return String(value ?? "");
+}
+
+function hasPolicySubmission(participant, policyKey){
+  const trials = policyKey
+    ? participant.trials.filter(trial=>trial.policy_key===policyKey)
+    : participant.trials;
+  return trials.some(trial=>(trial.survey_responses || []).some(response=>response.survey_stage==="policy"));
+}
+
+function matchesExportStatus(participant, policyKey, status){
+  if(status==="all") return true;
+  if(status==="completed") return participant.status==="completed";
+  if(status==="screened_out") return participant.status==="screened_out";
+  const submitted = hasPolicySubmission(participant,policyKey);
+  if(status==="submitted") return participant.status!=="completed" && participant.status!=="screened_out" && submitted;
+  if(status==="pending") return participant.status!=="completed" && participant.status!=="screened_out" && !submitted;
+  return true;
+}
+
+function filteredCaseForExport(item, participantIds){
+  const participants = item.participants.filter(person=>participantIds.has(person.participant_id));
+  return {
+    ...item,
+    assigned_count:participants.length,
+    introduction_count:participants.filter(person=>person.survey_stages.includes("policy_pre")).length,
+    response_count:participants.filter(person=>person.survey_stages.includes("policy")).length,
+    completed_participant_count:participants.filter(person=>person.status==="completed").length,
+    framework_count:participants.filter(person=>normalizedCondition(person.condition)==="framework").length,
+    baseline_count:participants.filter(person=>normalizedCondition(person.condition)==="baseline").length,
+    participants,
+  };
+}
+
+function buildFilteredExport(policyKey,status){
+  const participants = resultsData.participants
+    .filter(participant=>(!policyKey || participant.trials.some(trial=>trial.policy_key===policyKey)) && matchesExportStatus(participant,policyKey,status))
+    .map(participant=>policyKey ? {...participant,trials:participant.trials.filter(trial=>trial.policy_key===policyKey)} : participant);
+  const participantIds = new Set(participants.map(participant=>participant.participant_id));
+  const cases = resultsData.cases
+    .filter(item=>!policyKey || item.policy_key===policyKey)
+    .map(item=>filteredCaseForExport(item,participantIds));
+  return {
+    generated_at:new Date().toISOString(),
+    source_generated_at:resultsData.generated_at,
+    export_filter:{
+      policy_key:policyKey || "all",
+      status,
+      status_definitions:{
+        completed:"The participant completed the full study.",
+        submitted:"The selected policy survey was submitted, but the full study was not completed.",
+        pending:"The selected policy survey has not been submitted and the participant was not screened out.",
+        screened_out:"The participant was screened out during the background questionnaire.",
+        all:"All participant states are included.",
+      },
+    },
+    participant_count:participants.length,
+    completed_count:participants.filter(participant=>participant.status==="completed").length,
+    screened_out_count:participants.filter(participant=>participant.status==="screened_out").length,
+    case_count:cases.length,
+    response_count:cases.reduce((sum,item)=>sum+item.response_count,0),
+    cases,
+    participants,
+  };
+}
+
+function populateExportPolicies(){
+  exportPolicy.innerHTML = '<option value="">All policies</option>' + resultsData.cases.map(item=>`<option value="${resultEsc(item.policy_key)}">${resultEsc(item.short_label)} · ${resultEsc(item.label)}</option>`).join("");
+  exportResults.disabled=false;
 }
 
 function renderSummary(){
@@ -223,15 +294,19 @@ async function loadResults(){
     const response=await fetch(`/api/study/results?t=${Date.now()}`,{cache:"no-store",headers:adminHeaders()});
     if(response.status === 401){ sessionStorage.removeItem(ADMIN_TOKEN_KEY); throw new Error("Administrator token was not accepted."); }
     if(!response.ok) throw new Error(`HTTP ${response.status}`);
-    resultsData=await response.json(); renderSummary(); render();
+    resultsData=await response.json(); populateExportPolicies(); renderSummary(); render();
   }catch(error){ resultsBody.innerHTML=`<div class="results-empty">Failed to load results: ${resultEsc(error.message)}</div>`; }
   finally{ refreshResults.disabled=false; }
 }
 refreshResults.addEventListener("click",loadResults);
-document.getElementById("exportResults").addEventListener("click",()=>{
+exportResults.addEventListener("click",()=>{
   if(!resultsData) return;
+  const policyKey=exportPolicy.value;
+  const status=exportStatus.value;
+  const payload=buildFilteredExport(policyKey,status);
+  const policyToken=(policyKey || "all-policies").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").toLowerCase();
   const link=document.createElement("a");
-  link.href=URL.createObjectURL(new Blob([JSON.stringify(resultsData,null,2)],{type:"application/json"}));
-  link.download=`policy_study_results_${new Date().toISOString().slice(0,10)}.json`; link.click(); URL.revokeObjectURL(link.href);
+  link.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}));
+  link.download=`policy_study_${policyToken}_${status}_${new Date().toISOString().slice(0,10)}.json`; link.click(); URL.revokeObjectURL(link.href);
 });
 loadResults(); if(window.lucide) lucide.createIcons();
