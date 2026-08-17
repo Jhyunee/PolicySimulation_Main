@@ -14,7 +14,7 @@ if(location.protocol === "file:"){
   location.replace(`http://127.0.0.1:8001/task_instructions.html?${params.toString()}${location.hash}`);
 }
 </script>
-<link rel="stylesheet" href="styles.css?v=task-instructions-unified-20260816a" />
+<link rel="stylesheet" href="styles.css?v=task-instructions-terms-20260816a" />
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
 <body class="task-instructions-page">
@@ -31,6 +31,7 @@ if(location.protocol === "file:"){
         <span id="taskModeLabel">How to complete each case</span>
         <h2 id="taskModeTitle">Review the policy analysis</h2>
       </header>
+      <p id="taskTermCopy" class="task-term-copy" hidden></p>
       <ol id="taskSteps" class="task-instructions-list"></ol>
     </article>
 
@@ -39,7 +40,7 @@ if(location.protocol === "file:"){
       <h2>Final Report and stakeholder conversation</h2>
       <p id="taskFeatureCopy"></p>
       <div class="task-feature-flow" aria-label="Interaction sequence">
-        <b><i data-lucide="route"></i> Complete pathway</b>
+        <b><i data-lucide="route"></i> Complete policy pathway</b>
         <i data-lucide="arrow-right"></i>
         <b><i data-lucide="file-text"></i> Final Report</b>
         <i data-lucide="arrow-right"></i>
@@ -63,6 +64,6 @@ if(location.protocol === "file:"){
 </main>
 <script src="study_progress.js?v=task-instructions-20260813a"></script>
 <script src="study_logger.js?v=task-instructions-20260813a"></script>
-<script src="task_instructions.js?v=task-instructions-20260813b"></script>
+<script src="task_instructions.js?v=task-instructions-terms-20260816b"></script>
 </body>
 </html>
