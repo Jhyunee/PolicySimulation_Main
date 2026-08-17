@@ -75,6 +75,11 @@ function formatDate(value){
 }
 function conditionLabel(value){ return ["framework","full"].includes(value) ? "Framework" : value === "baseline" ? "Baseline" : "Unknown"; }
 function normalizedCondition(value){ return ["framework","full"].includes(value) ? "framework" : value === "baseline" ? "baseline" : "unknown"; }
+function participantState(person){
+  if(person.status === "screened_out") return {label:"Screened out",className:"screened"};
+  if(person.survey_stages.includes("policy")) return {label:"Submitted",className:"done"};
+  return {label:"Pending",className:"pending"};
+}
 function formatDuration(value){
   const milliseconds = Number(value || 0);
   if(!milliseconds) return "0m";
@@ -101,7 +106,8 @@ function answerValue(value){
 function renderSummary(){
   document.getElementById("resultsSummary").innerHTML = [
     [resultsData.case_count,"Policy cases"], [resultsData.participant_count,"Participants"],
-    [resultsData.response_count,"Case responses"], [resultsData.completed_count,"Completed studies"]
+    [resultsData.response_count,"Case responses"], [resultsData.completed_count,"Completed studies"],
+    [resultsData.screened_out_count || 0,"Screened out"]
   ].map(([value,label])=>`<article><strong>${value}</strong><span>${label}</span></article>`).join("");
 }
 
@@ -142,7 +148,7 @@ function participantDetail(participant){
   const paths = interactions.complete_paths || [];
   return `<article class="results-participant-detail">
     <header class="participant-detail-head"><div><span>Participant response</span><h2>${resultEsc(participant.participant_id)}</h2><p>${resultEsc(participant.prolific_pid || "No Prolific ID")} · ${resultEsc(participant.variant_id || "Legacy assignment")}</p></div><div class="participant-detail-badges"><em class="${trial?.condition_name || "unknown"}">${conditionLabel(trial?.condition_name)}</em><b>${resultEsc(participant.status)}</b></div></header>
-    <dl class="participant-facts"><div><dt>Case time</dt><dd>${formatDuration(interactions.recorded_duration_ms)}</dd></div><div><dt>Total study time</dt><dd>${formatDuration(participant.recorded_duration_ms)}</dd></div><div><dt>Policy order</dt><dd>${Number(trial?.policy_order_index ?? 0)+1}</dd></div><div><dt>Case events</dt><dd>${trial?.event_count || 0}</dd></div><div><dt>Persona questions</dt><dd>${trial?.chat_count || 0}</dd></div><div><dt>Joined</dt><dd>${formatDate(participant.created_at)}</dd></div></dl>
+    <dl class="participant-facts"><div><dt>Prolific ID</dt><dd>${resultEsc(participant.prolific_pid || "Not provided")}</dd></div><div><dt>Study ID</dt><dd>${resultEsc(participant.prolific_study_id || "Not provided")}</dd></div><div><dt>Session ID</dt><dd>${resultEsc(participant.prolific_session_id || "Not provided")}</dd></div><div><dt>Case time</dt><dd>${formatDuration(interactions.recorded_duration_ms)}</dd></div><div><dt>Total study time</dt><dd>${formatDuration(participant.recorded_duration_ms)}</dd></div><div><dt>Policy order</dt><dd>${Number(trial?.policy_order_index ?? 0)+1}</dd></div><div><dt>Case events</dt><dd>${trial?.event_count || 0}</dd></div><div><dt>Persona questions</dt><dd>${trial?.chat_count || 0}</dd></div><div><dt>Joined</dt><dd>${formatDate(participant.created_at)}</dd></div>${participant.status === "screened_out" ? `<div><dt>Screening result</dt><dd>${resultEsc(participant.screening_reason || "Ineligible")}</dd></div><div><dt>Screened out</dt><dd>${formatDate(participant.screened_out_at)}</dd></div>` : ""}</dl>
     <div class="interaction-audit-grid">
       <section class="interaction-audit-card"><header><div><span>Stakeholder discussion</span><b>${discussions.length} views · ${formatDuration(interactions.stakeholder_discussion_duration_ms)}</b></div><i data-lucide="messages-square"></i></header>
         ${discussions.length ? `<div class="interaction-records">${discussions.map(item=>`<article><strong>${resultEsc(item.phase || "Unknown phase")}</strong><span>${resultEsc(pathLabel(item.path))}</span><em>${item.duration_ms==null?"Duration unavailable":formatDuration(item.duration_ms)}</em><code>${resultEsc(item.path)}</code></article>`).join("")}</div>` : '<div class="results-no-response">No stakeholder discussion was opened.</div>'}
@@ -170,11 +176,12 @@ function conditionSelection(){
     const chats=people.reduce((sum,person)=>sum+Number(person.chat_count || 0),0);
     const discussions=people.reduce((sum,person)=>sum+Number(person.stakeholder_discussion_count || 0),0);
     const paths=people.reduce((sum,person)=>sum+Number(person.complete_path_count || 0),0);
+    const screenedOut=people.filter(person=>person.status === "screened_out").length;
     return `<button class="condition-result-card ${condition}" type="button" data-condition="${condition}">
       <header><span>${conditionLabel(condition)}</span><i data-lucide="${condition==="framework"?"git-branch":"file-text"}"></i></header>
       <h2>${condition==="framework"?"Branching pathway interface":"Baseline policy analysis"}</h2>
       <p>${condition==="framework"?"Responses and interactions from the exploratory EBC pathway condition.":"Responses and interactions from the single-path baseline condition."}</p>
-      <dl><div><dt>Assigned</dt><dd>${people.length}</dd></div><div><dt>Submitted</dt><dd>${submitted}</dd></div><div><dt>Avg. time</dt><dd>${formatDuration(averageDuration)}</dd></div><div><dt>Chats</dt><dd>${chats}</dd></div><div><dt>Discussions</dt><dd>${discussions}</dd></div><div><dt>Paths</dt><dd>${paths}</dd></div></dl>
+      <dl><div><dt>Assigned</dt><dd>${people.length}</dd></div><div><dt>Submitted</dt><dd>${submitted}</dd></div><div><dt>Screened out</dt><dd>${screenedOut}</dd></div><div><dt>Avg. time</dt><dd>${formatDuration(averageDuration)}</dd></div><div><dt>Chats</dt><dd>${chats}</dd></div><div><dt>Discussions</dt><dd>${discussions}</dd></div><div><dt>Paths</dt><dd>${paths}</dd></div></dl>
       <footer>View ${conditionLabel(condition)} participants <i data-lucide="arrow-right"></i></footer>
     </button>`;
   }).join("");
@@ -186,14 +193,15 @@ function caseDetail(){
   const conditionPeople = item.participants.filter(person=>normalizedCondition(person.condition)===selectedCondition);
   let people = conditionPeople;
   if(responseFilter==="submitted") people = people.filter(person=>person.survey_stages.includes("policy"));
-  if(responseFilter==="pending") people = people.filter(person=>!person.survey_stages.includes("policy"));
+  if(responseFilter==="pending") people = people.filter(person=>person.status !== "screened_out" && !person.survey_stages.includes("policy"));
+  if(responseFilter==="screened_out") people = people.filter(person=>person.status === "screened_out");
   if(!selectedParticipant || !people.some(person=>person.participant_id===selectedParticipant)) selectedParticipant = people[0]?.participant_id || "";
   const participant = participantRecord(selectedParticipant);
   const conditionResponses=conditionPeople.filter(person=>person.survey_stages.includes("policy")).length;
   return `<div class="results-case-view">
     <header class="case-view-head"><button type="button" data-back-conditions><i data-lucide="arrow-left"></i> Conditions</button><div><span>${resultEsc(item.short_label)} · ${conditionLabel(selectedCondition)}</span><h1>${resultEsc(item.label)}</h1><p>${conditionResponses} responses from ${conditionPeople.length} ${conditionLabel(selectedCondition)} participants</p></div>
-      <select id="responseFilter" aria-label="Filter participants"><option value="all" ${responseFilter==="all"?"selected":""}>All participants</option><option value="submitted" ${responseFilter==="submitted"?"selected":""}>Submitted only</option><option value="pending" ${responseFilter==="pending"?"selected":""}>Pending only</option></select></header>
-    <div class="results-participant-layout"><aside class="results-participant-list">${people.length ? people.map(person=>`<button type="button" data-participant="${resultEsc(person.participant_id)}" class="${person.participant_id===selectedParticipant?"active":""}"><span class="result-status ${person.survey_stages.includes("policy")?"done":"pending"}"></span><div><b>${resultEsc(person.participant_id)}</b><small>${conditionLabel(person.condition)} · ${person.survey_stages.includes("policy")?"Submitted":"Pending"}</small></div><time>${formatDate(person.submitted_at)}</time></button>`).join("") : '<div class="results-empty">No participants match this filter.</div>'}</aside>
+      <select id="responseFilter" aria-label="Filter participants"><option value="all" ${responseFilter==="all"?"selected":""}>All participants</option><option value="submitted" ${responseFilter==="submitted"?"selected":""}>Submitted only</option><option value="pending" ${responseFilter==="pending"?"selected":""}>Pending only</option><option value="screened_out" ${responseFilter==="screened_out"?"selected":""}>Screened out only</option></select></header>
+    <div class="results-participant-layout"><aside class="results-participant-list">${people.length ? people.map(person=>{const state=participantState(person);return `<button type="button" data-participant="${resultEsc(person.participant_id)}" class="${person.participant_id===selectedParticipant?"active":""}"><span class="result-status ${state.className}"></span><div><b>${resultEsc(person.participant_id)}</b><small>${conditionLabel(person.condition)} · ${state.label}</small></div><time>${formatDate(person.submitted_at)}</time></button>`;}).join("") : '<div class="results-empty">No participants match this filter.</div>'}</aside>
       <div>${participantDetail(participant)}</div></div>
   </div>`;
 }

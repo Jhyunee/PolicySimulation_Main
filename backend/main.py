@@ -20,6 +20,7 @@ app = FastAPI(title="Policy Pathway Study", version="1.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 FRONTEND = Path(__file__).resolve().parents[1] / "frontend"
 FRAMEWORK_CHAT_LIMIT = 5
+NO_POLICY_EXPERIENCE = "no_policy_research_or_practice_experience"
 
 
 class PersonaChatRequest(BaseModel):
@@ -68,6 +69,12 @@ def _admin_access(x_admin_token: str | None) -> None:
         raise HTTPException(503, "Administrator access is not configured.")
     if x_admin_token != expected:
         raise HTTPException(401, "Administrator authorization is required.")
+
+
+def _prolific_redirect_url(participant: dict, outcome: str) -> str:
+    condition = str(participant.get("condition") or "").upper()
+    prefix = "PROLIFIC_SCREENED_OUT_URL" if outcome == "screened_out" else "PROLIFIC_COMPLETION_URL"
+    return os.getenv(f"{prefix}_{condition}") or os.getenv(prefix, "")
 
 
 def _persona_messages(context: dict, question: str, history: list[dict]) -> list[dict]:
@@ -172,8 +179,11 @@ def participant(participant_id: str):
 
 @app.post("/api/study/events")
 def study_event(req: StudyEventRequest):
-    if not study_store.get_participant(req.participant_id):
+    participant = study_store.get_participant(req.participant_id)
+    if not participant:
         raise HTTPException(404, "Participant session not found.")
+    if participant["status"] == "screened_out":
+        raise HTTPException(403, "This participant is not eligible to continue the study.")
     return {"event_id": study_store.add_event(req.model_dump())}
 
 
@@ -182,6 +192,8 @@ def study_survey(req: StudySurveyRequest):
     participant = study_store.get_participant(req.participant_id)
     if not participant:
         raise HTTPException(404, "Participant session not found.")
+    if participant["status"] == "screened_out":
+        raise HTTPException(403, "This participant is not eligible to continue the study.")
     if req.survey_stage == "pre_study":
         if req.policy_key:
             raise HTTPException(400, "Pre-study responses cannot specify a policy.")
@@ -198,13 +210,24 @@ def study_survey(req: StudySurveyRequest):
         if req.survey_stage == "extended" and not participant["post_study_completed"]:
             raise HTTPException(409, "The quantitative post-study survey must be completed first.")
     response_id = study_store.save_survey_response(req.model_dump())
+    if req.survey_stage == "pre_study" and str(req.answers.get("policy_experience", "")).strip().lower() == "none":
+        screening = study_store.mark_screened_out(req.participant_id, NO_POLICY_EXPERIENCE)
+        participant = study_store.get_participant(req.participant_id) or participant
+        return {
+            "response_id": response_id,
+            **screening,
+            "redirect_url": _prolific_redirect_url(participant, "screened_out"),
+        }
     return {"response_id": response_id, "status": "saved"}
 
 
 @app.get("/api/study/chat-limit")
 def chat_limit(participant_id: str, policy_key: str):
-    if not study_store.get_participant(participant_id):
+    participant = study_store.get_participant(participant_id)
+    if not participant:
         raise HTTPException(404, "Participant session not found.")
+    if participant["status"] == "screened_out":
+        raise HTTPException(403, "This participant is not eligible to continue the study.")
     return study_store.chat_turn_status(participant_id, policy_key, FRAMEWORK_CHAT_LIMIT)
 
 
@@ -213,8 +236,11 @@ def persona_chat(req: PersonaChatRequest):
     started = time.monotonic()
     if not (req.participant_id and req.turn_id and req.pathway):
         raise HTTPException(400, "A study participant, turn ID, and pathway are required.")
-    if not study_store.get_participant(req.participant_id):
+    participant = study_store.get_participant(req.participant_id)
+    if not participant:
         raise HTTPException(404, "Participant session not found.")
+    if participant["status"] == "screened_out":
+        raise HTTPException(403, "This participant is not eligible to continue the study.")
     reserved = study_store.start_chat_turn({"turn_id":req.turn_id,"participant_id":req.participant_id,"policy_key":req.policy_key,"pathway":req.pathway,"persona_name":req.persona_name,"question":req.user_question or req.question}, FRAMEWORK_CHAT_LIMIT)
     if not reserved["accepted"]:
         raise HTTPException(429, detail={"code":"framework_chat_limit_reached", **reserved})
@@ -246,8 +272,9 @@ def study_results(x_admin_token: str | None = Header(default=None)):
 
 
 @app.get("/api/study/completion-url")
-def completion_url():
-    return {"url": os.getenv("PROLIFIC_COMPLETION_URL", "")}
+def completion_url(participant_id: str | None = None):
+    participant = study_store.get_participant(participant_id) if participant_id else {}
+    return {"url": _prolific_redirect_url(participant or {}, "completed")}
 
 
 app.mount("/", StaticFiles(directory=str(FRONTEND), html=True), name="frontend")

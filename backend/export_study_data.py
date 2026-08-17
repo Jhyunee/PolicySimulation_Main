@@ -76,6 +76,8 @@ def export(db_path: Path) -> list[dict]:
             "policy_trials": policy_trials,
             "pair_key": row["pair_key"],
             "status": row["status"],
+            "screening_reason": row["screening_reason"] if "screening_reason" in participant_columns else None,
+            "screened_out_at": row["screened_out_at"] if "screened_out_at" in participant_columns else None,
             "prolific_pid": row["prolific_pid"],
             "prolific_study_id": row["prolific_study_id"],
             "prolific_session_id": row["prolific_session_id"],

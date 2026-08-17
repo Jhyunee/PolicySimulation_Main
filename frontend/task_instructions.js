@@ -67,14 +67,14 @@ continueTask.addEventListener("click", async ()=>{
   continueTask.disabled = true;
   const condition = document.body.dataset.condition || "baseline";
   await PolicyStudy.event("task_instructions_completed", {condition}, PolicyStudy.pageElapsed());
-  const query = new URLSearchParams({stage:"pre"});
+  const query = new URLSearchParams();
   if(taskPreviewMode){
     query.set("previewStudy","1");
     query.set("variant",taskVariantId);
   }else{
     query.set("participant",taskParticipantId);
   }
-  location.href = `survey.html?${query.toString()}`;
+  location.href = `dashboard.html?${query.toString()}`;
 });
 
 continueTask.disabled = true;

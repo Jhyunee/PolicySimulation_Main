@@ -517,12 +517,27 @@ document.getElementById("studySurvey").addEventListener("submit", async event=>{
       }
       throw new Error(message);
     }
+    const saveResult = await response.json();
+    if(saveResult.status === "screened_out"){
+      localStorage.removeItem("policy-study-participant");
+      document.querySelector(".survey-hero").innerHTML = '<span>Screening complete</span><h1>Thank you for your interest.</h1><p>Based on your responses, you are not eligible to continue with this study.</p>';
+      form.innerHTML = '<section class="survey-section survey-complete"><i data-lucide="log-out"></i><h2>You will now return to Prolific.</h2><p>Your screening response has been saved.</p></section>';
+      if(window.lucide) lucide.createIcons();
+      window.scrollTo({top:0,behavior:"smooth"});
+      if(saveResult.redirect_url){
+        setTimeout(()=>{ location.href = saveResult.redirect_url; }, 1500);
+      }else{
+        document.querySelector(".survey-section.survey-complete p").textContent = "Your screening response has been saved. Please return to Prolific.";
+      }
+      return;
+    }
     PolicyStudy.event("survey_submitted", {
       survey_stage:stage,
       response_item_count:Object.keys(answers).length,
+      screening_status:saveResult.status,
     }, PolicyStudy.pageElapsed());
     if(stage === "pre_study"){
-      location.href = `dashboard.html?participant=${encodeURIComponent(participantId)}`;
+      location.href = `task_instructions.html?participant=${encodeURIComponent(participantId)}`;
     }else if(stage === "policy_pre"){
       location.href = `toc_intro.html?policy=${encodeURIComponent(policyKey)}&participant=${encodeURIComponent(participantId)}&policyIndex=${policyIndex}`;
     }else if(stage === "policy"){
@@ -540,7 +555,7 @@ document.getElementById("studySurvey").addEventListener("submit", async event=>{
       if(window.lucide) lucide.createIcons();
       window.scrollTo({top:0,behavior:"smooth"});
       if(loadedParticipant?.prolific_pid){
-        const completion = await fetch("/api/study/completion-url").then(item=>item.ok ? item.json() : null);
+        const completion = await fetch(`/api/study/completion-url?participant_id=${encodeURIComponent(participantId)}`).then(item=>item.ok ? item.json() : null);
         if(completion?.url){
           document.querySelector(".survey-section.survey-complete p").textContent = "Returning you to Prolific to complete your submission...";
           setTimeout(()=>{ location.href = completion.url; }, 1500);

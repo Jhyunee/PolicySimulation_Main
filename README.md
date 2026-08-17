@@ -6,7 +6,10 @@ Standalone deployment for the CHI policy-pathway user study. The bundled policy 
 
 - `DEEPSEEK_API_KEY`: required for stakeholder chat.
 - `ADMIN_TOKEN`: required to view `study_admin.html` and `study_results.html` data.
-- `PROLIFIC_COMPLETION_URL`: the complete-submission redirect URL supplied by Prolific.
+- `PROLIFIC_COMPLETION_URL`: fallback complete-submission redirect URL supplied by Prolific.
+- `PROLIFIC_COMPLETION_URL_BASELINE` / `PROLIFIC_COMPLETION_URL_FRAMEWORK`: condition-specific completion URLs when Baseline and Framework are separate Prolific studies.
+- `PROLIFIC_SCREENED_OUT_URL`: fallback custom-screening redirect URL supplied by Prolific.
+- `PROLIFIC_SCREENED_OUT_URL_BASELINE` / `PROLIFIC_SCREENED_OUT_URL_FRAMEWORK`: condition-specific custom-screening URLs. Participants who select `None` for policy-related research or practice experience are redirected here after their background response is saved.
 - `DATA_DIR=/data`: optional when a Railway Volume is mounted at `/data`; the app automatically uses Railway's mount-path variable when present.
 
 Attach a Railway Volume at `/data` before collecting responses. Do not commit the SQLite database.

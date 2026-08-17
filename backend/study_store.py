@@ -44,7 +44,9 @@ def _connect() -> sqlite3.Connection:
             study_version TEXT,
             domain_id TEXT,
             condition_name TEXT,
-            policy_order TEXT
+            policy_order TEXT,
+            screening_reason TEXT,
+            screened_out_at TEXT
         );
         CREATE INDEX IF NOT EXISTS idx_participants_pair ON participants(pair_key);
 
@@ -122,7 +124,7 @@ def _connect() -> sqlite3.Connection:
     for name in (
         "prolific_pid", "prolific_study_id", "prolific_session_id",
         "assigned_conditions_json", "variant_id", "study_version", "domain_id",
-        "condition_name", "policy_order",
+        "condition_name", "policy_order", "screening_reason", "screened_out_at",
     ):
         if name not in columns:
             connection.execute(f"ALTER TABLE participants ADD COLUMN {name} TEXT")
@@ -376,6 +378,8 @@ def get_participant(participant_id: str) -> dict | None:
         "policy_order": row["policy_order"],
         "pair_key": row["pair_key"],
         "status": row["status"],
+        "screening_reason": row["screening_reason"],
+        "screened_out_at": row["screened_out_at"],
         "completed_policies": completed,
         "pre_study_completed": pre_study_completed,
         "introduced_policies": introduced_policies,
@@ -401,6 +405,24 @@ def variant_counts() -> dict[str, dict]:
             "completed": int(row["completed"] or 0),
         }
         for row in rows
+    }
+
+
+def mark_screened_out(participant_id: str, reason: str) -> dict:
+    screened_out_at = _now()
+    with _connect() as connection:
+        connection.execute(
+            """
+            UPDATE participants
+            SET status = 'screened_out', screening_reason = ?, screened_out_at = ?
+            WHERE participant_id = ?
+            """,
+            (reason, screened_out_at, participant_id),
+        )
+    return {
+        "status": "screened_out",
+        "screening_reason": reason,
+        "screened_out_at": screened_out_at,
     }
 
 
@@ -626,6 +648,8 @@ def study_results() -> dict:
                 "participant_id": participant_id,
                 "created_at": row["created_at"],
                 "status": row["status"],
+                "screening_reason": row["screening_reason"],
+                "screened_out_at": row["screened_out_at"],
                 "prolific_pid": row["prolific_pid"],
                 "prolific_study_id": row["prolific_study_id"],
                 "prolific_session_id": row["prolific_session_id"],
@@ -651,6 +675,7 @@ def study_results() -> dict:
         "generated_at": _now(),
         "participant_count": len(participants),
         "completed_count": sum(item["status"] == "completed" for item in participants),
+        "screened_out_count": sum(item["status"] == "screened_out" for item in participants),
         "case_count": len(cases),
         "response_count": sum(case["response_count"] for case in cases),
         "cases": cases,

@@ -25,7 +25,7 @@ startButton.addEventListener("click", async ()=>{
     if(!response.ok) throw new Error(`HTTP ${response.status}`);
     const participant = await response.json();
     localStorage.setItem("policy-study-participant", participant.participant_id);
-    location.href = `task_instructions.html?participant=${encodeURIComponent(participant.participant_id)}`;
+    location.href = `survey.html?stage=pre&participant=${encodeURIComponent(participant.participant_id)}`;
   }catch(error){
     status.textContent = `The study could not be started: ${error.message}`;
     startButton.disabled = false;
