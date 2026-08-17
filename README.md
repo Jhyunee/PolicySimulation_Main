@@ -9,9 +9,11 @@ Standalone deployment for the CHI policy-pathway user study. The bundled policy 
 - `PROLIFIC_COMPLETION_URL`: fallback complete-submission redirect URL supplied by Prolific.
 - `PROLIFIC_COMPLETION_URL_BASELINE` / `PROLIFIC_COMPLETION_URL_FRAMEWORK`: condition-specific completion URLs when Baseline and Framework are separate Prolific studies.
 - `PROLIFIC_COMPLETION_URL_<DOMAIN>_<CONDITION>`: domain-and-condition-specific completion URL. For example, use `PROLIFIC_COMPLETION_URL_WELFARE_BASELINE` when Welfare Baseline is a separate Prolific study.
+- `PROLIFIC_COMPLETION_URL_<DOMAIN>_<CONDITION>_<ORDER>`: URL for a fixed AB or BA order, such as `PROLIFIC_COMPLETION_URL_WELFARE_BASELINE_AB`. Use this when policy orders are separate Prolific studies.
 - `PROLIFIC_SCREENED_OUT_URL`: fallback custom-screening redirect URL supplied by Prolific.
 - `PROLIFIC_SCREENED_OUT_URL_BASELINE` / `PROLIFIC_SCREENED_OUT_URL_FRAMEWORK`: condition-specific custom-screening URLs. Participants who select `None` for policy-related research or practice experience are redirected here after their background response is saved.
 - `PROLIFIC_SCREENED_OUT_URL_<DOMAIN>_<CONDITION>`: domain-and-condition-specific custom-screening URL, such as `PROLIFIC_SCREENED_OUT_URL_WELFARE_BASELINE`.
+- `PROLIFIC_SCREENED_OUT_URL_<DOMAIN>_<CONDITION>_<ORDER>`: order-specific custom-screening URL, such as `PROLIFIC_SCREENED_OUT_URL_WELFARE_BASELINE_AB`.
 - `DATA_DIR=/data`: optional when a Railway Volume is mounted at `/data`; the app automatically uses Railway's mount-path variable when present.
 
 Attach a Railway Volume at `/data` before collecting responses. Do not commit the SQLite database.
@@ -26,4 +28,4 @@ Use one Prolific study per fixed policy pair, condition, and order:
 
 The server rejects missing or incomplete variants, so a participant cannot receive a random policy pair.
 
-Redirect variables are resolved from most specific to least specific: domain and condition, condition only, then the common fallback. For example, a Welfare Baseline participant uses `PROLIFIC_COMPLETION_URL_WELFARE_BASELINE` when available, otherwise `PROLIFIC_COMPLETION_URL_BASELINE`, and finally `PROLIFIC_COMPLETION_URL`.
+Redirect variables are resolved from most specific to least specific: domain, condition, and order; domain and condition; condition only; then the common fallback. For example, a Welfare Baseline AB participant uses `PROLIFIC_COMPLETION_URL_WELFARE_BASELINE_AB` when available, then `PROLIFIC_COMPLETION_URL_WELFARE_BASELINE`, `PROLIFIC_COMPLETION_URL_BASELINE`, and finally `PROLIFIC_COMPLETION_URL`.
