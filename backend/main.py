@@ -74,16 +74,8 @@ def _admin_access(x_admin_token: str | None) -> None:
 
 def _prolific_redirect_url(participant: dict, outcome: str) -> str:
     domain = re.sub(r"[^A-Z0-9]+", "_", str(participant.get("domain_id") or "").upper()).strip("_")
-    condition = str(participant.get("condition") or "").upper()
-    order = re.sub(r"[^A-Z0-9]+", "_", str(participant.get("policy_order") or "").upper()).strip("_")
     prefix = "PROLIFIC_SCREENED_OUT_URL" if outcome == "screened_out" else "PROLIFIC_COMPLETION_URL"
-    keys = []
-    if domain and condition and order:
-        keys.append(f"{prefix}_{domain}_{condition}_{order}")
-    if domain and condition:
-        keys.append(f"{prefix}_{domain}_{condition}")
-    if condition:
-        keys.append(f"{prefix}_{condition}")
+    keys = [f"{prefix}_{domain}"] if domain else []
     keys.append(prefix)
     return next((os.getenv(key, "") for key in keys if os.getenv(key)), "")
 
