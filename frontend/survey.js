@@ -115,8 +115,7 @@ const allStudySections = [
       ["rq3_risk_3","I felt that some policy pathways would require validation using additional evidence or expert review before being used in policy discussion."]
     ],
     text:[
-      ["rq3_context_concern","If any results did not sufficiently reflect the policy context, which results or aspects concerned you?","Optional. Describe a pathway, condition, explanation, or missing context."],
-      ["rq3_validation_need","Which pathways or claims would require additional validation, and what evidence would you need?","Optional. Describe the evidence, source, or expert review you would seek."]
+      ["rq3_trust_verification","What aspects of the analysis increased or reduced your confidence in using this tool to support policy discussion or judgment? What, if anything, would you want to verify before relying on its results?","Describe the specific result, explanation, evidence, context, or expert review that shaped your confidence. If there is nothing you would verify, state that explicitly.",true]
     ]
   },
   {
@@ -131,14 +130,15 @@ const allStudySections = [
       ["chat_4","The persona's responses felt natural and plausible for the represented stakeholder."]
     ],
     text:[
-      ["chat_feedback","What did the stakeholder discussion or persona chat add to your exploration, and what risks or limitations did you notice?","Optional. You may refer to a specific persona, question, or response."]
+      ["chat_feedback","What, if anything, did the stakeholder discussion or persona chat add to your policy exploration? Please describe anything that felt useful, unconvincing, or potentially risky.","Refer to a specific persona, question, or response where possible. If it added nothing, explain why.",true]
     ]
   }
 ];
 
 /* ── ③ 정책 사후 (정책마다) ────────────────────────────────────────────────
-   RQ1  SCS 10 + 인지부하 6        — 양 조건 공통, 참조 대상 "이 분석"
-   RQ2  Coverage 4 + 개방 1        — framework 전용, 참조 대상 "분기 경로"    */
+   RQ1  SCS 10 + 인지부하 6          — 양 조건 공통, 참조 대상 "이 분석"
+   RQ2  Coverage 4 + 비교 지원 3     — framework 전용, 참조 대상 "분기 경로"
+   정성 Coverage 1                    — framework 전용, 필수 응답               */
 const cognitiveLoadSection = {
   title:"Complexity and clarity",
   instruction:LOAD_INSTRUCTION,
@@ -165,11 +165,29 @@ const coverageSection = {
     ["rq2b_5","I felt that important conditions or possible developments were missing from the pathways."]
   ],
   text:[
-    ["rq2b_missing","If any important conditions or developments seemed missing, which ones?","Optional. Describe the condition, stakeholder, or outcome you expected to see."]
+    ["rq2b_missing","Were any important conditions or developments missing from the pathways? Please explain.","Describe the condition, stakeholder, or outcome you expected to see. If none were missing, state that explicitly.",true]
   ]
 };
 
-const policySections = [allStudySections[0], cognitiveLoadSection, coverageSection];
+const comparisonSupportSection = {
+  title:"Support for comparing policy pathways",
+  conditions:["framework"],
+  items:[
+    ["rq2_compare_1","This tool helped me identify where and why possible policy developments diverged."],
+    ["rq2_compare_2","This tool helped me compare the conditions, bottlenecks, and projected results associated with different policy developments."],
+    ["rq2_compare_3","This tool made the differences among possible policy developments easier to understand."]
+  ]
+};
+
+const policySections = [allStudySections[0], cognitiveLoadSection, coverageSection, comparisonSupportSection];
+
+const comparisonReflectionSection = {
+  title:"Value of pathway comparison",
+  conditions:["framework"],
+  text:[
+    ["rq2_comparison_feedback","Did comparing multiple policy pathways help you assess the policy? Please explain what the comparison added, if anything, what remained difficult, and whether the additional time and information were worthwhile.","Describe what the comparison changed in your analysis. If it did not help, explain why.",true]
+  ]
+};
 
 /* ── ⑤ 정성 설문 ───────────────────────────────────────────────────────────
    RQ3c  extended_4, 5, 8  — 양 조건 공통 (강점 · 개선점 · LLM 도입에 대한 견해)
@@ -184,19 +202,21 @@ const policySections = [allStudySections[0], cognitiveLoadSection, coverageSecti
 const extendedSection = {
     title:"Practical use, limitations, and future implications",
     text:[
-      ["extended_4","What are the main strengths of this system as a policy decision-support tool?","Consider its analysis, interaction, comparison, or communication capabilities.",true],
-      ["extended_5","What should be improved before this system could support real policy decision-makers?","Describe missing functions, information, safeguards, or workflow support.",true],
+      ["extended_4","How did this tool affect the way you examined the two policies? Please describe anything you found useful, confusing, limiting, or missing.","Reflect freely on your overall experience with the analysis and interface.",true],
+      ["extended_5","In what situations, if any, could this tool support real policy work? What evidence, safeguards, or improvements would be needed before it could be used?","Describe where it could or could not fit into policy work and why.",true],
       ["extended_8","What do you think about the growing use of LLM-based tools in policy decision-making? Please share both the opportunities and the concerns you see.","Consider both potential benefits and unintended consequences.",true]
     ]
 };
 
 /* ── ④ 최종 설문 ───────────────────────────────────────────────────────────
-   RQ3a  TAM 6           — 양 조건 공통
-   RQ3b  Trust 7 + 개방 2 — 양 조건 공통
-   RQ4   Chat 3 + 개방 1  — framework 전용                                    */
+   RQ3a  TAM 6                    — 양 조건 공통
+   RQ3b  Trust 7 + 검증 근거 1    — 양 조건 공통
+   RQ2   비교 가치 정성 1         — framework 전용
+   RQ4   Chat 3 + 정성 1          — framework 전용                            */
 const postSections = [
   allStudySections[1],
   allStudySections[2],
+  comparisonReflectionSection,
   allStudySections[3],
 ];
 
