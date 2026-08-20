@@ -10,7 +10,7 @@ function normalizeCondition(value){
 }
 
 function stepMarkup(items){
-  return items.map((item,index)=>`<li><b>${String(index + 1).padStart(2,"0")}</b><div><strong>${item.title}</strong><span>${item.detail}</span></div></li>`).join("");
+  return items.map((item,index)=>`<li><b>${String(index + 1).padStart(2,"0")}</b><div><strong>${item.title}</strong><span>${item.detail}</span>${item.note ? `<span class="task-step-note"><b aria-hidden="true">→</b>${item.note}</span>` : ""}</div></li>`).join("");
 }
 
 function renderTask(condition){
@@ -26,12 +26,11 @@ function renderTask(condition){
   document.getElementById("taskFrameworkGuide").hidden = !framework;
   const items = framework ? [
     {title:"Choose how the policy develops", detail:"At each phase, select an Enabling, Baseline, or Constraining development condition."},
-    {title:"Build a pathway to Impact", detail:"Continue the selected development through Impact and review its projected effects."},
-    {title:"Explore different pathways", detail:"Repeat the process to examine and compare how the policy unfolds under different conditions."},
+    {title:"Build a pathway to Impact", detail:"Continue the selected development through Impact and review its projected effects.", note:"Review the Final Report and chat with stakeholder personas."},
+    {title:"Explore different pathways", detail:"Repeat the process to examine how the policy unfolds under different conditions.", note:"Choose two completed pathways and review their Comparison Report."},
   ] : [
     {title:"Review the complete pathway", detail:"Follow the presented analysis from Inputs through the Impact phase."},
     {title:"Review stakeholder discussion", detail:"Each node includes a stakeholder discussion. Open the discussion for at least one node to examine the perspectives represented there."},
-    {title:"Read the Final Report", detail:"Review the report available after reaching the end of the pathway."},
     {title:"Ask a stakeholder a question", detail:"Select a stakeholder persona whose responses reflect the position represented by the presented pathway, and ask at least one question."},
     {title:"Complete your review", detail:"Consider the policy development, constraints, and outcomes before finishing the case."},
   ];

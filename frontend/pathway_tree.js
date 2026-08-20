@@ -1873,11 +1873,6 @@ const BASELINE_CONTEXT_GUIDES = {
     title:"Examine stakeholder reasoning",
     copy:"Stakeholder discussion is available for each phase after Inputs. Open it to compare how different personas interpret the projected values, mechanisms, and constraints at the selected node.",
   },
-  report:{
-    target:".report-document-head",
-    title:"Review the complete projected pathway",
-    copy:"The Final report summarizes the fixed pathway phase by phase, including its mechanisms, quantitative estimates, and constraints. Treat it as an exploratory policy analysis rather than a definitive forecast.",
-  },
   chat:{
     target:".pathway-chat-button",
     title:"Question a stakeholder about the pathway",
@@ -2154,9 +2149,6 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     reportPath = finalReport.dataset.reportNodePath || (focusedNode || focusedTreeNode()).path;
     reportOpenedAt = performance.now();
     logTreeEvent("report_opened", {path:reportPath, condition:"baseline"});
-    if(frameworkGuideStep < 0 && !frameworkContextGuide && localStorage.getItem(frameworkContextGuideKey("report")) !== "1"){
-      frameworkContextGuide = "report";
-    }
     renderTree();
   };
   root.querySelectorAll("[data-focus-path]").forEach(btn=>btn.onclick=()=>{

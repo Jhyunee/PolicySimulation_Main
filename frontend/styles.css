@@ -1657,6 +1657,8 @@ html:has(body.toc-intro-page) { scrollbar-gutter:stable; }
   background:#eeebff; color:#5558d9; font-size:10.5px; }
 .task-instructions-list strong { display:block; margin:0 0 3px; color:#2c2a34; font-size:15px; }
 .task-instructions-list span { display:block; color:#6d6c76; font-size:13.5px; line-height:1.5; }
+.task-instructions-list .task-step-note { display:flex; align-items:flex-start; gap:7px; margin-top:8px; color:#5142ad; font-size:12.5px; font-weight:750; line-height:1.42; }
+.task-instructions-list .task-step-note b { flex:0 0 auto; color:#6f5de2; font-size:15px; line-height:1.18; }
 .task-primary-card { border-top:4px solid #5558d9; }
 .task-unified-card { padding:24px 28px 26px; }
 .task-card-title { margin:0 0 4px; color:#242329; font-size:30px; line-height:1.18; letter-spacing:0; }
