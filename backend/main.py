@@ -35,6 +35,13 @@ class PersonaChatRequest(BaseModel):
     user_question: str | None = None
 
 
+class PathwayComparisonRequest(BaseModel):
+    policy_key: str
+    path_a: str = Field(min_length=1, max_length=240)
+    path_b: str = Field(min_length=1, max_length=240)
+    participant_id: str | None = None
+
+
 class StudyEventRequest(BaseModel):
     participant_id: str = Field(pattern=r"^policy_[a-f0-9]{8}$")
     policy_key: str | None = None
@@ -96,19 +103,169 @@ Use 3-5 concise sentences in at most two paragraphs."""
     return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
 
 
-def _chat(messages: list[dict]) -> tuple[str, dict]:
+def _chat(
+    messages: list[dict],
+    *,
+    temperature: float = 0.65,
+    max_tokens: int = 220,
+    response_format: dict | None = None,
+) -> tuple[str, dict]:
     api_key = os.getenv("DEEPSEEK_API_KEY")
     if not api_key:
         raise ValueError("DEEPSEEK_API_KEY is not configured.")
     response = requests.post(
         os.getenv("DEEPSEEK_API_URL", "https://api.deepseek.com/v1/chat/completions"),
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
-        json={"model": os.getenv("DEEPSEEK_MODEL", "deepseek-chat"), "messages": messages, "temperature": 0.65, "max_tokens": 220},
+        json={
+            "model": os.getenv("DEEPSEEK_MODEL", "deepseek-chat"),
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            **({"response_format": response_format} if response_format else {}),
+        },
         timeout=90,
     )
     response.raise_for_status()
     payload = response.json()
     return payload["choices"][0]["message"]["content"].strip(), payload.get("usage") or {}
+
+
+def _phase_numeric_values(phase: dict) -> dict[str, float]:
+    values: dict[str, list[float]] = {}
+    for key, value in (phase.get("grounded_values") or {}).items():
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            values.setdefault(key, []).append(float(value))
+    for post in phase.get("posts") or []:
+        for key, value in (post.get("prediction_values") or {}).items():
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                values.setdefault(key, []).append(float(value))
+    return {key: sum(items) / len(items) for key, items in values.items() if items}
+
+
+def _phase_constraints(phase: dict) -> list[str]:
+    constraints: list[str] = []
+    for post in phase.get("posts") or []:
+        summary = post.get("rationale_summary") or {}
+        for item in summary.get("key_constraints") or []:
+            text = re.sub(r"\s+", " ", str(item or "")).strip()
+            if text and text.lower() not in {entry.lower() for entry in constraints}:
+                constraints.append(text)
+    return constraints[:6]
+
+
+def _comparison_path_report(policy_key: str, path: str) -> dict:
+    tree = precomputed_branch_store.get_tree(policy_key)
+    by_id = {node["node_id"]: node for node in tree["nodes"]}
+    if path not in by_id:
+        raise ValueError(f"Unknown pathway: {path}")
+    parts = path.split("/")
+    if parts[0] != "root" or any(part not in {"enabling", "baseline", "constraining"} for part in parts[1:]):
+        raise ValueError("The pathway contains an unsupported transition.")
+    expected_transitions = max(0, len(tree.get("phases") or []) - 1)
+    if len(parts) - 1 != expected_transitions:
+        raise ValueError("A complete pathway through Impact is required.")
+    node_ids = ["root"] + ["root/" + "/".join(parts[1:index + 1]) for index in range(1, len(parts))]
+    nodes = []
+    for index, node_id in enumerate(node_ids):
+        node = by_id.get(node_id)
+        if not node or not node.get("phase"):
+            raise ValueError(f"The pathway is missing phase {index + 1}.")
+        phase = node["phase"]
+        nodes.append({
+            "phase": phase.get("phase"),
+            "condition": "policy_input" if index == 0 else node.get("transition_mode"),
+            "phase_summary": re.sub(r"\s+", " ", str(phase.get("phase_summary") or "")).strip(),
+            "quantitative_values": _phase_numeric_values(phase),
+            "key_constraints": _phase_constraints(phase),
+        })
+    return {
+        "path": path,
+        "route": parts[1:],
+        "nodes": nodes,
+        "policy": tree.get("policy") or {},
+        "simulation_target": tree.get("simulation_target"),
+    }
+
+
+def _comparison_metrics(report_a: dict, report_b: dict) -> list[dict]:
+    phase_b = {item["phase"]: item for item in report_b["nodes"]}
+    output = []
+    for phase_a in report_a["nodes"]:
+        other = phase_b.get(phase_a["phase"], {})
+        values_a = phase_a.get("quantitative_values") or {}
+        values_b = other.get("quantitative_values") or {}
+        rows = []
+        for key in dict.fromkeys([*values_a.keys(), *values_b.keys()]):
+            value_a, value_b = values_a.get(key), values_b.get(key)
+            delta = value_b - value_a if value_a is not None and value_b is not None else None
+            relative_delta = (delta / abs(value_a) * 100) if delta is not None and value_a else None
+            rows.append({"field": key, "value_a": value_a, "value_b": value_b, "delta_b_minus_a": delta, "relative_delta_pct": relative_delta})
+        output.append({"phase": phase_a["phase"], "metrics": rows})
+    return output
+
+
+def _comparison_messages(report_a: dict, report_b: dict) -> list[dict]:
+    schema = {
+        "executive_summary": {
+            "critical_divergence": "string",
+            "overall_contrast": "string",
+            "comparison_scope": "string",
+        },
+        "pathway_profiles": {
+            "A": {"core_logic": "string", "primary_bottleneck": "string", "enabling_condition": "string", "limiting_condition": "string"},
+            "B": {"core_logic": "string", "primary_bottleneck": "string", "enabling_condition": "string", "limiting_condition": "string"},
+        },
+        "phase_comparisons": [{
+            "phase": "Inputs|Activities|Outputs|Outcomes|Impact",
+            "key_difference": "string",
+            "causal_interpretation": "string",
+            "bottleneck_a": "string",
+            "bottleneck_b": "string",
+            "downstream_implication": "string",
+        }],
+        "divergence_factors": [{
+            "phase": "string",
+            "condition": "string",
+            "role_in_pathway_a": "string",
+            "role_in_pathway_b": "string",
+        }],
+        "uncertainties": ["string"],
+    }
+    system = """You are a comparative analyst for an exploratory policy simulation based on Theory of Change.
+Compare two selected pathway reports using only the supplied content. Summarize and contrast their mechanisms,
+assumptions, bottlenecks, enabling and limiting conditions, quantitative estimates, and downstream implications.
+Remain descriptive and analytically neutral: do not rank the pathways, evaluate which is better, recommend a
+choice, prescribe improvements, or introduce policy judgment. Do not invent evidence, numeric values, causal
+certainty, or recommendations. Treat all estimates as conditional exploratory outputs. If the reports do not
+support a distinction, say that the phase is substantively similar. Divergence factors must only describe how
+an evidenced condition functions in A and B, not how it should be changed. Return one valid JSON object matching
+the supplied schema exactly.
+Compare same-named quantitative fields one by one before describing a phase. If quantitative indicators move
+in different directions, explicitly describe the result as mixed and name the conflicting indicators; never
+collapse mixed evidence into a claim that one pathway has higher overall benefits or performance. The supplied
+authoritative_numeric_comparison already computes A, B, and B-minus-A values; use it as the sole authority for
+numeric direction and do not reinterpret its signs. Include all
+five phases in phase_comparisons in ToC order. Keep each string concise (one or two sentences)."""
+    payload = {
+        "instruction": "Produce a neutral, grounded comparison of pathway A and pathway B without judging or recommending either route.",
+        "required_json_schema": schema,
+        "policy": report_a.get("policy"),
+        "simulation_target": report_a.get("simulation_target"),
+        "pathway_A_report": report_a,
+        "pathway_B_report": report_b,
+        "authoritative_numeric_comparison": _comparison_metrics(report_a, report_b),
+    }
+    return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
+
+
+def _parse_json_object(content: str) -> dict:
+    cleaned = content.strip()
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", cleaned, flags=re.IGNORECASE | re.DOTALL).strip()
+    parsed = json.loads(cleaned)
+    if not isinstance(parsed, dict):
+        raise ValueError("The comparison response was not a JSON object.")
+    return parsed
 
 
 @app.get("/api/pathway/policies")
@@ -232,6 +389,40 @@ def chat_limit(participant_id: str, policy_key: str):
     if participant["status"] == "screened_out":
         raise HTTPException(403, "This participant is not eligible to continue the study.")
     return study_store.chat_turn_status(participant_id, policy_key, FRAMEWORK_CHAT_LIMIT)
+
+
+@app.post("/api/pathway/compare")
+def compare_pathways(req: PathwayComparisonRequest):
+    started = time.monotonic()
+    try:
+        report_a = _comparison_path_report(req.policy_key, req.path_a)
+        report_b = _comparison_path_report(req.policy_key, req.path_b)
+        if req.path_a == req.path_b:
+            raise ValueError("Select two different pathways for comparison.")
+        content, usage = _chat(
+            _comparison_messages(report_a, report_b),
+            temperature=0.2,
+            max_tokens=2400,
+            response_format={"type": "json_object"},
+        )
+        analysis = _parse_json_object(content)
+    except (KeyError, FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+        status = 503 if "DEEPSEEK_API_KEY" in str(exc) else 422
+        raise HTTPException(status, str(exc))
+    except requests.RequestException as exc:
+        raise HTTPException(502, "The pathway comparison service is temporarily unavailable.") from exc
+    except Exception as exc:
+        raise HTTPException(500, "The pathway comparison could not be generated.") from exc
+    return {
+        "analysis": analysis,
+        "metrics": _comparison_metrics(report_a, report_b),
+        "paths": {
+            "A": {"path": req.path_a, "route": report_a["route"]},
+            "B": {"path": req.path_b, "route": report_b["route"]},
+        },
+        "usage": usage,
+        "latency_ms": round((time.monotonic() - started) * 1000),
+    }
 
 
 @app.post("/api/pathway/persona-chat")

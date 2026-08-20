@@ -257,7 +257,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Federal stabilization funding translates into provider-level subgrants through lead agencies' administrative choices, strengthening the causal pathway by increasing provider participation and reducing closures. However, this transition is weakened by cost-estimation and self-certification risks, technical assistance feasibility, and disbursement speed that strains provider cash flow. Consequently, downstream effects on maternal labor-force participation and worker wages remain uncertain and limited by the short observation window.",
+        "panel_key_constraints": [
+          "administrative capacity of intermediaries",
+          "verification requirements",
+          "disbursement speed"
+        ]
       }
     },
     "root/baseline": {
@@ -455,7 +461,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The translation of federal stabilization funding into provider-level subgrants determines whether providers can stabilize operations and retain staff, shaping the downstream child care supply. This transition is weakened by disbursement delays that strain provider cash flow, especially for small providers with thin reserves, though simplified applications and technical assistance can boost participation among underserved providers. Consequently, faster and more accessible grants preserve provider capacity and support workforce retention, while delays or inequitable distribution reduce supply and limit family care options and maternal labor-force participation.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "provider cash flow and reserves",
+          "administrative barriers for underserved providers"
+        ]
       }
     },
     "root/constraining": {
@@ -653,7 +665,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The conversion of federal stabilization funding into provider subgrants is slowed by administrative friction, particularly documentation burdens for license-exempt and relative providers, which delays disbursement and suppresses participation. This transition is weakened by limited staff capacity and uneven outreach, favoring larger centers with more documented expenses, while smaller providers must cover costs with reserves or debt. Consequently, downstream effects on child care supply, workforce retention, and maternal labor-force participation are muted, especially in rural and underserved areas.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "limited staff capacity",
+          "uneven outreach"
+        ]
       }
     },
     "root/enabling/enabling": {
@@ -851,7 +869,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Federal guidance and state technical assistance convert stabilization funding into provider participation and slot maintenance, strengthening the link from funding to supply stability. However, this transition is weakened by administrative barriers for rural and license-exempt providers, and by the short observation window that limits full downstream effects. Consequently, the pathway to employment and wage outcomes remains conditional on whether maintained slots translate into actual care availability and providers shift to structural investments.",
+        "panel_key_constraints": [
+          "administrative barriers for rural and license-exempt providers",
+          "short observation window",
+          "provider use of funds for sustained wage increases"
+        ]
       }
     },
     "root/enabling/baseline": {
@@ -1049,7 +1073,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative disbursement capacity converts into provider-level financial stability, shifting the downstream pathway by establishing a maintained but unevenly distributed supply of care. This transition is weakened by participation skewing toward centers with administrative capacity, residual documentation barriers for license-exempt and relative providers, and bottlenecks from verification requirements and uneven geographic distribution. Consequently, downstream effects on maternal labor-force participation and worker wages are dampened by access gaps and depend on providers sustaining operations after funds are exhausted.",
+        "panel_key_constraints": [
+          "administrative capacity",
+          "documentation barriers",
+          "verification requirements and geographic distribution"
+        ]
       }
     },
     "root/enabling/constraining": {
@@ -1247,7 +1277,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The translation of ARP CCDF stabilization funding into provider participation and slot maintenance is bottlenecked by administrative friction, weakening the link between funding availability and provider stability. Participation skews toward licensed centers and away from license-exempt and relative providers, while capacity limits and cash-flow constraints undermine streamlined application and timely disbursement assumptions. Consequently, supply gains concentrate in urban center-based care, leaving rural and informal care fragile and muting expected improvements in labor outcomes and affordability.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "capacity limits",
+          "cash-flow constraints"
+        ]
       }
     },
     "root/baseline/enabling": {
@@ -1445,7 +1481,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Streamlined applications, self-certification, and intermediary-led outreach broaden provider participation, especially among license-exempt and relative providers, converting stabilization funding into maintained slots. However, the 45-day disbursement delay and documentation burdens for small providers, along with uneven technical assistance, weaken this transition by suppressing participation and slot preservation. Consequently, slot maintenance is realized within 18–24 months, while wage and employment effects only partially appear, with effects varying by state and provider type.",
+        "panel_key_constraints": [
+          "disbursement delay",
+          "documentation burdens",
+          "uneven technical assistance"
+        ]
       }
     },
     "root/baseline/baseline": {
@@ -1643,7 +1685,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization subgrants convert federal funding into provider survival and slot preservation, with participation and slot maintenance as key transmission variables. This transition is weakened by disbursement delays, documentation burdens, and uneven outreach, which suppress participation and slot retention, particularly among license-exempt and relative providers. Consequently, the actual supply of care is constrained in underserved or rural areas, limiting maternal labor-force participation and wage gains within the 18–24 month window.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "documentation burdens",
+          "uneven outreach"
+        ]
       }
     },
     "root/baseline/constraining": {
@@ -1841,7 +1889,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The transition from activities to outputs is constrained by a disbursement bottleneck that disproportionately excludes license-exempt and relative providers, reducing participation and capping the number of providers receiving funds. This partial participation weakens the link to supply stabilization because closures among small providers cannot be absorbed by larger centers, lowering the number of child care slots maintained. Consequently, downstream effects on affordability, maternal employment, and child care jobs are dampened, especially in underserved communities, leading to uneven stabilization rather than broad supply preservation.",
+        "panel_key_constraints": [
+          "administrative verification and payment delays",
+          "lack of financial records and cash reserves among small providers",
+          "limited technical assistance capacity"
+        ]
       }
     },
     "root/constraining/enabling": {
@@ -2039,7 +2093,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Streamlined administrative processes and trusted local intermediaries lower documentation barriers, raising provider participation and preserving child care slots, which shifts the pathway toward supply preservation. However, persistent disbursement delays, reliance on credit, and uneven technical assistance weaken the transition, while one-time funding threatens sustainability. Consequently, downstream effects on employment and wages are uncertain and may erode as grants lapse, with high participation breadth but shallow stabilization depth.",
+        "panel_key_constraints": [
+          "persistent disbursement delays",
+          "uneven technical assistance reach",
+          "one-time funding nature"
+        ]
       }
     },
     "root/constraining/baseline": {
@@ -2237,7 +2297,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative friction filters provider participation, suppressing enrollment and concentrating funds in larger centers. Delayed disbursement and high rent/utilities costs weaken the transition, leaving small providers closed or fragile and reducing non-standard-hour care. This yields partial stabilization concentrated in urban areas, with persistent rural gaps muting downstream impacts on affordability and workforce retention.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "delayed disbursement",
+          "high rent/utilities costs"
+        ]
       }
     },
     "root/constraining/constraining": {
@@ -2435,7 +2501,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The translation of ARP CCDF stabilization funding into provider-level subgrants is critically weakened by administrative friction in application processing and disbursement. Documentation burdens, especially for license-exempt and relative providers, combined with limited lead-agency staff capacity, slow processing and reduce provider participation. Consequently, the number of providers receiving funds and the average subgrant amount are depressed, leading to maintained child care slots falling short of at-risk supply and uneven, muted effects on affordability and supply, particularly in underserved communities.",
+        "panel_key_constraints": [
+          "administrative friction in application processing and disbursement",
+          "documentation burden for license-exempt and relative providers",
+          "limited lead-agency staff capacity"
+        ]
       }
     },
     "root/enabling/enabling/enabling": {
@@ -2643,7 +2715,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization funds passed through to providers reduce family costs and boost maternal employment, wages, and staffing, shifting the pathway toward durable outcomes. However, rising operating costs, uneven wage gains across provider types, and persistent staffing shortages temper these gains, while sustained participation depends on simplified applications and technical assistance. The transition to lasting structural improvements remains uncertain, as effects may not persist beyond the grant period.",
+        "panel_key_constraints": [
+          "rising operating costs",
+          "uneven wage gains across provider types",
+          "persistent staffing shortages"
+        ]
       }
     },
     "root/enabling/enabling/baseline": {
@@ -2851,7 +2929,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The pass-through of stabilization funds from providers to families and workers shifts the pathway from supply-side stabilization to demand-side and workforce outcomes, increasing maternal labor force participation and employment. This transition is weakened by administrative delays, uneven grant sizes, and the one-time nature of funding, which threaten wage sustainability and full labor market adjustment. Consequently, the durability of these gains and the full effect on maternal employment depend on whether structural funding replaces one-time grants, making sustainability critical.",
+        "panel_key_constraints": [
+          "administrative delays",
+          "uneven grant sizes",
+          "one-time funding"
+        ]
       }
     },
     "root/enabling/enabling/constraining": {
@@ -3049,7 +3133,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization grants prevent immediate provider closures but fail to translate into substantial family cost relief or workforce gains due to administrative bottlenecks and providers' use of funds for survival expenses. The transition weakens because delayed disbursement, documentation burdens, and prioritization of licensed centers over license-exempt providers, combined with the short funding window, limit the realization of intended benefits. Consequently, downstream effects on maternal employment and sector health are modest and uneven, falling short of policy goals without stronger enforcement of tuition relief and wage pass-through.",
+        "panel_key_constraints": [
+          "administrative bottlenecks",
+          "provider prioritization",
+          "short funding window"
+        ]
       }
     },
     "root/enabling/baseline/enabling": {
@@ -3257,7 +3347,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Provider-level stabilization translates into family and workforce outcomes through cost reductions and wage increases, which drive maternal labor-force participation and employment growth. This transition is weakened by uneven fund distribution, one-time wage investments, and temporary funding, while access gaps in rural and home-based care persist. Consequently, gains may be unevenly distributed and erode without permanent policy commitments.",
+        "panel_key_constraints": [
+          "uneven distribution of funds",
+          "one-time wage investments",
+          "temporary funding"
+        ]
       }
     },
     "root/enabling/baseline/baseline": {
@@ -3465,7 +3561,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "One-time stabilization grants pass through to families and workers, reducing child care costs and boosting maternal employment and wages. However, uneven grant distribution, provider cost pressures, and the short observation window dampen these effects, while access gaps and the one-time nature of funding create a cliff effect. Consequently, gains are modest and fragile, requiring sustained investment to prevent erosion and build durable foundations.",
+        "panel_key_constraints": [
+          "uneven grant distribution",
+          "provider cost pressures",
+          "short observation window"
+        ]
       }
     },
     "root/enabling/baseline/constraining": {
@@ -3673,7 +3775,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization funding prevented provider closures and maintained care slots, but the transition to family affordability and workforce outcomes is weak because providers used funds primarily for operational costs rather than sustained tuition relief or wage increases. This transition is further limited by the 85% of State Median Income threshold excluding many families, one-time funding causing provider caution, administrative burdens favoring centers, and disbursement delays. Consequently, cost reductions, maternal labor-force participation gains, wage increases, and employment growth are modest and likely to reverse once funds are exhausted, leaving conditions largely unchanged.",
+        "panel_key_constraints": [
+          "provider use of funds for operational costs",
+          "income threshold excluding families",
+          "one-time funding causing provider caution"
+        ]
       }
     },
     "root/enabling/constraining/enabling": {
@@ -3881,7 +3989,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization funding disbursed to providers converts into maintained child care supply and modest family cost relief, supporting maternal labor-force participation and provider investment in personnel. However, administrative friction and participation shortfalls, particularly among family child care homes, dampen these effects despite technical assistance and streamlined applications. Consequently, downstream impacts are real but constrained, with gains concentrated among certain providers and families, and may erode without sustained funding and expanded participation.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "participation shortfall",
+          "cash-flow timing"
+        ]
       }
     },
     "root/enabling/constraining/baseline": {
@@ -4089,7 +4203,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The ARP CCDF stabilization grants transition into modest downstream effects on child care costs, maternal employment, and provider wages, but this transition is weakened by administrative bottlenecks, limited provider participation, and concentration in licensed centers, which exclude license-exempt and rural providers. Rising operating costs and a short observation window further dampen the magnitude of gains. Consequently, the policy yields stabilization without transformation, preventing sector collapse but not fundamentally improving affordability or workforce conditions, with effects unevenly distributed and dependent on future funding permanence.",
+        "panel_key_constraints": [
+          "administrative bottlenecks",
+          "limited provider participation",
+          "concentration in licensed centers"
+        ]
       }
     },
     "root/enabling/constraining/constraining": {
@@ -4287,7 +4407,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The transmission of stabilization funds through state agencies to providers is diluted by administrative bottlenecks, shifting the pathway from broad stabilization to narrower, uneven recovery. Strongest limiting conditions are verification backlogs and disbursement delays, documentation burdens favoring licensed centers, and concentration of grants among larger providers, which weaken affordability and workforce gains. Resulting effects are modest and uneven, concentrated among stable providers, and likely to fade once funds expire, leaving rural and underserved areas fragile.",
+        "panel_key_constraints": [
+          "administrative bottlenecks",
+          "documentation burdens favoring licensed centers",
+          "concentration of grants among larger providers"
+        ]
       }
     },
     "root/baseline/enabling/enabling": {
@@ -4495,7 +4621,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Streamlined implementation broadens provider participation and accelerates disbursement, converting stabilization funding into family-level affordability and provider-level wage and employment effects within 18–24 months. However, disbursement delays, administrative capacity constraints among small providers, and providers using funds for one-time expenses rather than sustained wage increases weaken or limit these effects. Consequently, wage and employment gains may be partially temporary, and long-term retention effects remain uncertain, shaping expectations for later phases.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "administrative capacity constraints",
+          "one-time expense use"
+        ]
       }
     },
     "root/baseline/enabling/baseline": {
@@ -4703,7 +4835,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Provider stabilization grants translate into family affordability and workforce outcomes by funding personnel costs and tuition relief, which reduce child care costs, raise wages, and support employment growth, thereby increasing maternal labor force participation. This transition is weakened by provider pass-through uncertainty, disbursement delays, administrative burdens on small providers, and state-level variation, with some providers prioritizing rent over wages. Consequently, effects are partially realized within 18-24 months, with wage gains potentially lagging inflation and labor force impacts moderated by broader economic conditions.",
+        "panel_key_constraints": [
+          "provider pass-through of funds",
+          "disbursement delays and administrative burdens",
+          "state-level variation in subgrant formulas"
+        ]
       }
     },
     "root/baseline/enabling/constraining": {
@@ -4901,7 +5039,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The translation of ARP CCDF stabilization subgrants into family affordability, maternal employment, and workforce outcomes is heavily dampened by implementation frictions, including disbursement delays, documentation burdens, and provider prioritization of arrears. These frictions, combined with administrative capacity constraints, uneven subgrant formulas, and thin provider cash reserves, weaken the causal chain, while simplified applications and technical assistance could partially mitigate them. Consequently, the downstream pathway shifts from transformative expansion to stabilization-only outcomes, leaving persistent affordability gaps and workforce attrition that require supplemental policies or extended timelines.",
+        "panel_key_constraints": [
+          "implementation frictions",
+          "administrative capacity constraints",
+          "provider cash reserves"
+        ]
       }
     },
     "root/baseline/baseline/enabling": {
@@ -5109,7 +5253,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Efficient disbursement of stabilization funding enables providers to reduce family costs and invest in personnel, thereby improving affordability, maternal labor force participation, and workforce stability. This transition is conditioned by high provider participation, appropriate use of funds, and sufficient time for labor market responses, while administrative burdens, state-level formula variation, and wage sustainability concerns weaken the mechanism. Consequently, downstream effects are substantial but uneven, with rural areas and providers facing weaker intermediaries experiencing smaller gains.",
+        "panel_key_constraints": [
+          "provider participation rates",
+          "fund use for cost relief and wages",
+          "administrative burdens and state-level variation"
+        ]
       }
     },
     "root/baseline/baseline/baseline": {
@@ -5317,7 +5467,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Provider allocation of stabilization grants converts funding into family cost relief and workforce stabilization, which then shifts downstream effects by establishing modest affordability and employment gains. However, the 45-day disbursement delay and administrative burdens suppress participation among license-exempt and smaller providers, tempering cost reductions and wage gains, while larger subgrants and faster disbursement enable stronger outcomes. Consequently, gains are modest and may not fully reverse pandemic damage, with sustainability contingent on continued funding, as wage stagnation could resume turnover and erode supply and maternal employment gains.",
+        "panel_key_constraints": [
+          "disbursement delay",
+          "administrative burdens",
+          "provider participation"
+        ]
       }
     },
     "root/baseline/baseline/constraining": {
@@ -5525,7 +5681,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The ARP CCDF stabilization subgrants primarily stabilize provider operations rather than transform affordability or workforce outcomes, leading to modest downstream effects on costs, employment, and wages. This transition is weakened by providers prioritizing survival over tuition relief, administrative burdens suppressing participation among license-exempt and relative providers, and the funding cliff deterring expansion. Consequently, without sustained funding or faster disbursement, affordability and maternal employment gains remain muted and provider capacity does not expand.",
+        "panel_key_constraints": [
+          "45-day disbursement delay",
+          "provider prioritization of survival over tuition relief",
+          "administrative burden on license-exempt and relative providers"
+        ]
       }
     },
     "root/baseline/constraining/enabling": {
@@ -5733,7 +5895,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The pass-through of stabilization subgrants into provider-level personnel spending and tuition relief drives wage increases, employment retention, and family cost reductions. However, documentation burdens for license-exempt and relative providers, subgrant formula variation, and cash-flow strain from disbursement delays can suppress participation and weaken the stabilization effect. Consequently, downstream effects will be heterogeneous, with rural and low-income communities potentially lagging unless technical assistance and timely disbursement are sustained.",
+        "panel_key_constraints": [
+          "documentation burdens for license-exempt and relative providers",
+          "subgrant formula variation",
+          "cash-flow strain from disbursement delays"
+        ]
       }
     },
     "root/baseline/constraining/baseline": {
@@ -5941,7 +6109,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization grants transition from supply preservation to demand-side and workforce outcomes by covering operating costs, preventing tuition hikes, and enabling modest wage increases, which supports maternal employment and sector retention. However, partial provider participation, disbursement delays, uneven reach to license-exempt and rural providers, and administrative burden temper the magnitude of these effects. Consequently, downstream gains in affordability and participation are modest and uneven, and their persistence depends on addressing implementation gaps in subsequent funding rounds.",
+        "panel_key_constraints": [
+          "partial provider participation",
+          "disbursement delays",
+          "uneven reach to license-exempt and rural providers"
+        ]
       }
     },
     "root/baseline/constraining/constraining": {
@@ -6149,7 +6323,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The translation of ARP CCDF stabilization subgrants into family-facing affordability and workforce outcomes is substantially weakened by provider-level implementation constraints. Providers prioritize covering rent, utilities, and payroll arrears over pass-through as tuition relief and wage increases, especially given disbursement delays and partial participation, while administrative burden, limited technical assistance, and trade-offs between wages and affordability further suppress benefit delivery. This shifts the pathway toward stabilization without transformation, yielding limited gains for vulnerable families and rural areas and leaving structural improvements unachieved.",
+        "panel_key_constraints": [
+          "provider prioritization of operational costs",
+          "administrative burden of documenting pass-through",
+          "limited technical assistance for small and license-exempt providers"
+        ]
       }
     },
     "root/constraining/enabling/enabling": {
@@ -6357,7 +6537,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Streamlined application processes and faster disbursement strengthen the link from stabilization funding to provider stability, enabling tuition relief and wage increases that support maternal labor-force participation and employment growth. However, persistent bottlenecks such as heavy documentation burdens, uneven technical assistance, and the temporary nature of funding weaken this transition, particularly for small and rural providers. Consequently, near-term effects are real but partial, and their persistence is uncertain, shifting the pathway toward a sustainability risk scenario.",
+        "panel_key_constraints": [
+          "documentation burdens",
+          "uneven technical assistance",
+          "temporary funding"
+        ]
       }
     },
     "root/constraining/enabling/baseline": {
@@ -6565,7 +6751,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization subgrants, though broad in reach, were too small and delayed to drive transformative change, shifting the pathway toward temporary stabilization rather than recovery. The transition weakens because providers prioritized operating costs over tuition relief, and disbursement delays undermined cash-flow stability, especially for smaller and license-exempt providers. Consequently, gains in cost reductions and labor-force participation are modest and fragile, likely eroding once funds lapse, leaving the sector vulnerable to closures and wage stagnation.",
+        "panel_key_constraints": [
+          "small grant size",
+          "delayed disbursement",
+          "provider prioritization of operating costs"
+        ]
       }
     },
     "root/constraining/enabling/constraining": {
@@ -6773,7 +6965,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "One-time stabilization grants produced only shallow, partial market stabilization, weakening the link between provider participation and durable improvements in affordability, maternal employment, and workforce conditions. This transition is limited by providers using funds for debt and operating costs rather than tuition reductions or permanent raises, non-renewable grants creating uncertainty, and administrative burdens deterring license-exempt providers. Consequently, gains are expected to erode as grants lapse, with providers raising tuition and stalling wage growth, limiting long-term impact on family stability and workforce retention.",
+        "panel_key_constraints": [
+          "non-renewable grant design",
+          "provider fund allocation priorities",
+          "administrative burdens"
+        ]
       }
     },
     "root/constraining/baseline/enabling": {
@@ -6981,7 +7179,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization funding, filtered through administrative implementation, translates into provider survival and modest cost relief, which drives small gains in maternal labor force participation and child care employment. The transition is weakened by disbursement delays and uneven technical assistance, which suppress provider participation and concentrate funds in larger centers, though state-funded outreach and community-partnered support partially offset these frictions. Consequently, downstream effects are modest and unevenly distributed, with gains concentrated in rural and non-standard-hour care, and may reverse once funding ends.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "uneven technical assistance",
+          "provider participation frictions"
+        ]
       }
     },
     "root/constraining/baseline/baseline": {
@@ -7189,7 +7393,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative friction filtered which providers received funds and how they used them, producing partial stabilization rather than transformative recovery. The transition is weakened by uneven provider participation, concentration of gains in urban centers and larger providers, and fragile financial positions that limited pass-through to families or wages. Consequently, downstream effects are fragile and uneven, with gains likely to fade as funds expire and the sector remaining below pre-pandemic capacity, especially for non-standard-hour care.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "uneven provider participation",
+          "fragile provider finances"
+        ]
       }
     },
     "root/constraining/baseline/constraining": {
@@ -7397,7 +7607,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Broad disbursement of stabilization funding fails to translate into family affordability or workforce gains because administrative friction forces providers to prioritize survival over tuition relief and wage investment. Delayed and uneven disbursement, along with limited administrative capacity among small, license-exempt, and rural providers, breaks the causal chain from provider stabilization to family outcomes. Consequently, downstream effects on maternal employment and child care supply are muted, and temporary funds lead to tuition restoration and persistent staff turnover.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "delayed and uneven disbursement",
+          "limited administrative capacity"
+        ]
       }
     },
     "root/constraining/constraining/enabling": {
@@ -7605,7 +7821,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Streamlined implementation through lead agencies and local intermediaries accelerates fund disbursement and expands provider participation, enabling providers to allocate funds toward tuition relief and personnel costs, which modestly reduces family child care costs and increases maternal labor force participation. However, staffing shortages, competition from other sectors, and the one-time nature of funding temper wage and employment gains, while the assumption that funds are used for cost relief rather than operating expenses may not hold. Consequently, downstream effects are modest and potentially temporary, with rural access and job flexibility moderating the persistence of maternal employment gains.",
+        "panel_key_constraints": [
+          "staffing shortages",
+          "competition from other sectors",
+          "one-time funding"
+        ]
       }
     },
     "root/constraining/constraining/baseline": {
@@ -7813,7 +8035,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative friction in stabilization funding, including disbursement delays and partial provider participation, suppresses intended reductions in child care costs and gains in maternal employment, wages, and overall employment. These effects are weakened by providers prioritizing operational survival over tuition relief and by persistent affordability and supply gaps for low-wage and non-standard-hour families. Consequently, the policy shifts from transformative stabilization to partial mitigation, preventing collapse but failing to restore pre-pandemic conditions, leaving rural and underserved communities vulnerable and requiring continued support.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "provider financial fragility",
+          "limited expansion capacity"
+        ]
       }
     },
     "root/constraining/constraining/constraining": {
@@ -8021,7 +8249,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Federal stabilization funds transmitted through state processes to providers produce muted downstream effects on affordability, maternal employment, wages, and sector employment. Implementation friction—documentation burdens, slow subgrant disbursement, and uneven provider reach—weakens the intended impacts, particularly for small home-based and license-exempt providers. Consequently, the policy prevents some closures but fails to create structural improvements, leaving the sector vulnerable once funding ends.",
+        "panel_key_constraints": [
+          "administrative capacity constraints",
+          "provider cash-flow gaps during disbursement delays",
+          "temporary nature of grants"
+        ]
       }
     },
     "root/baseline/baseline/baseline/enabling": {
@@ -8219,7 +8453,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative simplification and technical assistance, funded by the 10% set-aside, amplify the effect of stabilization grants on provider survival and workforce retention, shifting the pathway from crisis mitigation to conditional stabilization. However, the one-time nature of funds, 45-day disbursement delays, thin provider reserves, and inflation eroding wage gains weaken this transition, with uneven access in rural or low-income areas. Consequently, supply and workforce gains are real but fragile, and future closures or erosion are likely without renewed funding or sustained administrative support.",
+        "panel_key_constraints": [
+          "one-time nature of funds",
+          "45-day disbursement delays",
+          "uneven access in rural or low-income areas"
+        ]
       }
     },
     "root/baseline/baseline/baseline/baseline": {
@@ -8417,7 +8657,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The impact phase shifts from emergency stabilization to a new, lower equilibrium, as one-time funding fails to create self-sustaining operations. This transition is weakened by disbursement delays, thin margins in rural and license-exempt segments, and inflation eroding real wages, which limit workforce retention and supply gains. Consequently, supply and workforce gains erode, particularly in underserved areas, constraining maternal labor-force participation and access.",
+        "panel_key_constraints": [
+          "disbursement delay",
+          "thin margins in rural and license-exempt segments",
+          "inflation eroding real wages"
+        ]
       }
     },
     "root/baseline/baseline/baseline/constraining": {
@@ -8615,7 +8861,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time ARP CCDF grants reverses stabilization gains, as temporary funds did not create durable supply or workforce capacity. This transition is weakened by disbursement delays, administrative burdens on small and license-exempt providers, and the lack of ongoing operational support, which disproportionately affect underserved and rural areas. Consequently, the downstream pathway shifts from recovery to net decline, undermining earlier gains in affordability and maternal labor-force participation and signaling the need for sustained funding.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "administrative burdens on small and license-exempt providers",
+          "absence of ongoing operational support"
+        ]
       }
     },
     "root/baseline/baseline/constraining/enabling": {
@@ -8813,7 +9065,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative maturation converts one-time stabilization grants into modest but durable supply and workforce gains, shifting the pathway from crisis prevention toward stabilization. However, the September 2023 funding cliff, rural and thin-margin provider vulnerability, and persistent disbursement delays and documentation burdens limit expansion and leave gains fragile. Consequently, gains plateau and closures continue, particularly in underserved areas, preventing transformation.",
+        "panel_key_constraints": [
+          "funding cliff",
+          "rural and thin-margin provider vulnerability",
+          "disbursement delays and documentation burden"
+        ]
       }
     },
     "root/baseline/baseline/constraining/baseline": {
@@ -9011,7 +9269,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The end of one-time stabilization grants reverts providers to pre-pandemic cost structures, triggering closures and workforce attrition that shift the pathway from stabilization to contraction. This transition is weakened by the absence of sustained funding, persistent staffing competition, and the short window being insufficient to overcome accumulated financial damage, with limited buffers for small, license-exempt, and rural providers. Consequently, gains in maternal labor-force participation and affordability are temporary, and inequities deepen in underserved areas, making the next phase contingent on new funding or structural reforms.",
+        "panel_key_constraints": [
+          "absence of sustained funding",
+          "persistent staffing competition",
+          "short window to overcome financial damage"
+        ]
       }
     },
     "root/baseline/baseline/constraining/constraining": {
@@ -9209,7 +9473,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time stabilization grants produce only temporary stabilization, as the funding cliff and administrative friction sever the link between short-term support and durable supply. This transition weakens because providers use funds to cover arrears rather than build reserves, and the grants fail to address structural underfunding or create sustainable financing. Consequently, closures and workforce attrition outpace new entry, yielding a net supply decline that erodes maternal labor-force participation and access in underserved areas.",
+        "panel_key_constraints": [
+          "funding cliff",
+          "administrative friction",
+          "absence of a bridge to ongoing funding"
+        ]
       }
     },
     "root/baseline/baseline/enabling/enabling": {
@@ -9407,7 +9677,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Institutionalized technical assistance and intermediary partnerships convert one-time grants into durable provider capacity, yielding modest gains in child care supply and workforce size while reducing closures. However, uneven reach of assistance, especially among rural and license-exempt providers with thinner reserves, weakens this transition and increases closure risk. Consequently, downstream effects are conditional and uneven, with potential erosion of gains in underserved areas if support does not persist.",
+        "panel_key_constraints": [
+          "uneven reach of technical assistance",
+          "thinner reserves among rural and license-exempt providers",
+          "weaker intermediary support"
+        ]
       }
     },
     "root/baseline/baseline/enabling/baseline": {
@@ -9605,7 +9881,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Temporary stabilization funding transitions into structural market fragility as one-time grants delay but do not prevent closures, converting short-term slot maintenance into a post-grant supply decline. This transition is weakened by the 45-day disbursement delay, thin provider reserves, and the absence of permanent funding, which undermine the sustainability of temporary wage gains and disproportionately affect rural and family providers. Consequently, downstream effects are selective recovery, with overall supply declining and closures concentrated in underserved areas, eroding maternal labor-force participation gains unless structural reforms follow.",
+        "panel_key_constraints": [
+          "45-day disbursement delay",
+          "thin provider reserves",
+          "absence of permanent funding stream"
+        ]
       }
     },
     "root/baseline/baseline/enabling/constraining": {
@@ -9803,7 +10085,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time stabilization payments temporarily preserved slots and wages, but the funding cliff and lack of durable revenue break the link to long-term supply, causing net declines in supply and workforce. This transition is weakened by the disbursement delay, thin margins among small providers, and non-competitive wages, while only a minority built reserves or diversified revenue. Consequently, earlier gains are reversed, especially in rural areas, leading to market concentration in wealthier urban areas and reduced maternal labor-force participation.",
+        "panel_key_constraints": [
+          "disbursement delay",
+          "thin provider margins",
+          "non-competitive wages"
+        ]
       }
     },
     "root/baseline/constraining/baseline/enabling": {
@@ -10001,7 +10289,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Institutionalized technical assistance and simplified application processes strengthen the link between one-time stabilization funds and lasting provider viability by building administrative and financial capacity. However, gains are tempered by the one-time nature of funding, thin provider reserves, and uneven reach of technical assistance, which weaken the transition. Consequently, the downstream pathway shifts from crisis stabilization to modest, uneven recovery, with gains likely to erode without sustained funding, especially in underserved communities.",
+        "panel_key_constraints": [
+          "one-time funding",
+          "thin provider reserves",
+          "uneven technical assistance reach"
+        ]
       }
     },
     "root/baseline/constraining/baseline/baseline": {
@@ -10199,7 +10493,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds reverses partial gains, shifting the system from temporary stabilization to a fragile equilibrium. This transition is weakened by uneven fund receipt, disbursement delays, and the absence of sustained funding or structural reform, which exclude vulnerable providers and prevent reserve-building. Consequently, supply contracts and workforce attrition persist, eroding affordability and maternal labor-force gains, especially in rural and low-income communities.",
+        "panel_key_constraints": [
+          "uneven fund receipt",
+          "disbursement delays",
+          "absence of sustained funding or structural reform"
+        ]
       }
     },
     "root/baseline/constraining/baseline/constraining": {
@@ -10397,7 +10697,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds reverses early gains in child care supply and workforce stability, shifting the pathway from stabilization to contraction. This transition is weakened by disbursement delays, uneven participation among small and home-based providers, and the absence of ongoing funding or structural reforms, which leave underlying fragility unaddressed. Consequently, downstream effects include reduced care access, higher prices, and reversal of maternal labor-force gains, with closures concentrated among providers lacking reserves or alternative financing.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "uneven participation among small and home-based providers",
+          "absence of ongoing funding or structural reforms"
+        ]
       }
     },
     "root/baseline/constraining/constraining/enabling": {
@@ -10595,7 +10901,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Institutionalized technical assistance and simplified processes reduce administrative barriers, increasing provider participation in stabilization subgrants and preserving supply and workforce stability. However, uneven technical assistance capacity across states and the short implementation window weaken these gains, limiting post-grant sustainability. Consequently, the sector becomes more resilient but remains fragile, with gains concentrated in centers and underserved areas while home-based and rural providers stay vulnerable.",
+        "panel_key_constraints": [
+          "uneven technical assistance capacity",
+          "short implementation window",
+          "persistent fragility from parent pathway"
+        ]
       }
     },
     "root/baseline/constraining/constraining/baseline": {
@@ -10793,7 +11105,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "One-time stabilization grants temporarily delayed but did not eliminate structural fragility in the child care market, so once funds were exhausted, providers reverted to pre-grant pressures, leading to net contraction. Disbursement delays, partial provider participation, and providers' prioritizing operating costs over wages meant only the strongest providers were stabilized, while small, home-based, license-exempt, and rural providers remained vulnerable. Consequently, the pathway shifts to 'stabilization without transformation,' with supply and workforce declines and permanent closures that erode gains in maternal employment and affordability, especially in underserved areas.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "partial provider participation",
+          "providers' prioritization of operating costs over wages"
+        ]
       }
     },
     "root/baseline/constraining/constraining/constraining": {
@@ -10991,7 +11309,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time stabilization grants temporarily prevented immediate provider closures, but once funds were exhausted, providers reverted to pre-existing structural fragility, reversing earlier gains. This transition is weakened by grant use for arrears rather than reserves, compliance-focused technical assistance, disbursement delays, and exclusion of license-exempt and rural providers, which disproportionately affect small family child care homes. Consequently, the supply decline and workforce contraction reduce access for low-income families and stagnate maternal labor-force participation, widening inequities and necessitating structural funding.",
+        "panel_key_constraints": [
+          "one-time funding without sustainable business models",
+          "grants used for arrears rather than reserves or wages",
+          "disbursement delays and exclusion of license-exempt providers"
+        ]
       }
     },
     "root/baseline/constraining/enabling/enabling": {
@@ -11189,7 +11513,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Institutionalized technical assistance and streamlined disbursement convert one-time grants into durable provider financial-management capacity, stabilizing supply and workforce. This transition weakens where cash-flow strain affects license-exempt and home-based providers, and where rural or low-income areas have uneven TA access, with the 18-24 month window too short to capture delayed closures. Consequently, stabilization persists only where administrative capacity and network resilience are built, leaving gains uneven and vulnerable to erosion after funds expire.",
+        "panel_key_constraints": [
+          "cash-flow strain for license-exempt and home-based providers",
+          "uneven TA access in rural/low-income areas",
+          "18-24 month window too short"
+        ]
       }
     },
     "root/baseline/constraining/enabling/baseline": {
@@ -11387,7 +11717,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time ARP CCDF funds erodes temporary stabilization gains, shifting the pathway from stabilization to a cliff effect. This transition is weakened by the 45-day disbursement delay, uneven participation among license-exempt and small home-based providers, and the absence of sustained funding, which prevent larger centers from absorbing supply gaps. Consequently, post-grant closures and supply declines reflect a return to pre-existing vulnerabilities, partially reversing maternal labor-force participation and access gains, especially in underserved communities.",
+        "panel_key_constraints": [
+          "absence of sustained funding",
+          "administrative capacity disparities",
+          "wage competition and budget constraints"
+        ]
       }
     },
     "root/baseline/constraining/enabling/constraining": {
@@ -11585,7 +11921,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds reverses temporary stabilization, triggering net contractions in child care supply and workforce. This transition is weakened by the absence of ongoing funding and administrative delays that prevented small and license-exempt providers from building cash buffers, making them disproportionately vulnerable. Consequently, downstream effects are persistent and unequal, with closures and workforce exits concentrated in rural and low-income communities, potentially reversing earlier gains.",
+        "panel_key_constraints": [
+          "absence of ongoing funding",
+          "administrative and disbursement delays",
+          "lack of financial reserves among providers"
+        ]
       }
     },
     "root/baseline/enabling/baseline/enabling": {
@@ -11781,7 +12123,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Institutionalized technical assistance and simplified processes convert one-time stabilization grants into durable provider capacity and supply resilience. However, the end of federal funding, disbursement delays, and thin margins for small providers weaken this transition, especially in rural and tribal areas. Consequently, supply and workforce growth are projected but remain uncertain and uneven, with gains potentially eroding without permanent state funding.",
+        "panel_key_constraints": [
+          "end of federal funding",
+          "disbursement delays",
+          "thin margins for small providers"
+        ]
       }
     },
     "root/baseline/enabling/baseline/baseline": {
@@ -11979,7 +12327,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The transition from outcomes to impact depends on whether one-time grants produce durable sector gains or merely defer closures, with the central mechanism being the funding cliff that renews financial pressure after disbursement. This transition is weakened by thin reserves from disbursement delays, administrative burdens, and the absence of ongoing operational subsidies, which disproportionately affect small family child care homes and rural providers. Consequently, supply and workforce gains are partial and uneven, with permanent closures concentrated in underserved communities, and without sustained investment, gains may erode and maternal labor-force participation gains may reverse.",
+        "panel_key_constraints": [
+          "thin reserves from disbursement delays",
+          "administrative burdens",
+          "absence of ongoing operational subsidies"
+        ]
       }
     },
     "root/baseline/enabling/baseline/constraining": {
@@ -12177,7 +12531,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization grants reverses short-term supply and workforce gains as providers revert to financial fragility, shifting the pathway from recovery to contraction. This transition weakens because funds were used for immediate arrears rather than reserves, and disbursement delays plus uneven technical assistance left small and license-exempt providers unable to achieve sustainability. Consequently, downstream effects include a net decline in supply and workforce, permanent provider closures, and dampened maternal labor-force participation, with the most severe impacts in rural and low-income communities.",
+        "panel_key_constraints": [
+          "absence of renewal mechanisms or new revenue streams",
+          "persistent cost pressures and thin margins",
+          "workforce attrition to higher-paying sectors"
+        ]
       }
     },
     "root/baseline/enabling/constraining/enabling": {
@@ -12375,7 +12735,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Institutionalized technical assistance and streamlined processes convert one-time grants into durable supply and workforce gains by improving provider financial management and retention. However, ongoing cost pressures, delayed disbursements, and uneven state TA capacity weaken this transition, limiting its scope. Consequently, gains are modest and fragile, with potential erosion in underserved areas without continued investment.",
+        "panel_key_constraints": [
+          "ongoing cost pressures",
+          "delayed disbursements",
+          "uneven state TA capacity"
+        ]
       }
     },
     "root/baseline/enabling/constraining/baseline": {
@@ -12573,7 +12939,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds converts temporary cash-flow relief into delayed but persistent contraction, as providers used grants for arrears and survival rather than reserves, allowing structural fragility to reassert itself. This transition is weakened by faster disbursement and technical assistance that built minimal resilience, but is constrained by administrative delays, low participation among license-exempt providers, and the absence of sustained funding or complementary policies. Consequently, the sector shifts from prevented collapse to managed erosion, with access losses concentrated in underserved areas, reversing earlier gains in maternal labor-force participation and deepening workforce shortages.",
+        "panel_key_constraints": [
+          "administrative delays",
+          "low participation among license-exempt providers",
+          "absence of sustained funding or complementary policies"
+        ]
       }
     },
     "root/baseline/enabling/constraining/constraining": {
@@ -12771,7 +13143,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The expiration of time-limited stabilization grants reverses temporary operational relief, causing providers to revert to pre-existing fragility and triggering closures and workforce attrition. This transition is weakened by the use of funds for arrears rather than reserves, administrative burdens that reduce participation among vulnerable providers, and the absence of ongoing funding or structural reforms. Consequently, supply contracts and workforce shrinks, disproportionately affecting rural and underserved areas, partially reversing downstream gains in maternal employment and affordability.",
+        "panel_key_constraints": [
+          "one-time grant structure",
+          "administrative burdens",
+          "absence of ongoing funding or structural reforms"
+        ]
       }
     },
     "root/baseline/enabling/enabling/enabling": {
@@ -12969,7 +13347,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "One-time stabilization grants convert into durable supply and workforce gains through institutionalized technical assistance and streamlined administrative processes that strengthen provider financial management and retention capacity. However, this transition is weakened by thin-reserve providers in rural areas with weaker technical assistance, disbursement delays, and inflation eroding wage gains, which increase closure risk. Consequently, gains persist only if states replace federal funds or providers diversify revenue, making continued policy support critical to avoid erosion of supply and workforce gains.",
+        "panel_key_constraints": [
+          "thin-reserve providers in rural areas",
+          "disbursement delays",
+          "inflation eroding wage gains"
+        ]
       }
     },
     "root/baseline/enabling/enabling/baseline": {
@@ -13157,7 +13541,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The transition from grant-supported stabilization to post-grant market equilibrium tests the durability of short-term gains, as providers' financial resilience determines whether gains persist. This transition is weakened by the funding cliff, thin provider margins, and inability to sustain higher wages, which disproportionately affect small and rural providers. Consequently, downstream effects are uneven, with potential closures and workforce attrition undermining access in vulnerable communities unless follow-up investment occurs.",
+        "panel_key_constraints": [
+          "funding cliff",
+          "thin provider margins",
+          "inability to sustain higher wages"
+        ]
       }
     },
     "root/baseline/enabling/enabling/constraining": {
@@ -13355,7 +13745,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The expiration of one-time ARP CCDF grants reverses short-term stabilization gains as providers who spent funds on immediate costs face pre-pandemic pressures without ongoing support, driving closures and workforce attrition. This transition is weakened by disbursement delays, the absence of mandated financial planning, and the concentration of closures among small, license-exempt, and rural providers with thin margins. Consequently, the pathway shifts from sustained supply growth to net contraction, eroding maternal labor-force participation gains and exacerbating access inequities in underserved areas.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "absence of mandated financial planning",
+          "thin margins among small, license-exempt, and rural providers"
+        ]
       }
     },
     "root/constraining/baseline/baseline/enabling": {
@@ -13553,7 +13949,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative friction interacts with state-funded technical assistance to reduce disbursement delays and boost participation among underserved providers, preventing a steeper supply collapse. However, the transition's strength depends on whether assistance reaches a critical mass of small providers and on the sufficiency of wage increases to retain workers, with estimates diverging sharply. Without sustained state investment or new funding, supply and workforce gains erode, leaving rural and underserved communities most vulnerable and muting maternal labor-force participation gains.",
+        "panel_key_constraints": [
+          "reach of technical assistance to small providers",
+          "sufficiency of wage increases for worker retention",
+          "sustained state investment or new funding"
+        ]
       }
     },
     "root/constraining/baseline/baseline/baseline": {
@@ -13751,7 +14153,12 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds converts temporary administrative friction into permanent structural contraction, leading to net supply decline and workforce contraction. This transition is weakened by the lack of sustained investment and unresolved administrative bottlenecks, which prevent providers from building resilience. Consequently, the sector faces persistent under-capacity, particularly for non-standard-hour care, eroding short-term employment and wage gains.",
+        "panel_key_constraints": [
+          "lack of sustained investment",
+          "unresolved administrative bottlenecks"
+        ]
       }
     },
     "root/constraining/baseline/baseline/constraining": {
@@ -13949,7 +14356,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time stabilization funds temporarily postponed provider closures but did not create durable financial resilience, so as funds expire, the sector reverts to fragility and contracts below pre-pandemic levels. This transition is weakened by administrative friction that concentrates funds in larger centers, leaving small providers without reserves, and by the lack of follow-up investment and persistent cost pressures. Consequently, closures concentrate in rural and underserved areas, widening geographic inequities and leaving the child care market smaller, with severe shortages for families needing non-standard-hour care.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "lack of follow-up investment",
+          "persistent cost pressures"
+        ]
       }
     },
     "root/constraining/baseline/constraining/enabling": {
@@ -14147,7 +14560,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative friction weakens the translation of stabilization funds into family-level affordability and workforce investment, as providers prioritize rent and utilities over tuition relief and wages. This transition is limited by the one-time nature of funds, the end of the public health emergency, and uneven technical assistance, though targeted support can reduce barriers for some providers. Consequently, supply and workforce changes remain modest or negative, and closure rates persist, muting long-term impacts on maternal employment and family access.",
+        "panel_key_constraints": [
+          "one-time nature of funds",
+          "end of public health emergency",
+          "uneven technical assistance"
+        ]
       }
     },
     "root/constraining/baseline/constraining/baseline": {
@@ -14345,7 +14764,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Exhaustion of one-time stabilization funds and persistent administrative friction convert temporary relief into a net contraction of supply and workforce. The transition weakens when small, license-exempt, and rural providers are disproportionately excluded from timely funding, and modest wage gains fail to retain workers. This shifts the pathway from stabilization to structural erosion, reducing capacity to support maternal employment and increasing care gaps for non-standard-hour and rural families.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "disproportionate exclusion of small, license-exempt, and rural providers",
+          "modest wage gains"
+        ]
       }
     },
     "root/constraining/baseline/constraining/constraining": {
@@ -14543,7 +14968,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds converts temporary provider relief into a delayed wave of closures and workforce contraction rather than durable supply stabilization. This transition is weakened by administrative friction, provider allocation of funds toward rent and utilities rather than wages or reserves, and the absence of a sustainable funding stream, with support concentrated in larger centers. Consequently, downstream effects are limited in scope and persistence, as small home-based and license-exempt providers lack financial resilience, severing the link between stabilization and long-term supply, workforce retention, and affordability.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "allocation of funds to rent and utilities",
+          "absence of sustainable funding stream"
+        ]
       }
     },
     "root/constraining/baseline/enabling/enabling": {
@@ -14741,7 +15172,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative friction in the parent pathway suppresses provider participation, but enabling partnerships with community organizations streamline applications and provide technical assistance, partially offsetting this and improving supply continuity. The transition yields modest net gains because funds primarily prevent closures rather than expand capacity, and providers prioritize rent over wages, limiting affordability gains. The end of funding creates a cliff effect, and technical assistance only partially offsets closures among thin-margin rural providers, leaving downstream sustainability uncertain and underserved areas fragile.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "end of funding",
+          "thin-margin rural providers"
+        ]
       }
     },
     "root/constraining/baseline/enabling/baseline": {
@@ -14939,7 +15376,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of temporary grant buffers reverses stabilization gains, as providers that used funds for immediate costs face pre-pandemic pressures and close at elevated rates, driving net supply declines. This transition is weakened by administrative friction that concentrated support in larger centers, leaving small providers without lasting resilience, and by unsustainable wage increases that prompt worker attrition. Consequently, the market returns to fragility, with closures outpacing new entry and disproportionate harm to low-wage shift-working families, making future interventions more costly and less effective.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "unsustainable wage increases",
+          "lack of systemic reform"
+        ]
       }
     },
     "root/constraining/baseline/enabling/constraining": {
@@ -15137,7 +15580,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The post-grant cliff reverses earlier stabilization gains as one-time subgrants exhaust, leaving providers with depleted buffers and the same fixed costs, triggering permanent closures and a net supply contraction. This transition is weakened by administrative friction that favored larger centers, leaving small and license-exempt providers with less support, and by stagnant reimbursement rates and low wages that erode workforce retention. Consequently, downstream effects include reduced maternal labor-force participation, widened urban-rural inequities, and a return to pre-pandemic fragility.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "lack of sustained funding",
+          "stagnant reimbursement rates and low wages"
+        ]
       }
     },
     "root/constraining/constraining/baseline/enabling": {
@@ -15325,7 +15774,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The ARP CCDF stabilization funding produces a partial stabilization effect through streamlined applications, targeted technical assistance, and informal provider networks, strengthening the funding-to-stability link for participating providers. However, one-time grants do not create a self-sustaining market, and persistent financial fragility, wage competition, and debt from disbursement delays weaken the transition, with uneven reach of assistance to rural areas. This results in modest long-term declines in supply and workforce, with permanent closures concentrated among small providers, preventing catastrophic collapse but leaving persistent shortages in low-income communities.",
+        "panel_key_constraints": [
+          "one-time grant exhaustion",
+          "persistent financial fragility and wage competition",
+          "uneven technical assistance reach"
+        ]
       }
     },
     "root/constraining/constraining/baseline/baseline": {
@@ -15523,7 +15978,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative friction from the prior phase translates into long-term financial fragility, eroding supply and workforce once one-time funds are exhausted. This transition weakens when wage increases are insufficient to retain staff and when sustained investment or administrative reform is absent, preventing expansion. Consequently, downstream effects are constrained to partial mitigation, with persistent supply gaps limiting maternal labor-force participation gains and necessitating further intervention.",
+        "panel_key_constraints": [
+          "insufficient wage increases",
+          "lack of sustained investment",
+          "lack of administrative reform"
+        ]
       }
     },
     "root/constraining/constraining/baseline/constraining": {
@@ -15721,7 +16182,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The transition from short-term stabilization grants to long-term supply sustainability fails because delayed, modest disbursements are used for immediate operating costs rather than reserves, so the sector contracts when grants end. This breakdown is driven by persistent structural underfunding, thin margins, wage competition, documentation burdens excluding vulnerable providers, and the absence of ongoing subsidies or systemic reform. Consequently, gains are reversed within a short period, leaving reduced access and higher costs, with closures concentrated among home-based and license-exempt providers in underserved areas.",
+        "panel_key_constraints": [
+          "delayed and modest disbursements",
+          "structural underfunding and thin margins",
+          "documentation burden excluding vulnerable providers"
+        ]
       }
     },
     "root/constraining/constraining/constraining/enabling": {
@@ -15919,7 +16386,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The ARP CCDF stabilization funds, despite initial disbursement delays, partially stabilized the child care sector by enabling lead agencies to partner with intermediaries and provide hands-on technical assistance, which reduced documentation burdens and accelerated funding receipt for small and home-based providers. However, temporary grants, persistent cash-flow gaps in rural and low-income areas, and uneven outreach intensity weaken this transition, limiting new entry and exposing underlying fragility. Consequently, the sector experiences modest contraction or stabilization rather than structural transformation, leaving maternal employment gains and affordability improvements vulnerable to reversal.",
+        "panel_key_constraints": [
+          "temporary nature of grants",
+          "persistent cash-flow gaps in rural and low-income areas",
+          "uneven outreach intensity across regions"
+        ]
       }
     },
     "root/constraining/constraining/constraining/baseline": {
@@ -16107,7 +16580,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Exhaustion of one-time stabilization funds converts earlier administrative friction into a post-grant supply contraction, as providers who used subgrants for operating costs face the same structural pressures once funding ends. This transition is weakened by the lack of structural cost fixes and insufficient wage increases, and is concentrated among small home-based providers with the least administrative capacity and no ongoing subsidies. The result is a net contraction in supply and workforce, reducing access in underserved areas and eroding maternal labor-force participation gains.",
+        "panel_key_constraints": [
+          "lack of structural cost fixes",
+          "insufficient wage increases",
+          "concentration among small providers with low administrative capacity"
+        ]
       }
     },
     "root/constraining/constraining/constraining/constraining": {
@@ -16305,7 +16784,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Temporary grants absorbed into immediate operating costs fail to build reserves or capacity, so when funding lapses, providers face the same fragility and a post-grant cliff. This transition weakens because disbursement delays exhaust reserves, wages lag inflation, and rural providers lack technical assistance, preventing sustainable operations. Consequently, the pathway shifts to delayed contraction, reducing family access, maternal employment, and workforce quality, with effects concentrated among small providers in underserved areas.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "wage stagnation",
+          "limited technical assistance"
+        ]
       }
     },
     "root/constraining/constraining/enabling/enabling": {
@@ -16503,7 +16988,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The ARP CCDF stabilization funding, filtered through administrative implementation choices, produces modest net gains in child care supply and workforce size while leaving structural fragility intact. These gains are enabled by streamlined applications and trusted-messenger technical assistance, but are limited by the absence of sustained funding and competition from other sectors, which temper workforce gains and keep closure rates elevated. Consequently, downstream effects on maternal labor-force participation and affordability are modest and geographically disparate, and the sector may revert to pre-pandemic fragility without continued investment.",
+        "panel_key_constraints": [
+          "absence of sustained funding",
+          "competition from other sectors",
+          "disbursement friction"
+        ]
       }
     },
     "root/constraining/constraining/enabling/baseline": {
@@ -16701,7 +17192,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds shifts the pathway from temporary stabilization to renewed fragility, as deferred maintenance, debt, and cost pressures reassert themselves. This transition is weakened by administrative friction that left vulnerable providers with depleted reserves, and by the absence of sustained public investment or wage gains sufficient to retain workers. Consequently, supply and workforce decline, eroding maternal labor-force participation and family access to care, with rural and low-income communities bearing the brunt.",
+        "panel_key_constraints": [
+          "administrative friction",
+          "absence of sustained public investment",
+          "insufficient wage gains"
+        ]
       }
     },
     "root/constraining/constraining/enabling/constraining": {
@@ -16899,7 +17396,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The lapse of one-time ARP CCDF stabilization grants severs the temporary link between grant support and provider viability, triggering a post-grant contraction in child care supply and workforce. This transition is weakened by the funding cliff, administrative friction depleting provider reserves, and the inability of small home-based and rural providers to build financial cushions or access credit, accelerating closures. Consequently, downstream effects are partial erosion of earlier gains, with net supply and workforce contracting and disproportionately harming underserved communities unless structural subsidies or wage reforms are introduced.",
+        "panel_key_constraints": [
+          "funding cliff",
+          "administrative friction",
+          "limited financial cushions and credit access for small and rural providers"
+        ]
       }
     },
     "root/constraining/enabling/baseline/enabling": {
@@ -17097,7 +17600,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The conversion of one-time stabilization grants into durable provider financial stability through state-level intermediary networks shifts the downstream pathway from stabilization to sustainability. However, uneven intermediary reach, particularly for license-exempt, home-based, and rural providers, and mixed evidence on workforce retention weaken this transition, with federal oversight and rural providers projecting net supply declines. Consequently, the policy's legacy is preventing a collapse rather than achieving full recovery, with the persistence of gains hinging on whether intermediary networks become permanent or erode.",
+        "panel_key_constraints": [
+          "uneven intermediary reach",
+          "mixed workforce retention projections",
+          "dependence on permanent institutionalization"
+        ]
       }
     },
     "root/constraining/enabling/baseline/baseline": {
@@ -17295,7 +17804,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds converts temporary cash-flow relief into a delayed contraction of the child care sector. This transition weakens when grants are too small, delayed, and short-term to build reserves or address structural costs, and when no sustainability mechanism follows. Consequently, modest gains in affordability and maternal employment erode, with closures concentrated among small, license-exempt, and rural providers, perpetuating chronic undersupply.",
+        "panel_key_constraints": [
+          "absence of sustainability mechanism",
+          "grant insufficiency",
+          "structural cost pressures"
+        ]
       }
     },
     "root/constraining/enabling/baseline/constraining": {
@@ -17493,7 +18008,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The temporary stabilization from one-time grants gives way to a funding cliff, as providers cannot sustain operations once funds lapse, triggering closures and workforce exits. This transition is weakened by grants being used for short-term survival rather than resilience, administrative delays, and the absence of follow-up funding, which disproportionately affect small, rural, and license-exempt providers. Consequently, supply contracts and competition for remaining slots intensifies, eroding equity and workforce gains and shifting the trajectory from recovery to fragility.",
+        "panel_key_constraints": [
+          "short-term use of grants",
+          "administrative friction",
+          "absence of follow-up funding"
+        ]
       }
     },
     "root/constraining/enabling/constraining/enabling": {
@@ -17691,7 +18212,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Sustained technical assistance and provider networks funded through administrative flexibility convert one-time stabilization grants into modestly durable supply and workforce gains by reducing the cliff effect, though the effect is uneven and fragile. The transition weakens under rural isolation, gaps in license-exempt providers, and the non-renewable nature of grants, which limit reach and sustainability. Consequently, downstream effects support maternal labor-force participation and market recovery better than the parent pathway but remain vulnerable to future shocks unless networks become permanent.",
+        "panel_key_constraints": [
+          "rural isolation",
+          "license-exempt provider gaps",
+          "non-renewable grants"
+        ]
       }
     },
     "root/constraining/enabling/constraining/baseline": {
@@ -17889,7 +18416,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time grants provide only temporary liquidity, and once exhausted, providers revert to structural cost pressures, shifting the pathway from stabilization to erosion. This transition is weakened by the non-renewable funding stream, administrative delays, and thin provider margins, especially in underserved areas, with grants used for debt repayment rather than durable investments. Consequently, supply and workforce decline, closures become permanent, and access and affordability worsen, particularly in rural and low-income communities.",
+        "panel_key_constraints": [
+          "non-renewable funding stream",
+          "administrative delays",
+          "thin provider margins"
+        ]
       }
     },
     "root/constraining/enabling/constraining/constraining": {
@@ -18087,7 +18620,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time stabilization grants temporarily sustain child care operations but fail to create durable financial foundations, so as funds lapse, providers face renewed cost pressures, debt burdens, and staffing attrition, reversing earlier gains. This transition weakens because providers used funds for debt repayment and bonuses rather than reserves or permanent wage increases, and thin-margin providers, especially in rural areas, face disbursement delays and administrative burdens. Consequently, the downstream pathway shifts from modest stabilization to net contraction, reducing family access, dampening maternal labor-force participation, and widening inequities.",
+        "panel_key_constraints": [
+          "funds used for debt and bonuses rather than reserves",
+          "thin-margin providers in rural and underserved areas",
+          "disbursement delays and administrative burdens"
+        ]
       }
     },
     "root/constraining/enabling/enabling/enabling": {
@@ -18285,7 +18824,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Institutionalized streamlined processes and intermediary support convert one-time grants into modest supply and workforce gains by reducing administrative burdens. However, persistent rural barriers, thin margins, and exhausted funds weaken this transition, keeping closure rates elevated and limiting expansion. Consequently, gains are fragile and likely to erode without further funding, though the built infrastructure offers a platform for targeted investments.",
+        "panel_key_constraints": [
+          "persistent rural barriers",
+          "thin provider margins",
+          "exhaustion of one-time funds"
+        ]
       }
     },
     "root/constraining/enabling/enabling/baseline": {
@@ -18483,7 +19028,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time ARP CCDF stabilization funds reverses temporary gains in supply, workforce, and affordability, shifting the pathway from stabilization to sustainability. This reversal is weakened by streamlined application processes and intermediary networks, but bottlenecks such as disbursement delays, thin margins, and retail wage competition prevent these from replacing ongoing subsidies. Consequently, the downstream effects include a net supply decline, workforce contraction, and permanent closures concentrated in rural and low-income communities, eroding maternal labor-force participation and access to care.",
+        "panel_key_constraints": [
+          "disbursement delays",
+          "thin provider margins",
+          "retail wage competition"
+        ]
       }
     },
     "root/constraining/enabling/enabling/constraining": {
@@ -18681,7 +19232,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "As temporary ARP CCDF stabilization grants lapse, the causal link between grant disbursement and provider stability breaks, reversing earlier gains and shifting the pathway from stabilization to consolidation and contraction. This transition is weakened by overwhelmed administrative capacity, providers using funds for arrears rather than long-term improvements, and wage increases not retained against competing employers. Consequently, supply and workforce decline, closures rise, and harms concentrate in rural and low-income communities, muting expected gains in maternal labor-force participation and affordability unless follow-up investment occurs.",
+        "panel_key_constraints": [
+          "administrative capacity",
+          "use of funds for arrears",
+          "wage retention"
+        ]
       }
     },
     "root/enabling/baseline/baseline/enabling": {
@@ -18879,7 +19436,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Institutionalized technical assistance and provider networks from the stabilization grant period convert one-time funding into durable administrative capacity, reducing post-grant closures and modestly expanding supply. However, the one-time nature of grants and uneven access to networks limit the durability of wage gains, while structural fragility in rural and home-based segments keeps closure rates above pre-pandemic norms. Consequently, this phase partially protects affordability and maternal employment gains but signals that sustained public investment or permanent cost-structure changes are needed to prevent erosion beyond the 18–24 month window.",
+        "panel_key_constraints": [
+          "one-time nature of grants",
+          "uneven access to networks",
+          "structural fragility in rural and home-based segments"
+        ]
       }
     },
     "root/enabling/baseline/baseline/baseline": {
@@ -19077,7 +19640,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time grants temporarily stabilize the sector by preventing immediate closures and modestly boosting supply and workforce, but once funds are exhausted, providers revert to pre-existing cost structures and market failures. This transition is weakened by the unsustainable nature of wage increases and operational improvements, as well as thinner margins and administrative burdens for rural and home-based providers, which increase closure risks. Consequently, gains in supply and workforce are fragile and unevenly distributed, with the sector likely to plateau or decline in underserved areas without sustained federal support.",
+        "panel_key_constraints": [
+          "exhaustion of funds",
+          "unsustainable cost structures",
+          "absence of sustained federal support"
+        ]
       }
     },
     "root/enabling/baseline/baseline/constraining": {
@@ -19275,7 +19844,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time grants temporarily sustain child care supply and wages, but once funds are exhausted, providers revert to unaffordable cost models, triggering delayed closures and net supply contraction. This transition is weakened by the absence of sustained funding, persistent enrollment shortfalls, and the disproportionate vulnerability of small/home-based providers with thinner margins. Consequently, early gains in maternal employment and wages are reversed, leaving the sector with reduced capacity to absorb future shocks, particularly in rural and low-income communities.",
+        "panel_key_constraints": [
+          "absence of sustained funding streams",
+          "persistent enrollment shortfalls",
+          "disproportionate vulnerability of small/home-based providers"
+        ]
       }
     },
     "root/enabling/baseline/constraining/enabling": {
@@ -19473,7 +20048,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The conversion of one-time stabilization grants into durable provider capacity through sustained technical assistance and local provider networks reduces the post-grant closure cliff and modestly stabilizes supply and workforce. However, the one-time nature of funding and the vulnerability of thin-margin or underserved areas limit this transition, leaving an 8% permanent closure rate. Consequently, downstream effects are fragile and contingent on keeping closures below the threshold, with maternal labor-force participation gains remaining uncertain.",
+        "panel_key_constraints": [
+          "one-time funding",
+          "thin-margin or underserved areas",
+          "closure rate threshold"
+        ]
       }
     },
     "root/enabling/baseline/constraining/baseline": {
@@ -19671,7 +20252,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds reverses temporary gains and triggers a contraction in child care supply and workforce. This transition is weakened by providers' reliance on short-term operating costs, insufficient wage increases, and the absence of sustained funding, with rural and home-based providers most vulnerable. Consequently, downstream effects are unevenly distributed, eroding maternal labor-force participation and affordability gains.",
+        "panel_key_constraints": [
+          "short-term use of funds",
+          "insufficient wage increases",
+          "lack of sustained funding"
+        ]
       }
     },
     "root/enabling/baseline/constraining/constraining": {
@@ -19869,7 +20456,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The temporary stabilization from one-time grants reverses once funds are exhausted, as providers revert to structural cost pressures without a sustainable revenue stream, triggering delayed closures and workforce attrition. This transition is weakened by the absence of follow-up funding or systemic reform, and by grants being used for immediate costs rather than reserves, with family child care homes and license-exempt providers most vulnerable. Consequently, the downstream pathway shifts from recovery to contraction, eroding maternal labor-force gains and widening access gaps for low-income and rural families.",
+        "panel_key_constraints": [
+          "absence of follow-up funding or systemic reform",
+          "grants used for arrears and immediate operating costs",
+          "limited administrative capacity and alternative funding access"
+        ]
       }
     },
     "root/enabling/baseline/enabling/enabling": {
@@ -20067,7 +20660,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The conversion of one-time stabilization grants into durable provider capacity through technical assistance and peer networks determines whether short-term gains become self-sustaining or erode post-grant. This transition is weakened by structural fragility among rural and home-based providers, geographic access gaps, and the finite funding horizon that threatens network survival. Consequently, downstream effects are modest and unevenly distributed, with persistent supply fragility dampening affordability and labor-force gains without continued public investment.",
+        "panel_key_constraints": [
+          "structural fragility among rural and home-based providers",
+          "geographic access gaps",
+          "finite funding horizon"
+        ]
       }
     },
     "root/enabling/baseline/enabling/baseline": {
@@ -20265,7 +20864,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "One-time stabilization grants temporarily sustain provider operations and modest wage gains, but as funds exhaust, providers revert to structural fragility, shifting the pathway from short-term stabilization to a fragile equilibrium. The finite funding window and uneven administrative capacity weaken the transition, especially in rural and home-based providers lacking reserves or technical assistance. Consequently, supply and workforce gains are limited and contingent on sustained policy follow-through, with closures concentrated among the most vulnerable providers.",
+        "panel_key_constraints": [
+          "finite funding window",
+          "uneven administrative capacity",
+          "lack of reserves or technical assistance"
+        ]
       }
     },
     "root/enabling/baseline/enabling/constraining": {
@@ -20463,7 +21068,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The transition from temporary stabilization funding to long-term market sustainability fails because one-time grants created a funding cliff rather than durable structural change. This is weakened by the finite funding window, uneven distribution that left rural and license-exempt providers underserved, and the absence of a permanent funding mechanism or capacity-building support. Consequently, the sector experiences a net contraction in supply and workforce, eroding earlier gains in affordability and access, particularly in underserved areas, and leaving the market more fragile than before.",
+        "panel_key_constraints": [
+          "finite funding window",
+          "uneven distribution",
+          "absence of permanent funding mechanism"
+        ]
       }
     },
     "root/enabling/constraining/baseline/enabling": {
@@ -20661,7 +21272,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Sustained technical assistance and streamlined administrative processes convert uneven grant participation into modest but durable supply and workforce stabilization. However, this transition is weakened by persistent disbursement delays, temporary funding, and structural fragility among rural providers lacking support. Consequently, gains are real but fragile, and their persistence depends on institutionalizing enabling conditions beyond the grant period.",
+        "panel_key_constraints": [
+          "persistent disbursement delays",
+          "temporary funding",
+          "structural fragility among rural providers"
+        ]
       }
     },
     "root/enabling/constraining/baseline/baseline": {
@@ -20859,7 +21476,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The temporary stabilization from one-time grants reverses once funds are exhausted, shifting the pathway from stabilization to partial erosion. This reversal is weakened by the concentration of funds in licensed centers, the lack of reserves due to spending requirements, and the absence of a permanent financing mechanism, leaving vulnerable providers without resilience. Consequently, the next phase must model the reversal of early gains, increased strain on families in underserved areas, and a shrinking workforce, with the contraction likely persisting beyond the grant window.",
+        "panel_key_constraints": [
+          "concentration of funds in licensed centers",
+          "lack of reserves due to spending requirements",
+          "absence of a permanent financing mechanism"
+        ]
       }
     },
     "root/enabling/constraining/baseline/constraining": {
@@ -21057,7 +21680,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "One-time stabilization grants produce only temporary relief, as providers exhaust funds on immediate costs without transitioning to sustainable models, causing supply and workforce declines. The transition fails because no permanent funding stream exists, and administrative delays and low participation prevent many small and rural providers from building reserves. Consequently, the sector reverts to pre-pandemic fragility, widening access gaps for families with non-standard schedules and leaving the goal of a self-sustaining market unachieved.",
+        "panel_key_constraints": [
+          "absence of permanent funding stream",
+          "administrative bottlenecks",
+          "low participation among license-exempt providers"
+        ]
       }
     },
     "root/enabling/constraining/constraining/enabling": {
@@ -21255,7 +21884,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Administrative learning and technical assistance infrastructure reduce provider compliance costs and increase resilience, lowering closure rates and stabilizing supply and workforce size. However, uneven reach to rural and license-exempt providers, thin margins among small providers, and imminent fund expiration weaken these gains. Consequently, downstream effects are modest and fragile, with elevated closure rates and limited supply growth persisting unless continued investment occurs.",
+        "panel_key_constraints": [
+          "uneven reach to rural and license-exempt providers",
+          "thin margins among small providers",
+          "imminent expiration of funds"
+        ]
       }
     },
     "root/enabling/constraining/constraining/baseline": {
@@ -21453,7 +22088,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of time-limited ARP CCDF stabilization grants converts temporary liquidity into a funding cliff, re-exposing providers to pre-pandemic cost pressures and triggering permanent closures and net supply contraction. This transition is weakened by administrative bottlenecks that prevent smaller home-based and license-exempt providers from building reserves or raising wages, and by the lack of sustained operational funding, with closures concentrated in rural and underserved areas. Consequently, the downstream pathway shifts from stabilization to retrenchment, reversing gains in affordability and maternal labor-force participation and deepening child care deserts, with the magnitude of decline contingent on whether new funding or systemic reforms materialize.",
+        "panel_key_constraints": [
+          "administrative bottlenecks",
+          "lack of sustained operational funding",
+          "concentration of closures in rural and underserved areas"
+        ]
       }
     },
     "root/enabling/constraining/constraining/constraining": {
@@ -21651,7 +22292,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The expiration of one-time stabilization grants reverses short-term gains into long-term contraction, as providers face a funding cliff without sustainable revenue, leading to permanent closures and reduced supply. This transition is weakened by the failure of grants to build reserves or address wage competitiveness, and by administrative capacity constraints that delay disbursement and underfund home-based providers. Consequently, the sector experiences net contraction, eroding maternal labor-force gains and leaving underserved communities with reduced access and uncertain recovery.",
+        "panel_key_constraints": [
+          "absence of sustainable revenue model",
+          "administrative capacity constraints",
+          "underfunding of home-based providers"
+        ]
       }
     },
     "root/enabling/constraining/enabling/enabling": {
@@ -21849,7 +22496,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Sustained technical assistance and streamlined processes offset administrative friction, enabling more providers to receive stabilization funds and strengthening the funding-to-supply link. This transition weakens where wage gains fail to outpace inflation, technical assistance reaches underserved providers unevenly, and cash-flow constraints persist, limiting provider resilience. Consequently, the phase yields modest, fragile supply and workforce gains that risk erosion without sustained funding and institutional support.",
+        "panel_key_constraints": [
+          "wage gains relative to inflation",
+          "uneven technical assistance reach",
+          "persistent cash-flow constraints"
+        ]
       }
     },
     "root/enabling/constraining/enabling/baseline": {
@@ -22047,7 +22700,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds removes temporary subsidies, triggering renewed closures and supply contraction. This transition weakens when providers lack reserves or efficiencies, no new federal funding emerges, and wage gains lag inflation, causing workforce attrition. Consequently, early gains in maternal labor-force participation and affordability are partially reversed, especially in underserved communities, unless permanent funding is introduced.",
+        "panel_key_constraints": [
+          "lack of provider reserves or efficiencies",
+          "absence of new federal funding",
+          "wage gains lagging inflation"
+        ]
       }
     },
     "root/enabling/constraining/enabling/constraining": {
@@ -22245,7 +22904,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The expiration of time-limited ARP CCDF grants reverses stabilization gains, exposing the sector's financial fragility and shifting the pathway from recovery to retrenchment. This transition is weakened by the absence of permanent funding, providers' use of funds for immediate costs rather than reserves, and persistent inflation and wage pressures. Consequently, supply and workforce contract, closures concentrate among vulnerable providers, and early gains in maternal employment and affordability are partially reversed, with further decline likely absent replacement funding or reforms.",
+        "panel_key_constraints": [
+          "absence of permanent funding mechanism",
+          "providers' use of funds for immediate costs",
+          "persistent inflation and wage pressures"
+        ]
       }
     },
     "root/enabling/enabling/baseline/enabling": {
@@ -22443,7 +23108,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "One-time stabilization grants can yield durable supply and workforce gains only if sustained institutional support helps providers shift from emergency relief to sustainable practices. This transition weakens when support ends, when rural and license-exempt providers lack network access, and when no replacement funding exists, risking erosion of gains. Consequently, downstream effects are moderate and uneven, with persistent closures among fragile providers and possible partial reversal without ongoing policy commitment.",
+        "panel_key_constraints": [
+          "one-time funding nature",
+          "uneven access to networks",
+          "lack of structural replacement funding"
+        ]
       }
     },
     "root/enabling/enabling/baseline/baseline": {
@@ -22641,7 +23312,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The transition from short-term stabilization to long-term impact depends on whether one-time grants created durable provider resilience or merely deferred closures. This transition weakens when grants fund immediate operating costs rather than structural investments, wage gains are not sustained, and market pressures reassert themselves, especially among home-based and license-exempt providers. Consequently, downstream effects are modest and uneven, with permanent closures and erosion of gains in labor-force participation and affordability without structural policy follow-through.",
+        "panel_key_constraints": [
+          "one-time grant funding",
+          "provider use of funds for operating costs",
+          "fragility of home-based and license-exempt providers"
+        ]
       }
     },
     "root/enabling/enabling/baseline/constraining": {
@@ -22839,7 +23516,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time grants produce only temporary stabilization, and the causal chain breaks as funding ends, forcing providers to raise tuition or cut wages. This transition weakens because the grants did not address structural underfunding, and the absence of ongoing subsidies is the critical bottleneck, with home-based and rural providers most vulnerable. Consequently, the sector reverts to structural contraction, reversing earlier gains and disproportionately affecting underserved communities.",
+        "panel_key_constraints": [
+          "absence of ongoing subsidies",
+          "structural underfunding",
+          "vulnerability of home-based and rural providers"
+        ]
       }
     },
     "root/enabling/enabling/constraining/enabling": {
@@ -23037,7 +23720,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "Stabilization grants paired with technical assistance and streamlined processes prevent immediate provider closures and enable modest supply and workforce growth, but these effects are fragile and time-limited. The transition weakens when lead agencies lack support infrastructure, funds are delayed, or providers face enrollment and cost pressures, which keep closure rates elevated. Consequently, downstream gains remain modest and risk reversal without continued investment, limiting improvements in affordability and maternal labor-force participation.",
+        "panel_key_constraints": [
+          "one-time funding",
+          "uneven support infrastructure",
+          "enrollment and cost pressures"
+        ]
       }
     },
     "root/enabling/enabling/constraining/baseline": {
@@ -23235,7 +23924,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The exhaustion of one-time stabilization funds converts temporary supply maintenance into a post-grant contraction, as providers who used grants for immediate costs face thin margins and rising costs, yielding a net supply and workforce decline. This transition is weakened by the short observation window, uneven distribution favoring licensed centers, and the inability to raise wages without pricing out families. Consequently, downstream effects on maternal employment and child development are reduced and concentrated among home-based and underserved-area providers, indicating that stabilization gains are transient without sustained investment.",
+        "panel_key_constraints": [
+          "short observation window",
+          "uneven distribution of funds",
+          "inability to raise wages"
+        ]
       }
     },
     "root/enabling/enabling/constraining/constraining": {
@@ -23433,7 +24128,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "One-time stabilization grants fail to secure long-term provider viability, instead deferring closures and workforce attrition, which reverses the downstream pathway by reducing supply and access. This transition is weakened by the funding cliff, persistent inflation, and administrative bottlenecks that force spending on immediate costs, while thin margins and insufficient grant size limit structural investments. Consequently, the sector continues contracting, suppressing maternal labor-force participation and employment gains, and undermining the policy's stabilization and affordability goals.",
+        "panel_key_constraints": [
+          "funding cliff",
+          "persistent inflation",
+          "administrative bottlenecks"
+        ]
       }
     },
     "root/enabling/enabling/enabling/enabling": {
@@ -23631,7 +24332,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The persistence of implementation-era enabling conditions converts one-time stabilization grants into durable provider capacity, yielding modest supply and workforce growth while holding closure rates below pre-grant trajectories. However, gains are uneven across provider types, with rural, license-exempt, and thin-margin home-based providers remaining vulnerable, and benefits risk eroding without continued public investment. This shifts the pathway from crisis mitigation to partial, fragile stabilization, with downstream outcomes depending on whether policymakers extend support or accept a plateau below full recovery.",
+        "panel_key_constraints": [
+          "uneven durability of gains across provider types",
+          "risk of erosion without continued public investment",
+          "incomplete transition to self-sustaining markets"
+        ]
       }
     },
     "root/enabling/enabling/enabling/baseline": {
@@ -23829,7 +24536,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time stabilization grants temporarily buffer closures and support modest wage increases, but they do not alter the underlying cost structure, so as funds taper, market pressures reassert and yield only modest net supply and workforce gains. The transition weakens because the short window prevents structural adaptation, and providers using funds for immediate needs face renewed fragility, especially rural, license-exempt, and small home-based providers, compounded by thin margins, high turnover, and administrative gaps. Consequently, the stabilization is precarious, and without continued subsidies or reimbursement reforms, gains may erode, reducing care access and maternal labor force participation in subsequent phases.",
+        "panel_key_constraints": [
+          "short 18-24 month window",
+          "thin margins and high turnover",
+          "administrative capacity gaps"
+        ]
       }
     },
     "root/enabling/enabling/enabling/constraining": {
@@ -24027,7 +24740,13 @@
         ],
         "state_type": "simulated",
         "grounded_values": {},
-        "grounded_evidence": []
+        "grounded_evidence": [],
+        "panel_summary": "The one-time grants temporarily sustain child care supply and wages, but the causal link to long-term stability breaks once funds lapse because spending focused on immediate costs rather than structural investments. This transition weakens when faster disbursement and simplified applications fail to address rising post-grant costs and the absence of follow-up financing or reimbursement rate increases. Consequently, supply and workforce decline, with closures and exits concentrated in rural and underserved segments, reversing earlier gains in access and maternal labor-force participation.",
+        "panel_key_constraints": [
+          "one-time grant structure",
+          "lack of structural investments",
+          "absence of follow-up financing"
+        ]
       }
     }
   },
@@ -24078,5 +24797,12 @@
   "mechanism_planner_mode": "per_transition",
   "branch_prompt_experiment": "current",
   "expansion_strategy": "full_tree",
-  "coverage_level_override": null
+  "coverage_level_override": null,
+  "panel_summary_generation": {
+    "prompt_version": "toc-panel-summary-v1",
+    "model": "deepseek-chat",
+    "generated_at": "2026-08-18T16:56:08.034482+00:00",
+    "node_count": 120,
+    "validation_warning_count": 20
+  }
 }

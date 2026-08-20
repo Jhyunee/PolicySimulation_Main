@@ -94,6 +94,8 @@ def _phase_payload(result: dict | None, grounded_input_state: dict | None = None
         "phase": result.get("phase"), "direction": result.get("direction"),
         "posting_order": result.get("posting_order") or [],
         "phase_summary": "Policy inputs shown below were verified against the source policy document." if document_grounded else result.get("phase_summary"),
+        "panel_summary": result.get("panel_summary"),
+        "panel_key_constraints": result.get("panel_key_constraints") or [],
         "state_type": result.get("state_type"),
         "grounded_values": result.get("grounded_values") if document_grounded else {},
         "grounded_evidence": result.get("grounded_evidence") if document_grounded else [],

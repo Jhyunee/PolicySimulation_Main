@@ -4,6 +4,7 @@ const tocPolicyKey = tocParams.get("policy") || "";
 const tocPolicyIndex = Math.max(0, Math.min(1, Number(tocParams.get("policyIndex") || 0)));
 const tocPreviewMode = tocParams.get("previewStudy") === "1";
 const tocVariantId = tocParams.get("variant") || "";
+const tocStudyIntro = tocParams.get("stage") === "study_intro";
 const tocStatus = document.getElementById("tocIntroStatus");
 const tocContinue = document.getElementById("continueToAnalysis");
 let tocCondition = "baseline";
@@ -21,6 +22,13 @@ function baselineGuideKey(){
 }
 
 function analysisHref(){
+  if(tocStudyIntro){
+    const query = new URLSearchParams();
+    if(tocParticipantId) query.set("participant",tocParticipantId);
+    if(tocPreviewMode) query.set("previewStudy","1");
+    if(tocVariantId) query.set("variant",tocVariantId);
+    return `task_instructions.html?${query.toString()}`;
+  }
   const query = new URLSearchParams({policy:tocPolicyKey, policyIndex:String(tocPolicyIndex)});
   if(tocParticipantId) query.set("participant", tocParticipantId);
   if(tocPreviewMode) query.set("previewStudy", "1");
@@ -32,8 +40,8 @@ function analysisHref(){
 }
 
 async function loadTocIntro(){
-  if(!tocPolicyKey || (!tocParticipantId && !tocPreviewMode)) throw new Error("A policy case and study session are required.");
-  const policyRequest = fetch("/api/pathway/policies").then(response=>{
+  if((!tocStudyIntro && !tocPolicyKey) || (!tocParticipantId && !tocPreviewMode)) throw new Error("A policy case and study session are required.");
+  const policyRequest = tocStudyIntro ? Promise.resolve(null) : fetch("/api/pathway/policies").then(response=>{
     if(!response.ok) throw new Error(`Policies HTTP ${response.status}`);
     return response.json();
   });
@@ -47,23 +55,29 @@ async function loadTocIntro(){
         return response.json();
       });
   const [policyPayload, assignment] = await Promise.all([policyRequest, assignmentRequest]);
-  const policy = (policyPayload.policies || []).find(item=>item.key === tocPolicyKey);
-  if(!policy) throw new Error("The assigned policy could not be found.");
-  const trial = assignment.assigned_trials?.find(item=>item.policy_key === tocPolicyKey);
+  const policy = tocStudyIntro ? null : (policyPayload.policies || []).find(item=>item.key === tocPolicyKey);
+  if(!tocStudyIntro && !policy) throw new Error("The assigned policy could not be found.");
+  const trial = tocStudyIntro ? assignment.assigned_trials?.[0] : assignment.assigned_trials?.find(item=>item.policy_key === tocPolicyKey);
   tocCondition = normalizedTocCondition(trial?.condition || assignment.condition || assignment.condition_name);
-  document.getElementById("tocCaseLabel").textContent = `Policy case ${tocPolicyIndex + 1} · Before the analysis`;
-  document.getElementById("tocPolicyName").textContent = policy.label;
+  const tocCaseLabel = document.getElementById("tocCaseLabel");
+  tocCaseLabel.hidden = tocStudyIntro;
+  tocCaseLabel.textContent = tocStudyIntro ? "" : `Policy case ${tocPolicyIndex + 1} · Before the analysis`;
+  document.getElementById("tocFooterLabel").textContent = tocStudyIntro ? "Next" : "Policy case";
+  document.getElementById("tocPolicyName").textContent = tocStudyIntro ? "Policy Exploration Task Guide" : policy.label;
+  tocContinue.innerHTML = tocStudyIntro
+    ? 'Continue to task guide <i data-lucide="arrow-right"></i>'
+    : 'Continue to policy analysis <i data-lucide="arrow-right"></i>';
   document.getElementById("tocConditionCopy").textContent = tocCondition === "framework"
-    ? "The next screen lets you select and compare alternative developments at each phase. A short on-screen guide will introduce the controls before you begin."
+    ? (tocStudyIntro ? "The next guide explains how to select development conditions and compare multiple policy pathways." : "The next screen lets you select and compare alternative developments at each phase.")
     : "The next screen presents one policy development across the same five phases so that you can review its conditions, explanations, and projected effects.";
   tocContinue.disabled = false;
-  await PolicyStudy.event("toc_introduction_viewed", {condition:tocCondition, policy_index:tocPolicyIndex});
+  await PolicyStudy.event("toc_introduction_viewed", {condition:tocCondition, policy_index:tocStudyIntro ? null : tocPolicyIndex, scope:tocStudyIntro ? "study" : "policy"});
   if(window.lucide) lucide.createIcons();
 }
 
 tocContinue.addEventListener("click", async ()=>{
   tocContinue.disabled = true;
-  await PolicyStudy.event("toc_introduction_completed", {condition:tocCondition, policy_index:tocPolicyIndex}, PolicyStudy.pageElapsed());
+  await PolicyStudy.event("toc_introduction_completed", {condition:tocCondition, policy_index:tocStudyIntro ? null : tocPolicyIndex, scope:tocStudyIntro ? "study" : "policy"}, PolicyStudy.pageElapsed());
   location.href = analysisHref();
 });
 

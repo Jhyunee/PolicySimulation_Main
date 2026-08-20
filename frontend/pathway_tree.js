@@ -206,6 +206,12 @@ let focusedNode = null;
 let focusedPath = "root";
 let discussionNodeKey = "";
 let savedPathways = [];
+let comparisonPaths = [];
+let comparisonOpen = false;
+let comparisonResult = null;
+let comparisonLoading = false;
+let comparisonError = "";
+let comparisonRequestKey = "";
 let discussionOpen = false;
 let expandedRationaleIndex = null;
 let reportPath = "";
@@ -248,7 +254,7 @@ let frameworkChatUsage = {
   limit: FRAMEWORK_CHAT_LIMIT,
   remaining: FRAMEWORK_CHAT_LIMIT,
 };
-let TREE_VIEW_SCALE = 0.72;
+let TREE_VIEW_SCALE = 0.68;
 const TREE_VIEW_SCALE_MIN = 0.44;
 const TREE_VIEW_SCALE_MAX = 0.92;
 const TREE_VIEW_SCALE_STEP = 0.08;
@@ -687,7 +693,7 @@ function layoutNodes(nodes){
   // Keep 114px cards separated by a compact 32px unscaled visual gap.
   // This gives E/B/C siblings roughly half the previous whitespace without
   // allowing card borders or shadows to overlap.
-  const leafGap = 146;
+  const leafGap = currentPolicyKey === "usa/chi_ctc" ? 160 : 146;
   const colX = col => 82 + col * TREE_COL_GAP;
   const childOrder = precomputedTreeNodes
     ? PRECOMPUTED_TRANSITION_ORDER
@@ -1025,11 +1031,203 @@ function pathNodesTree(path){
   parts.forEach((_, i)=>paths.push(`root/${parts.slice(0, i + 1).join("/")}`));
   return paths.map(p=>treeNodes.get(p) || nodeFromPath(p));
 }
+function comparisonCodeTree(path){
+  const codes = {
+    enabling:"E", baseline:"B", constraining:"C",
+    optimistic:"E", neutral:"B", conservative:"C",
+  };
+  return pathStancesTree(path).map(stance=>codes[stance] || String(stance || "?").slice(0,1).toUpperCase()).join(" → ");
+}
+function comparisonConstraintTextTree(node){
+  const constraints = phaseConstraintDataTree(node?.phase || {}, 2).map(({tag})=>tag);
+  return constraints.length ? constraints.join(" · ") : "No distinct constraint identified";
+}
+function comparisonSelectionKeyTree(){
+  return comparisonPaths.length === 2 ? `${currentPolicyKey}::${comparisonPaths.join("::")}` : "";
+}
+function comparisonDeltaTree(field, row){
+  const delta = row?.delta_b_minus_a;
+  if(delta == null || !Number.isFinite(Number(delta))) return "Not comparable";
+  const numeric = Number(delta);
+  const sign = numeric > 0 ? "+" : "";
+  const formatted = predictionValueTree(field, Math.abs(numeric));
+  const value = numeric < 0 ? `−${formatted}` : `${sign}${formatted}`;
+  const relative = Number.isFinite(Number(row.relative_delta_pct))
+    ? ` (${Number(row.relative_delta_pct) > 0 ? "+" : ""}${fmtTree(Number(row.relative_delta_pct))}%)`
+    : "";
+  return `${value}${relative}`;
+}
+function comparisonMetricsTableTree(phaseName){
+  const phase = (comparisonResult?.metrics || []).find(item=>item.phase === phaseName);
+  const rows = phase?.metrics || [];
+  if(!rows.length) return `<p class="comparison-no-metrics">No quantitative estimate was recorded for this phase.</p>`;
+  return `<div class="comparison-metric-table" role="table" aria-label="${escTree(phaseName)} quantitative comparison">
+    <div class="comparison-metric-head" role="row"><span>Metric</span><span>Path A</span><span>Path B</span><span>Difference (B − A)</span></div>
+    ${rows.map(row=>`<div class="comparison-metric-row" role="row">
+      <b title="${escTree(fieldTree(row.field))}">${escTree(fieldTree(row.field))}</b>
+      <span>${row.value_a == null ? "—" : escTree(predictionValueTree(row.field, row.value_a))}</span>
+      <span>${row.value_b == null ? "—" : escTree(predictionValueTree(row.field, row.value_b))}</span>
+      <strong>${escTree(comparisonDeltaTree(row.field, row))}</strong>
+    </div>`).join("")}
+  </div>`;
+}
+function comparisonProfileTree(label, profile={}){
+  return `<article class="comparison-profile">
+    <header><span>${label}</span><b>${escTree(comparisonCodeTree(comparisonPaths[label === "A" ? 0 : 1]))}</b></header>
+    <dl>
+      <div><dt>Primary bottleneck</dt><dd>${escTree(profile.primary_bottleneck || "Not identified")}</dd></div>
+      <div><dt>Enabling condition</dt><dd>${escTree(profile.enabling_condition || "Not identified")}</dd></div>
+      <div><dt>Limiting condition</dt><dd>${escTree(profile.limiting_condition || "Not identified")}</dd></div>
+    </dl>
+  </article>`;
+}
+function comparisonAnalysisTree(nodesA, nodesB){
+  if(comparisonLoading) return `<section class="comparison-generating" aria-live="polite"><i data-lucide="loader-circle"></i><div><b>Preparing a comparison report...</b><p>Comparing the selected pathways phase by phase.</p></div></section>`;
+  if(comparisonError) return `<section class="comparison-generating error" aria-live="polite"><i data-lucide="circle-alert"></i><div><b>Comparison could not be generated</b><p>${escTree(comparisonError)}</p><button type="button" data-retry-comparison="1">Try again</button></div></section>`;
+  const analysis = comparisonResult?.analysis;
+  if(!analysis) return "";
+  const executive = analysis.executive_summary || {};
+  const phaseMap = new Map((analysis.phase_comparisons || []).map(item=>[item.phase, item]));
+  const firstDivergence = nodesA.findIndex((node, index)=>index > 0 && node.stance !== nodesB[index]?.stance);
+  const phases = TREE_PHASES.map((phaseName, index)=>{
+    const item = phaseMap.get(phaseName) || {};
+    const nodeA = nodesA[index] || {};
+    const nodeB = nodesB[index] || {};
+    const shared = index === 0 || nodeA.stance === nodeB.stance;
+    const beforeDivergence = firstDivergence > index;
+    const expanded = firstDivergence < 0 ? index === TREE_PHASES.length - 1 : index >= firstDivergence;
+    const phaseState = beforeDivergence
+      ? "Shared before divergence"
+      : shared ? "Shared stance after divergence" : "Different development conditions";
+    return `<details class="comparison-synthesis-phase ${shared ? "shared" : "different"}" ${expanded ? "open" : ""}>
+      <summary><span>${index + 1}</span><div><b>${escTree(phaseName)}</b><em>${phaseState}</em></div></summary>
+      <div class="comparison-synthesis-phase-body">
+        <div class="comparison-condition-pair"><span>A · ${escTree(index === 0 ? "Policy input" : stanceShortTree(nodeA))}</span><span>B · ${escTree(index === 0 ? "Policy input" : stanceShortTree(nodeB))}</span></div>
+        <div class="comparison-phase-interpretation">
+          <section><b>What changes</b><p>${escTree(item.key_difference || "No grounded difference was identified.")}</p></section>
+          <section><b>Why it matters</b><p>${escTree(item.downstream_implication || "No distinct downstream implication was identified.")}</p></section>
+        </div>
+        <div class="comparison-bottleneck-pair"><p><b>A · Bottleneck</b>${escTree(item.bottleneck_a || "Not identified")}</p><p><b>B · Bottleneck</b>${escTree(item.bottleneck_b || "Not identified")}</p></div>
+        <details class="comparison-metrics-details" ${shared ? "" : "open"}>
+          <summary>Quantitative estimates</summary>
+          ${comparisonMetricsTableTree(phaseName)}
+        </details>
+      </div>
+    </details>`;
+  }).join("");
+  const divergenceFactors = analysis.divergence_factors || [];
+  const uncertainties = analysis.uncertainties || [];
+  return `<section class="comparison-executive-grid">
+      <article><span>Where the pathways diverge</span><p>${escTree(executive.critical_divergence || "Not identified")}</p></article>
+      <article><span>Overall contrast</span><p>${escTree(executive.overall_contrast || "Not identified")}</p></article>
+    </section>
+    <p class="comparison-decision-note"><b>Scope of comparison:</b> ${escTree(executive.comparison_scope || "The comparison is limited to the supplied pathway reports and simulation estimates.")}</p>
+    <section class="comparison-closing-grid">
+      <article><span>Conditions shaping the divergence</span>${divergenceFactors.length ? `<ol>${divergenceFactors.map(item=>`<li><b>${escTree(item.phase || "Pathway")}</b><p>${escTree(item.condition || "")}</p><small class="comparison-factor-roles"><span><strong>A</strong>${escTree(item.role_in_pathway_a || "Not identified")}</span><span><strong>B</strong>${escTree(item.role_in_pathway_b || "Not identified")}</span></small></li>`).join("")}</ol>` : "<p>None identified.</p>"}</article>
+      <article><span>Uncertainty and verification needs</span>${uncertainties.length ? `<ul>${uncertainties.map(item=>`<li>${escTree(item)}</li>`).join("")}</ul>` : "<p>No additional uncertainty was identified.</p>"}</article>
+    </section>
+    <section class="comparison-synthesis-list"><header><span>Phase-by-phase comparison</span><p>Shared phases before the first divergence are collapsed. Open any phase to review its details.</p></header>${phases}</section>
+    <footer class="comparison-ai-note"><p>Interpretive summary based on the selected pathway reports. Quantitative differences are calculated directly from the simulation outputs.</p></footer>`;
+}
+function renderComparisonModalTree(){
+  if(!comparisonOpen || comparisonPaths.length !== 2) return "";
+  const [pathA, pathB] = comparisonPaths;
+  const nodesA = pathNodesTree(pathA);
+  const nodesB = pathNodesTree(pathB);
+  const firstDivergence = nodesA.findIndex((node, index)=>index > 0 && node.stance !== nodesB[index]?.stance);
+  const divergenceLabel = firstDivergence > 0
+    ? `${firstDivergence + 1}. ${TREE_PHASE_KO[nodesA[firstDivergence]?.phase?.phase] || nodesA[firstDivergence]?.phase?.phase}`
+    : "No stance divergence identified";
+  return `<div class="tree-modal-backdrop" data-close-comparison="1">
+    <section class="tree-comparison-modal" role="dialog" aria-modal="true" aria-label="Pathway comparison">
+      <header class="tree-modal-head comparison-modal-head">
+        <div><span>Pathway comparison</span><h2>Compare selected pathways</h2><p>Review where the selected routes diverge and how their conditions lead to different downstream results.</p></div>
+        <button data-close-comparison="1" type="button">Close</button>
+      </header>
+      <section class="comparison-route-summary">
+        <div><span>A</span><b>${escTree(comparisonCodeTree(pathA))}</b></div>
+        <div><span>B</span><b>${escTree(comparisonCodeTree(pathB))}</b></div>
+        <aside><span>First divergence</span><b>${escTree(divergenceLabel)}</b></aside>
+      </section>
+      ${comparisonAnalysisTree(nodesA, nodesB)}
+    </section>
+  </div>`;
+}
+function renderComparisonDockTree(){
+  if(TREE_BASELINE_MODE || treeDemoMode) return "";
+  const slots = [0,1].map(index=>{
+    const path = comparisonPaths[index];
+    if(!path){
+      const isNextSlot = index === comparisonPaths.length;
+      return `<div class="comparison-path-slot empty ${isNextSlot ? "drop-ready" : "waiting"}" ${isNextSlot ? `data-comparison-drop="${index}"` : ""}>
+        ${isNextSlot && frameworkContextGuide === "comparison" ? '<i class="comparison-drop-arrow" data-lucide="corner-down-right" aria-hidden="true"></i>' : ""}
+        <span>${index === 0 ? "A" : "B"}</span>
+        <p>${isNextSlot ? "Drag a completed Impact card here" : "Add Path A first"}</p>
+      </div>`;
+    }
+    return `<div class="comparison-path-slot">
+      <span>${index === 0 ? "A" : "B"}</span>
+      <strong title="${escTree(pathLabelTree(path))}">${escTree(comparisonCodeTree(path))}</strong>
+      <button type="button" data-remove-comparison="${path}" aria-label="Remove pathway ${index === 0 ? "A" : "B"}"><i data-lucide="x"></i></button>
+    </div>`;
+  }).join("");
+  return `<section class="tree-comparison-dock" aria-label="Pathways selected for comparison">
+    <div class="comparison-dock-label"><span>Selected for comparison</span><small>${comparisonPaths.length} of 2 pathways</small></div>
+    <div class="comparison-path-slots">${slots}</div>
+    <button type="button" data-open-comparison="1" ${comparisonPaths.length === 2 ? "" : "disabled"}>Compare Pathways <i data-lucide="columns-2"></i></button>
+  </section>`;
+}
+async function loadComparisonSynthesisTree(force=false){
+  const requestKey = comparisonSelectionKeyTree();
+  if(!requestKey || comparisonPaths.length !== 2) return;
+  if(!force && comparisonResult && comparisonRequestKey === requestKey) return;
+  comparisonRequestKey = requestKey;
+  comparisonLoading = true;
+  comparisonError = "";
+  comparisonResult = null;
+  renderTree();
+  const requestedPaths = [...comparisonPaths];
+  const startedAt = performance.now();
+  logTreeEvent("pathway_comparison_generation_started", {paths:requestedPaths});
+  try{
+    const response = await fetch("/api/pathway/compare", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        policy_key:currentPolicyKey,
+        path_a:requestedPaths[0],
+        path_b:requestedPaths[1],
+        participant_id:PolicyStudy.participantId || null,
+      }),
+    });
+    const payload = await response.json().catch(()=>({}));
+    if(!response.ok){
+      const detail = typeof payload.detail === "string" ? payload.detail : payload.detail?.message;
+      throw new Error(detail || `Comparison request failed (${response.status})`);
+    }
+    if(comparisonSelectionKeyTree() !== requestKey) return;
+    comparisonResult = payload;
+    comparisonLoading = false;
+    comparisonError = "";
+    logTreeEvent("pathway_comparison_generated", {
+      paths:requestedPaths,
+      latency_ms:payload.latency_ms || Math.round(performance.now() - startedAt),
+      usage:payload.usage || {},
+    });
+  }catch(error){
+    if(comparisonSelectionKeyTree() !== requestKey) return;
+    comparisonResult = null;
+    comparisonLoading = false;
+    comparisonError = error?.message || "The comparison service is unavailable.";
+    logTreeEvent("pathway_comparison_generation_failed", {paths:requestedPaths, error:comparisonError});
+  }
+  renderTree();
+}
 function phaseMetricListTree(phase, limit=3){
   const values = Object.entries(phaseValuesTree(phase || {})).slice(0, limit);
   if(!values.length) return "";
   return `<dl class="report-metrics">${values.map(([k,v])=>`
-    <div><dt>${escTree(fieldTree(k))}</dt><dd>${fmtTree(v)}</dd></div>
+    <div class="${currentPolicyKey === "usa/chi_ctc" && k === "long_term_healthcare_cost_savings_usd" ? "report-metric-compact-value" : ""}"><dt>${escTree(fieldTree(k))}</dt><dd>${escTree(predictionValueTree(k,v))}</dd></div>
   `).join("")}</dl>`;
 }
 function phaseConstraintDataTree(phase, limit=3){
@@ -1067,7 +1265,7 @@ function reportPhaseTextTree(nodes, index){
   const node = nodes[index];
   const phase = node.phase || {};
   const stance = stanceLabelTree(node);
-  const summary = sentenceTree(phase.phase_summary || "", 2);
+  const originalSummary = sentenceTree(phase.phase_summary || "", 2);
   const lead = [
     "The pathway begins with the policy resources and implementation capacity available at launch.",
     "These inputs shape the actions taken by implementing organizations and affected stakeholders.",
@@ -1075,7 +1273,10 @@ function reportPhaseTextTree(nodes, index){
     "These outputs shape the policy's near-term target outcomes.",
     "The final phase considers whether near-term outcomes extend into durable systemic effects.",
   ][index] || "";
-  return `${lead} Under the ${stance}, ${summary}`;
+  if(phase.phase !== "Inputs" && phase.panel_summary){
+    return phase.panel_summary;
+  }
+  return `${lead} Under the ${stance}, ${originalSummary}`;
 }
 function reportFinalPredictionTextTree(nodes){
   const finalNode = nodes[nodes.length - 1] || {};
@@ -1092,6 +1293,41 @@ function reportFinalPredictionTextTree(nodes){
     ? "The final estimates describe whether near-term policy outcomes persist over time."
     : "The final estimates describe whether near-term policy outcomes persist under the selected exploratory pathway.";
 }
+function reportNodeByPhaseTree(nodes, phaseName){
+  return nodes.find(node=>String(node?.phase?.phase || "").toLowerCase() === phaseName.toLowerCase()) || null;
+}
+function reportPhaseSentencesTree(node){
+  const phase = node?.phase || {};
+  return summarySentencesTree(phase.panel_summary || phase.phase_summary || "");
+}
+function reportInsightTextTree(nodes, kind){
+  const outcomes = reportNodeByPhaseTree(nodes, "Outcomes");
+  const impact = reportNodeByPhaseTree(nodes, "Impact");
+  const ordered = kind === "mechanism" ? [outcomes, impact] : [impact, outcomes];
+  const sentences = ordered.flatMap(reportPhaseSentencesTree);
+  const patterns = {
+    bottleneck:/constraint|bottleneck|insufficient|shortage|delay|gap|barrier|limit|risk|uneven|temporary/i,
+    mechanism:/mechanism|translate|lead|result|produce|improve|reduce|increase|support|shape|convert/i,
+  };
+  const selected = sentences.find(sentence=>{
+    if(!patterns[kind]?.test(sentence)) return false;
+    return true;
+  }) || sentences.find(sentence=>patterns[kind]?.test(sentence)) || sentences[0];
+  if(selected) return selected;
+  if(kind === "bottleneck") return "No single dominant bottleneck was identified in the available phase summaries.";
+  return "The pathway links implementation activity to near-term outcomes and longer-term effects.";
+}
+function reportUncertaintiesTree(nodes, limit=2){
+  const impact = reportNodeByPhaseTree(nodes, "Impact");
+  const outcomes = reportNodeByPhaseTree(nodes, "Outcomes");
+  const uncertaintyPattern = /uncertain|verify|attribut|temporary|depend|risk|assum|persist|durable|potential|\bmay\b/i;
+  const candidates = [impact, outcomes].flatMap(reportPhaseSentencesTree)
+    .filter(sentence=>uncertaintyPattern.test(sentence));
+  const unique = [...new Set(candidates)].slice(0, limit);
+  return unique.length ? unique : [
+    "Long-term estimates depend on whether the selected pathway's conditions persist beyond the simulated period.",
+  ];
+}
 function renderPathReportModal(){
   if(!reportPath) return "";
   const nodes = pathNodesTree(reportPath);
@@ -1107,22 +1343,27 @@ function renderPathReportModal(){
   const sections = nodes.map((node, i)=>{
     const phase = node.phase || {};
     const tone = node.col === 0 ? TREE_STANCES.neutral : (TREE_STANCES[node.stance] || TREE_STANCES.neutral);
-    return `<article class="report-phase" style="--lane:${tone.color}">
-      <div class="report-phase-head">
+    return `<details class="report-phase-details" style="--lane:${tone.color}">
+      <summary>
+        <div class="report-phase-head">
         <span>${i + 1}</span>
         <div>
           <b>${escTree(TREE_PHASE_KO[phase.phase] || phase.phase)}</b>
           <em>${node.col === 0 ? "Policy Input" : escTree(tone.label)}</em>
         </div>
-      </div>
-      <div class="report-phase-content">
+        </div>
+      </summary>
+      <div class="report-phase-content report-phase-details-content">
         <div class="report-subhead">Quantitative estimates</div>
         ${phaseMetricListTree(phase, 3)}
         <p>${escTree(reportPhaseTextTree(nodes, i))}</p>
         ${reportConstraintsTree(phase, 3)}
       </div>
-    </article>`;
+    </details>`;
   }).join("");
+  const outcomesNode = reportNodeByPhaseTree(nodes, "Outcomes");
+  const impactNode = reportNodeByPhaseTree(nodes, "Impact") || finalNode;
+  const uncertainties = reportUncertaintiesTree(nodes);
   return `<div class="tree-modal-backdrop" data-close-report="1">
     <section class="tree-report-modal report-document" style="--lane:${finalTone.color}" role="dialog" aria-modal="true" aria-label="Pathway report">
       <header class="report-document-head">
@@ -1131,19 +1372,39 @@ function renderPathReportModal(){
           <h2>Pathway Outcome Report</h2>
           <p>Scenario-specific analysis of conditions, projected outcomes, and constraints across the selected policy pathway.</p>
         </div>
-        <div class="report-document-actions"><div class="report-document-id"><span>Policy case</span><b>${escTree(currentPolicyMeta.label || currentPolicyMeta.title || "Policy case")}</b><em>Exploratory result</em></div><button data-close-report="1" type="button">Close</button></div>
+        <div class="report-document-actions report-comparison-actions">
+          <button data-close-report="1" type="button">Close</button>
+        </div>
       </header>
       <section class="report-route"><span>Selected pathway</span><p>${escTree(route)}</p></section>
-      <section class="report-summary-grid">
-        <div class="report-overview">
-          <span class="report-section-label">Outcome overview</span>
-          <h3>Final prediction summary</h3>
-          <p>${escTree(reportFinalPredictionTextTree(nodes))}</p>
-          ${phaseMetricListTree(finalNode.phase, 3)}
+      <section class="report-projected-results">
+        <header><span class="report-section-label">Projected results</span><h3>Short-term outcomes and long-term impacts</h3></header>
+        <div class="report-result-grid">
+          <article>
+            <span>Short-term outcomes</span>
+            <p>Near-term changes expected among the policy's target population.</p>
+            ${outcomesNode ? phaseMetricListTree(outcomesNode.phase, 3) : '<p class="report-empty-value">No short-term outcome values were available.</p>'}
+          </article>
+          <article>
+            <span>Long-term impacts</span>
+            <p>Broader effects that may emerge if the pathway's conditions continue to hold.</p>
+            ${phaseMetricListTree(impactNode.phase, 3)}
+          </article>
         </div>
-        <aside class="report-use-note"><span>Interpretation note</span><p>These results support comparison and discussion of pathways. They are conditional exploratory simulations, not definitive policy forecasts.</p></aside>
       </section>
-      <section class="report-analysis"><div class="report-analysis-head"><span>01</span><div><b>Phase-by-phase analysis</b><p>Mechanisms, quantitative estimates, and constraints along the selected route.</p></div></div><div class="report-flow">${sections}</div></section>
+      <section class="report-why-section">
+        <header><span class="report-section-label">Why this result emerged</span><h3>Conditions and mechanisms</h3></header>
+        <div class="report-why-grid">
+          <article><span>Primary bottleneck</span><p>${escTree(reportInsightTextTree(nodes, "bottleneck"))}</p></article>
+          <article><span>Causal mechanism</span><p>${escTree(reportInsightTextTree(nodes, "mechanism"))}</p></article>
+        </div>
+      </section>
+      <section class="report-uncertainty-section">
+        <span class="report-section-label">Uncertainty and verification needs</span>
+        <ul>${uncertainties.map(item=>`<li>${escTree(item)}</li>`).join("")}</ul>
+      </section>
+      <section class="report-analysis report-analysis-collapsed"><div class="report-analysis-head"><span>01</span><div><b>Phase details</b><p>Open a phase to review its estimates, mechanism, and constraints.</p></div></div><div class="report-flow">${sections}</div></section>
+      <aside class="report-use-note report-use-note-final"><span>Interpretation note</span><p>These results are conditional exploratory simulations, not definitive policy forecasts or recommendations.</p></aside>
       <footer class="report-document-footer"><span>Policy simulation framework</span><span>Use alongside domain evidence and expert review.</span></footer>
     </section>
   </div>`;
@@ -1159,14 +1420,18 @@ function renderSelectedSummaryTree(){
   const tone = TREE_STANCES[node.stance] || TREE_STANCES.neutral;
   const verifiedInput = phase.phase === "Inputs" && phase.state_type === "document_grounded";
   const groundedSources = groundedSourcesTree(phase);
+  const panelConstraints = phase.panel_key_constraints || [];
+  const panelMetrics = verifiedInput ? verifiedInputRowsTree(phase, 6) : metricRowsTree(phase, 5);
   return `<section class="storage-summary" style="--lane:${tone.color}">
     <span>${node.col === 0 ? "Selected phase" : tone.label}</span>
     <h3>${node.col+1}. ${escTree(TREE_PHASE_KO[phase.phase] || phase.phase)}</h3>
     <div class="toc-phase-focus"><b>What this phase examines</b><p>${escTree(TREE_PHASE_FOCUS[phase.phase] || "")}</p></div>
     ${verifiedInput
       ? `<div class="verified-input-heading input-use-heading"><b>How these inputs are used</b><p>These values define the policy’s initial resources, policy rules, and implementation timeline. Subsequent pathways explore how implementation conditions and stakeholder responses shape their translation into outcomes.</p></div>`
-      : `<p>${escTree(phase.phase_summary || "")}</p>`}
-    <div class="storage-summary-values ${verifiedInput ? "verified-input-slots" : ""}">${verifiedInput ? verifiedInputRowsTree(phase, 6) : metricRowsTree(phase, 5)}</div>
+      : `<p>${escTree(phase.panel_summary || phase.phase_summary || "")}</p>
+        ${panelConstraints.length ? `<div class="storage-summary-section-label">Key constraints</div><div class="storage-summary-constraints">${panelConstraints.map(item=>`<span>${escTree(item)}</span>`).join("")}</div>` : ""}`}
+    ${!verifiedInput && panelMetrics ? `<div class="storage-summary-section-label storage-summary-values-label">Quantitative estimates</div>` : ""}
+    <div class="storage-summary-values ${verifiedInput ? "verified-input-slots" : ""}">${panelMetrics}</div>
     ${verifiedInput ? `<div class="verified-input-heading verified-input-evidence"><b>Verified from Official Policy Document</b><p>Structured through the framework’s document-processing pipeline and verified against the cited text.</p>${groundedSources.length ? `<p class="verified-input-source"><b>Source</b> ${groundedSources.map(escTree).join("; ")}</p>` : ""}</div>` : ""}
   </section>`;
 }
@@ -1241,8 +1506,11 @@ function renderTreeNode(node, pos){
   const hideMetrics = hideNodeMetricsTree(phase);
   const isImpact = phase.phase === "Impact";
   const nodeWidth = nodeWidthTree(node);
+  const comparisonDrag = !TREE_BASELINE_MODE && isImpact
+    ? ` draggable="true" data-comparison-drag="${node.path}" title="Drag this completed Impact card to the comparison area"`
+    : "";
   return `<button class="tree-node ${hideMetrics||isImpact?"process-node":""} ${phase.phase==="Outcomes"?"outcome-node":""} ${isImpact?"impact-node":""} ${expanded?"expanded":""} ${isSelectedPath?"selected-path":""} ${isFocused?"focused":""} ${isNew?"is-new":""}"
-    data-path="${node.path}" data-phase-index="${node.col}" style="--x:${pos.x}px;--y:${pos.y}px;--lane:${tone.color};--node-width:${nodeWidth}px;">
+    data-path="${node.path}" data-phase-index="${node.col}"${comparisonDrag} style="--x:${pos.x}px;--y:${pos.y}px;--lane:${tone.color};--node-width:${nodeWidth}px;">
     <span class="tree-node-head">
       <em>${stanceShortTree(node)}</em>
       <i>${node.col+1}</i>
@@ -1422,7 +1690,7 @@ function renderPathwayChatModal(){
       </div>
       ${answers}
     </section>`;
-  }).join("") : `<div class="path-chat-empty">Ask ${escTree(selectedPersona || "the selected stakeholder")} about the evidence, risks, or practical use of this complete pathway.</div>`;
+  }).join("") : `<div class="path-chat-empty">Select an example question below, or type your own question for ${escTree(selectedPersona || "the selected stakeholder")} about this pathway.</div>`;
   return `<div class="tree-modal-backdrop" data-close-path-chat="1">
     <section class="tree-chat-modal" style="--lane:${tone.color}" role="dialog" aria-modal="true" aria-label="Pathway stakeholder chat">
       <div class="tree-modal-head">
@@ -1545,21 +1813,20 @@ function renderProgress(){
   return `<div class="tree-progress">${steps}</div>`;
 }
 const FRAMEWORK_GUIDE_STEPS = [
-  {target:'.tree-node[data-phase-index="0"]', title:"Select a node to continue", copy:"Begin with the policy input node. Selecting a node reveals the possible developments available in the next phase, while the panel on the left updates with its detailed explanation."},
+  {
+    target:'.tree-node[data-phase-index="1"]',
+    title:"Choose a development condition",
+    copy:"At each phase, choose one of three conditions to determine how the policy develops next. Your selection reveals the available developments in the following phase; continue until the pathway reaches Impact.",
+    details:[
+      ["Enabling", "Positive development or recovery from a bottleneck."],
+      ["Baseline", "Continuation under typical or expected conditions."],
+      ["Constraining", "Stronger bottlenecks and possible failure to meet the policy goal."],
+    ],
+  },
   {
     target:'.tree-phase-inspector',
     title:"Review the selected node summary",
-    copy:"The panel on the left summarizes the node you selected. It explains what the phase examines and shows the relevant conditions, assumptions, quantitative values, and supporting details for that point in the pathway.",
-  },
-  {
-    target:'.tree-node[data-phase-index="1"]',
-    title:"Compare three development conditions",
-    copy:"At every phase, the pathway can develop under one of three implementation conditions.",
-    details:[
-      ["Enabling", "Core implementation conditions and causal links hold or strengthen, supporting progress toward the policy goal."],
-      ["Baseline", "Implementation follows typical or expected conditions, generally continuing the current direction."],
-      ["Constraining", "Key assumptions, capacity, or causal links weaken, moving results away from the intended goal."],
-    ],
+    copy:"The panel on the left summarizes the node you selected, including its causal mechanism, key constraints, and quantitative estimates.",
   },
 ];
 
@@ -1585,12 +1852,18 @@ const FRAMEWORK_CONTEXT_GUIDES = {
   report:{
     target:".report-document-head",
     title:"Review the completed pathway",
-    copy:"Reaching Impact opens a final report for the selected route. It summarizes the phase-by-phase mechanisms, quantitative estimates, and constraints without treating the result as a definitive forecast.",
+    copy:"This report summarizes the completed pathway's projected results, bottleneck, causal mechanism, and uncertainties. Review it, then close the report to continue.",
+  },
+  comparison:{
+    target:".tree-comparison-dock",
+    title:"Drag and drop completed Impact cards",
+    emphasis:"DRAG AND DROP",
+    copy:"Move a completed Impact card into Path A or B. Add two pathways, then select Compare Pathways.",
   },
   chat:{
     target:".pathway-chat-button",
     title:"Question a stakeholder about this route",
-    copy:"Use Chat to ask a persona about the completed pathway. The route is also saved in the left panel, where its final report can be reopened and compared with other completed pathways.",
+    copy:"Use Chat to ask a persona about the evidence, risks, or practical implications of this completed pathway. You can choose an example question or write your own.",
   },
 };
 
@@ -1648,6 +1921,7 @@ function renderFrameworkGuide(){
     <article class="framework-guide-bubble" role="dialog" aria-modal="true" aria-label="Policy analysis guide">
       <span>${escTree(step.label)}</span>
       <h2>${escTree(step.title)}</h2>
+      ${step.emphasis ? `<strong class="framework-guide-emphasis">${escTree(step.emphasis)}</strong>` : ""}
       <p>${escTree(step.copy)}</p>
       ${step.details ? `<dl class="framework-guide-conditions">${step.details.map(([label,copy])=>`<div><dt>${escTree(label)}</dt><dd>${escTree(copy)}</dd></div>`).join("")}</dl>` : ""}
       <footer>${step.kind === "initial" ? '<button type="button" data-guide-skip="1">Skip guide</button>' : '<span></span>'}<button type="button" data-guide-next="1">${escTree(step.action)} <i data-lucide="arrow-right"></i></button></footer>
@@ -1703,15 +1977,9 @@ function closeFrameworkGuide(completed=false){
     const completedContext = frameworkContextGuide;
     localStorage.setItem(frameworkContextGuideKey(completedContext), "1");
     logTreeEvent("framework_feature_guide_completed", {feature:completedContext});
-    if(completedContext === "report"){
-      if(reportPath) closeTimedPanel("report");
-      const completedPath = reportPath;
-      reportPath = "";
-      const completedNode = treeNodes.get(completedPath) || treeNodes.get(focusedPath) || focusedTreeNode();
-      const chatAvailable = completedNode.col === TREE_PHASES.length - 1 && phasePostsTree(completedNode.phase || {}).length > 0;
-      frameworkContextGuide = chatAvailable && localStorage.getItem(frameworkContextGuideKey("chat")) !== "1" ? "chat" : "";
-    }else{
-      frameworkContextGuide = "";
+    frameworkContextGuide = "";
+    if(completedContext === "chat" && !TREE_BASELINE_MODE && localStorage.getItem(frameworkContextGuideKey("comparison")) !== "1"){
+      frameworkContextGuide = "comparison";
     }
     renderTree();
     return;
@@ -1751,21 +2019,29 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
         </div>
       </div>
     </section>`;
+  const comparisonDock = renderComparisonDockTree();
+  const canvasColumn = comparisonDock
+    ? `<div class="tree-canvas-column">${comparisonDock}${canvasSection}</div>`
+    : canvasSection;
   // baseline 조건: 캔버스 → 하단 패널 순서. Ours(framework)는 원래의
   // 좌측 사이드바(인스펙터) → 캔버스 순서를 그대로 유지한다.
   const workspaceBody = TREE_BASELINE_MODE
     ? `${canvasSection}${renderPhaseInspector(nodes, layout)}`
-    : `${renderPhaseInspector(nodes, layout)}${canvasSection}`;
+    : `${renderPhaseInspector(nodes, layout)}${canvasColumn}`;
   const studyToolbar = treeDemoMode ? "" : `<header class="baseline-report-toolbar tree-study-toolbar"><a href="${dashboardHrefTree(false)}"><i data-lucide="layout-dashboard"></i><span>Policies</span></a><span>Policy ${currentPolicyIndex + 1} of 2</span></header>`;
   const studyCompletion = treeDemoMode ? "" : `<section class="baseline-report-complete tree-exploration-complete"><a class="finish-link" data-finish-policy="1" href="${policySurveyHrefTree()}">${TREE_BASELINE_MODE ? "Finish Reviewing" : "Finish Exploring"} <i data-lucide="arrow-right"></i></a></section>`;
+  const afterWorkspace = studyCompletion && !TREE_BASELINE_MODE
+    ? `<div class="tree-after-workspace">${studyCompletion}</div>`
+    : studyCompletion;
   root.innerHTML = `${studyToolbar}
   <section class="tree-workspace">
     ${workspaceBody}
     ${renderDiscussionModal()}
     ${renderPathReportModal()}
+    ${renderComparisonModalTree()}
     ${renderPathwayChatModal()}
   </section>
-  ${studyCompletion}
+  ${afterWorkspace}
   ${renderFrameworkGuide()}`;
   if(reportPath && window.parent !== window){
     window.parent.postMessage({type:"policy-demo-report-open"}, window.location.origin);
@@ -1821,6 +2097,12 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     expandedPaths = new Set(["root"]);
     treeNodes = new Map();
     savedPathways = [];
+    comparisonPaths = [];
+    comparisonOpen = false;
+    comparisonResult = null;
+    comparisonLoading = false;
+    comparisonError = "";
+    comparisonRequestKey = "";
     treeNodes.set("root", rootNode());
     addChildren("root");
     focusedPath = "root";
@@ -1962,8 +2244,102 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
   });
   root.querySelectorAll("[data-close-report]").forEach(el=>el.onclick=(event)=>{
     if(event.target !== el && !el.matches("button")) return;
+    const completedNode = treeNodes.get(reportPath) || treeNodes.get(focusedPath) || focusedTreeNode();
+    const chatAvailable = completedNode.col === TREE_PHASES.length - 1 && phasePostsTree(completedNode.phase || {}).length > 0;
     closeTimedPanel("report");
     reportPath = "";
+    if(!TREE_BASELINE_MODE && frameworkGuideStep < 0 && !frameworkContextGuide){
+      if(chatAvailable && localStorage.getItem(frameworkContextGuideKey("chat")) !== "1"){
+        frameworkContextGuide = "chat";
+      }else if(localStorage.getItem(frameworkContextGuideKey("comparison")) !== "1"){
+        frameworkContextGuide = "comparison";
+      }
+    }
+    renderTree();
+  });
+  root.querySelectorAll("[data-comparison-drag]").forEach(node=>{
+    node.ondragstart=event=>{
+      const path = node.dataset.comparisonDrag;
+      if(!path || comparisonPaths.includes(path) || comparisonPaths.length >= 2){
+        event.preventDefault();
+        return;
+      }
+      event.dataTransfer.effectAllowed = "copy";
+      event.dataTransfer.setData("application/x-policy-path", path);
+      event.dataTransfer.setData("text/plain", path);
+      const preview = node.cloneNode(true);
+      preview.classList.add("comparison-drag-preview");
+      preview.removeAttribute("data-comparison-drag");
+      preview.removeAttribute("draggable");
+      preview.querySelectorAll("[id]").forEach(element=>element.removeAttribute("id"));
+      document.body.appendChild(preview);
+      event.dataTransfer.setDragImage(preview, Math.min(72, preview.offsetWidth / 2), 34);
+      node._comparisonDragPreview = preview;
+      node.classList.add("comparison-dragging");
+      logTreeEvent("comparison_path_drag_started", {path});
+    };
+    node.ondragend=()=>{
+      node.classList.remove("comparison-dragging");
+      node._comparisonDragPreview?.remove();
+      node._comparisonDragPreview = null;
+    };
+  });
+  root.querySelectorAll("[data-comparison-drop]").forEach(slot=>{
+    slot.ondragover=event=>{
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "copy";
+      slot.classList.add("drag-over");
+    };
+    slot.ondragleave=event=>{
+      if(!slot.contains(event.relatedTarget)) slot.classList.remove("drag-over");
+    };
+    slot.ondrop=event=>{
+      event.preventDefault();
+      slot.classList.remove("drag-over");
+      document.querySelectorAll(".comparison-drag-preview").forEach(preview=>preview.remove());
+      const path = event.dataTransfer.getData("application/x-policy-path") || event.dataTransfer.getData("text/plain");
+      const node = treeNodes.get(path);
+      if(!path || !node || node.col !== TREE_PHASES.length - 1 || comparisonPaths.includes(path) || comparisonPaths.length >= 2) return;
+      comparisonPaths = [...comparisonPaths, path];
+      comparisonResult = null;
+      comparisonError = "";
+      comparisonRequestKey = "";
+      logTreeEvent("comparison_path_added", {
+        path,
+        source:"drag_and_drop",
+        slot:comparisonPaths.length === 1 ? "A" : "B",
+        transitions:pathStancesTree(path),
+      });
+      renderTree();
+    };
+  });
+  root.querySelectorAll("[data-remove-comparison]").forEach(btn=>btn.onclick=()=>{
+    const path = btn.dataset.removeComparison;
+    comparisonPaths = comparisonPaths.filter(item=>item !== path);
+    comparisonOpen = false;
+    comparisonResult = null;
+    comparisonLoading = false;
+    comparisonError = "";
+    comparisonRequestKey = "";
+    logTreeEvent("comparison_path_removed", {path, remaining_paths:[...comparisonPaths]});
+    renderTree();
+  });
+  const openComparison = root.querySelector("[data-open-comparison]");
+  if(openComparison) openComparison.onclick=()=>{
+    if(comparisonPaths.length !== 2) return;
+    comparisonOpen = true;
+    logTreeEvent("pathway_comparison_opened", {
+      paths:[...comparisonPaths],
+      transitions:comparisonPaths.map(path=>pathStancesTree(path)),
+    });
+    renderTree();
+    loadComparisonSynthesisTree();
+  };
+  root.querySelectorAll("[data-retry-comparison]").forEach(btn=>btn.onclick=()=>loadComparisonSynthesisTree(true));
+  root.querySelectorAll("[data-close-comparison]").forEach(el=>el.onclick=(event)=>{
+    if(event.target !== el && !el.matches("button")) return;
+    comparisonOpen = false;
+    logTreeEvent("pathway_comparison_closed", {paths:[...comparisonPaths]});
     renderTree();
   });
   root.querySelectorAll("[data-close-path-chat]").forEach(el=>el.onclick=(event)=>{
@@ -2180,6 +2556,7 @@ fetch(`/api/pathway/${encodeURIComponent(treeCountry)}/${encodeURIComponent(tree
 window.addEventListener("pagehide", ()=>{
   PolicyStudy.exitEvent("policy_page_exit", {
     completed_paths:[...completedPathSet],
+    comparison_paths:[...comparisonPaths],
     visible_node_count:treeNodes.size,
     focused_path:focusedPath,
     discussion_open:discussionOpen,

@@ -16,22 +16,18 @@ function stepMarkup(items){
 function renderTask(condition){
   const framework = condition === "framework";
   document.body.dataset.condition = condition;
+  document.getElementById("taskModeHeader").hidden = framework;
+  document.getElementById("taskTitle").hidden = !framework;
   document.getElementById("taskModeLabel").textContent = framework ? "Exploring policy pathways" : "Reviewing a policy development";
-  document.getElementById("taskModeTitle").textContent = framework ? "Explore and compare at least two complete policy pathways" : "Examine the complete pathway presented";
+  document.getElementById("taskModeTitle").textContent = framework ? "Explore multiple pathways and compare their results" : "Examine the complete pathway presented";
   const taskTermCopy = document.getElementById("taskTermCopy");
-  taskTermCopy.hidden = !framework;
-  taskTermCopy.textContent = framework
-    ? "At each phase, select one of three branch conditions: Enabling, Baseline, or Constraining. The full sequence of selections from Inputs through Impact forms one complete policy pathway."
-    : "";
-  document.getElementById("taskFeatureCopy").textContent = framework
-    ? "After completing a policy pathway through Impact, its Final Report becomes available. You can then ask a stakeholder persona questions; the persona responds from the perspective represented in that completed policy pathway."
-    : "After reviewing the presented pathway through Impact, its Final Report becomes available. You can then ask a stakeholder persona questions; the persona responds from the perspective represented in that pathway.";
+  taskTermCopy.hidden = true;
+  taskTermCopy.textContent = "";
+  document.getElementById("taskFrameworkGuide").hidden = !framework;
   const items = framework ? [
-    {title:"Complete two distinct policy pathways", detail:"At each phase, select a branch condition and continue through Impact. Complete this process twice using different combinations of branch conditions."},
-    {title:"Review stakeholder discussion", detail:"Each node includes a stakeholder discussion. Open the discussion for at least one node to examine the perspectives represented there."},
-    {title:"Read both Final Reports", detail:"Review the Final Report for each of the two policy pathways you complete."},
-    {title:"Ask a stakeholder a question", detail:"On a completed policy pathway, select a stakeholder persona whose responses reflect the position represented by that policy pathway, and ask at least one question."},
-    {title:"Compare before continuing", detail:"Consider how the policy pathways differ in their development, constraints, and outcomes before finishing the case."},
+    {title:"Choose how the policy develops", detail:"At each phase, select an Enabling, Baseline, or Constraining development condition."},
+    {title:"Build a pathway to Impact", detail:"Continue the selected development through Impact and review its projected effects."},
+    {title:"Explore different pathways", detail:"Repeat the process to examine and compare how the policy unfolds under different conditions."},
   ] : [
     {title:"Review the complete pathway", detail:"Follow the presented analysis from Inputs through the Impact phase."},
     {title:"Review stakeholder discussion", detail:"Each node includes a stakeholder discussion. Open the discussion for at least one node to examine the perspectives represented there."},

@@ -37,7 +37,11 @@ function policyLink(policyKey, policyIndex){
   query.set("policyIndex", String(policyIndex));
   if(!introduced) query.set("stage", "policy_intro");
   if(!introduced) return `survey.html?${query.toString()}`;
-  return `toc_intro.html?${query.toString()}`;
+  const condition = String(trial?.condition || "baseline").toLowerCase();
+  const framework = condition === "framework" || condition === "full";
+  const guideKey = framework ? `policy-framework-guide:${participantId}` : `policy-baseline-guide:${participantId}`;
+  if(localStorage.getItem(guideKey) !== "1") query.set("guide","1");
+  return `${framework ? "pathway_tree.html" : "baseline_report.html"}?${query.toString()}`;
 }
 function renderDashboard(policies){
   const keys = assignedKeys(policies);

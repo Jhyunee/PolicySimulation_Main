@@ -49,6 +49,21 @@ function previewHref(stageName, nextPolicyKey="", nextPolicyIndex=0){
   return `survey.html?${query.toString()}`;
 }
 
+function policyAnalysisHref(nextPolicyKey, nextPolicyIndex){
+  const query = new URLSearchParams({policy:nextPolicyKey, policyIndex:String(nextPolicyIndex)});
+  if(previewMode){
+    query.set("previewStudy","1");
+    if(previewVariantId) query.set("variant",previewVariantId);
+  }else{
+    query.set("participant",participantId);
+  }
+  const framework = isFramework();
+  const guideOwner = previewMode ? (previewVariantId || "preview") : participantId;
+  const guideKey = framework ? `policy-framework-guide:${guideOwner}` : `policy-baseline-guide:${guideOwner}`;
+  if(localStorage.getItem(guideKey) !== "1") query.set("guide","1");
+  return `${framework ? "pathway_tree.html" : "baseline_report.html"}?${query.toString()}`;
+}
+
 function finishPreview(){
   document.querySelector(".survey-hero").innerHTML = '<span>Preview complete</span><h1>Interface review finished.</h1><p>No responses or interaction data were recorded.</p>';
   document.getElementById("studySurvey").innerHTML = '<section class="survey-section survey-complete"><i data-lucide="check-circle-2"></i><h2>Preview complete</h2><p>You may return to the study start page and begin another review.</p><a class="link-btn" href="study.html">Return to study home</a></section>';
@@ -474,11 +489,11 @@ document.getElementById("studySurvey").addEventListener("submit", async event=>{
   }
   if(previewMode){
     if(stage === "pre_study"){
-      location.href = previewHref("policy_intro",previewParticipant.assigned_policies[0],0);
-    }else if(stage === "policy_pre"){
-      const query = new URLSearchParams({previewStudy:"1",policy:policyKey,policyIndex:String(policyIndex)});
+      const query = new URLSearchParams({previewStudy:"1",stage:"study_intro"});
       if(previewVariantId) query.set("variant",previewVariantId);
       location.href = `toc_intro.html?${query.toString()}`;
+    }else if(stage === "policy_pre"){
+      location.href = policyAnalysisHref(policyKey,policyIndex);
     }else if(stage === "policy"){
       location.href = policyIndex === 0
         ? previewHref("policy_intro",previewParticipant.assigned_policies[1],1)
@@ -537,9 +552,9 @@ document.getElementById("studySurvey").addEventListener("submit", async event=>{
       screening_status:saveResult.status,
     }, PolicyStudy.pageElapsed());
     if(stage === "pre_study"){
-      location.href = `task_instructions.html?participant=${encodeURIComponent(participantId)}`;
+      location.href = `toc_intro.html?stage=study_intro&participant=${encodeURIComponent(participantId)}`;
     }else if(stage === "policy_pre"){
-      location.href = `toc_intro.html?policy=${encodeURIComponent(policyKey)}&participant=${encodeURIComponent(participantId)}&policyIndex=${policyIndex}`;
+      location.href = policyAnalysisHref(policyKey,policyIndex);
     }else if(stage === "policy"){
       const participant = await fetch(`/api/study/participants/${encodeURIComponent(participantId)}`).then(item=>item.json());
       if(participant.completed_policies.length >= participant.assigned_policies.length){

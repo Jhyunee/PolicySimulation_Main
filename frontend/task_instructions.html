@@ -14,43 +14,32 @@ if(location.protocol === "file:"){
   location.replace(`http://127.0.0.1:8001/task_instructions.html?${params.toString()}${location.hash}`);
 }
 </script>
-<link rel="stylesheet" href="styles.css?v=task-instructions-terms-20260816a" />
+<link rel="stylesheet" href="styles.css?v=study-card-alignment-20260820a" />
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
 <body class="task-instructions-page">
 <main class="task-instructions-shell">
-  <section class="task-instructions-hero">
-    <span>Before the policy cases</span>
-    <h1 id="taskTitle">Your policy review task</h1>
-    <p>Imagine that you are conducting an early-stage review of an unfamiliar policy. Use the interface to examine how the policy may unfold and explore the issues and stakeholder perspectives that you consider relevant.</p>
-  </section>
-
-  <section class="task-instructions-layout">
-    <article class="task-instructions-card task-primary-card">
-      <header>
+  <section class="task-instructions-layout task-instructions-layout-unified">
+    <article class="task-instructions-card task-primary-card task-unified-card">
+      <header id="taskModeHeader">
         <span id="taskModeLabel">How to complete each case</span>
         <h2 id="taskModeTitle">Review the policy analysis</h2>
       </header>
       <p id="taskTermCopy" class="task-term-copy" hidden></p>
+      <h1 id="taskTitle" class="task-card-title" hidden>Your Policy Exploration Task</h1>
       <ol id="taskSteps" class="task-instructions-list"></ol>
+      <figure id="taskFrameworkGuide" class="task-framework-guide" hidden>
+        <img src="assets/policy-pathway-guide.png?v=20260820c" alt="Example showing three development conditions at each phase and a selected policy pathway continuing from Inputs to Impact" />
+        <figcaption>
+          <p><b>A branch</b> is one development condition selected at a phase. <b>A pathway</b> is the complete sequence of selections from Inputs to Impact.</p>
+          <div class="task-condition-legend" aria-label="Development condition definitions">
+            <span class="enabling"><b>Enabling</b> Positive development and recovery from bottlenecks</span>
+            <span class="baseline"><b>Baseline</b> Continuation under typical conditions</span>
+            <span class="constraining"><b>Constraining</b> Intensified bottlenecks and potential failure to meet policy goals</span>
+          </div>
+        </figcaption>
+      </figure>
     </article>
-
-    <aside class="task-instructions-card task-feature-card">
-      <span>Available after reaching Impact</span>
-      <h2>Final Report and stakeholder conversation</h2>
-      <p id="taskFeatureCopy"></p>
-      <div class="task-feature-flow" aria-label="Interaction sequence">
-        <b><i data-lucide="route"></i> Complete policy pathway</b>
-        <i data-lucide="arrow-right"></i>
-        <b><i data-lucide="file-text"></i> Final Report</b>
-        <i data-lucide="arrow-right"></i>
-        <b><i data-lucide="messages-square"></i> Persona chat</b>
-      </div>
-    </aside>
-    <div class="task-chat-notice">
-      <i data-lucide="info"></i>
-      <p><strong>Chat use</strong>You may ask up to five questions in each policy case. Your questions and the persona responses will be recorded for research analysis. Please use the chat only for this study task.</p>
-    </div>
   </section>
 
   <section class="task-instructions-footer">
@@ -64,6 +53,6 @@ if(location.protocol === "file:"){
 </main>
 <script src="study_progress.js?v=task-instructions-20260813a"></script>
 <script src="study_logger.js?v=task-instructions-20260813a"></script>
-<script src="task_instructions.js?v=prolific-screening-20260817a"></script>
+<script src="task_instructions.js?v=visual-pathway-guide-20260820c"></script>
 </body>
 </html>
