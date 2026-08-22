@@ -25,7 +25,8 @@
 
   function inferredStage(){
     if(path === "study.html" || path === "") return 0;
-    if(path === "task_instructions.html") return 0;
+    if(path === "task_instructions.html" || path === "feature_instructions.html") return 0;
+    if(path === "pathway_tree.html" && params.get("practice") === "1") return 0;
     if(path === "survey.html"){
       const stage = params.get("stage");
       if(stage === "pre") return 1;

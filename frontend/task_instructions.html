@@ -11,10 +11,10 @@ if(location.protocol === "file:"){
     params.set("previewStudy", "1");
     params.set("variant", "public_health--framework--ab");
   }
-  location.replace(`http://127.0.0.1:8001/task_instructions.html?${params.toString()}${location.hash}`);
+  location.replace(`http://127.0.0.1:8004/task_instructions.html?${params.toString()}${location.hash}`);
 }
 </script>
-<link rel="stylesheet" href="styles.css?v=framework-task-notes-20260820a" />
+<link rel="stylesheet" href="styles.css?v=framework-feature-guide-20260822h" />
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
 <body class="task-instructions-page">
@@ -47,12 +47,12 @@ if(location.protocol === "file:"){
       <span>About the information shown</span>
       <p>The interface presents policy-analysis results generated through an AI-based simulation. Please review the information as you normally would when evaluating an unfamiliar policy-analysis tool.</p>
     </div>
-    <button id="continueTask" type="button">Continue to assigned policies <i data-lucide="arrow-right"></i></button>
+    <button id="continueTask" type="button">Continue <i data-lucide="arrow-right"></i></button>
   </section>
   <p id="taskStatus" class="task-instructions-status" aria-live="polite"></p>
 </main>
 <script src="study_progress.js?v=task-instructions-20260813a"></script>
-<script src="study_logger.js?v=task-instructions-20260813a"></script>
-<script src="task_instructions.js?v=framework-task-notes-20260820a"></script>
+<script src="study_logger.js?v=admin-preview-20260822a"></script>
+<script src="task_instructions.js?v=framework-feature-guide-20260822b"></script>
 </body>
 </html>

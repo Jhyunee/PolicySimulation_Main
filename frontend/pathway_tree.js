@@ -221,6 +221,7 @@ let pathwayChatPersona = "";
 let pathwayChatTurns = [];
 let newlyAddedPaths = new Set();
 let completedPathSet = new Set();
+let completionNotice = "";
 let discussionOpenedAt = null;
 let reportOpenedAt = null;
 let chatOpenedAt = null;
@@ -229,7 +230,9 @@ let activeSegmentStartedAt = document.hidden ? null : performance.now();
 const treeQuery = new URLSearchParams(window.location.search);
 const treePreviewMode = treeQuery.get("previewStudy") === "1";
 const treeDemoMode = treeQuery.get("demo") === "1";
-let currentPolicyKey = treeQuery.get("policy") || "usa/chi_nsa";
+const treePracticeMode = treeQuery.get("practice") === "1";
+const PATHWAY_COMPARISON_ENABLED = false;
+let currentPolicyKey = treePracticeMode ? "usa/chi_ctc" : (treeQuery.get("policy") || "usa/chi_nsa");
 const currentPolicyIndex = Math.max(0, Math.min(1, Number(treeQuery.get("policyIndex") || 0)));
 const frameworkGuideStorageKey = `policy-framework-guide:${PolicyStudy.participantId || treeQuery.get("variant") || "preview"}`;
 const baselineGuideStorageKey = `policy-baseline-guide:${PolicyStudy.participantId || treeQuery.get("variant") || "preview"}`;
@@ -265,6 +268,102 @@ let currentPolicyMeta = {
   title:"No Surprises Act Pathway Explorer",
   description:"Explore alternative implementation pathways.",
 };
+
+const TREE_PRACTICE_ROUTE = [
+  "root/baseline",
+  "root/baseline/constraining",
+  "root/baseline/constraining/enabling",
+  "root/baseline/constraining/enabling/baseline",
+];
+let treePracticeStep = 0;
+document.body.classList.toggle("tree-practice-mode", treePracticeMode);
+
+const TREE_PRACTICE_GUIDES = [
+  {
+    target:".tree-phase-inspector",
+    title:"Begin with the policy inputs",
+    copy:"The Input card starts the pathway. The panel on the left summarizes the selected phase, its role, conditions, and available values.",
+    action:"Start practice",
+  },
+  {
+    target:'.tree-node[data-path="root/baseline"]',
+    title:"Select the next branch",
+    copy:"Select the highlighted branch to continue the practice pathway.",
+  },
+  {
+    target:".node-discussion-button",
+    title:"Open the stakeholder discussion",
+    copy:"Each explored phase can include stakeholder reasoning. Open the highlighted discussion to inspect how the selected development is interpreted.",
+  },
+  {
+    target:'.tree-discussion-modal [data-close-discussion="1"]',
+    title:"Review the discussion, then close it",
+    copy:"This is the same stakeholder discussion used in the study. Review the perspectives, then select Close to continue the practice pathway.",
+  },
+  {
+    target:'.tree-node[data-path="root/baseline/constraining"]',
+    title:"Select the next branch",
+    copy:"Select the highlighted branch to continue the practice pathway.",
+  },
+  {
+    target:'.tree-node[data-path="root/baseline/constraining/enabling"]',
+    title:"Select the next branch",
+    copy:"Select the highlighted branch to continue the practice pathway.",
+  },
+  {
+    target:'.tree-node[data-path="root/baseline/constraining/enabling/baseline"]',
+    title:"Complete the pathway to Impact",
+    copy:"Select the highlighted Baseline Impact card to complete this illustrative pathway and open its Final Report.",
+  },
+  {
+    target:'.report-document-actions [data-close-report="1"]',
+    title:"Review the Final Report",
+    copy:"The report brings the selected phases together and summarizes their projected outcomes, mechanisms, constraints, and uncertainty. Review it, then close the report.",
+  },
+  {
+    target:".practice-completion-link",
+    title:"Practice complete",
+    copy:"You have used the same pathway interface, stakeholder discussion, and Final Report that appear in the study. Continue to your first policy case.",
+  },
+];
+
+function practiceExpectedPathTree(){
+  return ({1:TREE_PRACTICE_ROUTE[0],4:TREE_PRACTICE_ROUTE[1],5:TREE_PRACTICE_ROUTE[2],6:TREE_PRACTICE_ROUTE[3]})[treePracticeStep] || "";
+}
+
+async function practiceFirstPolicyHrefTree(){
+  const variantId = treeQuery.get("variant") || "";
+  const participantId = treeQuery.get("participant") || PolicyStudy.participantId || "";
+  let firstPolicy = "";
+
+  if(treePreviewMode){
+    if(!variantId) throw new Error("A study variant is required for preview.");
+    const response = await fetch(`/api/study/variants/${encodeURIComponent(variantId)}`);
+    if(!response.ok) throw new Error(`Variant HTTP ${response.status}`);
+    const variant = await response.json();
+    firstPolicy = variant.policy_keys?.[0] || "";
+  }else{
+    if(!participantId) throw new Error("A participant session is required.");
+    const response = await fetch(`/api/study/participants/${encodeURIComponent(participantId)}`);
+    if(!response.ok) throw new Error(`Participant HTTP ${response.status}`);
+    const participant = await response.json();
+    firstPolicy = participant.assigned_policies?.[0] || "";
+  }
+
+  if(!firstPolicy) throw new Error("The first assigned policy is unavailable.");
+  const query = new URLSearchParams({
+    stage:"policy_intro",
+    policy:firstPolicy,
+    policyIndex:"0",
+  });
+  if(treePreviewMode){
+    query.set("previewStudy", "1");
+    query.set("variant", variantId);
+  }else{
+    query.set("participant", participantId);
+  }
+  return `survey.html?${query.toString()}`;
+}
 
 const TREE_ROLE_COLORS = ["#9FA1FF", "#B5BAFF", "#8FCFDD", "#7DB7F0", "#6F6B78"];
 const NSA_AVATARS = {
@@ -324,6 +423,69 @@ const KPASS_CONSTRAINT_PATTERNS = [
   ["Regional coverage", /\b(local government|region|지역|지자체)\b.{0,45}\b(gap|uneven|capacity|budget|격차|불균형|재정)/i],
   ["Digital access", /\b(app|website|digital|앱|누리집|디지털)\b.{0,45}\b(access|barrier|literacy|접근|장벽)/i],
 ];
+
+function practicePhaseSummaryTree(phaseName, stance){
+  const summaries = {
+    Inputs:"The example policy begins with an implementation budget, trained staff, and an outreach plan. These inputs define the capacity available for delivery.",
+    Activities:{
+      enabling:"Coordination and early outreach strengthen implementation and reduce access barriers.",
+      baseline:"Implementation proceeds under expected staffing, participation, and administrative conditions.",
+      constraining:"Staffing delays and fragmented coordination weaken implementation capacity.",
+    },
+    Outputs:{
+      enabling:"Broad service delivery increases the number of eligible households reached.",
+      baseline:"Service delivery reaches the expected share of eligible households.",
+      constraining:"Processing delays reduce service delivery and leave eligible households unreached.",
+    },
+    Outcomes:{
+      enabling:"Targeted corrective outreach helps participation recover after earlier delivery delays.",
+      baseline:"Near-term outcomes improve at the expected rate under ordinary participation conditions.",
+      constraining:"Uneven access limits near-term improvements among harder-to-reach households.",
+    },
+    Impact:{
+      enabling:"Expanded access supports broader and more durable long-term gains.",
+      baseline:"Benefits persist over time, although they remain below the policy's full potential.",
+      constraining:"Persistent access barriers limit durable change and widen differences in who benefits.",
+    },
+  };
+  const value = summaries[phaseName];
+  return typeof value === "string" ? value : (value?.[stance] || value?.baseline || "");
+}
+
+function preparePracticePrecomputedTree(source){
+  const data = JSON.parse(JSON.stringify(source));
+  data.policy = {
+    ...data.policy,
+    label:"Illustrative Family Support Program",
+    short_label:"Practice case",
+    title:"Practice Policy Pathway Explorer",
+    description:"Practice how implementation conditions shape an illustrative policy from Inputs to Impact.",
+  };
+  (data.nodes || []).forEach(node=>{
+    const phase = node.phase || {};
+    const stance = node.transition_mode || "baseline";
+    const summary = practicePhaseSummaryTree(phase.phase, stance);
+    phase.phase_summary = summary;
+    phase.panel_summary = summary;
+    phase.panel_key_constraints = phase.phase === "Inputs"
+      ? ["Implementation capacity"]
+      : stance === "enabling"
+        ? ["Corrective outreach"]
+        : stance === "constraining"
+          ? ["Processing capacity"]
+          : ["Expected participation"];
+    phase.grounded_evidence = [];
+    phase.grounded_policy_parameters = [];
+    if(phase.phase === "Inputs") phase.state_type = "practice_example";
+    (phase.posts || []).forEach((post,index)=>{
+      const role = data.policy.roles?.find(item=>item.key === post.stakeholder_type)?.label || "stakeholder";
+      const narrative = `As a ${role}, I interpret this ${String(phase.phase || "phase").toLowerCase()} development through its implementation capacity and access conditions. ${summary} The projected values are illustrative and should be read as conditional results rather than definitive forecasts.`;
+      post.narrative = narrative;
+      post.rationale_summary = {narrative_rationale:narrative};
+    });
+  });
+  return data;
+}
 
 function configurePolicyTree(precomputed){
   currentPolicyMeta = precomputed.policy || currentPolicyMeta;
@@ -386,12 +548,28 @@ function markPolicyCompleteTree(){
   // The standalone research demo is a free exploration surface, not a study task.
   if(treeDemoMode) return true;
   if(treePreviewMode) return true;
-  const answeredChats = pathwayChatTurns.filter(turn=>!turn.answers.some(answer=>answer.pending || answer.error));
+  const answeredChats = pathwayChatTurns.filter(turn=>turn.answers.some(answer=>!answer.pending && !answer.error && answer.answer));
+  const pendingChats = pathwayChatTurns.some(turn=>turn.answers.some(answer=>answer.pending));
+  const failedChats = pathwayChatTurns.some(turn=>turn.answers.some(answer=>answer.error));
+  const blockCompletion = (reason, message)=>{
+    completionNotice = message;
+    logTreeEvent("policy_completion_blocked", {
+      reason,
+      completed_paths:[...completedPathSet],
+      completed_path_count:completedPathSet.size,
+      answered_chat_count:answeredChats.length,
+      pending_chat:pendingChats,
+      failed_chat:failedChats,
+    });
+    renderTree();
+    return false;
+  };
   // Baseline presents one fixed path, but keeps the common stakeholder-chat task.
   if(TREE_BASELINE_MODE){
     if(!answeredChats.length){
-      alert("Please ask at least one stakeholder persona a question before continuing.");
-      return false;
+      if(pendingChats) return blockCompletion("chat_pending", "Please wait until the stakeholder response is complete before continuing.");
+      if(failedChats) return blockCompletion("chat_failed", "The stakeholder response could not be generated. Please retry the question before continuing.");
+      return blockCompletion("chat_required", "Please ask at least one stakeholder persona a question before continuing.");
     }
     PolicyStudy.exitEvent("policy_exploration_finished", {
       completed_paths:[...completedPathSet],
@@ -403,13 +581,14 @@ function markPolicyCompleteTree(){
     return true;
   }
   if(completedPathSet.size < 2){
-    alert("Please explore at least two different complete pathways through the Impact phase before continuing.");
-    return false;
+    return blockCompletion("paths_required", `Please explore at least two different complete pathways through the Impact phase before continuing. ${completedPathSet.size} of 2 pathways completed.`);
   }
   if(!answeredChats.length){
-    alert("Please open a completed pathway and ask at least one stakeholder persona a question before continuing.");
-    return false;
+    if(pendingChats) return blockCompletion("chat_pending", "Please wait until the stakeholder response is complete before continuing.");
+    if(failedChats) return blockCompletion("chat_failed", "The stakeholder response could not be generated. Please retry the question before continuing.");
+    return blockCompletion("chat_required", "Please open a completed pathway and ask at least one stakeholder persona a question before continuing.");
   }
+  completionNotice = "";
   PolicyStudy.exitEvent("policy_exploration_finished", {
     completed_paths:[...completedPathSet],
     completed_path_count:completedPathSet.size,
@@ -1130,6 +1309,7 @@ function comparisonAnalysisTree(nodesA, nodesB){
     <footer class="comparison-ai-note"><p>Interpretive summary based on the selected pathway reports. Quantitative differences are calculated directly from the simulation outputs.</p></footer>`;
 }
 function renderComparisonModalTree(){
+  if(!PATHWAY_COMPARISON_ENABLED) return "";
   if(!comparisonOpen || comparisonPaths.length !== 2) return "";
   const [pathA, pathB] = comparisonPaths;
   const nodesA = pathNodesTree(pathA);
@@ -1154,6 +1334,7 @@ function renderComparisonModalTree(){
   </div>`;
 }
 function renderComparisonDockTree(){
+  if(!PATHWAY_COMPARISON_ENABLED) return "";
   if(TREE_BASELINE_MODE || treeDemoMode) return "";
   const slots = [0,1].map(index=>{
     const path = comparisonPaths[index];
@@ -1436,7 +1617,7 @@ function renderSelectedSummaryTree(){
   </section>`;
 }
 function renderPhaseInspector(nodes, layout){
-  return `<aside class="tree-phase-inspector" aria-label="Selected phase details">
+  return `<aside class="tree-phase-inspector ${treePracticeMode && treePracticeStep === 0 ? "practice-target" : ""}" aria-label="Selected phase details">
     ${renderSelectedSummaryTree()}
   </aside>`;
 }
@@ -1506,11 +1687,15 @@ function renderTreeNode(node, pos){
   const hideMetrics = hideNodeMetricsTree(phase);
   const isImpact = phase.phase === "Impact";
   const nodeWidth = nodeWidthTree(node);
-  const comparisonDrag = !TREE_BASELINE_MODE && isImpact
+  const practiceExpected = practiceExpectedPathTree();
+  const practiceTarget = treePracticeMode && (treePracticeStep === 0 ? node.path === "root" : node.path === practiceExpected);
+  const practiceLocked = treePracticeMode && !practiceTarget && node.path !== practiceExpected;
+  const practiceDisabled = practiceLocked || (treePracticeMode && treePracticeStep === 0 && node.path === "root");
+  const comparisonDrag = PATHWAY_COMPARISON_ENABLED && !TREE_BASELINE_MODE && isImpact
     ? ` draggable="true" data-comparison-drag="${node.path}" title="Drag this completed Impact card to the comparison area"`
     : "";
-  return `<button class="tree-node ${hideMetrics||isImpact?"process-node":""} ${phase.phase==="Outcomes"?"outcome-node":""} ${isImpact?"impact-node":""} ${expanded?"expanded":""} ${isSelectedPath?"selected-path":""} ${isFocused?"focused":""} ${isNew?"is-new":""}"
-    data-path="${node.path}" data-phase-index="${node.col}"${comparisonDrag} style="--x:${pos.x}px;--y:${pos.y}px;--lane:${tone.color};--node-width:${nodeWidth}px;">
+  return `<button class="tree-node ${hideMetrics||isImpact?"process-node":""} ${phase.phase==="Outcomes"?"outcome-node":""} ${isImpact?"impact-node":""} ${expanded?"expanded":""} ${isSelectedPath?"selected-path":""} ${isFocused?"focused":""} ${isNew?"is-new":""} ${practiceTarget?"practice-target":""} ${practiceLocked?"practice-locked":""}"
+    data-path="${node.path}" data-phase-index="${node.col}"${comparisonDrag}${practiceDisabled?' disabled aria-disabled="true"':""} style="--x:${pos.x}px;--y:${pos.y}px;--lane:${tone.color};--node-width:${nodeWidth}px;">
     <span class="tree-node-head">
       <em>${stanceShortTree(node)}</em>
       <i>${node.col+1}</i>
@@ -1605,12 +1790,15 @@ function renderDiscussionButton(positions){
   const postCount = phasePostsTree(node.phase || {}).length;
   if(!pos || !postCount || node.col === 0) return "";
   const w = nodeWidthTree(node);
-  return `<button class="node-discussion-button" data-open-discussion="1" type="button"
+  const practiceTarget = treePracticeMode && treePracticeStep === 2;
+  const practiceLocked = treePracticeMode && !practiceTarget;
+  return `<button class="node-discussion-button ${practiceTarget?"practice-target":""} ${practiceLocked?"practice-locked":""}" data-open-discussion="1" type="button"${practiceLocked?' disabled aria-disabled="true"':""}
     style="--x:${pos.x + w - 40}px;--y:${pos.y - 65}px;">
     <span>Stakeholder</span><span>discussion</span>
   </button>`;
 }
 function renderPathwayChatButton(positions){
+  if(treePracticeMode) return "";
   const node = TREE_BASELINE_MODE
     ? [...treeNodes.values()].find(n=>n.col === TREE_PHASES.length - 1)
     : (focusedNode || focusedTreeNode());
@@ -1854,12 +2042,6 @@ const FRAMEWORK_CONTEXT_GUIDES = {
     title:"Review the completed pathway",
     copy:"This report summarizes the completed pathway's projected results, bottleneck, causal mechanism, and uncertainties. Review it, then close the report to continue.",
   },
-  comparison:{
-    target:".tree-comparison-dock",
-    title:"Drag and drop completed Impact cards",
-    emphasis:"DRAG AND DROP",
-    copy:"Move a completed Impact card into Path A or B. Add two pathways, then select Compare Pathways.",
-  },
   chat:{
     target:".pathway-chat-button",
     title:"Question a stakeholder about this route",
@@ -1893,6 +2075,14 @@ function activeGuideStorageKey(){
 }
 
 function activeFrameworkGuide(){
+  if(treePracticeMode){
+    const step = TREE_PRACTICE_GUIDES[treePracticeStep];
+    return step ? {
+      ...step,
+      kind:"practice",
+      label:`Practice ${treePracticeStep + 1} of ${TREE_PRACTICE_GUIDES.length}`,
+    } : null;
+  }
   const steps = activeGuideSteps();
   if(frameworkGuideStep >= 0){
     return {
@@ -1919,7 +2109,7 @@ function renderFrameworkGuide(){
       ${step.emphasis ? `<strong class="framework-guide-emphasis">${escTree(step.emphasis)}</strong>` : ""}
       <p>${escTree(step.copy)}</p>
       ${step.details ? `<dl class="framework-guide-conditions">${step.details.map(([label,copy])=>`<div><dt>${escTree(label)}</dt><dd>${escTree(copy)}</dd></div>`).join("")}</dl>` : ""}
-      <footer>${step.kind === "initial" ? '<button type="button" data-guide-skip="1">Skip guide</button>' : '<span></span>'}<button type="button" data-guide-next="1">${escTree(step.action)} <i data-lucide="arrow-right"></i></button></footer>
+      <footer>${step.kind === "initial" ? '<button type="button" data-guide-skip="1">Skip guide</button>' : '<span></span>'}${step.action ? `<button type="button" data-guide-next="1">${escTree(step.action)} <i data-lucide="arrow-right"></i></button>` : '<span class="framework-guide-use-target">Use the highlighted control</span>'}</footer>
     </article>
   </div>`;
 }
@@ -1973,9 +2163,6 @@ function closeFrameworkGuide(completed=false){
     localStorage.setItem(frameworkContextGuideKey(completedContext), "1");
     logTreeEvent("framework_feature_guide_completed", {feature:completedContext});
     frameworkContextGuide = "";
-    if(completedContext === "chat" && !TREE_BASELINE_MODE && localStorage.getItem(frameworkContextGuideKey("comparison")) !== "1"){
-      frameworkContextGuide = "comparison";
-    }
     renderTree();
     return;
   }
@@ -2023,11 +2210,20 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
   const workspaceBody = TREE_BASELINE_MODE
     ? `${canvasSection}${renderPhaseInspector(nodes, layout)}`
     : `${renderPhaseInspector(nodes, layout)}${canvasColumn}`;
-  const studyToolbar = treeDemoMode ? "" : `<header class="baseline-report-toolbar tree-study-toolbar"><a href="${dashboardHrefTree(false)}"><i data-lucide="layout-dashboard"></i><span>Policies</span></a><span>Policy ${currentPolicyIndex + 1} of 2</span></header>`;
-  const studyCompletion = treeDemoMode ? "" : `<section class="baseline-report-complete tree-exploration-complete"><a class="finish-link" data-finish-policy="1" href="${policySurveyHrefTree()}">${TREE_BASELINE_MODE ? "Finish Reviewing" : "Finish Exploring"} <i data-lucide="arrow-right"></i></a></section>`;
+  const studyToolbar = treeDemoMode ? "" : treePracticeMode
+    ? `<header class="baseline-report-toolbar tree-study-toolbar tree-practice-toolbar"><span><i data-lucide="mouse-pointer-click"></i> Interactive practice</span><b>Illustrative example data</b></header>`
+    : `<header class="baseline-report-toolbar tree-study-toolbar"><a href="${dashboardHrefTree(false)}"><i data-lucide="layout-dashboard"></i><span>Policies</span></a><span>Policy ${currentPolicyIndex + 1} of 2</span></header>`;
+  const studyCompletion = treeDemoMode ? "" : treePracticeMode
+    ? (treePracticeStep === 8 ? `<section class="baseline-report-complete tree-exploration-complete practice-completion"><a class="finish-link practice-completion-link" data-finish-practice="1" href="#">Continue to first policy <i data-lucide="arrow-right"></i></a></section>` : "")
+    : `<section class="baseline-report-complete tree-exploration-complete"><a class="finish-link" data-finish-policy="1" href="${policySurveyHrefTree()}">${TREE_BASELINE_MODE ? "Finish Reviewing" : "Finish Exploring"} <i data-lucide="arrow-right"></i></a></section>`;
   const afterWorkspace = studyCompletion && !TREE_BASELINE_MODE
     ? `<div class="tree-after-workspace">${studyCompletion}</div>`
     : studyCompletion;
+  const completionNoticeMarkup = completionNotice ? `<aside class="tree-completion-notice" role="status" aria-live="polite">
+    <i data-lucide="circle-alert"></i>
+    <p>${escTree(completionNotice)}</p>
+    <button data-dismiss-completion-notice="1" type="button" aria-label="Dismiss message"><i data-lucide="x"></i></button>
+  </aside>` : "";
   root.innerHTML = `${studyToolbar}
   <section class="tree-workspace">
     ${workspaceBody}
@@ -2037,6 +2233,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     ${renderPathwayChatModal()}
   </section>
   ${afterWorkspace}
+  ${completionNoticeMarkup}
   ${renderFrameworkGuide()}`;
   if(reportPath && window.parent !== window){
     window.parent.postMessage({type:"policy-demo-report-open"}, window.location.origin);
@@ -2046,6 +2243,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     if(pathwayChatOpen) closeTimedPanel("chat");
     if(reportPath) closeTimedPanel("report");
     const path = btn.dataset.path;
+    if(treePracticeMode && path !== practiceExpectedPathTree()) return;
     const anchor = captureTreeAnchor(path);
     const node = nodeFromPath(path);
     focusedNode = treeNodes.get(path) || node;
@@ -2077,7 +2275,13 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
       reportOpenedAt = performance.now();
       logTreeEvent("report_opened", {path});
     }
-    if(frameworkGuideStep < 0 && !frameworkContextGuide){
+    if(treePracticeMode){
+      if(treePracticeStep === 1) treePracticeStep = 2;
+      else if(treePracticeStep === 4) treePracticeStep = 5;
+      else if(treePracticeStep === 5) treePracticeStep = 6;
+      else if(treePracticeStep === 6) treePracticeStep = 7;
+      logTreeEvent("practice_step_completed", {step:treePracticeStep, path});
+    }else if(frameworkGuideStep < 0 && !frameworkContextGuide){
       if(!TREE_BASELINE_MODE && isCompletePath && localStorage.getItem(frameworkContextGuideKey("report")) !== "1"){
         frameworkContextGuide = "report";
       }else if(node.col > 0 && phasePostsTree(node.phase || {}).length > 0 && localStorage.getItem(frameworkContextGuideKey("discussion")) !== "1"){
@@ -2116,8 +2320,35 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     event.preventDefault();
     if(markPolicyCompleteTree()) location.href = policySurveyHrefTree();
   };
+  const dismissCompletionNotice = root.querySelector("[data-dismiss-completion-notice]");
+  if(dismissCompletionNotice) dismissCompletionNotice.onclick=()=>{
+    completionNotice = "";
+    renderTree();
+  };
+  const finishPractice = root.querySelector("[data-finish-practice]");
+  if(finishPractice) finishPractice.onclick=async event=>{
+    event.preventDefault();
+    finishPractice.setAttribute("aria-disabled", "true");
+    localStorage.setItem(frameworkGuideStorageKey, "1");
+    Object.keys(FRAMEWORK_CONTEXT_GUIDES).forEach(kind=>localStorage.setItem(frameworkContextGuideKey(kind), "1"));
+    logTreeEvent("framework_practice_completed", {route:TREE_PRACTICE_ROUTE});
+    try{
+      location.href = await practiceFirstPolicyHrefTree();
+    }catch(error){
+      finishPractice.removeAttribute("aria-disabled");
+      alert(`Unable to open the first policy case: ${error.message}`);
+    }
+  };
   const guideNext = root.querySelector("[data-guide-next]");
   if(guideNext) guideNext.onclick=()=>{
+    if(treePracticeMode){
+      if(treePracticeStep === 0){
+        treePracticeStep = 1;
+        logTreeEvent("practice_step_completed", {step:1});
+        renderTree();
+      }
+      return;
+    }
     if(frameworkContextGuide){
       closeFrameworkGuide(true);
       return;
@@ -2180,6 +2411,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     renderTree();
   });
   root.querySelectorAll("[data-open-discussion]").forEach(btn=>btn.onclick=()=>{
+    if(treePracticeMode && treePracticeStep !== 2) return;
     if(pathwayChatOpen) closeTimedPanel("chat");
     if(reportPath) closeTimedPanel("report");
     discussionOpen = true;
@@ -2192,6 +2424,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
       phase:focusedTreeNode().phase?.phase,
       phase_index:focusedTreeNode().col,
     });
+    if(treePracticeMode) treePracticeStep = 3;
     renderTree();
   });
   root.querySelectorAll("[data-open-path-chat]").forEach(btn=>btn.onclick=()=>{
@@ -2216,6 +2449,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     closeTimedPanel("discussion");
     discussionOpen = false;
     expandedRationaleIndex = null;
+    if(treePracticeMode && treePracticeStep === 3) treePracticeStep = 4;
     renderTree();
   });
   root.querySelectorAll("[data-rationale-index]").forEach(btn=>btn.onclick=()=>{
@@ -2240,11 +2474,11 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     const chatAvailable = completedNode.col === TREE_PHASES.length - 1 && phasePostsTree(completedNode.phase || {}).length > 0;
     closeTimedPanel("report");
     reportPath = "";
-    if(!TREE_BASELINE_MODE && frameworkGuideStep < 0 && !frameworkContextGuide){
+    if(treePracticeMode && treePracticeStep === 7){
+      treePracticeStep = 8;
+    }else if(!TREE_BASELINE_MODE && frameworkGuideStep < 0 && !frameworkContextGuide){
       if(chatAvailable && localStorage.getItem(frameworkContextGuideKey("chat")) !== "1"){
         frameworkContextGuide = "chat";
-      }else if(localStorage.getItem(frameworkContextGuideKey("comparison")) !== "1"){
-        frameworkContextGuide = "comparison";
       }
     }
     renderTree();
@@ -2502,7 +2736,8 @@ fetch(`/api/pathway/${encodeURIComponent(treeCountry)}/${encodeURIComponent(tree
     if(!response.ok) throw new Error(`precomputed pathway: ${response.status}`);
     return response.json();
   })
-  .then(precomputed=>{
+  .then(rawPrecomputed=>{
+    const precomputed = treePracticeMode ? preparePracticePrecomputedTree(rawPrecomputed) : rawPrecomputed;
     configurePolicyTree(precomputed);
     treeData = {stances:[]};
     if(precomputed?.nodes?.length){

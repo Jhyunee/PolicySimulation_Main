@@ -68,7 +68,7 @@ async function loadTocIntro(){
     ? 'Continue to task guide <i data-lucide="arrow-right"></i>'
     : 'Continue to policy analysis <i data-lucide="arrow-right"></i>';
   document.getElementById("tocConditionCopy").textContent = tocCondition === "framework"
-    ? (tocStudyIntro ? "The next guide explains how to select development conditions and compare multiple policy pathways." : "The next screen lets you select and compare alternative developments at each phase.")
+    ? (tocStudyIntro ? "The next guide explains how to select development conditions and explore multiple policy pathways." : "The next screen lets you select alternative developments at each phase.")
     : "The next screen presents one policy development across the same five phases so that you can review its conditions, explanations, and projected effects.";
   tocContinue.disabled = false;
   await PolicyStudy.event("toc_introduction_viewed", {condition:tocCondition, policy_index:tocStudyIntro ? null : tocPolicyIndex, scope:tocStudyIntro ? "study" : "policy"});

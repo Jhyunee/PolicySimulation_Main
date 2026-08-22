@@ -169,25 +169,7 @@ const coverageSection = {
   ]
 };
 
-const comparisonSupportSection = {
-  title:"Support for comparing policy pathways",
-  conditions:["framework"],
-  items:[
-    ["rq2_compare_1","This tool helped me identify where and why possible policy developments diverged."],
-    ["rq2_compare_2","This tool helped me compare the conditions, bottlenecks, and projected results associated with different policy developments."],
-    ["rq2_compare_3","This tool made the differences among possible policy developments easier to understand."]
-  ]
-};
-
-const policySections = [allStudySections[0], cognitiveLoadSection, coverageSection, comparisonSupportSection];
-
-const comparisonReflectionSection = {
-  title:"Value of pathway comparison",
-  conditions:["framework"],
-  text:[
-    ["rq2_comparison_feedback","Did comparing multiple policy pathways help you assess the policy? Please explain what the comparison added, if anything, what remained difficult, and whether the additional time and information were worthwhile.","Describe what the comparison changed in your analysis. If it did not help, explain why.",true]
-  ]
-};
+const policySections = [allStudySections[0], cognitiveLoadSection, coverageSection];
 
 /* ── ⑤ 정성 설문 ───────────────────────────────────────────────────────────
    RQ3c  extended_4, 5, 8  — 양 조건 공통 (강점 · 개선점 · LLM 도입에 대한 견해)
@@ -216,7 +198,6 @@ const extendedSection = {
 const postSections = [
   allStudySections[1],
   allStudySections[2],
-  comparisonReflectionSection,
   allStudySections[3],
 ];
 

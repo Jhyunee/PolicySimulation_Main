@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Policy Exploration Features</title>
+<script>
+if(location.protocol === "file:"){
+  const params = new URLSearchParams(location.search);
+  if(!params.has("participant") && !params.has("variant")){
+    params.set("previewStudy", "1");
+    params.set("variant", "public_health--framework--ab");
+  }
+  location.replace(`http://127.0.0.1:8004/feature_instructions.html?${params.toString()}${location.hash}`);
+}
+</script>
+<link rel="stylesheet" href="styles.css?v=framework-feature-guide-20260822f" />
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="task-instructions-page task-feature-guide-page" data-condition="framework">
+<main class="task-instructions-shell">
+  <section class="task-instructions-layout task-instructions-layout-unified">
+    <article class="task-instructions-card task-primary-card task-unified-card task-feature-guide-card">
+      <h1 class="task-card-title">Additional Key Components</h1>
+      <div class="task-feature-guide-grid">
+        <section class="task-feature-guide-item">
+          <div class="task-feature-guide-heading">
+            <b>04</b>
+            <div>
+              <strong>Check Stakeholders' Opinions</strong>
+              <span>Open a stakeholder discussion to review how different personas interpret the selected development.</span>
+            </div>
+          </div>
+          <figure class="task-feature-guide-visual">
+            <img src="assets/web_guide_2.png?v=20260822a" alt="Example of stakeholder opinions presented for a selected policy development" />
+          </figure>
+        </section>
+
+        <section class="task-feature-guide-item">
+          <div class="task-feature-guide-heading">
+            <b>05</b>
+            <div>
+              <strong>Review a Summarized Pathway Report and Chat</strong>
+              <span>After reaching Impact, review the completed pathway summary and ask a stakeholder persona a question.</span>
+            </div>
+          </div>
+          <figure class="task-feature-guide-visual">
+            <img src="assets/web_guide_3.png?v=20260822a" alt="Example of a summarized pathway report and stakeholder chat" />
+          </figure>
+        </section>
+      </div>
+    </article>
+  </section>
+
+  <section class="task-instructions-footer">
+    <div>
+      <span>Next</span>
+      <p>Try these features with illustrative example data before reviewing your assigned policy cases.</p>
+    </div>
+    <button id="continueFeatureGuide" type="button">Continue to interactive practice <i data-lucide="arrow-right"></i></button>
+  </section>
+  <p id="featureGuideStatus" class="task-instructions-status" aria-live="polite"></p>
+</main>
+<script src="study_progress.js?v=framework-feature-guide-20260822a"></script>
+<script src="study_logger.js?v=admin-preview-20260822a"></script>
+<script src="feature_instructions.js?v=framework-feature-guide-20260822a"></script>
+</body>
+</html>

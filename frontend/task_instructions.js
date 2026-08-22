@@ -19,15 +19,18 @@ function renderTask(condition){
   document.getElementById("taskModeHeader").hidden = framework;
   document.getElementById("taskTitle").hidden = !framework;
   document.getElementById("taskModeLabel").textContent = framework ? "Exploring policy pathways" : "Reviewing a policy development";
-  document.getElementById("taskModeTitle").textContent = framework ? "Explore multiple pathways and compare their results" : "Examine the complete pathway presented";
+  document.getElementById("taskModeTitle").textContent = framework ? "Explore how a policy unfolds under different conditions" : "Examine the complete pathway presented";
   const taskTermCopy = document.getElementById("taskTermCopy");
   taskTermCopy.hidden = true;
   taskTermCopy.textContent = "";
   document.getElementById("taskFrameworkGuide").hidden = !framework;
+  continueTask.innerHTML = framework
+    ? 'Continue <i data-lucide="arrow-right"></i>'
+    : 'Continue to assigned policies <i data-lucide="arrow-right"></i>';
   const items = framework ? [
     {title:"Choose how the policy develops", detail:"At each phase, select an Enabling, Baseline, or Constraining development condition."},
-    {title:"Build a pathway to Impact", detail:"Continue the selected development through Impact and review its projected effects.", note:"Review the Final Report and chat with stakeholder personas."},
-    {title:"Explore different pathways", detail:"Repeat the process to examine how the policy unfolds under different conditions.", note:"Choose two completed pathways and review their Comparison Report."},
+    {title:"Build a pathway to Impact", detail:"Continue the selected development through Impact and review its projected effects."},
+    {title:"Explore different pathways", detail:"Repeat the process to examine how the policy unfolds under different conditions."},
   ] : [
     {title:"Review the complete pathway", detail:"Follow the presented analysis from Inputs through the Impact phase."},
     {title:"Review stakeholder discussion", detail:"Each node includes a stakeholder discussion. Open the discussion for at least one node to examine the perspectives represented there."},
@@ -69,7 +72,8 @@ continueTask.addEventListener("click", async ()=>{
   }else{
     query.set("participant",taskParticipantId);
   }
-  location.href = `dashboard.html?${query.toString()}`;
+  const nextPage = condition === "framework" ? "feature_instructions.html" : "dashboard.html";
+  location.href = `${nextPage}?${query.toString()}`;
 });
 
 continueTask.disabled = true;
