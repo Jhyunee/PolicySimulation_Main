@@ -44,6 +44,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mirror", type=Path, action="append", default=[])
     parser.add_argument("--workers", type=int, default=6)
     parser.add_argument("--checkpoint", type=Path)
+    parser.add_argument("--include-inputs", action="store_true")
     return parser.parse_args()
 
 
@@ -136,7 +137,7 @@ def main() -> None:
     for node_id, node in working.get("nodes", {}).items():
         result = node.get("phase_result") or {}
         phase = str(result.get("phase") or "")
-        if not phase or phase == "Inputs" or result.get("panel_summary"):
+        if not phase or (phase == "Inputs" and not args.include_inputs) or result.get("panel_summary"):
             continue
         source = " ".join(str(result.get("phase_summary") or "").split())
         if not source:
@@ -167,7 +168,9 @@ def main() -> None:
     expected = sum(
         1
         for node in working.get("nodes", {}).values()
-        if (node.get("phase_result") or {}).get("phase") not in {None, "", "Inputs"}
+        if (node.get("phase_result") or {}).get("phase") not in (
+            {None, ""} if args.include_inputs else {None, "", "Inputs"}
+        )
     )
     generated = sum(
         1
