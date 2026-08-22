@@ -3,11 +3,17 @@ const refreshResults = document.getElementById("refreshResults");
 const exportPolicy = document.getElementById("exportPolicy");
 const exportStatus = document.getElementById("exportStatus");
 const exportResults = document.getElementById("exportResults");
+const resultsNotice = document.getElementById("resultsNotice");
+const deleteResponseDialog = document.getElementById("deleteResponseDialog");
+const deleteParticipantId = document.getElementById("deleteParticipantId");
+const deleteProlificId = document.getElementById("deleteProlificId");
+const confirmDeleteResponse = document.getElementById("confirmDeleteResponse");
 let resultsData = null;
 let selectedCase = "";
 let selectedCondition = "";
 let selectedParticipant = "";
 let responseFilter = "submitted";
+let participantPendingDeletion = "";
 const ADMIN_TOKEN_KEY = "policy-study-admin-token";
 
 function adminHeaders(){
@@ -218,7 +224,7 @@ function participantDetail(participant){
   const chats = interactions.chat_turns || [];
   const paths = interactions.complete_paths || [];
   return `<article class="results-participant-detail">
-    <header class="participant-detail-head"><div><span>Participant response</span><h2>${resultEsc(participant.participant_id)}</h2><p>${resultEsc(participant.prolific_pid || "No Prolific ID")} · ${resultEsc(participant.variant_id || "Legacy assignment")}</p></div><div class="participant-detail-badges"><em class="${trial?.condition_name || "unknown"}">${conditionLabel(trial?.condition_name)}</em><b>${resultEsc(participant.status)}</b></div></header>
+    <header class="participant-detail-head"><div><span>Participant response</span><h2>${resultEsc(participant.participant_id)}</h2><p>${resultEsc(participant.prolific_pid || "No Prolific ID")} · ${resultEsc(participant.variant_id || "Legacy assignment")}</p></div><div class="participant-detail-actions"><div class="participant-detail-badges"><em class="${trial?.condition_name || "unknown"}">${conditionLabel(trial?.condition_name)}</em><b>${resultEsc(participant.status)}</b></div><button class="delete-participant-response" data-delete-participant="${resultEsc(participant.participant_id)}" type="button"><i data-lucide="trash-2"></i> Delete response</button></div></header>
     <dl class="participant-facts"><div><dt>Prolific ID</dt><dd>${resultEsc(participant.prolific_pid || "Not provided")}</dd></div><div><dt>Study ID</dt><dd>${resultEsc(participant.prolific_study_id || "Not provided")}</dd></div><div><dt>Session ID</dt><dd>${resultEsc(participant.prolific_session_id || "Not provided")}</dd></div><div><dt>Case time</dt><dd>${formatDuration(interactions.recorded_duration_ms)}</dd></div><div><dt>Total study time</dt><dd>${formatDuration(participant.recorded_duration_ms)}</dd></div><div><dt>Policy order</dt><dd>${Number(trial?.policy_order_index ?? 0)+1}</dd></div><div><dt>Case events</dt><dd>${trial?.event_count || 0}</dd></div><div><dt>Persona questions</dt><dd>${trial?.chat_count || 0}</dd></div><div><dt>Joined</dt><dd>${formatDate(participant.created_at)}</dd></div>${participant.status === "screened_out" ? `<div><dt>Screening result</dt><dd>${resultEsc(participant.screening_reason || "Ineligible")}</dd></div><div><dt>Screened out</dt><dd>${formatDate(participant.screened_out_at)}</dd></div>` : ""}</dl>
     <div class="interaction-audit-grid">
       <section class="interaction-audit-card"><header><div><span>Stakeholder discussion</span><b>${discussions.length} views · ${formatDuration(interactions.stakeholder_discussion_duration_ms)}</b></div><i data-lucide="messages-square"></i></header>
@@ -284,9 +290,74 @@ function render(){
   resultsBody.querySelector("[data-back-cases]")?.addEventListener("click",()=>{selectedCase="";selectedCondition="";selectedParticipant="";render();});
   resultsBody.querySelector("[data-back-conditions]")?.addEventListener("click",()=>{selectedCondition="";selectedParticipant="";render();});
   resultsBody.querySelectorAll("[data-participant]").forEach(button=>button.onclick=()=>{selectedParticipant=button.dataset.participant;render();});
+  resultsBody.querySelector("[data-delete-participant]")?.addEventListener("click",event=>openDeleteDialog(event.currentTarget.dataset.deleteParticipant));
   resultsBody.querySelector("#responseFilter")?.addEventListener("change",event=>{responseFilter=event.target.value;selectedParticipant="";render();});
   if(window.lucide) lucide.createIcons();
 }
+
+function showResultsNotice(message,type="success"){
+  resultsNotice.textContent=message;
+  resultsNotice.className=`results-notice ${type}`;
+  resultsNotice.hidden=false;
+  window.clearTimeout(showResultsNotice.timer);
+  showResultsNotice.timer=window.setTimeout(()=>{resultsNotice.hidden=true;},5000);
+}
+
+function openDeleteDialog(participantId){
+  const participant=participantRecord(participantId);
+  if(!participant) return;
+  participantPendingDeletion=participantId;
+  deleteParticipantId.textContent=participantId;
+  deleteProlificId.textContent=participant.prolific_pid || "Not provided";
+  confirmDeleteResponse.disabled=false;
+  confirmDeleteResponse.innerHTML='<i data-lucide="trash-2"></i> Delete response';
+  deleteResponseDialog.showModal();
+  if(window.lucide) lucide.createIcons();
+}
+
+function closeDeleteDialog(){
+  if(confirmDeleteResponse.disabled) return;
+  participantPendingDeletion="";
+  deleteResponseDialog.close();
+}
+
+async function deleteParticipantResponse(){
+  if(!participantPendingDeletion) return;
+  const participantId=participantPendingDeletion;
+  confirmDeleteResponse.disabled=true;
+  confirmDeleteResponse.textContent="Deleting...";
+  try{
+    const response=await fetch(`/api/study/participants/${encodeURIComponent(participantId)}`,{
+      method:"DELETE",
+      headers:adminHeaders(),
+    });
+    if(response.status===401){
+      sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+      throw new Error("Administrator token was not accepted.");
+    }
+    if(!response.ok){
+      const payload=await response.json().catch(()=>({}));
+      throw new Error(payload.detail || `HTTP ${response.status}`);
+    }
+    participantPendingDeletion="";
+    selectedParticipant="";
+    deleteResponseDialog.close();
+    await loadResults();
+    showResultsNotice(`Deleted ${participantId} and all associated study records.`);
+  }catch(error){
+    confirmDeleteResponse.disabled=false;
+    confirmDeleteResponse.innerHTML='<i data-lucide="trash-2"></i> Delete response';
+    showResultsNotice(`Could not delete the response: ${error.message}`,"error");
+    if(window.lucide) lucide.createIcons();
+  }
+}
+
+document.getElementById("closeDeleteResponse").addEventListener("click",closeDeleteDialog);
+document.getElementById("cancelDeleteResponse").addEventListener("click",closeDeleteDialog);
+confirmDeleteResponse.addEventListener("click",deleteParticipantResponse);
+deleteResponseDialog.addEventListener("click",event=>{
+  if(event.target===deleteResponseDialog) closeDeleteDialog();
+});
 
 async function loadResults(){
   refreshResults.disabled=true;

@@ -465,6 +465,18 @@ def study_results(x_admin_token: str | None = Header(default=None)):
     return payload
 
 
+@app.delete("/api/study/participants/{participant_id}")
+def delete_study_participant(
+    participant_id: str,
+    x_admin_token: str | None = Header(default=None),
+):
+    _admin_access(x_admin_token)
+    deleted = study_store.delete_participant(participant_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Participant response was not found.")
+    return {"deleted": True, **deleted}
+
+
 @app.get("/api/study/completion-url")
 def completion_url(participant_id: str | None = None):
     participant = study_store.get_participant(participant_id) if participant_id else {}

@@ -388,6 +388,34 @@ def get_participant(participant_id: str) -> dict | None:
     }
 
 
+def delete_participant(participant_id: str) -> dict | None:
+    """Permanently delete one participant and every associated study record."""
+    with _connect() as connection:
+        participant = connection.execute(
+            "SELECT participant_id FROM participants WHERE participant_id = ?",
+            (participant_id,),
+        ).fetchone()
+        if not participant:
+            return None
+
+        deleted_records: dict[str, int] = {}
+        for table in ("chat_turns", "events", "survey_responses", "policy_trials"):
+            cursor = connection.execute(
+                f"DELETE FROM {table} WHERE participant_id = ?",
+                (participant_id,),
+            )
+            deleted_records[table] = cursor.rowcount
+        cursor = connection.execute(
+            "DELETE FROM participants WHERE participant_id = ?",
+            (participant_id,),
+        )
+        deleted_records["participants"] = cursor.rowcount
+        return {
+            "participant_id": participant_id,
+            "deleted_records": deleted_records,
+        }
+
+
 def variant_counts() -> dict[str, dict]:
     with _connect() as connection:
         rows = connection.execute(

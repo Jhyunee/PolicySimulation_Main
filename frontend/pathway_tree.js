@@ -645,7 +645,7 @@ function updateTreeZoom(nextScale){
   requestAnimationFrame(()=>{
     canvas.scrollLeft = Math.max(0, centerX * TREE_VIEW_SCALE - canvas.clientWidth / 2);
     canvas.scrollTop = Math.max(0, centerY * TREE_VIEW_SCALE - canvas.clientHeight / 2);
-    updateTreeViewport();
+    updateMiniMapViewport();
   });
   logTreeEvent("tree_zoom_changed", {scale:TREE_VIEW_SCALE});
 }

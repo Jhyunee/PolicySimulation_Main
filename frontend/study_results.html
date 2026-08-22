@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Study Results Dashboard</title>
-<link rel="stylesheet" href="styles.css?v=filtered-export-20260818a" />
+<link rel="stylesheet" href="styles.css?v=response-delete-20260822a" />
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
 <body class="study-results-page">
@@ -26,8 +26,20 @@
     </div>
   </section>
   <section id="resultsSummary" class="results-summary"></section>
+  <div id="resultsNotice" class="results-notice" role="status" aria-live="polite" hidden></div>
   <section id="resultsBody"><div class="dashboard-loading">Loading study results...</div></section>
 </main>
-<script src="study_results.js?v=filtered-export-20260818b"></script>
+<dialog id="deleteResponseDialog" class="delete-response-dialog">
+  <div class="delete-response-dialog-panel">
+    <header><span>Permanent deletion</span><button id="closeDeleteResponse" type="button" aria-label="Close"><i data-lucide="x"></i></button></header>
+    <div class="delete-response-dialog-icon"><i data-lucide="trash-2"></i></div>
+    <h2>Delete this participant response?</h2>
+    <p>This permanently deletes the participant, both policy-case responses, surveys, pathway events, stakeholder discussions, and persona chats.</p>
+    <dl><div><dt>Participant ID</dt><dd id="deleteParticipantId"></dd></div><div><dt>Prolific ID</dt><dd id="deleteProlificId"></dd></div></dl>
+    <strong>This action cannot be undone.</strong>
+    <footer><button id="cancelDeleteResponse" type="button">Cancel</button><button id="confirmDeleteResponse" type="button"><i data-lucide="trash-2"></i> Delete response</button></footer>
+  </div>
+</dialog>
+<script src="study_results.js?v=response-delete-20260822a"></script>
 </body>
 </html>
