@@ -2133,6 +2133,30 @@ const THREE_PATH_GUIDE_STEPS = [
     title:"Review the selected phase summary",
     copy:"The panel below the pathways explains the selected phase, including its mechanism, key constraints, and quantitative estimates. It updates whenever you select another phase card.",
   },
+  {
+    target:'.tree-node[data-path="root/baseline/baseline/baseline/baseline"]',
+    title:"Open the Baseline Impact report",
+    copy:"Select the highlighted Baseline Impact card to review the Final Report for this complete policy development.",
+    interactive:true,
+  },
+  {
+    target:'.report-document-actions [data-close-report="1"]',
+    title:"Review the Final Report",
+    copy:"The report summarizes the Baseline development's projected results, mechanism, constraints, and uncertainty. Review it, then select Close.",
+    interactive:true,
+  },
+  {
+    target:'.pathway-chat-button',
+    title:"Open stakeholder chat",
+    copy:"Select Chat to preview the stakeholder conversation interface for the Baseline development.",
+    interactive:true,
+  },
+  {
+    target:'.tree-chat-modal [data-close-path-chat="1"]',
+    title:"Review the chat, then close it",
+    copy:"Review the stakeholder chat interface, then select Close to finish the guide. You do not need to ask a question during the guide.",
+    interactive:true,
+  },
 ];
 
 const FRAMEWORK_CONTEXT_GUIDES = {
@@ -2197,13 +2221,16 @@ function activeFrameworkGuide(){
   }
   const steps = activeGuideSteps();
   if(frameworkGuideStep >= 0){
+    const step = steps[frameworkGuideStep];
     return {
-      ...steps[frameworkGuideStep],
+      ...step,
       kind:"initial",
       label:`Guide ${frameworkGuideStep + 1} of ${steps.length}`,
-      action:frameworkGuideStep === steps.length - 1
-        ? (TREE_BASELINE_MODE ? "Start reviewing" : TREE_THREE_PATH_MODE ? "Start comparing" : "Start exploring")
-        : "Next",
+      action:step.interactive
+        ? null
+        : frameworkGuideStep === steps.length - 1
+          ? (TREE_BASELINE_MODE ? "Start reviewing" : TREE_THREE_PATH_MODE ? "Start comparing" : "Start exploring")
+          : "Next",
     };
   }
   const guide = activeContextGuides()[frameworkContextGuide];
@@ -2358,6 +2385,8 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     if(reportPath) closeTimedPanel("report");
     const path = btn.dataset.path;
     if(treePracticeMode && path !== practiceExpectedPathTree()) return;
+    const threePathGuideImpact = "root/baseline/baseline/baseline/baseline";
+    if(TREE_THREE_PATH_MODE && frameworkGuideStep === 2 && path !== threePathGuideImpact) return;
     const anchor = captureTreeAnchor(path);
     const node = nodeFromPath(path);
     focusedNode = treeNodes.get(path) || node;
@@ -2395,8 +2424,15 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
       else if(treePracticeStep === 5) treePracticeStep = 6;
       else if(treePracticeStep === 6) treePracticeStep = 7;
       logTreeEvent("practice_step_completed", {step:treePracticeStep, path});
-    }else if(frameworkGuideStep < 0 && !frameworkContextGuide && !TREE_THREE_PATH_MODE){
-      if(!TREE_BASELINE_MODE && isCompletePath && localStorage.getItem(frameworkContextGuideKey("report")) !== "1"){
+    }else if(TREE_THREE_PATH_MODE && frameworkGuideStep === 2 && path === threePathGuideImpact){
+      frameworkGuideStep = 3;
+      logTreeEvent("framework_guide_advanced", {step:frameworkGuideStep + 1, path});
+    }else if(frameworkGuideStep < 0 && !frameworkContextGuide){
+      if(TREE_THREE_PATH_MODE){
+        if(!isCompletePath && node.col > 0 && phasePostsTree(node.phase || {}).length > 0 && localStorage.getItem(frameworkContextGuideKey("discussion")) !== "1"){
+          frameworkContextGuide = "discussion";
+        }
+      }else if(!TREE_BASELINE_MODE && isCompletePath && localStorage.getItem(frameworkContextGuideKey("report")) !== "1"){
         frameworkContextGuide = "report";
       }else if(node.col > 0 && phasePostsTree(node.phase || {}).length > 0 && localStorage.getItem(frameworkContextGuideKey("discussion")) !== "1"){
         frameworkContextGuide = "discussion";
@@ -2558,6 +2594,10 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     chatOpenedAt = performance.now();
     logTreeEvent("chat_opened", {path:pathwayChatPath, persona:pathwayChatPersona});
     if(treePracticeMode) treePracticeStep = 9;
+    if(TREE_THREE_PATH_MODE && frameworkGuideStep === 4){
+      frameworkGuideStep = 5;
+      logTreeEvent("framework_guide_advanced", {step:frameworkGuideStep + 1, path:pathwayChatPath});
+    }
     renderTree();
   });
   root.querySelectorAll("[data-close-discussion]").forEach(el=>el.onclick=(event)=>{
@@ -2592,6 +2632,11 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     reportPath = "";
     if(treePracticeMode && treePracticeStep === 7){
       treePracticeStep = 8;
+    }else if(TREE_THREE_PATH_MODE && frameworkGuideStep === 3){
+      frameworkGuideStep = 4;
+      logTreeEvent("framework_guide_advanced", {step:frameworkGuideStep + 1, path:completedNode.path});
+    }else if(TREE_THREE_PATH_MODE && frameworkGuideStep < 0 && !frameworkContextGuide && chatAvailable && localStorage.getItem(frameworkContextGuideKey("discussion")) !== "1"){
+      frameworkContextGuide = "discussion";
     }else if(!TREE_BASELINE_MODE && !TREE_THREE_PATH_MODE && frameworkGuideStep < 0 && !frameworkContextGuide){
       if(chatAvailable && localStorage.getItem(frameworkContextGuideKey("chat")) !== "1"){
         frameworkContextGuide = "chat";
@@ -2689,6 +2734,10 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     closeTimedPanel("chat");
     pathwayChatOpen = false;
     if(treePracticeMode && treePracticeStep === 9) treePracticeStep = 10;
+    if(TREE_THREE_PATH_MODE && frameworkGuideStep === 5){
+      closeFrameworkGuide(true);
+      return;
+    }
     renderTree();
   });
   root.querySelectorAll("[data-path-chat-q]").forEach(btn=>btn.onclick=()=>{
