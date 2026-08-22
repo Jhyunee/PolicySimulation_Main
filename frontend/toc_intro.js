@@ -27,7 +27,8 @@ function analysisHref(){
     if(tocParticipantId) query.set("participant",tocParticipantId);
     if(tocPreviewMode) query.set("previewStudy","1");
     if(tocVariantId) query.set("variant",tocVariantId);
-    return `task_instructions.html?${query.toString()}`;
+    const nextPage = tocCondition === "framework" ? "task_instructions.html" : "feature_instructions.html";
+    return `${nextPage}?${query.toString()}`;
   }
   const query = new URLSearchParams({policy:tocPolicyKey, policyIndex:String(tocPolicyIndex)});
   if(tocParticipantId) query.set("participant", tocParticipantId);
@@ -65,7 +66,7 @@ async function loadTocIntro(){
   document.getElementById("tocFooterLabel").textContent = tocStudyIntro ? "Next" : "Policy case";
   document.getElementById("tocPolicyName").textContent = tocStudyIntro ? "Policy Exploration Task Guide" : policy.label;
   tocContinue.innerHTML = tocStudyIntro
-    ? 'Continue to task guide <i data-lucide="arrow-right"></i>'
+    ? `Continue to ${tocCondition === "framework" ? "task guide" : "key components"} <i data-lucide="arrow-right"></i>`
     : 'Continue to policy analysis <i data-lucide="arrow-right"></i>';
   document.getElementById("tocConditionCopy").textContent = tocCondition === "framework"
     ? (tocStudyIntro ? "The next guide explains how to select development conditions and explore multiple policy pathways." : "The next screen lets you select alternative developments at each phase.")

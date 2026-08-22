@@ -1,6 +1,8 @@
 const dashboardParams = new URLSearchParams(location.search);
 const participantId = dashboardParams.get("participant") || "";
-const dashboardPreview = dashboardParams.get("preview") === "1";
+const dashboardStudyPreview = dashboardParams.get("previewStudy") === "1";
+const dashboardVariantId = dashboardParams.get("variant") || "";
+const dashboardPreview = dashboardParams.get("preview") === "1" || dashboardStudyPreview;
 const assignedParam = dashboardParams.get("policies") || "";
 const orderParam = dashboardParams.get("order") || "";
 let serverAssignment = null;
@@ -34,6 +36,10 @@ function policyLink(policyKey, policyIndex){
   const trial = serverTrials.find(item=>item.policy_key === policyKey);
   const query = new URLSearchParams({policy:policyKey});
   if(participantId) query.set("participant", participantId);
+  if(dashboardStudyPreview){
+    query.set("previewStudy", "1");
+    if(dashboardVariantId) query.set("variant", dashboardVariantId);
+  }
   query.set("policyIndex", String(policyIndex));
   if(!introduced) query.set("stage", "policy_intro");
   if(!introduced) return `survey.html?${query.toString()}`;
@@ -93,6 +99,9 @@ if(dashboardParams.get("completed")){
 const assignmentRequest = participantId
   ? fetch(`/api/study/participants/${encodeURIComponent(participantId)}`)
       .then(response=>response.ok ? response.json() : Promise.reject(new Error(`Participant HTTP ${response.status}`)))
+  : dashboardStudyPreview && dashboardVariantId
+    ? fetch(`/api/study/variants/${encodeURIComponent(dashboardVariantId)}`)
+        .then(response=>response.ok ? response.json() : Promise.reject(new Error(`Variant HTTP ${response.status}`)))
   : Promise.resolve(null);
 
 Promise.all([
@@ -100,15 +109,26 @@ Promise.all([
   assignmentRequest,
 ])
   .then(([payload, participant])=>{
-    if(participant && !participant.pre_study_completed){
+    if(participant && !dashboardStudyPreview && !participant.pre_study_completed){
       location.href = `survey.html?stage=pre&participant=${encodeURIComponent(participantId)}`;
       return;
     }
-    serverAssignment = participant?.assigned_policies || null;
-    serverTrials = participant?.assigned_trials || [];
-    serverCompleted = new Set(participant?.completed_policies || []);
-    serverIntroduced = new Set(participant?.introduced_policies || []);
-    if(window.StudyProgress && participant){
+    if(dashboardStudyPreview){
+      serverAssignment = participant?.policy_keys || null;
+      serverTrials = (participant?.policy_keys || []).map((policy_key, index)=>({
+        policy_key,
+        policy_index:index,
+        condition:participant?.condition || "baseline",
+      }));
+      serverCompleted = new Set();
+      serverIntroduced = new Set();
+    }else{
+      serverAssignment = participant?.assigned_policies || null;
+      serverTrials = participant?.assigned_trials || [];
+      serverCompleted = new Set(participant?.completed_policies || []);
+      serverIntroduced = new Set(participant?.introduced_policies || []);
+    }
+    if(window.StudyProgress && participant && !dashboardStudyPreview){
       StudyProgress.setStage(Math.min(4, 2 + serverCompleted.size));
     }
     PolicyStudy.event("dashboard_view", {assigned_policies:serverAssignment || [], assigned_trials:serverTrials});

@@ -1,7 +1,6 @@
 const consent = document.getElementById("studyConsent");
 const startButton = document.getElementById("startStudy");
 const status = document.getElementById("startStatus");
-const variantSummary = document.getElementById("studyVariantSummary");
 const pageParams = new URLSearchParams(location.search);
 const variantId = pageParams.get("variant") || "";
 const previewMode = pageParams.get("previewStudy") === "1";
@@ -49,8 +48,6 @@ async function loadVariant(){
   const response = await fetch(`/api/study/variants/${encodeURIComponent(variantId)}`);
   if(!response.ok) throw new Error(`Variant HTTP ${response.status}`);
   selectedVariant = await response.json();
-  variantSummary.innerHTML = `<span>${selectedVariant.domain_label} · ${selectedVariant.condition_label}</span><b>${selectedVariant.order_label}</b>`;
-  variantSummary.hidden = false;
   if(previewMode){
     document.querySelector(".study-start-panel > p").textContent = "Preview mode does not create a participant session or record responses and interactions.";
     document.querySelector(".study-confirm span").textContent = "I am ready to preview the complete study flow.";
