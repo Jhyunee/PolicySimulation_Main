@@ -514,6 +514,9 @@ label { color:var(--muted); font-size:12px; }
 .study-step-list strong,.study-step-list span { display:block; }
 .study-step-list strong { font-size:14px; }
 .study-step-list span { margin-top:4px; color:#777681; font-size:12.5px; line-height:1.45; }
+.study-scope-list article { grid-template-columns:1fr; gap:0; padding:22px 0; }
+.study-scope-list strong { font-size:17px; line-height:1.35; }
+.study-scope-list span { max-width:720px; margin-top:7px; font-size:15px; line-height:1.55; }
 .study-start-panel { border:1px solid #dcdde1; border-top:5px solid #7fbf91; border-radius:8px; background:#fff; box-shadow:0 12px 34px rgba(34,33,39,.09); padding:26px; }
 .study-start-panel > span { color:#4d835d; font-size:11px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
 .study-start-panel h2 { margin:7px 0 10px; font-size:24px; letter-spacing:0; }
