@@ -1,0 +1,162 @@
+{
+  "simulation_target": "The 2022 percentage-point reduction from the pre-NSA baseline in (1) out-of-network bill prevalence for emergency services and (2) out-of-network bill prevalence for non-emergency services at in-network facilities",
+  "aggregated_final": {
+    "systemic_oon_billing_prevalence_pct": 13.6,
+    "network_adequacy_rate_pct": 66.0,
+    "premium_change_attributable_to_nsa_pct": 3.3
+  },
+  "implementation_gap_report": [
+    {
+      "phase": "Inputs",
+      "variable": "federal_enforcement_budget_usd",
+      "forward_agg": 45000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 45000000.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "certified_idr_entity_count",
+      "forward_agg": 12.2,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 12.2
+    },
+    {
+      "phase": "Inputs",
+      "variable": "qpa_ready_plan_pct",
+      "forward_agg": 55.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 55.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "qpa_calculations_completed",
+      "forward_agg": 3700000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 3700000.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "timely_initial_payment_or_denial_rate",
+      "forward_agg": 57.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 57.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "idr_cases_initiated",
+      "forward_agg": 47000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 47000.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "protected_claims_correctly_processed_rate",
+      "forward_agg": 66.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 66.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "notice_compliance_rate",
+      "forward_agg": 51.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 51.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "timely_idr_determination_rate",
+      "forward_agg": 36.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 36.0
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "emergency_oon_bill_prevalence_reduction_pp",
+      "forward_agg": 10.4,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 10.4
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "nonemergency_oon_bill_prevalence_reduction_pp",
+      "forward_agg": 5.6,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 5.6
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "patient_savings_per_protected_claim_usd",
+      "forward_agg": 370.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 370.0
+    },
+    {
+      "phase": "Impact",
+      "variable": "systemic_oon_billing_prevalence_pct",
+      "forward_agg": 13.6,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 13.6
+    },
+    {
+      "phase": "Impact",
+      "variable": "network_adequacy_rate_pct",
+      "forward_agg": 66.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 66.0
+    },
+    {
+      "phase": "Impact",
+      "variable": "premium_change_attributable_to_nsa_pct",
+      "forward_agg": 3.3,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 3.3
+    }
+  ],
+  "narrative_synthesis": "",
+  "phase_stakeholder_summaries": {}
+}

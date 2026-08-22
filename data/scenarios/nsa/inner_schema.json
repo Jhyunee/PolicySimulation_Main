@@ -1,0 +1,145 @@
+{
+  "phases": [
+    {
+      "phase": "Inputs",
+      "prediction_fields": [
+        {
+          "name": "federal_enforcement_budget_usd",
+          "unit": "USD",
+          "type": "float",
+          "description": "Federal resources allocated during calendar year 2022 to No Surprises Act oversight, complaint handling, audits, and enforcement."
+        },
+        {
+          "name": "certified_idr_entity_count",
+          "unit": "count",
+          "type": "int",
+          "description": "Number of certified independent dispute resolution entities active and available to accept federal IDR cases during calendar year 2022."
+        },
+        {
+          "name": "qpa_ready_plan_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "Percentage of group health plans and health insurance issuers with operational data and systems to calculate the Qualifying Payment Amount accurately at the start of 2022."
+        }
+      ],
+      "discussion_points": [
+        "Where are enforcement resources insufficient for complaint processing, auditing, or corrective action?",
+        "Does certified IDR capacity match the expected volume and geographic distribution of payment disputes?",
+        "Which data, contracting, or system limitations prevent plans from calculating reliable QPAs?"
+      ]
+    },
+    {
+      "phase": "Activities",
+      "prediction_fields": [
+        {
+          "name": "qpa_calculations_completed",
+          "unit": "count",
+          "type": "int",
+          "description": "Number of QPA calculations completed by plans and issuers during 2022 for protected out-of-network claims subject to the No Surprises Act."
+        },
+        {
+          "name": "timely_initial_payment_or_denial_rate",
+          "unit": "%",
+          "type": "float",
+          "description": "Percentage of eligible protected claims in 2022 for which a plan or issuer issued an initial payment or denial notice within the applicable 30-day window."
+        },
+        {
+          "name": "idr_cases_initiated",
+          "unit": "count",
+          "type": "int",
+          "description": "Number of federal IDR payment disputes initiated during calendar year 2022 after open negotiation did not resolve the payment amount."
+        }
+      ],
+      "discussion_points": [
+        "How do inaccurate or disputed QPA calculations propagate into payment negotiation and IDR demand?",
+        "Which operational constraints cause late initial payments or denial notices?",
+        "Under what conditions do negotiations break down and move into IDR, including high-cost or specialized services?"
+      ]
+    },
+    {
+      "phase": "Outputs",
+      "prediction_fields": [
+        {
+          "name": "protected_claims_correctly_processed_rate",
+          "unit": "%",
+          "type": "float",
+          "description": "Percentage of NSA-protected out-of-network claims processed during 2022 with the correct in-network patient cost-sharing and applicable payment procedure."
+        },
+        {
+          "name": "notice_compliance_rate",
+          "unit": "%",
+          "type": "float",
+          "description": "Percentage of 2022 encounters subject to NSA disclosure requirements in which the required notice was complete, timely, and correctly provided."
+        },
+        {
+          "name": "timely_idr_determination_rate",
+          "unit": "%",
+          "type": "float",
+          "description": "Percentage of federal IDR cases decided during 2022 within the applicable administrative determination timeline."
+        }
+      ],
+      "discussion_points": [
+        "What processing failures still expose protected patients to incorrect out-of-network cost sharing or balance bills?",
+        "When does notice-and-consent implementation fail to provide meaningful and informed patient choice?",
+        "How do IDR delays affect provider cash flow, plan administration, and willingness to negotiate?"
+      ]
+    },
+    {
+      "phase": "Outcomes",
+      "prediction_fields": [
+        {
+          "name": "emergency_oon_bill_prevalence_reduction_pp",
+          "unit": "percentage_point",
+          "type": "float",
+          "description": "Percentage-point reduction in the prevalence of out-of-network bills for emergency services in 2022 relative to the pre-NSA baseline."
+        },
+        {
+          "name": "nonemergency_oon_bill_prevalence_reduction_pp",
+          "unit": "percentage_point",
+          "type": "float",
+          "description": "Percentage-point reduction in the prevalence of out-of-network bills for non-emergency services delivered at in-network facilities in 2022 relative to the pre-NSA baseline."
+        },
+        {
+          "name": "patient_savings_per_protected_claim_usd",
+          "unit": "USD_per_claim",
+          "type": "float",
+          "description": "Average reduction in patient out-of-pocket liability per NSA-protected out-of-network claim in 2022 relative to the amount expected under pre-NSA billing rules."
+        }
+      ],
+      "discussion_points": [
+        "Which service types, specialties, patient groups, or locations experience smaller reductions or continuing surprise bills?",
+        "Are notice-and-consent waivers, claim reclassification, or other substitution effects offsetting the observed reductions?",
+        "How are savings distributed across emergency and non-emergency claims, and which patients remain financially exposed?"
+      ]
+    },
+    {
+      "phase": "Impact",
+      "prediction_fields": [
+        {
+          "name": "systemic_oon_billing_prevalence_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "National prevalence of out-of-network balance billing among services covered by the No Surprises Act three to five years after implementation."
+        },
+        {
+          "name": "network_adequacy_rate_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "Percentage of regulated health plans meeting applicable network adequacy standards three to five years after NSA implementation."
+        },
+        {
+          "name": "premium_change_attributable_to_nsa_pct",
+          "unit": "%",
+          "type": "float",
+          "description": "Estimated percentage change in health plan premiums three to five years after implementation that is attributable to NSA compliance, contracting, and payment effects."
+        }
+      ],
+      "discussion_points": [
+        "Do contracting responses and provider or plan consolidation produce durable reductions in surprise billing or shift costs elsewhere?",
+        "Does the policy preserve adequate access to emergency, specialty, air ambulance, and rural services?",
+        "How do payment and compliance costs affect premiums, provider participation, and long-term market behavior?",
+        "Which unintended consequences would indicate that short-term consumer protection did not translate into durable system-level improvement?"
+      ]
+    }
+  ]
+}

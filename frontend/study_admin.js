@@ -65,11 +65,11 @@ function renderVariants(payload){
   });
   variantsRoot.innerHTML = [...grouped.entries()].map(([domainId,variants])=>`
     <section class="variant-domain" data-domain="${adminEsc(domainId)}">
-      <header><div><span>Domain</span><h2>${adminEsc(variants[0].domain_label)}</h2></div><b>${variants.filter(item=>item.ready).length}/4 ready</b></header>
+      <header><div><span>Domain</span><h2>${adminEsc(variants[0].domain_label)}</h2></div><b>${variants.filter(item=>item.ready).length}/${variants.length} ready</b></header>
       <div class="variant-grid">${variants.map(variantCard).join("")}</div>
     </section>`).join("");
   const ready = payload.variants.filter(item=>item.ready).length;
-  document.getElementById("readyVariantCount").textContent = `${ready}/20`;
+  document.getElementById("readyVariantCount").textContent = `${ready}/${payload.variants.length}`;
   document.querySelectorAll("[data-copy]").forEach(button=>button.addEventListener("click",async()=>{
     await navigator.clipboard.writeText(new URL(button.dataset.copy,location.href).href);
     button.innerHTML = '<i data-lucide="check"></i>';

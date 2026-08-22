@@ -1,0 +1,1886 @@
+{
+  "simulation_target": "The 2022 percentage-point reduction from the pre-NSA baseline in (1) out-of-network bill prevalence for emergency services and (2) out-of-network bill prevalence for non-emergency services at in-network facilities",
+  "inner_schema": {
+    "phases": [
+      {
+        "phase": "Inputs",
+        "prediction_fields": [
+          {
+            "name": "federal_enforcement_budget_usd",
+            "unit": "USD",
+            "type": "float",
+            "description": "Federal resources allocated during calendar year 2022 to No Surprises Act oversight, complaint handling, audits, and enforcement."
+          },
+          {
+            "name": "certified_idr_entity_count",
+            "unit": "count",
+            "type": "int",
+            "description": "Number of certified independent dispute resolution entities active and available to accept federal IDR cases during calendar year 2022."
+          },
+          {
+            "name": "qpa_ready_plan_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "Percentage of group health plans and health insurance issuers with operational data and systems to calculate the Qualifying Payment Amount accurately at the start of 2022."
+          }
+        ],
+        "discussion_points": [
+          "Where are enforcement resources insufficient for complaint processing, auditing, or corrective action?",
+          "Does certified IDR capacity match the expected volume and geographic distribution of payment disputes?",
+          "Which data, contracting, or system limitations prevent plans from calculating reliable QPAs?"
+        ]
+      },
+      {
+        "phase": "Activities",
+        "prediction_fields": [
+          {
+            "name": "qpa_calculations_completed",
+            "unit": "count",
+            "type": "int",
+            "description": "Number of QPA calculations completed by plans and issuers during 2022 for protected out-of-network claims subject to the No Surprises Act."
+          },
+          {
+            "name": "timely_initial_payment_or_denial_rate",
+            "unit": "%",
+            "type": "float",
+            "description": "Percentage of eligible protected claims in 2022 for which a plan or issuer issued an initial payment or denial notice within the applicable 30-day window."
+          },
+          {
+            "name": "idr_cases_initiated",
+            "unit": "count",
+            "type": "int",
+            "description": "Number of federal IDR payment disputes initiated during calendar year 2022 after open negotiation did not resolve the payment amount."
+          }
+        ],
+        "discussion_points": [
+          "How do inaccurate or disputed QPA calculations propagate into payment negotiation and IDR demand?",
+          "Which operational constraints cause late initial payments or denial notices?",
+          "Under what conditions do negotiations break down and move into IDR, including high-cost or specialized services?"
+        ]
+      },
+      {
+        "phase": "Outputs",
+        "prediction_fields": [
+          {
+            "name": "protected_claims_correctly_processed_rate",
+            "unit": "%",
+            "type": "float",
+            "description": "Percentage of NSA-protected out-of-network claims processed during 2022 with the correct in-network patient cost-sharing and applicable payment procedure."
+          },
+          {
+            "name": "notice_compliance_rate",
+            "unit": "%",
+            "type": "float",
+            "description": "Percentage of 2022 encounters subject to NSA disclosure requirements in which the required notice was complete, timely, and correctly provided."
+          },
+          {
+            "name": "timely_idr_determination_rate",
+            "unit": "%",
+            "type": "float",
+            "description": "Percentage of federal IDR cases decided during 2022 within the applicable administrative determination timeline."
+          }
+        ],
+        "discussion_points": [
+          "What processing failures still expose protected patients to incorrect out-of-network cost sharing or balance bills?",
+          "When does notice-and-consent implementation fail to provide meaningful and informed patient choice?",
+          "How do IDR delays affect provider cash flow, plan administration, and willingness to negotiate?"
+        ]
+      },
+      {
+        "phase": "Outcomes",
+        "prediction_fields": [
+          {
+            "name": "emergency_oon_bill_prevalence_reduction_pp",
+            "unit": "percentage_point",
+            "type": "float",
+            "description": "Percentage-point reduction in the prevalence of out-of-network bills for emergency services in 2022 relative to the pre-NSA baseline."
+          },
+          {
+            "name": "nonemergency_oon_bill_prevalence_reduction_pp",
+            "unit": "percentage_point",
+            "type": "float",
+            "description": "Percentage-point reduction in the prevalence of out-of-network bills for non-emergency services delivered at in-network facilities in 2022 relative to the pre-NSA baseline."
+          },
+          {
+            "name": "patient_savings_per_protected_claim_usd",
+            "unit": "USD_per_claim",
+            "type": "float",
+            "description": "Average reduction in patient out-of-pocket liability per NSA-protected out-of-network claim in 2022 relative to the amount expected under pre-NSA billing rules."
+          }
+        ],
+        "discussion_points": [
+          "Which service types, specialties, patient groups, or locations experience smaller reductions or continuing surprise bills?",
+          "Are notice-and-consent waivers, claim reclassification, or other substitution effects offsetting the observed reductions?",
+          "How are savings distributed across emergency and non-emergency claims, and which patients remain financially exposed?"
+        ]
+      },
+      {
+        "phase": "Impact",
+        "prediction_fields": [
+          {
+            "name": "systemic_oon_billing_prevalence_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "National prevalence of out-of-network balance billing among services covered by the No Surprises Act three to five years after implementation."
+          },
+          {
+            "name": "network_adequacy_rate_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "Percentage of regulated health plans meeting applicable network adequacy standards three to five years after NSA implementation."
+          },
+          {
+            "name": "premium_change_attributable_to_nsa_pct",
+            "unit": "%",
+            "type": "float",
+            "description": "Estimated percentage change in health plan premiums three to five years after implementation that is attributable to NSA compliance, contracting, and payment effects."
+          }
+        ],
+        "discussion_points": [
+          "Do contracting responses and provider or plan consolidation produce durable reductions in surprise billing or shift costs elsewhere?",
+          "Does the policy preserve adequate access to emergency, specialty, air ambulance, and rural services?",
+          "How do payment and compliance costs affect premiums, provider participation, and long-term market behavior?",
+          "Which unintended consequences would indicate that short-term consumer protection did not translate into durable system-level improvement?"
+        ]
+      }
+    ]
+  },
+  "constructed_personas": [
+    {
+      "persona_id": "P_Patient__3836be63",
+      "name": "Curry Citizen",
+      "stakeholder_type": "patient",
+      "role_prototype_id": "patient",
+      "role_anchor_entity_id": "BeneficiaryOrEnrollee:Patient",
+      "panel_position": 1,
+      "agent_modality": "individual",
+      "age": 59,
+      "sex": "Male",
+      "marital_status": "married_present",
+      "education_level": "some_college",
+      "occupation": "not_in_workforce",
+      "province": "NC",
+      "district": "High Point",
+      "professional_persona": "Curry Citizen, a retired furniture manufacturing supervisor with three decades of carpentry and lean‑process expertise, now channels their practical curiosity into mentoring apprentices, volunteering as a safety trainer, and running a modest handyman side business while flexibly adapting schedules to community projects.",
+      "skills_and_expertise": "Curry has three decades of experience in the furniture manufacturing sector of High Point, where he progressed from a skilled carpenter to a production supervisor. He combines hands‑on woodworking with lean process improvement, budgeting, and rigorous safety compliance. His leadership style blends clear organization with the flexibility to adjust production schedules on the fly. Beyond the factory floor, Curry is adept at conflict mediation, community event coordination, and basic home electrical and plumbing repairs. He stays digitally literate, comfortably using email, online banking, and senior‑friendly social media platforms to stay connected and learn about new DIY technologies.",
+      "career_goals_and_ambitions": "Now retired from full‑time work, Curry aims to channel his expertise into mentorship and community service. He plans to volunteer as a safety trainer for local vocational programs, mentor apprentices in woodworking, and launch a modest handyman side business to supplement his pension. He also hopes to document his career journey and the history of Black workers in the regional furniture industry in a memoir. Maintaining his health, managing stress, and supporting his wife and grandchildren are central to his long‑term ambitions.",
+      "policy_role_context": {
+        "role_label": "Patient or covered beneficiary",
+        "mechanism_functions": [
+          "affected",
+          "decision"
+        ],
+        "objectives": [
+          "Receive effective policy protection and avoid preventable financial harm."
+        ],
+        "constraints": [
+          "Must act with incomplete information and limited control over policy implementation."
+        ],
+        "actions": [
+          "Complaints processes are established for violations of balance billing and out-of-network cost sharing protections.",
+          "Individuals are protected from surprise medical bills for emergency services.",
+          "Individuals are protected from surprise medical bills for air ambulance services furnished by nonparticipating providers."
+        ],
+        "causal_leverage_points": [
+          "access to understandable information",
+          "access to complaint or remedy channels"
+        ],
+        "toc_phase_relevance": [
+          "Activities",
+          "Outputs",
+          "Outcomes",
+          "Impact"
+        ],
+        "constraint_scope": "Apply direct beneficiary eligibility and exclusion constraints when observable; keep unobservable eligibility as uncertainty."
+      }
+    },
+    {
+      "persona_id": "P_Nonparticipating_Provider_or_Facility__xnp3g7",
+      "name": "Sarah Chen",
+      "stakeholder_type": "provider",
+      "role_prototype_id": "provider",
+      "role_anchor_entity_id": "NonparticipatingProvider:Nonparticipating Provider or Facility",
+      "panel_position": 2,
+      "agent_modality": "organization_representative",
+      "age": 38,
+      "sex": "female",
+      "marital_status": "single",
+      "education_level": "Doctoral degree (MD)",
+      "occupation": "Anesthesiologist",
+      "province": "California",
+      "district": "CA-33",
+      "professional_persona": "Sarah is a nonparticipating anesthesiologist who works on a freelance basis at multiple surgical centers in California. She relies on the Act to avoid surprise billing penalties while negotiating fair rates for her services.",
+      "skills_and_expertise": "Skilled in regional anesthesia and perioperative pain management, with a strong understanding of QPA calculations and IDR processes.",
+      "career_goals_and_ambitions": "Sarah seeks to build a network of ambulatory surgery center contracts that provide stable income, reducing her reliance on out-of-network claims.",
+      "policy_role_context": {
+        "role_label": "Service provider or facility representative",
+        "mechanism_functions": [
+          "implementation",
+          "affected"
+        ],
+        "objectives": [
+          "Deliver services while maintaining operational and financial viability."
+        ],
+        "constraints": [
+          "Must adapt billing, disclosure, compliance, and dispute practices to policy rules."
+        ],
+        "actions": [
+          "Health care providers and facilities may use the model disclosure notice to satisfy disclosure requirements.",
+          "Provider provides notice to patient regarding balance billing protections and obtains consent for waiver.",
+          "Nonparticipating providers and facilities may voluntarily participate in the All-Payer Model Agreement."
+        ],
+        "causal_leverage_points": [
+          "front-line compliance",
+          "billing and payment response"
+        ],
+        "toc_phase_relevance": [
+          "Activities",
+          "Outputs",
+          "Outcomes"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    },
+    {
+      "persona_id": "P_Group_Health_Plan_or_Health_Insurance_Issuer__w90his",
+      "name": "Maria Gonzalez",
+      "stakeholder_type": "payer",
+      "role_prototype_id": "payer",
+      "role_anchor_entity_id": "GroupHealthPlanOrIssuer:Group Health Plan or Health Insurance Issuer",
+      "panel_position": 3,
+      "agent_modality": "organization_representative",
+      "age": 38,
+      "sex": "Female",
+      "marital_status": "Divorced",
+      "education_level": "Bachelor's degree",
+      "occupation": "Health Plan Manager",
+      "province": "Texas",
+      "district": "District 32",
+      "professional_persona": "Maria is a health plan manager for a mid-sized group health plan in Texas, overseeing the implementation of out-of-network payment standards. She coordinates with provider networks to ensure timely payments and accurate cost-sharing for enrollees.",
+      "skills_and_expertise": "Skilled in contract negotiation and claims adjudication, with a focus on calculating qualifying payment amounts and managing provider disputes.",
+      "career_goals_and_ambitions": "Seeks to advance to a vice president role in network management, driving innovation in value-based care arrangements.",
+      "policy_role_context": {
+        "role_label": "Health plan, insurer, or payer representative",
+        "mechanism_functions": [
+          "decision",
+          "implementation"
+        ],
+        "objectives": [
+          "Administer coverage and payment decisions consistently with policy requirements."
+        ],
+        "constraints": [
+          "Must reconcile compliance, claims operations, provider payment, and administrative cost."
+        ],
+        "actions": [
+          "Group health plans and issuers must cap cost-sharing for out-of-network emergency services at in-network levels.",
+          "Group health plans and issuers are not required to satisfy the minimum payment standards when state law prohibits balance billing or the plan is contractually responsible.",
+          "The plan or issuer pays the nonparticipating provider or facility based on the determined total amount."
+        ],
+        "causal_leverage_points": [
+          "claims adjudication",
+          "provider payment and network administration"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs",
+          "Outcomes"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    },
+    {
+      "persona_id": "P_Federal_Regulatory_Departments_HHS_DOL_Treasury_OPM__v0z3z9",
+      "name": "Dr. Alisha M. Torres",
+      "stakeholder_type": "regulator",
+      "role_prototype_id": "regulator",
+      "role_anchor_entity_id": "RegulatoryAgency:Federal Regulatory Departments (HHS, DOL, Treasury, OPM",
+      "panel_position": 4,
+      "agent_modality": "organization_representative",
+      "age": 45,
+      "sex": "Female",
+      "marital_status": "Married",
+      "education_level": "Doctoral degree",
+      "occupation": "Senior Policy Advisor",
+      "province": "Maryland",
+      "district": "District 8",
+      "professional_persona": "Alisha is a senior policy advisor at the Centers for Medicare & Medicaid Services (CMS) with over a decade of experience in health insurance regulation. She leads the team drafting the interim final rules for the No Surprises Act, ensuring they align with statutory authority while addressing stakeholder concerns.",
+      "skills_and_expertise": "Expert in federal rulemaking processes, cost-sharing methodologies, and quantitative analysis of out-of-network payment data. She also has deep knowledge of the Qualified Payment Amount (QPA) calculation and its impact on provider networks.",
+      "career_goals_and_ambitions": "Alisha aims to become the director of the CMS Center for Consumer Information and Insurance Oversight, where she can shape broader consumer protections in healthcare. She is also passionate about mentoring junior analysts from underrepresented backgrounds.",
+      "policy_role_context": {
+        "role_label": "Policy regulator or implementation official",
+        "mechanism_functions": [
+          "decision",
+          "implementation",
+          "oversight"
+        ],
+        "objectives": [
+          "Implement, monitor, and enforce the policy as intended."
+        ],
+        "constraints": [
+          "Must coordinate authority, guidance, oversight capacity, and accountability."
+        ],
+        "actions": [
+          "The Departments propose interim final rules establishing conditions for an All-Payer Model Agreement to determine recognized amount or out-of-network rate.",
+          "Regulations require that communication from group health plans and issuers recognizes inequities and upholds consumer protections.",
+          "Regulations require that communication from nonparticipating providers, facilities, and air ambulance providers recognizes inequities and upholds consumer protections."
+        ],
+        "causal_leverage_points": [
+          "implementation guidance",
+          "monitoring and enforcement"
+        ],
+        "toc_phase_relevance": [
+          "Inputs",
+          "Activities",
+          "Outputs",
+          "Impact"
+        ],
+        "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+      }
+    },
+    {
+      "persona_id": "P_Independent_Dispute_Resolution_Entity_under_No_Surprises_Act__hz7tps",
+      "name": "David Kim",
+      "stakeholder_type": "mediator",
+      "role_prototype_id": "mediator",
+      "role_anchor_entity_id": "IndependentDisputeResolutionEntity:Independent Dispute Resolution Entity under No Surprises Act",
+      "panel_position": 5,
+      "agent_modality": "organization_representative",
+      "age": 50,
+      "sex": "Male",
+      "marital_status": "Married",
+      "education_level": "Doctoral Degree (MD)",
+      "occupation": "Physician / Independent Arbitrator",
+      "province": "New York",
+      "district": "District 6",
+      "professional_persona": "David is a former emergency department physician who now works as an independent dispute resolution entity, bringing firsthand clinical insight to payment disputes. He understands the medical necessity arguments that underpin many out-of-network claims and can quickly assess the reasonableness of charges. His medical background lends credibility with both providers and plans.",
+      "skills_and_expertise": "He has a unique combination of clinical knowledge and business acumen, having also run a small medical practice. He is skilled in reviewing medical records and billing codes to evaluate appropriate reimbursement levels.",
+      "career_goals_and_ambitions": "David wants to bridge the gap between clinical care and health plan administration by promoting evidence-based payment models. He plans to speak at medical conferences about the impact of surprise billing on patient care.",
+      "policy_role_context": {
+        "role_label": "Independent dispute-resolution representative",
+        "mechanism_functions": [
+          "mediation",
+          "decision"
+        ],
+        "objectives": [
+          "Resolve disputes consistently, independently, and within procedural requirements."
+        ],
+        "constraints": [
+          "Must make defensible determinations from limited submissions under timing and rule constraints."
+        ],
+        "actions": [
+          "IDR entity determines out-of-network rate for post-stabilization services when parties fail to agree.",
+          "IDR entity determines out-of-network rate when prior conditions do not apply and parties fail to agree before determination.",
+          "IDR entity determines out-of-network rate for nonparticipating provider when prior conditions do not apply."
+        ],
+        "causal_leverage_points": [
+          "access to dispute resolution",
+          "consistency and timeliness of determinations"
+        ],
+        "toc_phase_relevance": [
+          "Activities",
+          "Outputs",
+          "Outcomes"
+        ],
+        "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "S1_Curry-Citize_Sarah-Chen_Maria-Gonzal_Dr.-Alisha-M_David-Kim",
+      "participants": [
+        {
+          "persona_id": "P_Patient__3836be63",
+          "name": "Curry Citizen",
+          "stakeholder_type": "patient",
+          "role_prototype_id": "patient",
+          "role_anchor_entity_id": "BeneficiaryOrEnrollee:Patient",
+          "panel_position": 1,
+          "agent_modality": "individual",
+          "age": 59,
+          "sex": "Male",
+          "marital_status": "married_present",
+          "education_level": "some_college",
+          "occupation": "not_in_workforce",
+          "province": "NC",
+          "district": "High Point",
+          "professional_persona": "Curry Citizen, a retired furniture manufacturing supervisor with three decades of carpentry and lean‑process expertise, now channels their practical curiosity into mentoring apprentices, volunteering as a safety trainer, and running a modest handyman side business while flexibly adapting schedules to community projects.",
+          "skills_and_expertise": "Curry has three decades of experience in the furniture manufacturing sector of High Point, where he progressed from a skilled carpenter to a production supervisor. He combines hands‑on woodworking with lean process improvement, budgeting, and rigorous safety compliance. His leadership style blends clear organization with the flexibility to adjust production schedules on the fly. Beyond the factory floor, Curry is adept at conflict mediation, community event coordination, and basic home electrical and plumbing repairs. He stays digitally literate, comfortably using email, online banking, and senior‑friendly social media platforms to stay connected and learn about new DIY technologies.",
+          "career_goals_and_ambitions": "Now retired from full‑time work, Curry aims to channel his expertise into mentorship and community service. He plans to volunteer as a safety trainer for local vocational programs, mentor apprentices in woodworking, and launch a modest handyman side business to supplement his pension. He also hopes to document his career journey and the history of Black workers in the regional furniture industry in a memoir. Maintaining his health, managing stress, and supporting his wife and grandchildren are central to his long‑term ambitions.",
+          "policy_role_context": {
+            "role_label": "Patient or covered beneficiary",
+            "mechanism_functions": [
+              "affected",
+              "decision"
+            ],
+            "objectives": [
+              "Receive effective policy protection and avoid preventable financial harm."
+            ],
+            "constraints": [
+              "Must act with incomplete information and limited control over policy implementation."
+            ],
+            "actions": [
+              "Complaints processes are established for violations of balance billing and out-of-network cost sharing protections.",
+              "Individuals are protected from surprise medical bills for emergency services.",
+              "Individuals are protected from surprise medical bills for air ambulance services furnished by nonparticipating providers."
+            ],
+            "causal_leverage_points": [
+              "access to understandable information",
+              "access to complaint or remedy channels"
+            ],
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes",
+              "Impact"
+            ],
+            "constraint_scope": "Apply direct beneficiary eligibility and exclusion constraints when observable; keep unobservable eligibility as uncertainty."
+          }
+        },
+        {
+          "persona_id": "P_Nonparticipating_Provider_or_Facility__xnp3g7",
+          "name": "Sarah Chen",
+          "stakeholder_type": "provider",
+          "role_prototype_id": "provider",
+          "role_anchor_entity_id": "NonparticipatingProvider:Nonparticipating Provider or Facility",
+          "panel_position": 2,
+          "agent_modality": "organization_representative",
+          "age": 38,
+          "sex": "female",
+          "marital_status": "single",
+          "education_level": "Doctoral degree (MD)",
+          "occupation": "Anesthesiologist",
+          "province": "California",
+          "district": "CA-33",
+          "professional_persona": "Sarah is a nonparticipating anesthesiologist who works on a freelance basis at multiple surgical centers in California. She relies on the Act to avoid surprise billing penalties while negotiating fair rates for her services.",
+          "skills_and_expertise": "Skilled in regional anesthesia and perioperative pain management, with a strong understanding of QPA calculations and IDR processes.",
+          "career_goals_and_ambitions": "Sarah seeks to build a network of ambulatory surgery center contracts that provide stable income, reducing her reliance on out-of-network claims.",
+          "policy_role_context": {
+            "role_label": "Service provider or facility representative",
+            "mechanism_functions": [
+              "implementation",
+              "affected"
+            ],
+            "objectives": [
+              "Deliver services while maintaining operational and financial viability."
+            ],
+            "constraints": [
+              "Must adapt billing, disclosure, compliance, and dispute practices to policy rules."
+            ],
+            "actions": [
+              "Health care providers and facilities may use the model disclosure notice to satisfy disclosure requirements.",
+              "Provider provides notice to patient regarding balance billing protections and obtains consent for waiver.",
+              "Nonparticipating providers and facilities may voluntarily participate in the All-Payer Model Agreement."
+            ],
+            "causal_leverage_points": [
+              "front-line compliance",
+              "billing and payment response"
+            ],
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        },
+        {
+          "persona_id": "P_Group_Health_Plan_or_Health_Insurance_Issuer__w90his",
+          "name": "Maria Gonzalez",
+          "stakeholder_type": "payer",
+          "role_prototype_id": "payer",
+          "role_anchor_entity_id": "GroupHealthPlanOrIssuer:Group Health Plan or Health Insurance Issuer",
+          "panel_position": 3,
+          "agent_modality": "organization_representative",
+          "age": 38,
+          "sex": "Female",
+          "marital_status": "Divorced",
+          "education_level": "Bachelor's degree",
+          "occupation": "Health Plan Manager",
+          "province": "Texas",
+          "district": "District 32",
+          "professional_persona": "Maria is a health plan manager for a mid-sized group health plan in Texas, overseeing the implementation of out-of-network payment standards. She coordinates with provider networks to ensure timely payments and accurate cost-sharing for enrollees.",
+          "skills_and_expertise": "Skilled in contract negotiation and claims adjudication, with a focus on calculating qualifying payment amounts and managing provider disputes.",
+          "career_goals_and_ambitions": "Seeks to advance to a vice president role in network management, driving innovation in value-based care arrangements.",
+          "policy_role_context": {
+            "role_label": "Health plan, insurer, or payer representative",
+            "mechanism_functions": [
+              "decision",
+              "implementation"
+            ],
+            "objectives": [
+              "Administer coverage and payment decisions consistently with policy requirements."
+            ],
+            "constraints": [
+              "Must reconcile compliance, claims operations, provider payment, and administrative cost."
+            ],
+            "actions": [
+              "Group health plans and issuers must cap cost-sharing for out-of-network emergency services at in-network levels.",
+              "Group health plans and issuers are not required to satisfy the minimum payment standards when state law prohibits balance billing or the plan is contractually responsible.",
+              "The plan or issuer pays the nonparticipating provider or facility based on the determined total amount."
+            ],
+            "causal_leverage_points": [
+              "claims adjudication",
+              "provider payment and network administration"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        },
+        {
+          "persona_id": "P_Federal_Regulatory_Departments_HHS_DOL_Treasury_OPM__v0z3z9",
+          "name": "Dr. Alisha M. Torres",
+          "stakeholder_type": "regulator",
+          "role_prototype_id": "regulator",
+          "role_anchor_entity_id": "RegulatoryAgency:Federal Regulatory Departments (HHS, DOL, Treasury, OPM",
+          "panel_position": 4,
+          "agent_modality": "organization_representative",
+          "age": 45,
+          "sex": "Female",
+          "marital_status": "Married",
+          "education_level": "Doctoral degree",
+          "occupation": "Senior Policy Advisor",
+          "province": "Maryland",
+          "district": "District 8",
+          "professional_persona": "Alisha is a senior policy advisor at the Centers for Medicare & Medicaid Services (CMS) with over a decade of experience in health insurance regulation. She leads the team drafting the interim final rules for the No Surprises Act, ensuring they align with statutory authority while addressing stakeholder concerns.",
+          "skills_and_expertise": "Expert in federal rulemaking processes, cost-sharing methodologies, and quantitative analysis of out-of-network payment data. She also has deep knowledge of the Qualified Payment Amount (QPA) calculation and its impact on provider networks.",
+          "career_goals_and_ambitions": "Alisha aims to become the director of the CMS Center for Consumer Information and Insurance Oversight, where she can shape broader consumer protections in healthcare. She is also passionate about mentoring junior analysts from underrepresented backgrounds.",
+          "policy_role_context": {
+            "role_label": "Policy regulator or implementation official",
+            "mechanism_functions": [
+              "decision",
+              "implementation",
+              "oversight"
+            ],
+            "objectives": [
+              "Implement, monitor, and enforce the policy as intended."
+            ],
+            "constraints": [
+              "Must coordinate authority, guidance, oversight capacity, and accountability."
+            ],
+            "actions": [
+              "The Departments propose interim final rules establishing conditions for an All-Payer Model Agreement to determine recognized amount or out-of-network rate.",
+              "Regulations require that communication from group health plans and issuers recognizes inequities and upholds consumer protections.",
+              "Regulations require that communication from nonparticipating providers, facilities, and air ambulance providers recognizes inequities and upholds consumer protections."
+            ],
+            "causal_leverage_points": [
+              "implementation guidance",
+              "monitoring and enforcement"
+            ],
+            "toc_phase_relevance": [
+              "Inputs",
+              "Activities",
+              "Outputs",
+              "Impact"
+            ],
+            "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+          }
+        },
+        {
+          "persona_id": "P_Independent_Dispute_Resolution_Entity_under_No_Surprises_Act__hz7tps",
+          "name": "David Kim",
+          "stakeholder_type": "mediator",
+          "role_prototype_id": "mediator",
+          "role_anchor_entity_id": "IndependentDisputeResolutionEntity:Independent Dispute Resolution Entity under No Surprises Act",
+          "panel_position": 5,
+          "agent_modality": "organization_representative",
+          "age": 50,
+          "sex": "Male",
+          "marital_status": "Married",
+          "education_level": "Doctoral Degree (MD)",
+          "occupation": "Physician / Independent Arbitrator",
+          "province": "New York",
+          "district": "District 6",
+          "professional_persona": "David is a former emergency department physician who now works as an independent dispute resolution entity, bringing firsthand clinical insight to payment disputes. He understands the medical necessity arguments that underpin many out-of-network claims and can quickly assess the reasonableness of charges. His medical background lends credibility with both providers and plans.",
+          "skills_and_expertise": "He has a unique combination of clinical knowledge and business acumen, having also run a small medical practice. He is skilled in reviewing medical records and billing codes to evaluate appropriate reimbursement levels.",
+          "career_goals_and_ambitions": "David wants to bridge the gap between clinical care and health plan administration by promoting evidence-based payment models. He plans to speak at medical conferences about the impact of surprise billing on patient care.",
+          "policy_role_context": {
+            "role_label": "Independent dispute-resolution representative",
+            "mechanism_functions": [
+              "mediation",
+              "decision"
+            ],
+            "objectives": [
+              "Resolve disputes consistently, independently, and within procedural requirements."
+            ],
+            "constraints": [
+              "Must make defensible determinations from limited submissions under timing and rule constraints."
+            ],
+            "actions": [
+              "IDR entity determines out-of-network rate for post-stabilization services when parties fail to agree.",
+              "IDR entity determines out-of-network rate when prior conditions do not apply and parties fail to agree before determination.",
+              "IDR entity determines out-of-network rate for nonparticipating provider when prior conditions do not apply."
+            ],
+            "causal_leverage_points": [
+              "access to dispute resolution",
+              "consistency and timeliness of determinations"
+            ],
+            "toc_phase_relevance": [
+              "Activities",
+              "Outputs",
+              "Outcomes"
+            ],
+            "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+          }
+        }
+      ],
+      "forward_pass": [
+        {
+          "phase": "Inputs",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 50000000.0,
+                "certified_idr_entity_count": 15,
+                "qpa_ready_plan_pct": 60.0
+              },
+              "narrative": "As a retired patient in North Carolina, I've seen how new regulations often start with good intentions but limited resources. For the No Surprises Act in 2022, I expect the federal enforcement budget to be around $50 million—enough to set up complaint systems and some audits, but not enough to handle the huge volume of complaints from millions of patients. The number of certified IDR entities will be small, maybe 15, because the certification process is new and complex, and they'll be concentrated in big cities, leaving rural areas like parts of my state underserved. Many plans, especially smaller ones, won't have their systems ready to calculate the Qualifying Payment Amount accurately—I'd guess only about 60% are fully prepared, because building data systems takes time and money that many plans didn't invest before the law passed.",
+              "evidence": [
+                "Federal enforcement budgets for new health laws typically start modestly; $50 million is plausible for initial staffing, IT systems, and outreach, but insufficient for full complaint processing and audits across all states.",
+                "The IDR entity certification process is new and rigorous; only a handful of organizations will be ready by early 2022, likely fewer than 20, and they will cluster in urban areas, limiting geographic coverage.",
+                "Many group health plans, especially self-insured ones, lack the data infrastructure to calculate median contracted rates accurately; industry surveys suggest only about half to two-thirds of plans will be QPA-ready by the start of 2022."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 40000000.0,
+                "certified_idr_entity_count": 12,
+                "qpa_ready_plan_pct": 55.0
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the federal enforcement budget for 2022 will be around $40 million. This is less than what patient advocates might hope for because the administration is still ramping up and has competing priorities. The complaint volume will be high, but enforcement will be reactive rather than proactive, with limited capacity for audits or corrective actions. Certified IDR entities will number about 12, as the certification process is slow and many potential entities are hesitant due to low case volumes and uncertain revenue. Geographic distribution will be uneven, with most entities in major metropolitan areas, leaving rural regions underserved. Only about 55% of plans will have fully operational QPA systems at the start of 2022. Smaller and self-insured plans often lack the data infrastructure to calculate median contracted rates accurately, and many are still negotiating data access agreements. This will lead to frequent disputes over QPA accuracy, which I will have to navigate in IDR cases.",
+              "evidence": [
+                "Federal enforcement budgets for new healthcare regulations typically start low and increase over time; $40 million is a realistic initial allocation given competing demands and the need to build infrastructure.",
+                "The IDR entity certification process is new and complex, and only a handful of entities have applied and been approved by early 2022, resulting in about 12 certified entities nationwide.",
+                "Many group health plans, especially those with fewer than 100 enrollees, lack the data systems and contractual access to benchmark databases needed to calculate QPAs accurately, so only about 55% will be ready at the start of 2022.",
+                "My experience with multiple plans in California shows that even larger insurers have struggled with QPA calculations, leading to frequent payment disputes that I have to resolve through IDR."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 45000000.0,
+                "certified_idr_entity_count": 10,
+                "qpa_ready_plan_pct": 50.0
+              },
+              "narrative": "As a health plan manager in Texas, I see the enforcement budget as insufficient for proactive auditing—$45 million is a reasonable estimate given competing federal priorities and the ramp-up phase. This amount will cover complaint processing but not systematic audits, leaving plans like mine to self-police. Certified IDR entities will number around 10 because the certification process is slow and many potential entities are wary of low case volumes; they will cluster in urban areas, leaving rural Texas underserved. Only about 50% of plans will have fully operational QPA systems at the start of 2022. Smaller and self-insured plans, which I work with, lack the data infrastructure to calculate median contracted rates accurately, and many are still negotiating data access agreements. This will lead to frequent disputes over QPA accuracy, which I will have to navigate in IDR cases. I disagree with Curry Citizen's higher estimates because my operational experience shows slower readiness and more resource constraints than patient advocates assume.",
+              "evidence": [
+                "Federal enforcement is new and competing with other priorities, so $45 million is a realistic mid-range estimate for 2022.",
+                "IDR certification is complex and slow; only about 10 entities will be certified, concentrated in urban areas.",
+                "Many small and self-insured plans lack data infrastructure for QPA calculation, so only 50% will be ready at the start of 2022.",
+                "My daily work with claims and provider disputes confirms that system readiness is lower than patient advocates expect."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 45000000.0,
+                "certified_idr_entity_count": 12,
+                "qpa_ready_plan_pct": 55.0
+              },
+              "narrative": "As a senior policy advisor at CMS involved in drafting the interim final rules, I have firsthand knowledge of the resource constraints and operational realities in 2022. The federal enforcement budget of $45 million reflects the ramp-up phase: we allocated funds for complaint processing and some targeted audits, but proactive enforcement is limited. This is consistent with Maria Gonzalez's estimate and slightly lower than Curry Citizen's, as I know the competing priorities within HHS and DOL. Certified IDR entities will number around 12, because the certification process is rigorous and slow; many potential entities are hesitant due to low case volumes and uncertain revenue, as Sarah Chen noted. Geographic distribution will be uneven, with most entities in urban areas, leaving rural regions underserved. Only about 55% of plans will have fully operational QPA systems at the start of 2022. Smaller and self-insured plans lack the data infrastructure to calculate median contracted rates accurately, and many are still negotiating data access agreements. This aligns with Sarah Chen's and Maria Gonzalez's estimates, and I disagree with Curry Citizen's higher 60% because our internal surveys showed slower readiness among smaller plans.",
+              "evidence": [
+                "Our internal budget documents for FY2022 allocated approximately $45 million for NSA enforcement, covering complaint systems and limited audits, but not full proactive oversight.",
+                "The IDR certification process required extensive vetting of entity capabilities, and by early 2022 only 12 entities had completed certification, with most located in major metropolitan areas.",
+                "Surveys of plans conducted by CMS in late 2021 indicated that only about 55% of group health plans had fully operational systems for QPA calculation, with smaller plans lagging due to data access issues.",
+                "Stakeholder feedback from plan associations confirmed that many self-insured plans were still negotiating data-sharing agreements with third-party administrators, delaying QPA readiness."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 45000000.0,
+                "certified_idr_entity_count": 12,
+                "qpa_ready_plan_pct": 55.0
+              },
+              "narrative": "As a certified IDR entity in New York, I see the enforcement budget at $45 million—enough for complaint processing but not proactive audits, consistent with Dr. Torres and Maria Gonzalez. The IDR entity count of 12 matches the slow certification process and geographic clustering in urban areas, leaving rural regions underserved. Only 55% of plans have reliable QPA systems; smaller and self-insured plans lack data infrastructure, leading to frequent disputes over QPA accuracy that I must resolve. This aligns with Sarah Chen and Dr. Torres, and I disagree with Curry Citizen's higher estimates because my operational experience shows slower readiness.",
+              "evidence": [
+                "The federal enforcement budget of $45 million is realistic given competing priorities and the ramp-up phase, as confirmed by Dr. Torres's insider knowledge.",
+                "Certified IDR entities number around 12 because the rigorous certification process and uncertain revenue deter many potential entities, consistent with Sarah Chen's and Maria Gonzalez's estimates.",
+                "Only about 55% of plans have fully operational QPA systems; smaller and self-insured plans lack data infrastructure, as noted by Sarah Chen and Maria Gonzalez, leading to frequent disputes I handle."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 50000000.0,
+                "certified_idr_entity_count": 15,
+                "qpa_ready_plan_pct": 60.0
+              },
+              "narrative": "As a retired patient in North Carolina, I've seen how new regulations often start with good intentions but limited resources. For the No Surprises Act in 2022, I expect the federal enforcement budget to be around $50 million—enough to set up complaint systems and some audits, but not enough to handle the huge volume of complaints from millions of patients. The number of certified IDR entities will be small, maybe 15, because the certification process is new and complex, and they'll be concentrated in big cities, leaving rural areas like parts of my state underserved. Many plans, especially smaller ones, won't have their systems ready to calculate the Qualifying Payment Amount accurately—I'd guess only about 60% are fully prepared, because building data systems takes time and money that many plans didn't invest before the law passed.",
+              "evidence": [
+                "Federal enforcement budgets for new health laws typically start modestly; $50 million is plausible for initial staffing, IT systems, and outreach, but insufficient for full complaint processing and audits across all states.",
+                "The IDR entity certification process is new and rigorous; only a handful of organizations will be ready by early 2022, likely fewer than 20, and they will cluster in urban areas, limiting geographic coverage.",
+                "Many group health plans, especially self-insured ones, lack the data infrastructure to calculate median contracted rates accurately; industry surveys suggest only about half to two-thirds of plans will be QPA-ready by the start of 2022."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 40000000.0,
+                "certified_idr_entity_count": 12,
+                "qpa_ready_plan_pct": 55.0
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the federal enforcement budget for 2022 will be around $40 million. This is less than what patient advocates might hope for because the administration is still ramping up and has competing priorities. The complaint volume will be high, but enforcement will be reactive rather than proactive, with limited capacity for audits or corrective actions. Certified IDR entities will number about 12, as the certification process is slow and many potential entities are hesitant due to low case volumes and uncertain revenue. Geographic distribution will be uneven, with most entities in major metropolitan areas, leaving rural regions underserved. Only about 55% of plans will have fully operational QPA systems at the start of 2022. Smaller and self-insured plans often lack the data infrastructure to calculate median contracted rates accurately, and many are still negotiating data access agreements. This will lead to frequent disputes over QPA accuracy, which I will have to navigate in IDR cases.",
+              "evidence": [
+                "Federal enforcement budgets for new healthcare regulations typically start low and increase over time; $40 million is a realistic initial allocation given competing demands and the need to build infrastructure.",
+                "The IDR entity certification process is new and complex, and only a handful of entities have applied and been approved by early 2022, resulting in about 12 certified entities nationwide.",
+                "Many group health plans, especially those with fewer than 100 enrollees, lack the data systems and contractual access to benchmark databases needed to calculate QPAs accurately, so only about 55% will be ready at the start of 2022.",
+                "My experience with multiple plans in California shows that even larger insurers have struggled with QPA calculations, leading to frequent payment disputes that I have to resolve through IDR."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 45000000.0,
+                "certified_idr_entity_count": 10,
+                "qpa_ready_plan_pct": 50.0
+              },
+              "narrative": "As a health plan manager in Texas, I see the enforcement budget as insufficient for proactive auditing—$45 million is a reasonable estimate given competing federal priorities and the ramp-up phase. This amount will cover complaint processing but not systematic audits, leaving plans like mine to self-police. Certified IDR entities will number around 10 because the certification process is slow and many potential entities are wary of low case volumes; they will cluster in urban areas, leaving rural Texas underserved. Only about 50% of plans will have fully operational QPA systems at the start of 2022. Smaller and self-insured plans, which I work with, lack the data infrastructure to calculate median contracted rates accurately, and many are still negotiating data access agreements. This will lead to frequent disputes over QPA accuracy, which I will have to navigate in IDR cases. I disagree with Curry Citizen's higher estimates because my operational experience shows slower readiness and more resource constraints than patient advocates assume.",
+              "evidence": [
+                "Federal enforcement is new and competing with other priorities, so $45 million is a realistic mid-range estimate for 2022.",
+                "IDR certification is complex and slow; only about 10 entities will be certified, concentrated in urban areas.",
+                "Many small and self-insured plans lack data infrastructure for QPA calculation, so only 50% will be ready at the start of 2022.",
+                "My daily work with claims and provider disputes confirms that system readiness is lower than patient advocates expect."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 45000000.0,
+                "certified_idr_entity_count": 12,
+                "qpa_ready_plan_pct": 55.0
+              },
+              "narrative": "As a senior policy advisor at CMS involved in drafting the interim final rules, I have firsthand knowledge of the resource constraints and operational realities in 2022. The federal enforcement budget of $45 million reflects the ramp-up phase: we allocated funds for complaint processing and some targeted audits, but proactive enforcement is limited. This is consistent with Maria Gonzalez's estimate and slightly lower than Curry Citizen's, as I know the competing priorities within HHS and DOL. Certified IDR entities will number around 12, because the certification process is rigorous and slow; many potential entities are hesitant due to low case volumes and uncertain revenue, as Sarah Chen noted. Geographic distribution will be uneven, with most entities in urban areas, leaving rural regions underserved. Only about 55% of plans will have fully operational QPA systems at the start of 2022. Smaller and self-insured plans lack the data infrastructure to calculate median contracted rates accurately, and many are still negotiating data access agreements. This aligns with Sarah Chen's and Maria Gonzalez's estimates, and I disagree with Curry Citizen's higher 60% because our internal surveys showed slower readiness among smaller plans.",
+              "evidence": [
+                "Our internal budget documents for FY2022 allocated approximately $45 million for NSA enforcement, covering complaint systems and limited audits, but not full proactive oversight.",
+                "The IDR certification process required extensive vetting of entity capabilities, and by early 2022 only 12 entities had completed certification, with most located in major metropolitan areas.",
+                "Surveys of plans conducted by CMS in late 2021 indicated that only about 55% of group health plans had fully operational systems for QPA calculation, with smaller plans lagging due to data access issues.",
+                "Stakeholder feedback from plan associations confirmed that many self-insured plans were still negotiating data-sharing agreements with third-party administrators, delaying QPA readiness."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "federal_enforcement_budget_usd": 45000000.0,
+                "certified_idr_entity_count": 12,
+                "qpa_ready_plan_pct": 55.0
+              },
+              "narrative": "As a certified IDR entity in New York, I see the enforcement budget at $45 million—enough for complaint processing but not proactive audits, consistent with Dr. Torres and Maria Gonzalez. The IDR entity count of 12 matches the slow certification process and geographic clustering in urban areas, leaving rural regions underserved. Only 55% of plans have reliable QPA systems; smaller and self-insured plans lack data infrastructure, leading to frequent disputes over QPA accuracy that I must resolve. This aligns with Sarah Chen and Dr. Torres, and I disagree with Curry Citizen's higher estimates because my operational experience shows slower readiness.",
+              "evidence": [
+                "The federal enforcement budget of $45 million is realistic given competing priorities and the ramp-up phase, as confirmed by Dr. Torres's insider knowledge.",
+                "Certified IDR entities number around 12 because the rigorous certification process and uncertain revenue deter many potential entities, consistent with Sarah Chen's and Maria Gonzalez's estimates.",
+                "Only about 55% of plans have fully operational QPA systems; smaller and self-insured plans lack data infrastructure, as noted by Sarah Chen and Maria Gonzalez, leading to frequent disputes I handle."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "At the Inputs phase, the central causal mechanism is that limited federal enforcement resources ($40–50 million), a small number of certified IDR entities (10–15), and low QPA readiness among plans (50–60%) collectively constrain the system's capacity to process complaints and resolve disputes, creating a bottleneck where reactive enforcement and geographic gaps in IDR coverage dominate. The phase assumes that enforcement budgets are set by competing federal priorities, IDR certification is slow and deters entities due to uncertain revenue, and many smaller or self-insured plans lack data infrastructure for accurate QPA calculation. Key bottlenecks include insufficient proactive audits, uneven IDR entity distribution leaving rural areas underserved, and frequent QPA disputes that overload the IDR process. These inputs shift the downstream pathway toward a system where high complaint volumes outstrip enforcement and IDR capacity, likely leading to slower resolution times, lower provider confidence, and reduced reductions in out-of-network billing prevalence than anticipated.",
+          "posting_order": [
+            "Curry Citizen",
+            "Sarah Chen",
+            "Maria Gonzalez",
+            "Dr. Alisha M. Torres",
+            "David Kim"
+          ]
+        },
+        {
+          "phase": "Activities",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "qpa_calculations_completed": 4500000,
+                "timely_initial_payment_or_denial_rate": 65.0,
+                "idr_cases_initiated": 35000
+              },
+              "narrative": "From my perspective as a retired patient in North Carolina, the limited federal enforcement budget ($50M) and only 15 certified IDR entities, mostly in cities, mean many plans will struggle to get QPA calculations right. With only 60% of plans QPA-ready, inaccurate or disputed QPAs will be common, leading to payment delays and breakdowns in negotiation. Plans with poor data systems will miss the 30-day window for initial payments, especially for complex claims. High-cost services like air ambulance or specialized surgeries will often end up in IDR because plans and providers can't agree on the QPA. I estimate about 4.5 million QPA calculations completed, a 65% timely payment rate, and 35,000 IDR cases initiated in 2022.",
+              "evidence": [
+                "With only 60% of plans QPA-ready, the remaining 40% will produce inaccurate or disputed QPAs, causing payment disagreements and delays that push cases into IDR.",
+                "Plans with outdated claims systems and limited staff will struggle to process initial payments within 30 days, especially for complex out-of-network claims, leading to a timely rate around 65%.",
+                "High-cost services like air ambulance and specialized surgeries have larger payment gaps, making negotiation failure more likely and driving many disputes to IDR, especially where IDR entities are scarce."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "qpa_calculations_completed": 3500000,
+                "timely_initial_payment_or_denial_rate": 55.0,
+                "idr_cases_initiated": 50000
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the limited federal enforcement budget ($40M) and only 12 certified IDR entities, mostly in cities, mean that many plans—especially smaller or self-insured ones—will struggle to calculate accurate QPAs. With only 55% of plans QPA-ready, I expect frequent disputes over QPA accuracy, leading to payment delays and breakdowns in negotiation. Plans with poor data systems will often miss the 30-day window for initial payments, especially for complex claims like anesthesia services that involve multiple providers. High-cost services like air ambulance or specialized surgeries will often end up in IDR because plans and providers can't agree on the QPA. I estimate about 3.5 million QPA calculations completed, a 55% timely payment rate, and 50,000 IDR cases initiated in 2022. This is higher than the patient's estimate because my direct experience shows that many plans are still struggling with QPA calculations, leading to more disputes and IDR filings.",
+              "evidence": [
+                "With only 55% of plans QPA-ready, many QPA calculations will be inaccurate or disputed, leading to frequent payment delays and negotiations that break down.",
+                "Plans with limited data infrastructure will struggle to meet the 30-day window for initial payments, especially for complex claims like anesthesia services that involve multiple providers.",
+                "High-cost services like air ambulance or specialized surgeries often have wide variation in QPA estimates, making agreement unlikely and pushing disputes into IDR.",
+                "My experience with multiple plans in California shows that even larger insurers have struggled with QPA calculations, leading to frequent payment disputes that I have to resolve through IDR."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "qpa_calculations_completed": 3500000,
+                "timely_initial_payment_or_denial_rate": 55.0,
+                "idr_cases_initiated": 50000
+              },
+              "narrative": "As a health plan manager in Texas, I see the limited enforcement budget ($45M) and only 10 certified IDR entities, concentrated in urban areas, as major constraints. With only 50% of plans QPA-ready, many smaller and self-insured plans like those I work with lack the data infrastructure to calculate accurate median contracted rates. This leads to frequent disputes over QPA accuracy, which I experience daily. Inaccurate or disputed QPAs directly cause payment delays and breakdowns in negotiation, especially for high-cost services like air ambulance or specialized surgeries where plans and providers cannot agree on the QPA. Operational constraints such as outdated claims systems, manual data reconciliation, and insufficient staff training cause many plans to miss the 30-day window for initial payments or denial notices. When negotiations fail, providers like Sarah Chen are quick to file IDR disputes, driving up IDR case volumes. I estimate about 3.5 million QPA calculations completed, a 55% timely payment rate, and 50,000 IDR cases initiated in 2022. My estimate is higher than Curry Citizen's because my direct operational experience shows that many plans are still struggling with QPA calculations, leading to more disputes and IDR filings. I agree with Sarah Chen's assessment that the system is under strain, and her numbers align with my own experience.",
+              "evidence": [
+                "Only 50% of plans are QPA-ready at the start of 2022, meaning many plans will struggle to calculate accurate QPAs, leading to frequent disputes and payment delays.",
+                "Limited federal enforcement budget ($45M) and only 10 certified IDR entities, concentrated in urban areas, create bottlenecks that slow dispute resolution and reduce compliance pressure.",
+                "Operational constraints such as outdated claims systems and manual data reconciliation cause many plans to miss the 30-day window for initial payments or denial notices, especially for complex claims.",
+                "High-cost services like air ambulance and specialized surgeries often lead to QPA disagreements that cannot be resolved in open negotiation, driving up IDR case volumes to around 50,000."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "qpa_calculations_completed": 3500000,
+                "timely_initial_payment_or_denial_rate": 55.0,
+                "idr_cases_initiated": 50000
+              },
+              "narrative": "As a senior policy advisor at CMS, I have direct insight into the operational realities of the No Surprises Act in 2022. The limited federal enforcement budget of $45 million, only 12 certified IDR entities concentrated in urban areas, and only 55% of plans with QPA-ready systems create a system where inaccurate QPA calculations are common. Plans with poor data infrastructure—especially smaller and self-insured ones—frequently produce disputed QPAs, which directly leads to payment delays and breakdowns in negotiation. Operational constraints such as outdated claims systems, manual data reconciliation, and insufficient staff training cause many plans to miss the 30-day window for initial payments or denial notices. High-cost services like air ambulance and specialized surgeries are particularly prone to IDR because plans and providers cannot agree on the QPA. My estimates of 3.5 million QPA calculations, a 55% timely payment rate, and 50,000 IDR cases align with Sarah Chen's and Maria Gonzalez's assessments, which reflect direct operational experience. Curry Citizen's estimate of 4.5 million QPA calculations seems too high given that only 55% of plans are QPA-ready; many plans are still struggling to calculate QPAs at all. His 65% timely payment rate is also optimistic—our internal data shows that plans with poor data systems frequently miss the 30-day window. The 35,000 IDR cases he estimates undercounts the disputes we see from providers like Sarah Chen, who are quick to file IDR when QPAs are disputed.",
+              "evidence": [
+                "Our internal surveys show that only 55% of plans had fully operational QPA systems by early 2022, with smaller plans lagging due to data access issues, limiting the total number of accurate QPA calculations to around 3.5 million.",
+                "Operational constraints such as outdated claims systems and manual data reconciliation cause many plans to miss the 30-day window for initial payments or denial notices, resulting in a timely payment rate of only 55%.",
+                "High-cost services like air ambulance and specialized surgeries frequently lead to QPA disputes that cannot be resolved in open negotiation, driving IDR cases to 50,000 in 2022.",
+                "Stakeholder feedback from provider associations confirms that disputed QPAs are a primary driver of IDR filings, consistent with the high IDR volume we observe."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "qpa_calculations_completed": 3500000,
+                "timely_initial_payment_or_denial_rate": 55.0,
+                "idr_cases_initiated": 50000
+              },
+              "narrative": "As an IDR entity in New York, I see the upstream constraints—$45M enforcement budget, only 12 certified IDR entities, and just 55% of plans QPA-ready—directly shaping activities. Plans with poor data systems (especially smaller and self-insured ones) frequently produce inaccurate QPAs, which I must adjudicate. These inaccuracies cause payment delays and breakdowns in negotiation, especially for high-cost services like air ambulance or specialized surgeries where plans and providers can't agree on the QPA. Operational constraints like outdated claims systems and manual reconciliation cause many plans to miss the 30-day window for initial payments or denial notices. My estimates of 3.5M QPA calculations, 55% timely payment rate, and 50,000 IDR cases align with Sarah Chen, Maria Gonzalez, and Dr. Torres—all of whom have direct operational experience. Curry Citizen's higher QPA count and timely rate seem optimistic given that only 55% of plans are QPA-ready; many plans are still struggling to calculate QPAs at all, and his lower IDR count undercounts the disputes I see daily.",
+              "evidence": [
+                "Only 55% of plans have reliable QPA systems, so many smaller and self-insured plans produce inaccurate QPAs that I must resolve, leading to frequent disputes and IDR filings.",
+                "Operational constraints like outdated claims systems and manual data reconciliation cause many plans to miss the 30-day window for initial payments or denial notices, consistent with my experience handling late payments.",
+                "High-cost services such as air ambulance and specialized surgeries often end up in IDR because plans and providers cannot agree on the QPA, driving up IDR case volumes to around 50,000.",
+                "My direct experience as an IDR entity confirms that the system is under strain, with 3.5 million QPA calculations reflecting the limited QPA readiness, not the 4.5 million Curry Citizen estimates."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "qpa_calculations_completed": 4500000,
+                "timely_initial_payment_or_denial_rate": 65.0,
+                "idr_cases_initiated": 35000
+              },
+              "narrative": "From my perspective as a retired patient in North Carolina, the limited federal enforcement budget ($50M) and only 15 certified IDR entities, mostly in cities, mean many plans will struggle to get QPA calculations right. With only 60% of plans QPA-ready, inaccurate or disputed QPAs will be common, leading to payment delays and breakdowns in negotiation. Plans with poor data systems will miss the 30-day window for initial payments, especially for complex claims. High-cost services like air ambulance or specialized surgeries will often end up in IDR because plans and providers can't agree on the QPA. I estimate about 4.5 million QPA calculations completed, a 65% timely payment rate, and 35,000 IDR cases initiated in 2022.",
+              "evidence": [
+                "With only 60% of plans QPA-ready, the remaining 40% will produce inaccurate or disputed QPAs, causing payment disagreements and delays that push cases into IDR.",
+                "Plans with outdated claims systems and limited staff will struggle to process initial payments within 30 days, especially for complex out-of-network claims, leading to a timely rate around 65%.",
+                "High-cost services like air ambulance and specialized surgeries have larger payment gaps, making negotiation failure more likely and driving many disputes to IDR, especially where IDR entities are scarce."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "qpa_calculations_completed": 3500000,
+                "timely_initial_payment_or_denial_rate": 55.0,
+                "idr_cases_initiated": 50000
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the limited federal enforcement budget ($40M) and only 12 certified IDR entities, mostly in cities, mean that many plans—especially smaller or self-insured ones—will struggle to calculate accurate QPAs. With only 55% of plans QPA-ready, I expect frequent disputes over QPA accuracy, leading to payment delays and breakdowns in negotiation. Plans with poor data systems will often miss the 30-day window for initial payments, especially for complex claims like anesthesia services that involve multiple providers. High-cost services like air ambulance or specialized surgeries will often end up in IDR because plans and providers can't agree on the QPA. I estimate about 3.5 million QPA calculations completed, a 55% timely payment rate, and 50,000 IDR cases initiated in 2022. This is higher than the patient's estimate because my direct experience shows that many plans are still struggling with QPA calculations, leading to more disputes and IDR filings.",
+              "evidence": [
+                "With only 55% of plans QPA-ready, many QPA calculations will be inaccurate or disputed, leading to frequent payment delays and negotiations that break down.",
+                "Plans with limited data infrastructure will struggle to meet the 30-day window for initial payments, especially for complex claims like anesthesia services that involve multiple providers.",
+                "High-cost services like air ambulance or specialized surgeries often have wide variation in QPA estimates, making agreement unlikely and pushing disputes into IDR.",
+                "My experience with multiple plans in California shows that even larger insurers have struggled with QPA calculations, leading to frequent payment disputes that I have to resolve through IDR."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "qpa_calculations_completed": 3500000,
+                "timely_initial_payment_or_denial_rate": 55.0,
+                "idr_cases_initiated": 50000
+              },
+              "narrative": "As a health plan manager in Texas, I see the limited enforcement budget ($45M) and only 10 certified IDR entities, concentrated in urban areas, as major constraints. With only 50% of plans QPA-ready, many smaller and self-insured plans like those I work with lack the data infrastructure to calculate accurate median contracted rates. This leads to frequent disputes over QPA accuracy, which I experience daily. Inaccurate or disputed QPAs directly cause payment delays and breakdowns in negotiation, especially for high-cost services like air ambulance or specialized surgeries where plans and providers cannot agree on the QPA. Operational constraints such as outdated claims systems, manual data reconciliation, and insufficient staff training cause many plans to miss the 30-day window for initial payments or denial notices. When negotiations fail, providers like Sarah Chen are quick to file IDR disputes, driving up IDR case volumes. I estimate about 3.5 million QPA calculations completed, a 55% timely payment rate, and 50,000 IDR cases initiated in 2022. My estimate is higher than Curry Citizen's because my direct operational experience shows that many plans are still struggling with QPA calculations, leading to more disputes and IDR filings. I agree with Sarah Chen's assessment that the system is under strain, and her numbers align with my own experience.",
+              "evidence": [
+                "Only 50% of plans are QPA-ready at the start of 2022, meaning many plans will struggle to calculate accurate QPAs, leading to frequent disputes and payment delays.",
+                "Limited federal enforcement budget ($45M) and only 10 certified IDR entities, concentrated in urban areas, create bottlenecks that slow dispute resolution and reduce compliance pressure.",
+                "Operational constraints such as outdated claims systems and manual data reconciliation cause many plans to miss the 30-day window for initial payments or denial notices, especially for complex claims.",
+                "High-cost services like air ambulance and specialized surgeries often lead to QPA disagreements that cannot be resolved in open negotiation, driving up IDR case volumes to around 50,000."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "qpa_calculations_completed": 3500000,
+                "timely_initial_payment_or_denial_rate": 55.0,
+                "idr_cases_initiated": 50000
+              },
+              "narrative": "As a senior policy advisor at CMS, I have direct insight into the operational realities of the No Surprises Act in 2022. The limited federal enforcement budget of $45 million, only 12 certified IDR entities concentrated in urban areas, and only 55% of plans with QPA-ready systems create a system where inaccurate QPA calculations are common. Plans with poor data infrastructure—especially smaller and self-insured ones—frequently produce disputed QPAs, which directly leads to payment delays and breakdowns in negotiation. Operational constraints such as outdated claims systems, manual data reconciliation, and insufficient staff training cause many plans to miss the 30-day window for initial payments or denial notices. High-cost services like air ambulance and specialized surgeries are particularly prone to IDR because plans and providers cannot agree on the QPA. My estimates of 3.5 million QPA calculations, a 55% timely payment rate, and 50,000 IDR cases align with Sarah Chen's and Maria Gonzalez's assessments, which reflect direct operational experience. Curry Citizen's estimate of 4.5 million QPA calculations seems too high given that only 55% of plans are QPA-ready; many plans are still struggling to calculate QPAs at all. His 65% timely payment rate is also optimistic—our internal data shows that plans with poor data systems frequently miss the 30-day window. The 35,000 IDR cases he estimates undercounts the disputes we see from providers like Sarah Chen, who are quick to file IDR when QPAs are disputed.",
+              "evidence": [
+                "Our internal surveys show that only 55% of plans had fully operational QPA systems by early 2022, with smaller plans lagging due to data access issues, limiting the total number of accurate QPA calculations to around 3.5 million.",
+                "Operational constraints such as outdated claims systems and manual data reconciliation cause many plans to miss the 30-day window for initial payments or denial notices, resulting in a timely payment rate of only 55%.",
+                "High-cost services like air ambulance and specialized surgeries frequently lead to QPA disputes that cannot be resolved in open negotiation, driving IDR cases to 50,000 in 2022.",
+                "Stakeholder feedback from provider associations confirms that disputed QPAs are a primary driver of IDR filings, consistent with the high IDR volume we observe."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "qpa_calculations_completed": 3500000,
+                "timely_initial_payment_or_denial_rate": 55.0,
+                "idr_cases_initiated": 50000
+              },
+              "narrative": "As an IDR entity in New York, I see the upstream constraints—$45M enforcement budget, only 12 certified IDR entities, and just 55% of plans QPA-ready—directly shaping activities. Plans with poor data systems (especially smaller and self-insured ones) frequently produce inaccurate QPAs, which I must adjudicate. These inaccuracies cause payment delays and breakdowns in negotiation, especially for high-cost services like air ambulance or specialized surgeries where plans and providers can't agree on the QPA. Operational constraints like outdated claims systems and manual reconciliation cause many plans to miss the 30-day window for initial payments or denial notices. My estimates of 3.5M QPA calculations, 55% timely payment rate, and 50,000 IDR cases align with Sarah Chen, Maria Gonzalez, and Dr. Torres—all of whom have direct operational experience. Curry Citizen's higher QPA count and timely rate seem optimistic given that only 55% of plans are QPA-ready; many plans are still struggling to calculate QPAs at all, and his lower IDR count undercounts the disputes I see daily.",
+              "evidence": [
+                "Only 55% of plans have reliable QPA systems, so many smaller and self-insured plans produce inaccurate QPAs that I must resolve, leading to frequent disputes and IDR filings.",
+                "Operational constraints like outdated claims systems and manual data reconciliation cause many plans to miss the 30-day window for initial payments or denial notices, consistent with my experience handling late payments.",
+                "High-cost services such as air ambulance and specialized surgeries often end up in IDR because plans and providers cannot agree on the QPA, driving up IDR case volumes to around 50,000.",
+                "My direct experience as an IDR entity confirms that the system is under strain, with 3.5 million QPA calculations reflecting the limited QPA readiness, not the 4.5 million Curry Citizen estimates."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "At the Activities phase, the central causal mechanism is that limited QPA readiness (only 55% of plans) and operational constraints (outdated systems, manual reconciliation) produce inaccurate QPA calculations, which directly cause payment delays and negotiation breakdowns, funneling disputes into IDR. The key assumption is that high-cost services (air ambulance, specialized surgeries) are particularly prone to QPA disagreements, driving IDR volumes to around 50,000 cases. The primary bottleneck is the low timely payment rate (55%), which stalls the transition to the next phase by leaving many claims unresolved and escalating disputes. This phase shifts the downstream pathway toward a high-IDR-volume scenario, where the system's capacity to resolve disputes becomes the critical constraint, rather than initial payment compliance.",
+          "posting_order": [
+            "Curry Citizen",
+            "Sarah Chen",
+            "Maria Gonzalez",
+            "Dr. Alisha M. Torres",
+            "David Kim"
+          ]
+        },
+        {
+          "phase": "Outputs",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 70.0,
+                "notice_compliance_rate": 55.0,
+                "timely_idr_determination_rate": 40.0
+              },
+              "narrative": "From my perspective as a retired patient in North Carolina, the limited enforcement budget ($50M) and only 15 certified IDR entities, mostly in cities, mean that many plans will still process claims incorrectly. With only 60% of plans QPA-ready, the remaining 40% will produce inaccurate cost-sharing calculations, leading to a protected claims correctly processed rate of about 70%. Notice compliance will be even lower, around 55%, because providers and facilities in rural areas like mine often lack the training and systems to provide complete, timely notices, and enforcement is too weak to ensure compliance. IDR delays will be severe—only about 40% of cases decided within the timeline—because the small number of IDR entities, especially in underserved areas, will be overwhelmed by the 35,000 cases initiated, causing backlogs that hurt provider cash flow and discourage negotiation.",
+              "evidence": [
+                "With only 60% of plans QPA-ready, the other 40% will frequently miscalculate cost-sharing, leading to incorrect processing for many protected claims; a 70% correct rate reflects this gap.",
+                "Notice compliance suffers because many providers, especially in rural areas, lack clear guidance and face weak enforcement; a 55% rate is plausible given limited audits and outreach.",
+                "The small number of IDR entities (15) concentrated in cities cannot handle 35,000 cases quickly, causing only about 40% to meet the determination timeline, which strains provider cash flow and reduces willingness to negotiate."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 65.0,
+                "notice_compliance_rate": 50.0,
+                "timely_idr_determination_rate": 35.0
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the limited enforcement budget ($40M) and only 12 certified IDR entities, mostly in cities, mean that many plans—especially smaller or self-insured ones—will continue to process claims incorrectly. With only 55% of plans QPA-ready, the remaining 45% will produce inaccurate cost-sharing calculations, leading to a protected claims correctly processed rate of about 65%. Notice compliance will be even lower, around 50%, because many providers and facilities in rural areas lack the training and systems to provide complete, timely notices, and enforcement is too weak to ensure compliance. IDR delays will be severe—only about 35% of cases decided within the timeline—because the small number of IDR entities, especially in underserved areas, will be overwhelmed by the 50,000 cases initiated, causing backlogs that hurt provider cash flow and discourage negotiation. The Curry Citizen's estimate of 70% correctly processed claims is too optimistic; my direct experience with multiple plans shows that even larger insurers struggle with QPA calculations, leading to more processing failures. Similarly, their 55% notice compliance rate is higher than I expect because many providers in rural areas simply don't have the infrastructure to comply, and enforcement is too weak to drive improvement. Their 40% timely IDR rate is also too high given the volume of cases and limited IDR capacity.",
+              "evidence": [
+                "With only 55% of plans QPA-ready, the remaining 45% will produce inaccurate cost-sharing calculations, leading to a protected claims correctly processed rate of about 65%.",
+                "Notice compliance will be low because many providers and facilities in rural areas lack the training and systems to provide complete, timely notices, and enforcement is too weak to ensure compliance.",
+                "The small number of certified IDR entities (12) will be overwhelmed by 50,000 cases, causing severe delays in determinations, with only about 35% decided within the timeline.",
+                "My direct experience with multiple plans in California shows that even larger insurers struggle with QPA calculations, leading to frequent processing failures and disputes."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 65.0,
+                "notice_compliance_rate": 50.0,
+                "timely_idr_determination_rate": 35.0
+              },
+              "narrative": "As a health plan manager in Texas, I see the limited enforcement budget ($45M) and only 10 certified IDR entities, mostly in cities, as major constraints. With only 50% of plans QPA-ready, many smaller and self-insured plans like those I work with lack the data infrastructure to calculate accurate median contracted rates. This leads to frequent disputes over QPA accuracy, which I experience daily. Inaccurate or disputed QPAs directly cause payment delays and breakdowns in negotiation, especially for high-cost services like air ambulance or specialized surgeries where plans and providers cannot agree on the QPA. Operational constraints such as outdated claims systems, manual data reconciliation, and insufficient staff training cause many plans to miss the 30-day window for initial payments or denial notices. When negotiations fail, providers like Sarah Chen are quick to file IDR disputes, driving up IDR case volumes. I estimate about 3.5 million QPA calculations completed, a 55% timely payment rate, and 50,000 IDR cases initiated in 2022. My estimate is higher than Curry Citizen's because my direct operational experience shows that many plans are still struggling with QPA calculations, leading to more disputes and IDR filings. I agree with Sarah Chen's assessment that the system is under strain, and her numbers align with my own experience.",
+              "evidence": [
+                "Only 50% of plans are QPA-ready at the start of 2022, meaning many plans will struggle to calculate accurate QPAs, leading to frequent disputes and payment delays.",
+                "Limited federal enforcement budget ($45M) and only 10 certified IDR entities, concentrated in urban areas, create bottlenecks that slow dispute resolution and reduce compliance pressure.",
+                "Operational constraints such as outdated claims systems and manual data reconciliation cause many plans to miss the 30-day window for initial payments or denial notices, especially for complex claims.",
+                "High-cost services like air ambulance and specialized surgeries often lead to QPA disagreements that cannot be resolved in open negotiation, driving up IDR case volumes to around 50,000."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 65.0,
+                "notice_compliance_rate": 50.0,
+                "timely_idr_determination_rate": 35.0
+              },
+              "narrative": "As a senior policy advisor at CMS, I see the limited enforcement budget of $45 million, only 12 certified IDR entities concentrated in urban areas, and only 55% of plans with QPA-ready systems as the key constraints driving outputs. Inaccurate QPA calculations from plans with poor data infrastructure lead to incorrect cost-sharing for many protected claims, resulting in a 65% correct processing rate. Notice compliance is low at 50% because many providers, especially in rural areas, lack the training and systems to provide complete and timely notices, and enforcement is too weak to compel improvement. The high volume of 50,000 IDR cases overwhelms the small number of IDR entities, causing severe delays—only 35% of cases are decided within the timeline. These delays hurt provider cash flow and discourage negotiation, as Sarah Chen and Maria Gonzalez have noted. Curry Citizen's estimates are too optimistic; my direct experience with plan readiness and enforcement capacity shows that the system is under greater strain.",
+              "evidence": [
+                "Our internal data shows that only 55% of plans had fully operational QPA systems by early 2022, leading to frequent inaccurate cost-sharing calculations and a 65% correct processing rate.",
+                "Surveys of providers and facilities indicate that many in rural areas lack the infrastructure to provide complete and timely notices, and enforcement resources are insufficient to drive compliance above 50%.",
+                "The 12 certified IDR entities, mostly in urban areas, are overwhelmed by 50,000 initiated cases, causing backlogs that result in only 35% of cases being decided within the administrative timeline.",
+                "Stakeholder feedback from provider associations confirms that IDR delays are severe and discourage negotiation, consistent with the low timely determination rate."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 65.0,
+                "notice_compliance_rate": 50.0,
+                "timely_idr_determination_rate": 35.0
+              },
+              "narrative": "As an IDR entity in New York, I see the upstream constraints—$45M enforcement budget, only 12 certified IDR entities, and just 55% of plans QPA-ready—directly shaping outputs. Plans with poor data systems (especially smaller and self-insured ones) frequently produce inaccurate QPAs, which I must adjudicate. These inaccuracies cause payment delays and breakdowns in negotiation, especially for high-cost services like air ambulance or specialized surgeries where plans and providers can't agree on the QPA. Operational constraints like outdated claims systems and manual reconciliation cause many plans to miss the 30-day window for initial payments or denial notices. My estimates of 65% correctly processed claims, 50% notice compliance, and 35% timely IDR determinations align with Sarah Chen, Maria Gonzalez, and Dr. Torres—all of whom have direct operational experience. Curry Citizen's estimates are too optimistic; my daily experience shows that many plans still struggle with QPA calculations, leading to more processing failures, and the small number of IDR entities is overwhelmed by the 50,000 cases initiated, causing severe delays that hurt provider cash flow and discourage negotiation.",
+              "evidence": [
+                "Only 55% of plans have reliable QPA systems, so many smaller and self-insured plans produce inaccurate cost-sharing calculations that I must resolve, leading to a 65% correct processing rate.",
+                "Notice compliance is low at 50% because many providers, especially in rural areas, lack the training and systems to provide complete and timely notices, and enforcement is too weak to compel improvement.",
+                "The high volume of 50,000 IDR cases overwhelms the small number of IDR entities (12), causing severe delays—only 35% of cases are decided within the timeline, as I experience daily.",
+                "Curry Citizen's estimates of 70% correct processing, 55% notice compliance, and 40% timely IDR rates are too optimistic given my direct operational experience with plan readiness and IDR capacity constraints."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 70.0,
+                "notice_compliance_rate": 55.0,
+                "timely_idr_determination_rate": 40.0
+              },
+              "narrative": "From my perspective as a retired patient in North Carolina, the limited enforcement budget ($50M) and only 15 certified IDR entities, mostly in cities, mean that many plans will still process claims incorrectly. With only 60% of plans QPA-ready, the remaining 40% will produce inaccurate cost-sharing calculations, leading to a protected claims correctly processed rate of about 70%. Notice compliance will be even lower, around 55%, because providers and facilities in rural areas like mine often lack the training and systems to provide complete, timely notices, and enforcement is too weak to ensure compliance. IDR delays will be severe—only about 40% of cases decided within the timeline—because the small number of IDR entities, especially in underserved areas, will be overwhelmed by the 35,000 cases initiated, causing backlogs that hurt provider cash flow and discourage negotiation.",
+              "evidence": [
+                "With only 60% of plans QPA-ready, the other 40% will frequently miscalculate cost-sharing, leading to incorrect processing for many protected claims; a 70% correct rate reflects this gap.",
+                "Notice compliance suffers because many providers, especially in rural areas, lack clear guidance and face weak enforcement; a 55% rate is plausible given limited audits and outreach.",
+                "The small number of IDR entities (15) concentrated in cities cannot handle 35,000 cases quickly, causing only about 40% to meet the determination timeline, which strains provider cash flow and reduces willingness to negotiate."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 65.0,
+                "notice_compliance_rate": 50.0,
+                "timely_idr_determination_rate": 35.0
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the limited enforcement budget ($40M) and only 12 certified IDR entities, mostly in cities, mean that many plans—especially smaller or self-insured ones—will continue to process claims incorrectly. With only 55% of plans QPA-ready, the remaining 45% will produce inaccurate cost-sharing calculations, leading to a protected claims correctly processed rate of about 65%. Notice compliance will be even lower, around 50%, because many providers and facilities in rural areas lack the training and systems to provide complete, timely notices, and enforcement is too weak to ensure compliance. IDR delays will be severe—only about 35% of cases decided within the timeline—because the small number of IDR entities, especially in underserved areas, will be overwhelmed by the 50,000 cases initiated, causing backlogs that hurt provider cash flow and discourage negotiation. The Curry Citizen's estimate of 70% correctly processed claims is too optimistic; my direct experience with multiple plans shows that even larger insurers struggle with QPA calculations, leading to more processing failures. Similarly, their 55% notice compliance rate is higher than I expect because many providers in rural areas simply don't have the infrastructure to comply, and enforcement is too weak to drive improvement. Their 40% timely IDR rate is also too high given the volume of cases and limited IDR capacity.",
+              "evidence": [
+                "With only 55% of plans QPA-ready, the remaining 45% will produce inaccurate cost-sharing calculations, leading to a protected claims correctly processed rate of about 65%.",
+                "Notice compliance will be low because many providers and facilities in rural areas lack the training and systems to provide complete, timely notices, and enforcement is too weak to ensure compliance.",
+                "The small number of certified IDR entities (12) will be overwhelmed by 50,000 cases, causing severe delays in determinations, with only about 35% decided within the timeline.",
+                "My direct experience with multiple plans in California shows that even larger insurers struggle with QPA calculations, leading to frequent processing failures and disputes."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 65.0,
+                "notice_compliance_rate": 50.0,
+                "timely_idr_determination_rate": 35.0
+              },
+              "narrative": "As a health plan manager in Texas, I see the limited enforcement budget ($45M) and only 10 certified IDR entities, mostly in cities, as major constraints. With only 50% of plans QPA-ready, many smaller and self-insured plans like those I work with lack the data infrastructure to calculate accurate median contracted rates. This leads to frequent disputes over QPA accuracy, which I experience daily. Inaccurate or disputed QPAs directly cause payment delays and breakdowns in negotiation, especially for high-cost services like air ambulance or specialized surgeries where plans and providers cannot agree on the QPA. Operational constraints such as outdated claims systems, manual data reconciliation, and insufficient staff training cause many plans to miss the 30-day window for initial payments or denial notices. When negotiations fail, providers like Sarah Chen are quick to file IDR disputes, driving up IDR case volumes. I estimate about 3.5 million QPA calculations completed, a 55% timely payment rate, and 50,000 IDR cases initiated in 2022. My estimate is higher than Curry Citizen's because my direct operational experience shows that many plans are still struggling with QPA calculations, leading to more disputes and IDR filings. I agree with Sarah Chen's assessment that the system is under strain, and her numbers align with my own experience.",
+              "evidence": [
+                "Only 50% of plans are QPA-ready at the start of 2022, meaning many plans will struggle to calculate accurate QPAs, leading to frequent disputes and payment delays.",
+                "Limited federal enforcement budget ($45M) and only 10 certified IDR entities, concentrated in urban areas, create bottlenecks that slow dispute resolution and reduce compliance pressure.",
+                "Operational constraints such as outdated claims systems and manual data reconciliation cause many plans to miss the 30-day window for initial payments or denial notices, especially for complex claims.",
+                "High-cost services like air ambulance and specialized surgeries often lead to QPA disagreements that cannot be resolved in open negotiation, driving up IDR case volumes to around 50,000."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 65.0,
+                "notice_compliance_rate": 50.0,
+                "timely_idr_determination_rate": 35.0
+              },
+              "narrative": "As a senior policy advisor at CMS, I see the limited enforcement budget of $45 million, only 12 certified IDR entities concentrated in urban areas, and only 55% of plans with QPA-ready systems as the key constraints driving outputs. Inaccurate QPA calculations from plans with poor data infrastructure lead to incorrect cost-sharing for many protected claims, resulting in a 65% correct processing rate. Notice compliance is low at 50% because many providers, especially in rural areas, lack the training and systems to provide complete and timely notices, and enforcement is too weak to compel improvement. The high volume of 50,000 IDR cases overwhelms the small number of IDR entities, causing severe delays—only 35% of cases are decided within the timeline. These delays hurt provider cash flow and discourage negotiation, as Sarah Chen and Maria Gonzalez have noted. Curry Citizen's estimates are too optimistic; my direct experience with plan readiness and enforcement capacity shows that the system is under greater strain.",
+              "evidence": [
+                "Our internal data shows that only 55% of plans had fully operational QPA systems by early 2022, leading to frequent inaccurate cost-sharing calculations and a 65% correct processing rate.",
+                "Surveys of providers and facilities indicate that many in rural areas lack the infrastructure to provide complete and timely notices, and enforcement resources are insufficient to drive compliance above 50%.",
+                "The 12 certified IDR entities, mostly in urban areas, are overwhelmed by 50,000 initiated cases, causing backlogs that result in only 35% of cases being decided within the administrative timeline.",
+                "Stakeholder feedback from provider associations confirms that IDR delays are severe and discourage negotiation, consistent with the low timely determination rate."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "protected_claims_correctly_processed_rate": 65.0,
+                "notice_compliance_rate": 50.0,
+                "timely_idr_determination_rate": 35.0
+              },
+              "narrative": "As an IDR entity in New York, I see the upstream constraints—$45M enforcement budget, only 12 certified IDR entities, and just 55% of plans QPA-ready—directly shaping outputs. Plans with poor data systems (especially smaller and self-insured ones) frequently produce inaccurate QPAs, which I must adjudicate. These inaccuracies cause payment delays and breakdowns in negotiation, especially for high-cost services like air ambulance or specialized surgeries where plans and providers can't agree on the QPA. Operational constraints like outdated claims systems and manual reconciliation cause many plans to miss the 30-day window for initial payments or denial notices. My estimates of 65% correctly processed claims, 50% notice compliance, and 35% timely IDR determinations align with Sarah Chen, Maria Gonzalez, and Dr. Torres—all of whom have direct operational experience. Curry Citizen's estimates are too optimistic; my daily experience shows that many plans still struggle with QPA calculations, leading to more processing failures, and the small number of IDR entities is overwhelmed by the 50,000 cases initiated, causing severe delays that hurt provider cash flow and discourage negotiation.",
+              "evidence": [
+                "Only 55% of plans have reliable QPA systems, so many smaller and self-insured plans produce inaccurate cost-sharing calculations that I must resolve, leading to a 65% correct processing rate.",
+                "Notice compliance is low at 50% because many providers, especially in rural areas, lack the training and systems to provide complete and timely notices, and enforcement is too weak to compel improvement.",
+                "The high volume of 50,000 IDR cases overwhelms the small number of IDR entities (12), causing severe delays—only 35% of cases are decided within the timeline, as I experience daily.",
+                "Curry Citizen's estimates of 70% correct processing, 55% notice compliance, and 40% timely IDR rates are too optimistic given my direct operational experience with plan readiness and IDR capacity constraints."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "At the Outputs phase, the central causal mechanism is that limited plan readiness for QPA calculations (only 50-60% of plans are QPA-ready) and weak enforcement capacity ($40-50M budget, 10-15 IDR entities concentrated in urban areas) jointly produce low rates of correct claims processing (65-70%), notice compliance (50-55%), and timely IDR determinations (35-40%). The key assumptions are that the remaining non-QPA-ready plans will frequently miscalculate cost-sharing, that rural providers lack infrastructure for notice compliance, and that the small number of IDR entities will be overwhelmed by 35,000-50,000 cases. The primary bottleneck is the severe IDR backlog, which discourages provider-payer negotiation and delays payment, thereby reducing the likelihood that downstream outcomes (reduced out-of-network bill prevalence) can be achieved. This phase shifts the pathway toward a scenario where enforcement gaps and operational constraints limit the effectiveness of the NSA, making it unlikely that the simulation target of a significant percentage-point reduction in out-of-network billing will be met without additional resources or system improvements.",
+          "posting_order": [
+            "Curry Citizen",
+            "Sarah Chen",
+            "Maria Gonzalez",
+            "Dr. Alisha M. Torres",
+            "David Kim"
+          ]
+        },
+        {
+          "phase": "Outcomes",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 12.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 8.0,
+                "patient_savings_per_protected_claim_usd": 450.0
+              },
+              "narrative": "As a retired patient in North Carolina, I see the upstream phases showing that the system is struggling. With only 55% of plans QPA-ready, a small number of IDR entities (15), and low enforcement capacity, many claims are still processed incorrectly (70% correct rate) and notice compliance is poor (55%). This means that while the law should eliminate surprise bills, the reality is that many patients, especially in rural areas like mine, will still get them. For emergency services, the reduction in out-of-network bill prevalence will be modest—maybe 12 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through. For non-emergency services at in-network facilities, the reduction will be smaller, around 8 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. Patient savings per protected claim will average about $450, but this varies widely: patients with high-cost claims or those who get stuck in IDR delays may see little savings, while those with straightforward claims benefit more. The system is better than before, but far from perfect.",
+              "evidence": [
+                "With only 55% of plans QPA-ready and a 70% correct claims processing rate, many patients still receive incorrect cost-sharing, leading to surprise bills despite the law.",
+                "Notice compliance is only 55%, meaning many patients are not properly informed about their protections, especially in rural areas, allowing providers to use waivers to bypass protections for non-emergency services.",
+                "The small number of IDR entities (15) and low timely determination rate (40%) create backlogs that delay payment and discourage providers from following the rules, reducing the effectiveness of protections.",
+                "High-cost services like air ambulance and specialized surgeries are more likely to end up in IDR, where delays and disputes mean patients may still face large bills or prolonged uncertainty."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 10.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 5.0,
+                "patient_savings_per_protected_claim_usd": 350.0
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the upstream phases show a system that is under-resourced and struggling. With only 55% of plans QPA-ready, a $40M enforcement budget, and just 12 IDR entities concentrated in urban areas, the outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "With only 55% of plans QPA-ready and a $40M enforcement budget, many claims are still processed incorrectly, limiting the reduction in surprise bills to about 10 percentage points for emergency services and 5 for non-emergency.",
+                "Notice compliance is only 50%, meaning many patients in rural areas or with non-emergency services do not receive proper waivers, leading to continued surprise bills.",
+                "IDR delays are severe (only 35% timely determinations), which reduces patient savings because high-cost claims take longer to resolve and providers may settle for lower amounts.",
+                "My direct experience with multiple plans in California shows that even larger insurers struggle with QPA calculations, leading to frequent disputes and processing failures that reduce the effectiveness of the protections."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 10.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 5.0,
+                "patient_savings_per_protected_claim_usd": 350.0
+              },
+              "narrative": "From my perspective as a health plan manager in Texas, the upstream phases show a system that is under-resourced and struggling. With only 50% of plans QPA-ready, a $45M enforcement budget, and just 10 certified IDR entities concentrated in urban areas, the outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "With only 50% of plans QPA-ready and 10 IDR entities concentrated in urban areas, many claims are processed incorrectly, leading to persistent surprise bills for patients, especially in rural areas.",
+                "Notice-and-consent waivers are often used improperly for non-emergency services, and some providers reclassify claims to avoid protections, limiting the reduction in non-emergency out-of-network bill prevalence to about 5 percentage points.",
+                "High-cost claims like anesthesia and air ambulance frequently end up in IDR with delays, reducing net patient savings to around $350 per protected claim, as my daily work shows many plans still miscalculate QPAs."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 10.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 5.0,
+                "patient_savings_per_protected_claim_usd": 350.0
+              },
+              "narrative": "As a senior policy advisor at CMS, I have direct insight into the operational realities of the No Surprises Act in 2022. The upstream phases show a system under severe strain: only 55% of plans are QPA-ready, enforcement budget is $45 million, and just 12 IDR entities exist, concentrated in urban areas. The outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "Our internal data shows that only 55% of plans had fully operational QPA systems by early 2022, leading to frequent inaccurate cost-sharing calculations and a 65% correct processing rate, which limits the reduction in surprise bills.",
+                "Notice compliance is at 50% because many providers, especially in rural areas, lack the training and systems to provide complete and timely notices, and enforcement resources are insufficient to drive compliance higher, reducing the effectiveness of non-emergency protections.",
+                "The 12 certified IDR entities, mostly in urban areas, are overwhelmed by 50,000 initiated cases, causing backlogs that result in only 35% of cases being decided within the timeline, which delays savings for patients with high-cost claims.",
+                "High-cost services like air ambulance and specialized surgeries frequently lead to QPA disputes that cannot be resolved in open negotiation, driving IDR cases and reducing patient savings, as seen in the $350 average savings per claim."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 10.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 5.0,
+                "patient_savings_per_protected_claim_usd": 350.0
+              },
+              "narrative": "As an IDR entity in New York, I see the upstream constraints—$45M enforcement budget, only 12 certified IDR entities, and just 55% of plans QPA-ready—directly shaping outcomes. The outputs phase showed only 65% correct processing, 50% notice compliance, and 35% timely IDR determinations. This means that despite the law's intent, many patients still get surprise bills. For emergency services, the reduction is about 10 percentage points because emergency protections are stronger, but enforcement gaps and IDR delays let some bills slip through, especially for air ambulance and specialized procedures where QPA disputes are common. For non-emergency services, the reduction is smaller at 5 percentage points because notice-and-consent waivers are often improperly used, and providers reclassify claims to avoid protections. Patient savings average about $350 per protected claim, less than Curry Citizen's $450, because high-cost claims like anesthesia often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. My estimates align with Sarah Chen, Maria Gonzalez, and Dr. Torres, all of whom have direct operational experience, while Curry Citizen's estimates are too optimistic given the system's real constraints.",
+              "evidence": [
+                "Only 55% of plans are QPA-ready, leading to frequent miscalculations and processing errors that allow some surprise bills to persist, especially in non-emergency settings where notice-and-consent waivers are misused.",
+                "The small number of IDR entities (12) and low timely determination rate (35%) cause delays that reduce patient savings, as high-cost claims like anesthesia and air ambulance often get stuck in the backlog.",
+                "Enforcement gaps due to a $45M budget and lack of proactive audits mean that violations of the balance billing prohibition and notice requirements are not consistently caught, particularly in rural areas and for specialized services.",
+                "My direct experience adjudicating disputes confirms that notice compliance is low (50%) and many providers reclassify claims or use waivers improperly, limiting the reduction in non-emergency surprise bills to about 5 percentage points."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 12.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 8.0,
+                "patient_savings_per_protected_claim_usd": 450.0
+              },
+              "narrative": "As a retired patient in North Carolina, I see the upstream phases showing that the system is struggling. With only 55% of plans QPA-ready, a small number of IDR entities (15), and low enforcement capacity, many claims are still processed incorrectly (70% correct rate) and notice compliance is poor (55%). This means that while the law should eliminate surprise bills, the reality is that many patients, especially in rural areas like mine, will still get them. For emergency services, the reduction in out-of-network bill prevalence will be modest—maybe 12 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through. For non-emergency services at in-network facilities, the reduction will be smaller, around 8 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. Patient savings per protected claim will average about $450, but this varies widely: patients with high-cost claims or those who get stuck in IDR delays may see little savings, while those with straightforward claims benefit more. The system is better than before, but far from perfect.",
+              "evidence": [
+                "With only 55% of plans QPA-ready and a 70% correct claims processing rate, many patients still receive incorrect cost-sharing, leading to surprise bills despite the law.",
+                "Notice compliance is only 55%, meaning many patients are not properly informed about their protections, especially in rural areas, allowing providers to use waivers to bypass protections for non-emergency services.",
+                "The small number of IDR entities (15) and low timely determination rate (40%) create backlogs that delay payment and discourage providers from following the rules, reducing the effectiveness of protections.",
+                "High-cost services like air ambulance and specialized surgeries are more likely to end up in IDR, where delays and disputes mean patients may still face large bills or prolonged uncertainty."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 10.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 5.0,
+                "patient_savings_per_protected_claim_usd": 350.0
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the upstream phases show a system that is under-resourced and struggling. With only 55% of plans QPA-ready, a $40M enforcement budget, and just 12 IDR entities concentrated in urban areas, the outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "With only 55% of plans QPA-ready and a $40M enforcement budget, many claims are still processed incorrectly, limiting the reduction in surprise bills to about 10 percentage points for emergency services and 5 for non-emergency.",
+                "Notice compliance is only 50%, meaning many patients in rural areas or with non-emergency services do not receive proper waivers, leading to continued surprise bills.",
+                "IDR delays are severe (only 35% timely determinations), which reduces patient savings because high-cost claims take longer to resolve and providers may settle for lower amounts.",
+                "My direct experience with multiple plans in California shows that even larger insurers struggle with QPA calculations, leading to frequent disputes and processing failures that reduce the effectiveness of the protections."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 10.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 5.0,
+                "patient_savings_per_protected_claim_usd": 350.0
+              },
+              "narrative": "From my perspective as a health plan manager in Texas, the upstream phases show a system that is under-resourced and struggling. With only 50% of plans QPA-ready, a $45M enforcement budget, and just 10 certified IDR entities concentrated in urban areas, the outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "With only 50% of plans QPA-ready and 10 IDR entities concentrated in urban areas, many claims are processed incorrectly, leading to persistent surprise bills for patients, especially in rural areas.",
+                "Notice-and-consent waivers are often used improperly for non-emergency services, and some providers reclassify claims to avoid protections, limiting the reduction in non-emergency out-of-network bill prevalence to about 5 percentage points.",
+                "High-cost claims like anesthesia and air ambulance frequently end up in IDR with delays, reducing net patient savings to around $350 per protected claim, as my daily work shows many plans still miscalculate QPAs."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 10.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 5.0,
+                "patient_savings_per_protected_claim_usd": 350.0
+              },
+              "narrative": "As a senior policy advisor at CMS, I have direct insight into the operational realities of the No Surprises Act in 2022. The upstream phases show a system under severe strain: only 55% of plans are QPA-ready, enforcement budget is $45 million, and just 12 IDR entities exist, concentrated in urban areas. The outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "Our internal data shows that only 55% of plans had fully operational QPA systems by early 2022, leading to frequent inaccurate cost-sharing calculations and a 65% correct processing rate, which limits the reduction in surprise bills.",
+                "Notice compliance is at 50% because many providers, especially in rural areas, lack the training and systems to provide complete and timely notices, and enforcement resources are insufficient to drive compliance higher, reducing the effectiveness of non-emergency protections.",
+                "The 12 certified IDR entities, mostly in urban areas, are overwhelmed by 50,000 initiated cases, causing backlogs that result in only 35% of cases being decided within the timeline, which delays savings for patients with high-cost claims.",
+                "High-cost services like air ambulance and specialized surgeries frequently lead to QPA disputes that cannot be resolved in open negotiation, driving IDR cases and reducing patient savings, as seen in the $350 average savings per claim."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "emergency_oon_bill_prevalence_reduction_pp": 10.0,
+                "nonemergency_oon_bill_prevalence_reduction_pp": 5.0,
+                "patient_savings_per_protected_claim_usd": 350.0
+              },
+              "narrative": "As an IDR entity in New York, I see the upstream constraints—$45M enforcement budget, only 12 certified IDR entities, and just 55% of plans QPA-ready—directly shaping outcomes. The outputs phase showed only 65% correct processing, 50% notice compliance, and 35% timely IDR determinations. This means that despite the law's intent, many patients still get surprise bills. For emergency services, the reduction is about 10 percentage points because emergency protections are stronger, but enforcement gaps and IDR delays let some bills slip through, especially for air ambulance and specialized procedures where QPA disputes are common. For non-emergency services, the reduction is smaller at 5 percentage points because notice-and-consent waivers are often improperly used, and providers reclassify claims to avoid protections. Patient savings average about $350 per protected claim, less than Curry Citizen's $450, because high-cost claims like anesthesia often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. My estimates align with Sarah Chen, Maria Gonzalez, and Dr. Torres, all of whom have direct operational experience, while Curry Citizen's estimates are too optimistic given the system's real constraints.",
+              "evidence": [
+                "Only 55% of plans are QPA-ready, leading to frequent miscalculations and processing errors that allow some surprise bills to persist, especially in non-emergency settings where notice-and-consent waivers are misused.",
+                "The small number of IDR entities (12) and low timely determination rate (35%) cause delays that reduce patient savings, as high-cost claims like anesthesia and air ambulance often get stuck in the backlog.",
+                "Enforcement gaps due to a $45M budget and lack of proactive audits mean that violations of the balance billing prohibition and notice requirements are not consistently caught, particularly in rural areas and for specialized services.",
+                "My direct experience adjudicating disputes confirms that notice compliance is low (50%) and many providers reclassify claims or use waivers improperly, limiting the reduction in non-emergency surprise bills to about 5 percentage points."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "The central causal mechanism at the Outcomes phase is that upstream constraints—low QPA readiness (55%), limited IDR capacity (12 entities), and weak enforcement ($45M budget)—directly limit the reduction in out-of-network bill prevalence and patient savings. The dominant assumption is that emergency protections are stronger than non-emergency ones, leading to a larger reduction for emergency services (10 percentage points) versus non-emergency (5 percentage points), and that patient savings average $350 per claim due to IDR delays and processing errors. Key bottlenecks include poor notice compliance (50%) and improper use of notice-and-consent waivers, which undermine non-emergency protections, while the small number of IDR entities and low timely determination rate (35%) create backlogs that reduce savings. This phase shifts the downstream pathway by confirming that the system's structural weaknesses will produce uneven and modest improvements, with rural patients and those with high-cost claims likely to see less benefit, thereby narrowing the expected impact of the No Surprises Act.",
+          "posting_order": [
+            "Curry Citizen",
+            "Sarah Chen",
+            "Maria Gonzalez",
+            "Dr. Alisha M. Torres",
+            "David Kim"
+          ]
+        },
+        {
+          "phase": "Impact",
+          "direction": "forward",
+          "initial_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 12.0,
+                "network_adequacy_rate_pct": 70.0,
+                "premium_change_attributable_to_nsa_pct": 2.5
+              },
+              "narrative": "From my perspective as a retired patient in North Carolina, the upstream phases show that the system is struggling. With only 55% of plans QPA-ready, a small number of IDR entities (15), and low enforcement capacity, many claims are still processed incorrectly (70% correct rate) and notice compliance is poor (55%). This means that while the law should eliminate surprise bills, the reality is that many patients, especially in rural areas like mine, will still get them. For emergency services, the reduction in out-of-network bill prevalence will be modest—maybe 12 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through. For non-emergency services at in-network facilities, the reduction will be smaller, around 8 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. Patient savings per protected claim will average about $450, but this varies widely: patients with high-cost claims or those who get stuck in IDR delays may see little savings, while those with straightforward claims benefit more. The system is better than before, but far from perfect.",
+              "evidence": [
+                "With only 55% of plans QPA-ready and a 70% correct claims processing rate, many patients still receive incorrect cost-sharing, leading to surprise bills despite the law.",
+                "Notice compliance is only 55%, meaning many patients are not properly informed about their protections, especially in rural areas, allowing providers to use waivers to bypass protections for non-emergency services.",
+                "The small number of IDR entities (15) and low timely determination rate (40%) create backlogs that delay payment and discourage providers from following the rules, reducing the effectiveness of protections.",
+                "High-cost services like air ambulance and specialized surgeries are more likely to end up in IDR, where delays and disputes mean patients may still face large bills or prolonged uncertainty."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 14.0,
+                "network_adequacy_rate_pct": 65.0,
+                "premium_change_attributable_to_nsa_pct": 3.5
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the upstream phases show a system that is under-resourced and struggling. With only 55% of plans QPA-ready, a $40M enforcement budget, and just 12 IDR entities concentrated in urban areas, the outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "With only 55% of plans QPA-ready and a $40M enforcement budget, many claims are still processed incorrectly, limiting the reduction in surprise bills to about 10 percentage points for emergency services and 5 for non-emergency.",
+                "Notice compliance is only 50%, meaning many patients in rural areas or with non-emergency services do not receive proper waivers, leading to continued surprise bills.",
+                "IDR delays are severe (only 35% timely determinations), which reduces patient savings because high-cost claims take longer to resolve and providers may settle for lower amounts.",
+                "My direct experience with multiple plans in California shows that even larger insurers struggle with QPA calculations, leading to frequent disputes and processing failures that reduce the effectiveness of the protections."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 14.0,
+                "network_adequacy_rate_pct": 65.0,
+                "premium_change_attributable_to_nsa_pct": 3.5
+              },
+              "narrative": "From my perspective as a health plan manager in Texas, the upstream phases show a system that is under-resourced and struggling. With only 50% of plans QPA-ready, a $45M enforcement budget, and just 10 certified IDR entities concentrated in urban areas, the outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "With only 50% of plans QPA-ready and 10 IDR entities concentrated in urban areas, many claims are processed incorrectly, leading to persistent surprise bills for patients, especially in rural areas.",
+                "Notice-and-consent waivers are often used improperly for non-emergency services, and some providers reclassify claims to avoid protections, limiting the reduction in non-emergency out-of-network bill prevalence to about 5 percentage points.",
+                "High-cost claims like anesthesia and air ambulance frequently end up in IDR with delays, reducing net patient savings to around $350 per protected claim, as my daily work shows many plans still miscalculate QPAs.",
+                "The combination of weak enforcement and limited IDR capacity means that systemic out-of-network billing prevalence remains around 14%, as many violations go uncorrected."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 14.0,
+                "network_adequacy_rate_pct": 65.0,
+                "premium_change_attributable_to_nsa_pct": 3.5
+              },
+              "narrative": "As a senior policy advisor at CMS, I see the upstream phases converging on a system that remains under severe strain three to five years after implementation. The limited enforcement budget ($45M), small number of IDR entities (12, mostly urban), and low QPA readiness (55%) have produced persistent bottlenecks: only 65% of claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. These constraints mean that while emergency protections reduce surprise bills by about 10 percentage points and non-emergency by 5, the systemic prevalence of out-of-network balance billing will remain around 14% because many patients still receive bills due to processing errors, improper notice-and-consent waivers, and IDR delays. Network adequacy will be about 65% because plans, facing higher administrative costs and provider pushback, will narrow networks to control premiums, and rural areas will see reduced access to specialists and air ambulance services. Premiums will increase by about 3.5% attributable to NSA compliance costs, including QPA system upgrades, higher out-of-network payments from IDR awards, and administrative overhead. Contracting responses and consolidation among plans and providers will shift costs rather than eliminate them, and rural access will deteriorate. Unintended consequences like persistent balance billing for high-cost services and reduced provider participation in networks would indicate that short-term consumer protection did not translate into durable system-level improvement. My estimates align with Sarah Chen and Maria Gonzalez, who share my operational perspective, and I disagree with Curry Citizen's more optimistic 12% prevalence and 2.5% premium change because his patient viewpoint underestimates the structural constraints we see in enforcement and plan readiness.",
+              "evidence": [
+                "Our internal data shows that only 55% of plans had fully operational QPA systems by early 2022, leading to frequent inaccurate cost-sharing calculations and a 65% correct processing rate, which limits the reduction in surprise bills to about 14% systemic prevalence.",
+                "Network adequacy is undermined by provider consolidation and plan narrowing of networks to control costs; our surveys indicate that only about 65% of regulated plans meet adequacy standards, with rural areas particularly affected.",
+                "Premium increases of 3.5% are driven by compliance costs for QPA system upgrades, higher out-of-network payments from IDR awards, and administrative overhead, consistent with our cost-impact analyses.",
+                "Persistent IDR delays (only 35% timely determinations) and improper notice-and-consent waivers (50% compliance) mean that many patients still receive balance bills, especially for high-cost services like air ambulance and specialized surgeries, preventing a larger reduction in out-of-network billing prevalence."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 14.0,
+                "network_adequacy_rate_pct": 65.0,
+                "premium_change_attributable_to_nsa_pct": 3.5
+              },
+              "narrative": "As an IDR entity in New York, I see the upstream constraints—$45M enforcement budget, only 12 certified IDR entities, and just 55% of plans QPA-ready—directly shaping the impact phase. The outputs phase showed only 65% correct processing, 50% notice compliance, and 35% timely IDR determinations, leading to modest reductions in surprise billing: about 10 percentage points for emergency services and 5 for non-emergency. This means systemic prevalence remains around 14%, as many patients still get bills due to processing errors, improper waivers, and IDR delays. Network adequacy drops to 65% because plans narrow networks to control costs, especially in rural areas where specialists and air ambulance services are scarce. Premiums rise by 3.5% due to compliance costs, higher out-of-network payments from IDR awards, and administrative overhead. Contracting responses and consolidation shift costs rather than eliminate them, and rural access deteriorates. Unintended consequences like persistent balance billing for high-cost services and reduced provider participation would indicate short-term protection didn't translate to durable improvement. My estimates align with Sarah Chen, Maria Gonzalez, and Dr. Torres, who share my operational perspective, and I disagree with Curry Citizen's more optimistic 12% prevalence and 2.5% premium change because his patient viewpoint underestimates the structural constraints we see in enforcement and plan readiness.",
+              "evidence": [
+                "Only 55% of plans are QPA-ready, leading to frequent miscalculations and processing errors that allow some surprise bills to persist, especially in non-emergency settings where notice-and-consent waivers are misused.",
+                "The small number of IDR entities (12) and low timely determination rate (35%) cause delays that reduce patient savings, as high-cost claims like anesthesia and air ambulance often get stuck in the backlog.",
+                "Enforcement gaps due to a $45M budget and lack of proactive audits mean that violations of the balance billing prohibition and notice requirements are not consistently caught, particularly in rural areas and for specialized services.",
+                "Plans facing higher administrative costs and provider pushback will narrow networks to control premiums, reducing network adequacy to about 65% and increasing premiums by 3.5% due to NSA compliance costs."
+              ],
+              "judgment": null
+            }
+          ],
+          "revised_posts": [
+            {
+              "persona_name": "Curry Citizen",
+              "stakeholder_type": "patient",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 12.0,
+                "network_adequacy_rate_pct": 70.0,
+                "premium_change_attributable_to_nsa_pct": 2.5
+              },
+              "narrative": "From my perspective as a retired patient in North Carolina, the upstream phases show that the system is struggling. With only 55% of plans QPA-ready, a small number of IDR entities (15), and low enforcement capacity, many claims are still processed incorrectly (70% correct rate) and notice compliance is poor (55%). This means that while the law should eliminate surprise bills, the reality is that many patients, especially in rural areas like mine, will still get them. For emergency services, the reduction in out-of-network bill prevalence will be modest—maybe 12 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through. For non-emergency services at in-network facilities, the reduction will be smaller, around 8 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. Patient savings per protected claim will average about $450, but this varies widely: patients with high-cost claims or those who get stuck in IDR delays may see little savings, while those with straightforward claims benefit more. The system is better than before, but far from perfect.",
+              "evidence": [
+                "With only 55% of plans QPA-ready and a 70% correct claims processing rate, many patients still receive incorrect cost-sharing, leading to surprise bills despite the law.",
+                "Notice compliance is only 55%, meaning many patients are not properly informed about their protections, especially in rural areas, allowing providers to use waivers to bypass protections for non-emergency services.",
+                "The small number of IDR entities (15) and low timely determination rate (40%) create backlogs that delay payment and discourage providers from following the rules, reducing the effectiveness of protections.",
+                "High-cost services like air ambulance and specialized surgeries are more likely to end up in IDR, where delays and disputes mean patients may still face large bills or prolonged uncertainty."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Sarah Chen",
+              "stakeholder_type": "provider",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 14.0,
+                "network_adequacy_rate_pct": 65.0,
+                "premium_change_attributable_to_nsa_pct": 3.5
+              },
+              "narrative": "From my perspective as a nonparticipating anesthesiologist in California, the upstream phases show a system that is under-resourced and struggling. With only 55% of plans QPA-ready, a $40M enforcement budget, and just 12 IDR entities concentrated in urban areas, the outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "With only 55% of plans QPA-ready and a $40M enforcement budget, many claims are still processed incorrectly, limiting the reduction in surprise bills to about 10 percentage points for emergency services and 5 for non-emergency.",
+                "Notice compliance is only 50%, meaning many patients in rural areas or with non-emergency services do not receive proper waivers, leading to continued surprise bills.",
+                "IDR delays are severe (only 35% timely determinations), which reduces patient savings because high-cost claims take longer to resolve and providers may settle for lower amounts.",
+                "My direct experience with multiple plans in California shows that even larger insurers struggle with QPA calculations, leading to frequent disputes and processing failures that reduce the effectiveness of the protections."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Maria Gonzalez",
+              "stakeholder_type": "payer",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 14.0,
+                "network_adequacy_rate_pct": 65.0,
+                "premium_change_attributable_to_nsa_pct": 3.5
+              },
+              "narrative": "From my perspective as a health plan manager in Texas, the upstream phases show a system that is under-resourced and struggling. With only 50% of plans QPA-ready, a $45M enforcement budget, and just 10 certified IDR entities concentrated in urban areas, the outputs phase already revealed that only 65% of protected claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. This means that despite the law's intent, many patients will still receive surprise bills. For emergency services, the reduction in out-of-network bill prevalence will be modest—about 10 percentage points—because emergency protections are stronger and harder to evade, but enforcement gaps and IDR delays mean some bills slip through, especially for services like air ambulance or specialized procedures where QPA disputes are common. For non-emergency services at in-network facilities, the reduction will be smaller, around 5 percentage points, because notice-and-consent waivers are often used improperly, and some providers reclassify claims to avoid protections. The Curry Citizen's estimate of 12 and 8 percentage points is too optimistic; my direct experience shows that many plans still miscalculate QPAs, and enforcement is too weak to catch all violations. Patient savings per protected claim will average about $350, less than the Curry Citizen's $450, because high-cost claims like anesthesia services often end up in IDR with delays, reducing net savings, and many patients still face balance bills due to processing errors. The system is better than before, but far from perfect, and the reductions are uneven across service types and patient groups.",
+              "evidence": [
+                "With only 50% of plans QPA-ready and 10 IDR entities concentrated in urban areas, many claims are processed incorrectly, leading to persistent surprise bills for patients, especially in rural areas.",
+                "Notice-and-consent waivers are often used improperly for non-emergency services, and some providers reclassify claims to avoid protections, limiting the reduction in non-emergency out-of-network bill prevalence to about 5 percentage points.",
+                "High-cost claims like anesthesia and air ambulance frequently end up in IDR with delays, reducing net patient savings to around $350 per protected claim, as my daily work shows many plans still miscalculate QPAs.",
+                "The combination of weak enforcement and limited IDR capacity means that systemic out-of-network billing prevalence remains around 14%, as many violations go uncorrected."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "Dr. Alisha M. Torres",
+              "stakeholder_type": "regulator",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 14.0,
+                "network_adequacy_rate_pct": 65.0,
+                "premium_change_attributable_to_nsa_pct": 3.5
+              },
+              "narrative": "As a senior policy advisor at CMS, I see the upstream phases converging on a system that remains under severe strain three to five years after implementation. The limited enforcement budget ($45M), small number of IDR entities (12, mostly urban), and low QPA readiness (55%) have produced persistent bottlenecks: only 65% of claims are processed correctly, notice compliance is at 50%, and timely IDR determinations are at 35%. These constraints mean that while emergency protections reduce surprise bills by about 10 percentage points and non-emergency by 5, the systemic prevalence of out-of-network balance billing will remain around 14% because many patients still receive bills due to processing errors, improper notice-and-consent waivers, and IDR delays. Network adequacy will be about 65% because plans, facing higher administrative costs and provider pushback, will narrow networks to control premiums, and rural areas will see reduced access to specialists and air ambulance services. Premiums will increase by about 3.5% attributable to NSA compliance costs, including QPA system upgrades, higher out-of-network payments from IDR awards, and administrative overhead. Contracting responses and consolidation among plans and providers will shift costs rather than eliminate them, and rural access will deteriorate. Unintended consequences like persistent balance billing for high-cost services and reduced provider participation in networks would indicate that short-term consumer protection did not translate into durable system-level improvement. My estimates align with Sarah Chen and Maria Gonzalez, who share my operational perspective, and I disagree with Curry Citizen's more optimistic 12% prevalence and 2.5% premium change because his patient viewpoint underestimates the structural constraints we see in enforcement and plan readiness.",
+              "evidence": [
+                "Our internal data shows that only 55% of plans had fully operational QPA systems by early 2022, leading to frequent inaccurate cost-sharing calculations and a 65% correct processing rate, which limits the reduction in surprise bills to about 14% systemic prevalence.",
+                "Network adequacy is undermined by provider consolidation and plan narrowing of networks to control costs; our surveys indicate that only about 65% of regulated plans meet adequacy standards, with rural areas particularly affected.",
+                "Premium increases of 3.5% are driven by compliance costs for QPA system upgrades, higher out-of-network payments from IDR awards, and administrative overhead, consistent with our cost-impact analyses.",
+                "Persistent IDR delays (only 35% timely determinations) and improper notice-and-consent waivers (50% compliance) mean that many patients still receive balance bills, especially for high-cost services like air ambulance and specialized surgeries, preventing a larger reduction in out-of-network billing prevalence."
+              ],
+              "judgment": null
+            },
+            {
+              "persona_name": "David Kim",
+              "stakeholder_type": "mediator",
+              "prediction_values": {
+                "systemic_oon_billing_prevalence_pct": 14.0,
+                "network_adequacy_rate_pct": 65.0,
+                "premium_change_attributable_to_nsa_pct": 3.5
+              },
+              "narrative": "As an IDR entity in New York, I see the upstream constraints—$45M enforcement budget, only 12 certified IDR entities, and just 55% of plans QPA-ready—directly shaping the impact phase. The outputs phase showed only 65% correct processing, 50% notice compliance, and 35% timely IDR determinations, leading to modest reductions in surprise billing: about 10 percentage points for emergency services and 5 for non-emergency. This means systemic prevalence remains around 14%, as many patients still get bills due to processing errors, improper waivers, and IDR delays. Network adequacy drops to 65% because plans narrow networks to control costs, especially in rural areas where specialists and air ambulance services are scarce. Premiums rise by 3.5% due to compliance costs, higher out-of-network payments from IDR awards, and administrative overhead. Contracting responses and consolidation shift costs rather than eliminate them, and rural access deteriorates. Unintended consequences like persistent balance billing for high-cost services and reduced provider participation would indicate short-term protection didn't translate to durable improvement. My estimates align with Sarah Chen, Maria Gonzalez, and Dr. Torres, who share my operational perspective, and I disagree with Curry Citizen's more optimistic 12% prevalence and 2.5% premium change because his patient viewpoint underestimates the structural constraints we see in enforcement and plan readiness.",
+              "evidence": [
+                "Only 55% of plans are QPA-ready, leading to frequent miscalculations and processing errors that allow some surprise bills to persist, especially in non-emergency settings where notice-and-consent waivers are misused.",
+                "The small number of IDR entities (12) and low timely determination rate (35%) cause delays that reduce patient savings, as high-cost claims like anesthesia and air ambulance often get stuck in the backlog.",
+                "Enforcement gaps due to a $45M budget and lack of proactive audits mean that violations of the balance billing prohibition and notice requirements are not consistently caught, particularly in rural areas and for specialized services.",
+                "Plans facing higher administrative costs and provider pushback will narrow networks to control premiums, reducing network adequacy to about 65% and increasing premiums by 3.5% due to NSA compliance costs."
+              ],
+              "judgment": null
+            }
+          ],
+          "refined_posts": null,
+          "phase_summary": "The central causal mechanism at this phase is that upstream constraints—low QPA readiness (55%), limited enforcement capacity ($45M budget), and a small number of IDR entities (12)—directly limit the reduction in out-of-network billing prevalence to approximately 14% systemically, with emergency services seeing a 10 percentage-point drop and non-emergency services only a 5-point drop. The key assumption is that weak enforcement and processing errors allow improper notice-and-consent waivers and IDR delays to persist, preventing stronger consumer protections. Bottlenecks include the 35% timely IDR determination rate and 50% notice compliance, which erode patient savings and discourage provider compliance. This phase shifts the downstream pathway toward modest impact with unintended consequences like network narrowing (65% adequacy) and premium increases (3.5%), indicating that short-term protections do not translate into durable system-level improvement.",
+          "posting_order": [
+            "Curry Citizen",
+            "Sarah Chen",
+            "Maria Gonzalez",
+            "Dr. Alisha M. Torres",
+            "David Kim"
+          ]
+        }
+      ],
+      "backward_pass": null,
+      "fwd_bwd_fwd_pass": null,
+      "fwd_bwd_fwd_bwd_pass": null,
+      "cross_checks": [
+        {
+          "phase": "Inputs",
+          "variable": "federal_enforcement_budget_usd",
+          "forward_agg": 45000000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 45000000.0
+        },
+        {
+          "phase": "Inputs",
+          "variable": "certified_idr_entity_count",
+          "forward_agg": 12.2,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 12.2
+        },
+        {
+          "phase": "Inputs",
+          "variable": "qpa_ready_plan_pct",
+          "forward_agg": 55.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 55.0
+        },
+        {
+          "phase": "Activities",
+          "variable": "qpa_calculations_completed",
+          "forward_agg": 3700000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 3700000.0
+        },
+        {
+          "phase": "Activities",
+          "variable": "timely_initial_payment_or_denial_rate",
+          "forward_agg": 57.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 57.0
+        },
+        {
+          "phase": "Activities",
+          "variable": "idr_cases_initiated",
+          "forward_agg": 47000.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 47000.0
+        },
+        {
+          "phase": "Outputs",
+          "variable": "protected_claims_correctly_processed_rate",
+          "forward_agg": 66.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 66.0
+        },
+        {
+          "phase": "Outputs",
+          "variable": "notice_compliance_rate",
+          "forward_agg": 51.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 51.0
+        },
+        {
+          "phase": "Outputs",
+          "variable": "timely_idr_determination_rate",
+          "forward_agg": 36.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 36.0
+        },
+        {
+          "phase": "Outcomes",
+          "variable": "emergency_oon_bill_prevalence_reduction_pp",
+          "forward_agg": 10.4,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 10.4
+        },
+        {
+          "phase": "Outcomes",
+          "variable": "nonemergency_oon_bill_prevalence_reduction_pp",
+          "forward_agg": 5.6,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 5.6
+        },
+        {
+          "phase": "Outcomes",
+          "variable": "patient_savings_per_protected_claim_usd",
+          "forward_agg": 370.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 370.0
+        },
+        {
+          "phase": "Impact",
+          "variable": "systemic_oon_billing_prevalence_pct",
+          "forward_agg": 13.6,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 13.6
+        },
+        {
+          "phase": "Impact",
+          "variable": "network_adequacy_rate_pct",
+          "forward_agg": 66.0,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 66.0
+        },
+        {
+          "phase": "Impact",
+          "variable": "premium_change_attributable_to_nsa_pct",
+          "forward_agg": 3.3,
+          "backward_agg": null,
+          "gap": null,
+          "relative_gap": null,
+          "consistency": null,
+          "aggregated_value": 3.3
+        }
+      ],
+      "scenario_impact": {
+        "systemic_oon_billing_prevalence_pct": 13.6,
+        "network_adequacy_rate_pct": 66.0,
+        "premium_change_attributable_to_nsa_pct": 3.3
+      },
+      "scenario_confidence": {
+        "systemic_oon_billing_prevalence_pct": null,
+        "network_adequacy_rate_pct": null,
+        "premium_change_attributable_to_nsa_pct": null
+      }
+    }
+  ],
+  "aggregated_final": {
+    "systemic_oon_billing_prevalence_pct": 13.6,
+    "network_adequacy_rate_pct": 66.0,
+    "premium_change_attributable_to_nsa_pct": 3.3
+  },
+  "implementation_gap_report": [
+    {
+      "phase": "Inputs",
+      "variable": "federal_enforcement_budget_usd",
+      "forward_agg": 45000000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 45000000.0
+    },
+    {
+      "phase": "Inputs",
+      "variable": "certified_idr_entity_count",
+      "forward_agg": 12.2,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 12.2
+    },
+    {
+      "phase": "Inputs",
+      "variable": "qpa_ready_plan_pct",
+      "forward_agg": 55.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 55.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "qpa_calculations_completed",
+      "forward_agg": 3700000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 3700000.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "timely_initial_payment_or_denial_rate",
+      "forward_agg": 57.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 57.0
+    },
+    {
+      "phase": "Activities",
+      "variable": "idr_cases_initiated",
+      "forward_agg": 47000.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 47000.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "protected_claims_correctly_processed_rate",
+      "forward_agg": 66.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 66.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "notice_compliance_rate",
+      "forward_agg": 51.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 51.0
+    },
+    {
+      "phase": "Outputs",
+      "variable": "timely_idr_determination_rate",
+      "forward_agg": 36.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 36.0
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "emergency_oon_bill_prevalence_reduction_pp",
+      "forward_agg": 10.4,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 10.4
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "nonemergency_oon_bill_prevalence_reduction_pp",
+      "forward_agg": 5.6,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 5.6
+    },
+    {
+      "phase": "Outcomes",
+      "variable": "patient_savings_per_protected_claim_usd",
+      "forward_agg": 370.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 370.0
+    },
+    {
+      "phase": "Impact",
+      "variable": "systemic_oon_billing_prevalence_pct",
+      "forward_agg": 13.6,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 13.6
+    },
+    {
+      "phase": "Impact",
+      "variable": "network_adequacy_rate_pct",
+      "forward_agg": 66.0,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 66.0
+    },
+    {
+      "phase": "Impact",
+      "variable": "premium_change_attributable_to_nsa_pct",
+      "forward_agg": 3.3,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": 3.3
+    }
+  ],
+  "narrative_synthesis": "",
+  "phase_stakeholder_summaries": {}
+}

@@ -16,13 +16,19 @@ const anchors7 = ["Strongly disagree", "Disagree", "Somewhat disagree", "Neither
 const LOAD_INSTRUCTION = "For the following six statements, please respond on a scale from 0 (not at all the case) to 10 (completely the case).";
 
 /* ── 조건 ──────────────────────────────────────────────────────────────────
-   between-subjects. 참가자는 baseline 또는 framework 한 조건만 경험한다.
+   between-subjects. 참가자는 baseline, framework, 3path 중 한 조건만 경험한다.
    조건 전용 섹션: rq2b_coverage(RQ2) · rq4_chat(RQ4)                       */
 let studyCondition = "framework";
-function isFramework(){ return studyCondition !== "baseline"; }
+function normalizedStudyCondition(value=studyCondition){
+  const condition = String(value || "").toLowerCase();
+  if(["framework","full"].includes(condition)) return "framework";
+  if(condition === "3path") return "3path";
+  return "baseline";
+}
+function isFramework(){ return normalizedStudyCondition() === "framework"; }
 function forCondition(section){
   const allowed = section.conditions;
-  return !allowed || allowed.includes(isFramework() ? "framework" : "baseline");
+  return !allowed || allowed.includes(normalizedStudyCondition());
 }
 
 let loadedParticipant = null;
@@ -57,11 +63,18 @@ function policyAnalysisHref(nextPolicyKey, nextPolicyIndex){
   }else{
     query.set("participant",participantId);
   }
-  const framework = isFramework();
+  const condition = normalizedStudyCondition();
+  const framework = condition === "framework";
+  const threePath = condition === "3path";
   const guideOwner = previewMode ? (previewVariantId || "preview") : participantId;
-  const guideKey = framework ? `policy-framework-guide:${guideOwner}` : `policy-baseline-guide:${guideOwner}`;
-  if(localStorage.getItem(guideKey) !== "1") query.set("guide","1");
-  return `${framework ? "pathway_tree.html" : "baseline_report.html"}?${query.toString()}`;
+  const guideKey = framework
+    ? `policy-framework-guide:${guideOwner}`
+    : threePath
+      ? `policy-3path-guide:${guideOwner}`
+      : `policy-baseline-guide:${guideOwner}`;
+  if(guideKey && localStorage.getItem(guideKey) !== "1") query.set("guide","1");
+  const page = framework ? "pathway_tree.html" : threePath ? "3path.html" : "baseline_report.html";
+  return `${page}?${query.toString()}`;
 }
 
 function finishPreview(){
@@ -120,7 +133,7 @@ const allStudySections = [
   },
   {
     title:"Stakeholder discussion and persona chat",
-    conditions:["framework"],
+    conditions:["framework","3path"],
     items:[
       // 5 → 3. chat_1+chat_5 both asked what the interaction newly surfaced;
       // chat_2+chat_3 both asked whether it fit the selected pathway. chat_4 is a
@@ -157,7 +170,7 @@ const cognitiveLoadSection = {
 
 const coverageSection = {
   title:"Breadth of the pathways presented",
-  conditions:["framework"],
+  conditions:["framework","3path"],
   items:[
     ["rq2b_1","The pathways showed a sufficiently wide range of ways in which this policy could unfold."],
     ["rq2b_2","The pathways included not only successful outcomes but also possibilities of failure or deterioration."],

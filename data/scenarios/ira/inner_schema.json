@@ -1,0 +1,25 @@
+{
+  "phases": [
+    {
+      "phase": "Inputs",
+      "prediction_fields": [
+        {
+          "name": "monthly_cost_sharing_cap",
+          "unit": "USD",
+          "type": "int",
+          "description": "Maximum enrollee cost sharing for a one-month supply of a covered insulin product, effective January 1, 2023."
+        },
+        {
+          "name": "reimbursement_deadline_days",
+          "unit": "days",
+          "type": "int",
+          "description": "Number of calendar days within which Part D sponsors must reimburse enrollees for any cost-sharing amount charged above $35 during the transition period."
+        }
+      ],
+      "discussion_points": [
+        "How does the documented input 'monthly_cost_sharing_cap' condition downstream implementation activities? Sets the primary cost-sharing limit that sponsors must implement at the point of sale, directly determining enrollee out-of-pocket costs and the basis for the retrospective subsidy.",
+        "How does the documented input 'reimbursement_deadline_days' condition downstream implementation activities? Establishes the compliance burden for sponsors during the transition period, affecting their administrative processes and potential penalties for non-compliance."
+      ]
+    }
+  ]
+}

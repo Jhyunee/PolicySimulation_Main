@@ -7,7 +7,9 @@ const continueFeatureGuide = document.getElementById("continueFeatureGuide");
 let featureGuideCondition = "framework";
 
 function normalizeFeatureCondition(value){
-  return ["framework", "full"].includes(String(value || "").toLowerCase()) ? "framework" : "baseline";
+  const condition = String(value || "").toLowerCase();
+  if(["framework", "full"].includes(condition)) return "framework";
+  return condition === "3path" ? "3path" : "baseline";
 }
 
 async function validateFeatureGuideSession(){
@@ -29,6 +31,9 @@ async function validateFeatureGuideSession(){
   if(featureGuideCondition === "framework"){
     footerCopy.textContent = "Try these features with illustrative example data before reviewing your assigned policy cases.";
     continueFeatureGuide.innerHTML = 'Continue to interactive practice <i data-lucide="arrow-right"></i>';
+  }else if(featureGuideCondition === "3path"){
+    footerCopy.textContent = "Review these components while comparing the three different pathways in each assigned policy case.";
+    continueFeatureGuide.innerHTML = 'Continue to assigned policies <i data-lucide="arrow-right"></i>';
   }else{
     footerCopy.textContent = "Review these components while examining each assigned policy case.";
     continueFeatureGuide.innerHTML = 'Continue to assigned policies <i data-lucide="arrow-right"></i>';

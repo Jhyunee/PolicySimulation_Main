@@ -4,8 +4,13 @@ from __future__ import annotations
 from typing import Iterable
 
 
-STUDY_VERSION = "domain-condition-v1"
-CONDITIONS = ("baseline", "framework")
+STUDY_VERSION = "domain-condition-v2"
+CONDITIONS = ("baseline", "framework", "3path")
+CONDITION_LABELS = {
+    "baseline": "Baseline",
+    "framework": "Framework",
+    "3path": "3Path",
+}
 
 DOMAINS = {
     "public_health": {
@@ -57,7 +62,7 @@ def _variant(domain_id: str, condition: str, order: str) -> dict:
         "domain_id": domain_id,
         "domain_label": domain["label"],
         "condition": condition,
-        "condition_label": "Framework" if condition == "framework" else "Baseline",
+        "condition_label": CONDITION_LABELS[condition],
         "policy_order": order,
         "policies": policies,
         "policy_keys": [policy["key"] for policy in policies],

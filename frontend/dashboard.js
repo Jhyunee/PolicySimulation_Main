@@ -45,9 +45,16 @@ function policyLink(policyKey, policyIndex){
   if(!introduced) return `survey.html?${query.toString()}`;
   const condition = String(trial?.condition || "baseline").toLowerCase();
   const framework = condition === "framework" || condition === "full";
-  const guideKey = framework ? `policy-framework-guide:${participantId}` : `policy-baseline-guide:${participantId}`;
-  if(localStorage.getItem(guideKey) !== "1") query.set("guide","1");
-  return `${framework ? "pathway_tree.html" : "baseline_report.html"}?${query.toString()}`;
+  const threePath = condition === "3path";
+  const guideOwner = dashboardStudyPreview ? (dashboardVariantId || "preview") : participantId;
+  const guideKey = framework
+    ? `policy-framework-guide:${guideOwner}`
+    : threePath
+      ? `policy-3path-guide:${guideOwner}`
+      : `policy-baseline-guide:${guideOwner}`;
+  if(guideKey && localStorage.getItem(guideKey) !== "1") query.set("guide","1");
+  const page = framework ? "pathway_tree.html" : threePath ? "3path.html" : "baseline_report.html";
+  return `${page}?${query.toString()}`;
 }
 function renderDashboard(policies){
   const keys = assignedKeys(policies);

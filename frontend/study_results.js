@@ -82,8 +82,16 @@ function formatDate(value){
   const date = new Date(value);
   return Number.isNaN(date.valueOf()) ? value : date.toLocaleString();
 }
-function conditionLabel(value){ return ["framework","full"].includes(value) ? "Framework" : value === "baseline" ? "Baseline" : "Unknown"; }
-function normalizedCondition(value){ return ["framework","full"].includes(value) ? "framework" : value === "baseline" ? "baseline" : "unknown"; }
+function conditionLabel(value){
+  const condition=normalizedCondition(value);
+  return condition==="framework" ? "Framework" : condition==="3path" ? "3Path" : condition==="baseline" ? "Baseline" : "Unknown";
+}
+function normalizedCondition(value){
+  const condition=String(value || "").toLowerCase();
+  if(["framework","full"].includes(condition)) return "framework";
+  if(condition==="3path") return "3path";
+  return condition==="baseline" ? "baseline" : "unknown";
+}
 function participantState(person){
   if(person.status === "screened_out") return {label:"Screened out",className:"screened"};
   if(person.survey_stages.includes("policy")) return {label:"Submitted",className:"done"};
@@ -138,6 +146,7 @@ function filteredCaseForExport(item, participantIds){
     response_count:participants.filter(person=>person.survey_stages.includes("policy")).length,
     completed_participant_count:participants.filter(person=>person.status==="completed").length,
     framework_count:participants.filter(person=>normalizedCondition(person.condition)==="framework").length,
+    three_path_count:participants.filter(person=>normalizedCondition(person.condition)==="3path").length,
     baseline_count:participants.filter(person=>normalizedCondition(person.condition)==="baseline").length,
     participants,
   };
@@ -196,7 +205,7 @@ function caseCards(){
       <header><span>${resultEsc(item.short_label)}</span><em>${rate}% responded</em></header>
       <h2>${resultEsc(item.label)}</h2><code>${resultEsc(item.policy_key)}</code>
       <div class="case-progress"><i style="width:${rate}%"></i></div>
-      <dl><div><dt>Assigned</dt><dd>${item.assigned_count}</dd></div><div><dt>Responses</dt><dd>${item.response_count}</dd></div><div><dt>Framework</dt><dd>${item.framework_count}</dd></div><div><dt>Baseline</dt><dd>${item.baseline_count}</dd></div></dl>
+      <dl><div><dt>Assigned</dt><dd>${item.assigned_count}</dd></div><div><dt>Responses</dt><dd>${item.response_count}</dd></div><div><dt>Framework</dt><dd>${item.framework_count}</dd></div><div><dt>3Path</dt><dd>${item.three_path_count || 0}</dd></div><div><dt>Baseline</dt><dd>${item.baseline_count}</dd></div></dl>
       <footer>View participant responses <i data-lucide="arrow-right"></i></footer>
     </button>`;
   }).join("")}</div>`;
@@ -234,7 +243,7 @@ function participantDetail(participant){
         ${chats.length ? `<div class="chat-audit-list">${chats.map(turn=>`<article><div><strong>${resultEsc(turn.persona_name)}</strong><span>${resultEsc(pathLabel(turn.pathway))}</span><em>${formatDuration(turn.latency_ms)}</em></div><p class="chat-question"><b>Q</b>${resultEsc(turn.question)}</p><p class="chat-answer"><b>A</b>${resultEsc(turn.answer || turn.error || "No answer recorded")}</p><code>${resultEsc(turn.pathway)}</code></article>`).join("")}</div>` : '<div class="results-no-response">No persona conversation was recorded.</div>'}
       </section>
     </div>
-    ${normalizedCondition(trial?.condition_name)==="framework" ? `<section class="path-audit-section"><header><div><span>Framework pathway exploration</span><h3>${paths.length} complete pathway${paths.length===1?"":"s"}</h3></div><b>${interactions.selected_node_count || 0} unique nodes selected</b></header>
+    ${["framework","3path"].includes(normalizedCondition(trial?.condition_name)) ? `<section class="path-audit-section"><header><div><span>${normalizedCondition(trial?.condition_name)==="3path" ? "3Path comparison" : "Framework pathway exploration"}</span><h3>${paths.length} complete pathway${paths.length===1?"":"s"}</h3></div><b>${interactions.selected_node_count || 0} unique nodes selected</b></header>
       ${paths.length ? `<div class="path-audit-list">${paths.map((path,index)=>`<article><i>${index+1}</i><div><strong>${resultEsc(pathLabel(path))}</strong><code>${resultEsc(path)}</code></div></article>`).join("")}</div>` : '<div class="results-no-response">No complete Framework pathway was recorded.</div>'}
     </section>` : ""}
     <div class="response-stage-group"><h3>Case-specific responses</h3>${["policy_pre","policy"].map(stage=>responseBlock(policyResponses.find(item=>item.survey_stage===stage))).join("")}</div>
@@ -244,7 +253,7 @@ function participantDetail(participant){
 
 function conditionSelection(){
   const item=currentCase();
-  const cards=["framework","baseline"].map(condition=>{
+  const cards=["framework","3path","baseline"].map(condition=>{
     const people=item.participants.filter(person=>normalizedCondition(person.condition)===condition);
     const submitted=people.filter(person=>person.survey_stages.includes("policy")).length;
     const timedPeople=people.filter(person=>Number(person.recorded_duration_ms || 0)>0);
@@ -254,10 +263,13 @@ function conditionSelection(){
     const discussions=people.reduce((sum,person)=>sum+Number(person.stakeholder_discussion_count || 0),0);
     const paths=people.reduce((sum,person)=>sum+Number(person.complete_path_count || 0),0);
     const screenedOut=people.filter(person=>person.status === "screened_out").length;
+    const title=condition==="framework" ? "Branching pathway interface" : condition==="3path" ? "Three different pathways" : "Baseline policy analysis";
+    const description=condition==="framework" ? "Responses and interactions from the exploratory branching condition." : condition==="3path" ? "Responses from the fixed Enabling, Baseline, and Constraining pathway comparison." : "Responses and interactions from the single-path baseline condition.";
+    const icon=condition==="framework" ? "git-branch" : condition==="3path" ? "columns-3" : "file-text";
     return `<button class="condition-result-card ${condition}" type="button" data-condition="${condition}">
-      <header><span>${conditionLabel(condition)}</span><i data-lucide="${condition==="framework"?"git-branch":"file-text"}"></i></header>
-      <h2>${condition==="framework"?"Branching pathway interface":"Baseline policy analysis"}</h2>
-      <p>${condition==="framework"?"Responses and interactions from the exploratory EBC pathway condition.":"Responses and interactions from the single-path baseline condition."}</p>
+      <header><span>${conditionLabel(condition)}</span><i data-lucide="${icon}"></i></header>
+      <h2>${title}</h2>
+      <p>${description}</p>
       <dl><div><dt>Assigned</dt><dd>${people.length}</dd></div><div><dt>Submitted</dt><dd>${submitted}</dd></div><div><dt>Screened out</dt><dd>${screenedOut}</dd></div><div><dt>Avg. time</dt><dd>${formatDuration(averageDuration)}</dd></div><div><dt>Chats</dt><dd>${chats}</dd></div><div><dt>Discussions</dt><dd>${discussions}</dd></div><div><dt>Paths</dt><dd>${paths}</dd></div></dl>
       <footer>View ${conditionLabel(condition)} participants <i data-lucide="arrow-right"></i></footer>
     </button>`;

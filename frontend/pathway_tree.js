@@ -229,17 +229,18 @@ let activeElapsedMs = 0;
 let activeSegmentStartedAt = document.hidden ? null : performance.now();
 const treeQuery = new URLSearchParams(window.location.search);
 const treePreviewMode = treeQuery.get("previewStudy") === "1";
-const treeDemoMode = treeQuery.get("demo") === "1";
+const treeDemoMode = treeQuery.get("demo") === "1" || window.TREE_DEMO_MODE === true;
 const treePracticeMode = treeQuery.get("practice") === "1";
 const PATHWAY_COMPARISON_ENABLED = false;
 let currentPolicyKey = treePracticeMode ? "usa/chi_ctc" : (treeQuery.get("policy") || "usa/chi_nsa");
 const currentPolicyIndex = Math.max(0, Math.min(1, Number(treeQuery.get("policyIndex") || 0)));
 const frameworkGuideStorageKey = `policy-framework-guide:${PolicyStudy.participantId || treeQuery.get("variant") || "preview"}`;
 const baselineGuideStorageKey = `policy-baseline-guide:${PolicyStudy.participantId || treeQuery.get("variant") || "preview"}`;
+const threePathGuideStorageKey = `policy-3path-guide:${PolicyStudy.participantId || treeQuery.get("variant") || "preview"}`;
 let frameworkGuideStep = treeQuery.get("guide") === "1" ? 0 : -1;
 let frameworkContextGuide = "";
 const frameworkGuideIdentity = PolicyStudy.participantId || treeQuery.get("variant") || "preview";
-const frameworkContextGuideKey = kind => `policy-${TREE_BASELINE_MODE ? "baseline" : "framework"}-feature-guide:${kind}:${frameworkGuideIdentity}`;
+const frameworkContextGuideKey = kind => `policy-${TREE_BASELINE_MODE ? "baseline" : TREE_THREE_PATH_MODE ? "3path" : "framework"}-feature-guide:${kind}:${frameworkGuideIdentity}`;
 
 /* ── Baseline 조건 ───────────────────────────────────────────────────────────
    유저스터디 baseline은 동일한 ToC 구조를 "단일 경로"로만 제시한다.
@@ -249,7 +250,10 @@ const frameworkContextGuideKey = kind => `policy-${TREE_BASELINE_MODE ? "baselin
    ⚠️ 선택되지 않은 분기의 존재를 어떤 방식으로도 노출하지 않는다.               */
 const TREE_BASELINE_MODE = window.TREE_BASELINE_MODE === true
   || treeQuery.get("condition") === "baseline";
+const TREE_THREE_PATH_MODE = window.TREE_THREE_PATH_MODE === true
+  || treeQuery.get("condition") === "3path";
 const BASELINE_TRANSITION = "baseline";
+const THREE_PATH_TRANSITIONS = ["enabling", "baseline", "constraining"];
 const FRAMEWORK_CHAT_LIMIT = 5;
 let frameworkChatUsage = {
   enabled: true,
@@ -257,7 +261,7 @@ let frameworkChatUsage = {
   limit: FRAMEWORK_CHAT_LIMIT,
   remaining: FRAMEWORK_CHAT_LIMIT,
 };
-let TREE_VIEW_SCALE = 0.68;
+let TREE_VIEW_SCALE = TREE_THREE_PATH_MODE ? 0.76 : 0.68;
 const TREE_VIEW_SCALE_MIN = 0.44;
 const TREE_VIEW_SCALE_MAX = 0.92;
 const TREE_VIEW_SCALE_STEP = 0.08;
@@ -508,7 +512,9 @@ function configurePolicyTree(precomputed){
   TREE_PHASES = precomputed.available_phases?.length
     ? [...precomputed.available_phases]
     : [...(precomputed.phases || TREE_PHASES)];
-  document.title = currentPolicyMeta.title || "Policy Pathway Explorer";
+  document.title = TREE_THREE_PATH_MODE
+    ? "3Path Policy Analysis"
+    : currentPolicyMeta.title || "Policy Pathway Explorer";
   const roles = currentPolicyMeta.roles || [];
   STAKEHOLDER_SEATS = roles.map((role, index)=>({
     role:role.key,
@@ -586,6 +592,25 @@ function markPolicyCompleteTree(){
       if(failedChats) return blockCompletion("chat_failed", "The stakeholder response could not be generated. Please retry the question before continuing.");
       return blockCompletion("chat_required", "Please ask at least one stakeholder persona a question before continuing.");
     }
+    PolicyStudy.exitEvent("policy_exploration_finished", {
+      completed_paths:[...completedPathSet],
+      completed_path_count:completedPathSet.size,
+      visible_node_count:treeNodes.size,
+      chat_turn_count:answeredChats.length,
+      active_elapsed_ms:Math.round(activePolicyElapsedTree()),
+    });
+    return true;
+  }
+  if(TREE_THREE_PATH_MODE){
+    if(completedPathSet.size < 2){
+      return blockCompletion("paths_required", `Please review at least two of the three complete pathways before continuing. ${completedPathSet.size} of 2 pathways reviewed.`);
+    }
+    if(!answeredChats.length){
+      if(pendingChats) return blockCompletion("chat_pending", "Please wait until the stakeholder response is complete before continuing.");
+      if(failedChats) return blockCompletion("chat_failed", "The stakeholder response could not be generated. Please retry the question before continuing.");
+      return blockCompletion("chat_required", "Please ask at least one stakeholder persona a question before continuing.");
+    }
+    completionNotice = "";
     PolicyStudy.exitEvent("policy_exploration_finished", {
       completed_paths:[...completedPathSet],
       completed_path_count:completedPathSet.size,
@@ -818,6 +843,14 @@ function nodeFromPath(path){
 }
 function childPaths(path){
   if(precomputedTreeNodes){
+    if(TREE_THREE_PATH_MODE){
+      const transitions = path === "root"
+        ? THREE_PATH_TRANSITIONS
+        : [path.split("/")[1]];
+      return transitions
+        .map(transition=>`${path}/${transition}`)
+        .filter(childPath=>precomputedTreeNodes.has(childPath));
+    }
     // baseline 조건: all-baseline 경로의 다음 노드 하나만 노출 (형제 분기 비노출)
     const transitions = TREE_BASELINE_MODE ? [BASELINE_TRANSITION] : PRECOMPUTED_TRANSITION_ORDER;
     return transitions
@@ -826,6 +859,10 @@ function childPaths(path){
   }
   const node = nodeFromPath(path);
   if(node.col >= TREE_PHASES.length - 1) return [];
+  if(TREE_THREE_PATH_MODE){
+    if(path === "root") return THREE_PATH_TRANSITIONS.map(transition=>`${path}/${transition}`);
+    return [`${path}/${path.split("/")[1]}`];
+  }
   if(TREE_BASELINE_MODE) return [`${path}/${BASELINE_TRANSITION}`];
   return TREE_STANCE_ORDER.map(stance=>`${path}/${stance}`);
 }
@@ -843,6 +880,19 @@ function expandBaselineChain(){
     guard += 1;
   }
   return path;
+}
+function expandThreePathChains(){
+  THREE_PATH_TRANSITIONS.forEach(transition=>{
+    let path = "root";
+    for(let phaseIndex=1; phaseIndex<TREE_PHASES.length; phaseIndex+=1){
+      const childPath = `${path}/${transition}`;
+      if(precomputedTreeNodes && !precomputedTreeNodes.has(childPath)) break;
+      if(!treeNodes.has(childPath)) treeNodes.set(childPath, nodeFromPath(childPath));
+      expandedPaths.add(path);
+      path = childPath;
+    }
+  });
+  return "root/baseline/baseline/baseline/baseline";
 }
 function addChildren(path){
   const parent = treeNodes.get(path) || nodeFromPath(path);
@@ -883,6 +933,25 @@ function visibleNodes(){
 function layoutNodes(nodes){
   const nodeMap = new Map(nodes.map(n=>[n.path,n]));
   const positions = new Map();
+  if(TREE_THREE_PATH_MODE){
+    const laneY = {enabling:124, baseline:300, constraining:476};
+    const rootY = laneY.baseline;
+    positions.set("root", {x:82, y:rootY});
+    nodes.forEach(node=>{
+      if(node.path === "root") return;
+      const lane = node.path.split("/")[1] || "baseline";
+      positions.set(node.path, {
+        x:82 + node.col * 270,
+        y:laneY[lane] || rootY,
+      });
+    });
+    return {
+      positions,
+      height:600,
+      width:82 + (TREE_PHASES.length - 1) * 270 + 330,
+      minY:60,
+    };
+  }
   let cursorY = 132;
   // Keep 114px cards separated by a compact 32px unscaled visual gap.
   // This gives E/B/C siblings roughly half the previous whitespace without
@@ -2048,6 +2117,24 @@ const BASELINE_GUIDE_STEPS = [
   },
 ];
 
+const THREE_PATH_GUIDE_STEPS = [
+  {
+    target:'.tree-node[data-phase-index="1"]',
+    title:"Compare three different policy developments",
+    copy:"This view presents Enabling-only, Baseline-only, and Constraining-only developments side by side. Select a phase card in any row to review that point in the policy process.",
+    details:[
+      ["Enabling", "Positive development and recovery from bottlenecks."],
+      ["Baseline", "Continuation under typical conditions."],
+      ["Constraining", "Intensified bottlenecks and possible failure to meet policy goals."],
+    ],
+  },
+  {
+    target:'.tree-phase-inspector',
+    title:"Review the selected phase summary",
+    copy:"The panel below the pathways explains the selected phase, including its mechanism, key constraints, and quantitative estimates. It updates whenever you select another phase card.",
+  },
+];
+
 const FRAMEWORK_CONTEXT_GUIDES = {
   discussion:{
     target:".node-discussion-button",
@@ -2080,7 +2167,11 @@ const BASELINE_CONTEXT_GUIDES = {
 };
 
 function activeGuideSteps(){
-  return TREE_BASELINE_MODE ? BASELINE_GUIDE_STEPS : FRAMEWORK_GUIDE_STEPS;
+  return TREE_BASELINE_MODE
+    ? BASELINE_GUIDE_STEPS
+    : TREE_THREE_PATH_MODE
+      ? THREE_PATH_GUIDE_STEPS
+      : FRAMEWORK_GUIDE_STEPS;
 }
 
 function activeContextGuides(){
@@ -2088,7 +2179,11 @@ function activeContextGuides(){
 }
 
 function activeGuideStorageKey(){
-  return TREE_BASELINE_MODE ? baselineGuideStorageKey : frameworkGuideStorageKey;
+  return TREE_BASELINE_MODE
+    ? baselineGuideStorageKey
+    : TREE_THREE_PATH_MODE
+      ? threePathGuideStorageKey
+      : frameworkGuideStorageKey;
 }
 
 function activeFrameworkGuide(){
@@ -2107,7 +2202,7 @@ function activeFrameworkGuide(){
       kind:"initial",
       label:`Guide ${frameworkGuideStep + 1} of ${steps.length}`,
       action:frameworkGuideStep === steps.length - 1
-        ? (TREE_BASELINE_MODE ? "Start reviewing" : "Start exploring")
+        ? (TREE_BASELINE_MODE ? "Start reviewing" : TREE_THREE_PATH_MODE ? "Start comparing" : "Start exploring")
         : "Next",
     };
   }
@@ -2190,7 +2285,7 @@ function closeFrameworkGuide(completed=false){
   }
   localStorage.setItem(activeGuideStorageKey(), "1");
   logTreeEvent(completed ? "policy_guide_completed" : "policy_guide_skipped", {
-    condition:TREE_BASELINE_MODE ? "baseline" : "framework",
+    condition:TREE_BASELINE_MODE ? "baseline" : TREE_THREE_PATH_MODE ? "3path" : "framework",
     step:frameworkGuideStep + 1,
   });
   frameworkGuideStep = -1;
@@ -2224,15 +2319,17 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     : canvasSection;
   // baseline 조건: 캔버스 → 하단 패널 순서. Ours(framework)는 원래의
   // 좌측 사이드바(인스펙터) → 캔버스 순서를 그대로 유지한다.
-  const workspaceBody = TREE_BASELINE_MODE
+  const workspaceBody = TREE_BASELINE_MODE || TREE_THREE_PATH_MODE
     ? `${canvasSection}${renderPhaseInspector(nodes, layout)}`
     : `${renderPhaseInspector(nodes, layout)}${canvasColumn}`;
-  const studyToolbar = treeDemoMode ? "" : treePracticeMode
+  const studyToolbar = TREE_THREE_PATH_MODE
+    ? `<header class="baseline-report-toolbar tree-study-toolbar three-path-toolbar"><span><i data-lucide="git-branch"></i> 3PATH POLICY ANALYSIS</span><b>${escTree(currentPolicyMeta.label)} · Enabling-only / Baseline-only / Constraining-only</b></header>`
+    : treeDemoMode ? "" : treePracticeMode
     ? `<header class="baseline-report-toolbar tree-study-toolbar tree-practice-toolbar"><span><i data-lucide="mouse-pointer-click"></i> Interactive practice</span><b>Illustrative example data</b></header>`
     : `<header class="baseline-report-toolbar tree-study-toolbar"><a href="${dashboardHrefTree(false)}"><i data-lucide="layout-dashboard"></i><span>Policies</span></a><span>Policy ${currentPolicyIndex + 1} of 2</span></header>`;
   const studyCompletion = treeDemoMode ? "" : treePracticeMode
     ? (treePracticeStep === 10 ? `<section class="baseline-report-complete tree-exploration-complete practice-completion"><a class="finish-link practice-completion-link" data-finish-practice="1" href="#">Continue to first policy <i data-lucide="arrow-right"></i></a></section>` : "")
-    : `<section class="baseline-report-complete tree-exploration-complete"><a class="finish-link" data-finish-policy="1" href="${policySurveyHrefTree()}">${TREE_BASELINE_MODE ? "Finish Reviewing" : "Finish Exploring"} <i data-lucide="arrow-right"></i></a></section>`;
+    : `<section class="baseline-report-complete tree-exploration-complete"><a class="finish-link" data-finish-policy="1" href="${policySurveyHrefTree()}">${TREE_BASELINE_MODE ? "Finish Reviewing" : TREE_THREE_PATH_MODE ? "Finish Comparing" : "Finish Exploring"} <i data-lucide="arrow-right"></i></a></section>`;
   const afterWorkspace = studyCompletion && !TREE_BASELINE_MODE
     ? `<div class="tree-after-workspace">${studyCompletion}</div>`
     : studyCompletion;
@@ -2298,7 +2395,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
       else if(treePracticeStep === 5) treePracticeStep = 6;
       else if(treePracticeStep === 6) treePracticeStep = 7;
       logTreeEvent("practice_step_completed", {step:treePracticeStep, path});
-    }else if(frameworkGuideStep < 0 && !frameworkContextGuide){
+    }else if(frameworkGuideStep < 0 && !frameworkContextGuide && !TREE_THREE_PATH_MODE){
       if(!TREE_BASELINE_MODE && isCompletePath && localStorage.getItem(frameworkContextGuideKey("report")) !== "1"){
         frameworkContextGuide = "report";
       }else if(node.col > 0 && phasePostsTree(node.phase || {}).length > 0 && localStorage.getItem(frameworkContextGuideKey("discussion")) !== "1"){
@@ -2495,7 +2592,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     reportPath = "";
     if(treePracticeMode && treePracticeStep === 7){
       treePracticeStep = 8;
-    }else if(!TREE_BASELINE_MODE && frameworkGuideStep < 0 && !frameworkContextGuide){
+    }else if(!TREE_BASELINE_MODE && !TREE_THREE_PATH_MODE && frameworkGuideStep < 0 && !frameworkContextGuide){
       if(chatAvailable && localStorage.getItem(frameworkContextGuideKey("chat")) !== "1"){
         frameworkContextGuide = "chat";
       }
@@ -2781,6 +2878,9 @@ fetch(`/api/pathway/${encodeURIComponent(treeCountry)}/${encodeURIComponent(tree
     if(TREE_BASELINE_MODE){
       // baseline: 단일 궤적 전체를 처음부터 제시 (선택 행위가 없으므로 점진적 공개가 불필요)
       expandBaselineChain();
+    }else if(TREE_THREE_PATH_MODE){
+      // 3path: 같은 전개 조건만 유지하는 세 개의 고정 경로를 한 화면에 제시한다.
+      expandThreePathChains();
     }else{
       addChildren("root");
     }
@@ -2790,7 +2890,7 @@ fetch(`/api/pathway/${encodeURIComponent(treeCountry)}/${encodeURIComponent(tree
     logTreeEvent("policy_exploration_started", {
       policy_label:currentPolicyMeta.label,
       available_phases:TREE_PHASES,
-      condition:TREE_BASELINE_MODE ? "baseline" : "framework",
+      condition:TREE_BASELINE_MODE ? "baseline" : TREE_THREE_PATH_MODE ? "3path" : "framework",
       assigned_order_index:Number(treeQuery.get("policyIndex") || 0),
     });
     renderTree();

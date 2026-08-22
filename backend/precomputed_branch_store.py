@@ -9,6 +9,24 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DATA = REPO_ROOT / "data"
 
 POLICY_TREES = {
+    "usa/chi_nsa": {
+        "label": "No Surprises Act", "short_label": "NSA",
+        "title": "No Surprises Act Pathway Explorer",
+        "description": "Explore how implementation capacity, provider and insurer behavior, and dispute resolution shape protections from unexpected out-of-network bills.",
+        "goal": "The No Surprises Act aims to protect patients from unexpected out-of-network bills and limit patient cost sharing in covered emergency and non-emergency situations.",
+        "overview": "The Act restricts balance billing and limits patient cost sharing for many emergency services and certain non-emergency services delivered by out-of-network providers at in-network facilities. Its effects depend on provider and insurer compliance, consumer awareness, administrative enforcement, payment negotiation, and the independent dispute-resolution process. The pathway simulation examines how these conditions may shape out-of-network billing, dispute volume, patient financial exposure, and longer-term market behavior.",
+        "tree_path": DATA / "trees" / "nsa.json", "scenario_dir": DATA / "scenarios" / "nsa",
+        "roles": [{"key":"patient","label":"Patient"},{"key":"provider","label":"Provider"},{"key":"payer","label":"Insurer"},{"key":"regulator","label":"Federal regulator"},{"key":"mediator","label":"Dispute mediator"}],
+    },
+    "usa/chi_ira": {
+        "label": "Inflation Reduction Act Insulin Provisions", "short_label": "IRA",
+        "title": "Insulin Cost-Sharing Pathway Explorer",
+        "description": "Explore how plan implementation, pharmacy delivery, and beneficiary access shape insulin affordability under the Inflation Reduction Act.",
+        "goal": "The Inflation Reduction Act's insulin provisions aim to reduce out-of-pocket insulin costs for Medicare beneficiaries and make monthly costs more predictable.",
+        "overview": "The policy limits cost sharing for covered insulin products in Medicare Part D and for insulin delivered through covered pumps in Medicare Part B. Its effects depend on plan implementation, pharmacy workflows, formulary and eligibility rules, beneficiary awareness, and consistent access to covered insulin. The pathway simulation examines how these conditions may shape out-of-pocket spending, cost variation, treatment access, adherence, and longer-term health and financial effects.",
+        "tree_path": DATA / "trees" / "ira.json", "scenario_dir": DATA / "scenarios" / "ira",
+        "roles": [{"key":"federal_policy_oversight","label":"Federal policy oversight"},{"key":"part_d_plan_implementer","label":"Part D plan implementer"},{"key":"frontline_pharmacy_provider","label":"Pharmacy provider"},{"key":"high_cost_insulin_beneficiary","label":"Insulin beneficiary"},{"key":"lis_insulin_beneficiary","label":"Low-income subsidy beneficiary"}],
+    },
     "usa/chi_ctc": {
         "label": "Expanded Child Tax Credit", "short_label": "CTC",
         "title": "Child Tax Credit Pathway Explorer",

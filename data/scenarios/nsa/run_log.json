@@ -1,0 +1,212 @@
+{
+  "command": "stage2-toc",
+  "model": "deepseek-chat",
+  "config_url": "https://api.deepseek.com/v1/chat/completions",
+  "config_path": "config/usa_chi_nsa_ebc.yaml",
+  "started_at": "2026-07-24T10:53:33",
+  "ended_at": "2026-07-24T10:56:08",
+  "duration_seconds": 154.09,
+  "usage": {
+    "llm_calls": 30,
+    "llm_calls_with_usage": 30,
+    "prompt_tokens": 135362,
+    "completion_tokens": 13048,
+    "total_tokens": 148410,
+    "call_count": 30,
+    "elapsed_sec": 0.0
+  },
+  "config": {
+    "llm": {
+      "url": "https://api.deepseek.com/v1/chat/completions",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "auth_header": "bearer",
+      "model": "deepseek-chat",
+      "temperature": 0.3,
+      "max_tokens": 8192,
+      "request_timeout": 180,
+      "max_retries": 3
+    },
+    "paths": {
+      "background_dir": "dataset/kor/background",
+      "input_policy_dir": "dataset/usa/chi_nsa/input_policy",
+      "past_policy_dir": "dataset/usa/chi_nsa/input_policy",
+      "processed_dir": "dataset/processed",
+      "outputs": {
+        "stage1": "outputs/usa/chi_nsa/stage1",
+        "stage2_toc": "outputs/usa/chi_nsa/stage2_toc"
+      }
+    },
+    "pdf": {
+      "parser": "opendataloader",
+      "fallback_to_pypdf": true,
+      "cache_dir": "dataset/processed/pdf_cache",
+      "output_formats": [
+        "markdown",
+        "json"
+      ],
+      "use_struct_tree": true,
+      "table_method": "cluster",
+      "reading_order": "xycut",
+      "keep_line_breaks": false,
+      "include_header_footer": false,
+      "markdown_page_separator": "\n\n--- page %page-number% ---\n\n"
+    },
+    "zep": {
+      "api_key_env": "ZEP_API_KEY",
+      "chunk_size": 500,
+      "chunk_overlap": 50,
+      "batch_size": 3,
+      "wait_timeout": 600
+    },
+    "kg": {
+      "use_iad_ig_ontology": true,
+      "chunk_size": 1200,
+      "chunk_overlap": 200,
+      "max_node_pool_context": 120,
+      "max_edges_per_chunk": 20,
+      "enable_validation_recovery": true
+    },
+    "stage1": {
+      "personas_per_category": 5,
+      "use_economic_context": false,
+      "use_economic_context_in_persona": false,
+      "use_policy_plan": false,
+      "use_policy_plan_in_context": false,
+      "output_file": "stage1_result.json",
+      "non_actor_types": [
+        "Program",
+        "Organization",
+        "Person"
+      ]
+    },
+    "persona": {
+      "selection_mode": "mechanism_panel",
+      "sampler": "scope_definer",
+      "simulation_sample_seed": 42,
+      "max_simulation_participants": 5,
+      "fallback_to_llm": true,
+      "mechanism_panel": {
+        "panel_id": "nsa_primary_mechanism_panel_v1",
+        "candidates_per_role": 5,
+        "strict_role_coverage": true,
+        "anchor_overrides": {
+          "patient": "BeneficiaryOrEnrollee:Patient",
+          "provider": "NonparticipatingProvider:Nonparticipating Provider or Facility",
+          "payer": "GroupHealthPlanOrIssuer:Group Health Plan or Health Insurance Issuer",
+          "regulator": "RegulatoryAgency:Federal Regulatory Departments (HHS, DOL, Treasury, OPM",
+          "mediator": "IndependentDisputeResolutionEntity:Independent Dispute Resolution Entity under No Surprises Act"
+        }
+      },
+      "scope_definer": {
+        "enabled": true,
+        "min_pool_size": 20,
+        "target_pool_size": 20,
+        "max_per_tier_occupation": 3,
+        "candidate_pool_top_k": 20,
+        "parquet_glob": "dataset/processed/nemotron_usa/Nemotron-Personas-USA/data/*.parquet",
+        "fallback": {
+          "enabled": true,
+          "mode": "random_full_nemotron"
+        },
+        "num_scenarios": 1,
+        "participants_per_scenario": 5,
+        "unique_participants_across_scenarios": false,
+        "values_module": "dataset.processed.nemotron_usa"
+      },
+      "kg_gen": {
+        "country": "usa",
+        "personas_per_entity": 5,
+        "temperature": 0.7
+      },
+      "role_actions": {
+        "enabled": true
+      },
+      "refiner": {
+        "enabled": false
+      },
+      "actor_anchor_policy": "persona_eligible",
+      "simulation_sampling_strategy": "role_stratified_weighted",
+      "simulation_role_gate": {
+        "enabled": false
+      },
+      "nemotron": {
+        "dataset_name": "nvidia/Nemotron-Personas-USA",
+        "split": "train",
+        "streaming": true,
+        "cache_dir": "dataset/processed/nemotron",
+        "local_data_dir": "dataset/processed/nemotron_usa/Nemotron-Personas-USA/data",
+        "seed": 42,
+        "require_column_signal": true,
+        "adaptive_matching": {
+          "enabled": true,
+          "profile_version": "iad_ig_role_scope_v4_full_local_usa",
+          "value_scan_limit": 5000,
+          "max_education_values": 100,
+          "max_bachelors_field_values": 100,
+          "max_occupation_values": 300,
+          "cache_dir": "dataset/processed/nemotron"
+        },
+        "synthesis": {
+          "enabled": true,
+          "scope": "selected",
+          "max_calls": 5
+        },
+        "shuffle_buffer_size": 10000,
+        "local_batch_size": 8192,
+        "scan_limit": 1000000,
+        "candidate_pool_size": 100,
+        "prefilter_heap_multiplier": 5,
+        "prefilter_field_heap_size": 100,
+        "prefilter_strategy": "top_m",
+        "top_m_light_scan": true,
+        "top_m_inline_text_columns": true,
+        "min_match_score": 1,
+        "reranker": "llm",
+        "llm_reranker": {
+          "enabled": true,
+          "batch_size": 20,
+          "top_n": 20
+        },
+        "diversity_penalty": {
+          "bachelors_field": 0.45,
+          "occupation": 0.35,
+          "province": 0.15,
+          "sex": 0.1
+        }
+      }
+    },
+    "stage2_toc": {
+      "prompt_variant": "en_natural",
+      "max_scenarios": 1,
+      "run_forward": true,
+      "run_backward": false,
+      "final_forward_refinement": false,
+      "phase_interaction_mode": "sequential",
+      "fixed_posting_order": [
+        "patient",
+        "provider",
+        "payer",
+        "regulator",
+        "mediator"
+      ],
+      "fwd_bwd_fwd_seq": false,
+      "fwd_bwd_fwd_bwd_seq": false,
+      "quantitative_target_only": false,
+      "sequential_backward": false,
+      "use_economic_context_in_simulation": false,
+      "inner_schema_file": "inner_schema.json",
+      "output_file": "stage2_toc_result.json",
+      "parallel_forward_backward": false,
+      "parallel_scenarios": false
+    }
+  },
+  "simulation_target": "The 2022 percentage-point reduction from the pre-NSA baseline in (1) out-of-network bill prevalence for emergency services and (2) out-of-network bill prevalence for non-emergency services at in-network facilities",
+  "run_tag": "ebc_all_baseline_test_v1",
+  "stage1_result": "outputs/usa/chi_nsa/stage1/20260723103828_deepseek-chat_result_mechanism_panel_v1/stage1_result.json",
+  "simulation_personas": "outputs/usa/chi_nsa/stage1/20260723103828_deepseek-chat_result_mechanism_panel_v1/simulation_personas_stage2.json",
+  "scenario_count": 1,
+  "outputs": {
+    "stage2_toc_result": "stage2_toc_result.json",
+    "final_report": "final_report.json"
+  }
+}

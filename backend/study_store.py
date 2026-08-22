@@ -640,6 +640,7 @@ def study_results() -> dict:
                     "completed_participant_count": 0,
                     "framework_count": 0,
                     "baseline_count": 0,
+                    "three_path_count": 0,
                     "participants": [],
                 })
                 stages = {survey["survey_stage"] for survey in policy_surveys}
@@ -652,6 +653,8 @@ def study_results() -> dict:
                     case["framework_count"] += 1
                 elif condition == "baseline":
                     case["baseline_count"] += 1
+                elif condition == "3path":
+                    case["three_path_count"] += 1
                 case["participants"].append({
                     "participant_id": participant_id,
                     "created_at": row["created_at"],
@@ -795,7 +798,7 @@ def chat_turn_status(participant_id: str, policy_key: str, framework_limit: int 
     with _connect() as connection:
         context = _trial_context(connection, participant_id, policy_key)
         condition = context.get("condition_name")
-        enabled = condition in {"baseline", "framework", "full"}
+        enabled = condition in {"baseline", "framework", "full", "3path"}
         used = int(connection.execute(
             """
             SELECT COUNT(*) AS n FROM chat_turns
@@ -819,7 +822,7 @@ def start_chat_turn(turn: dict, framework_limit: int | None = None) -> dict:
         connection.execute("BEGIN IMMEDIATE")
         context = _trial_context(connection, turn["participant_id"], turn["policy_key"])
         condition = context.get("condition_name")
-        limit_enabled = condition in {"baseline", "framework", "full"} and framework_limit is not None
+        limit_enabled = condition in {"baseline", "framework", "full", "3path"} and framework_limit is not None
         existing = connection.execute(
             "SELECT 1 FROM chat_turns WHERE turn_id = ?",
             (turn["turn_id"],),

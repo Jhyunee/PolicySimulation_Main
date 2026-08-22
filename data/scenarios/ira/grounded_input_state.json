@@ -1,0 +1,189 @@
+{
+  "policy_name": "Inflation Reduction Act Section 11406: $35 Monthly Cap on Medicare Part D Insulin Cost Sharing",
+  "state_type": "document_grounded",
+  "fields": [
+    {
+      "name": "monthly_cost_sharing_cap",
+      "value": 35,
+      "unit": "USD",
+      "type": "int",
+      "description": "Maximum enrollee cost sharing for a one-month supply of a covered insulin product, effective January 1, 2023.",
+      "effective_date": "2023-01-01",
+      "scope": "All Medicare Part D enrollees using covered insulin products",
+      "causal_relevance": "Sets the primary cost-sharing limit that sponsors must implement at the point of sale, directly determining enrollee out-of-pocket costs and the basis for the retrospective subsidy.",
+      "kg_links": [
+        "StatutoryCostSharingLimit:Statutory $35 Insulin Cost-Sharing Cap"
+      ],
+      "evidence": [
+        {
+          "source": "IRA_InsulinVaccines_Memo_09262022-2.pdf",
+          "page": 3,
+          "evidence_quote": "cost sharing for a one-month supply of each covered insulin product must not exceed $35 for all enrollees in all coverage phases."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "reimbursement_deadline_days",
+      "value": 30,
+      "unit": "days",
+      "type": "int",
+      "description": "Number of calendar days within which Part D sponsors must reimburse enrollees for any cost-sharing amount charged above $35 during the transition period.",
+      "effective_date": "2023-01-01",
+      "scope": "Part D sponsors charging higher cost sharing during the transition period",
+      "causal_relevance": "Establishes the compliance burden for sponsors during the transition period, affecting their administrative processes and potential penalties for non-compliance.",
+      "kg_links": [
+        "PartDSponsor:PartDSponsor"
+      ],
+      "evidence": [
+        {
+          "source": "IRA_InsulinVaccines_Memo_09262022-2.pdf",
+          "page": 3,
+          "evidence_quote": "the plan must reimburse enrollees within 30 calendar days any cost-sharing amount charged to the enrollee that exceeds $35 for a one-month supply of a covered insulin product."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    }
+  ],
+  "policy_parameters": [
+    {
+      "name": "effective_date",
+      "value": "2023-01-01",
+      "unit": "date",
+      "description": "Date when the cost-sharing limits become effective for all Part D plans.",
+      "effective_date": "2023-01-01",
+      "evidence": [
+        {
+          "source": "IRA_InsulinVaccines_Memo_09262022-2.pdf",
+          "page": 1,
+          "evidence_quote": "These changes become effective January 1, 2023 and apply to all Part D plans, including Employer Group Waiver plans."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "transition_period_end",
+      "value": "2023-03-31",
+      "unit": "date",
+      "description": "End of the transition period during which sponsors may charge higher cost sharing if they reimburse enrollees.",
+      "effective_date": "2023-03-31",
+      "evidence": [
+        {
+          "source": "IRA_InsulinVaccines_Memo_09262022-2.pdf",
+          "page": 3,
+          "evidence_quote": "if a Part D sponsor is unable to do so and charges higher cost sharing between January 1, 2023 through March 31, 2023 based on its previously approved CY 2023 PBP, the plan must reimburse enrollees within 30 calendar days any cost-sharing amount charged to the enrollee that exceeds $35 for a one-month supply of a covered insulin product."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "deductible_not_applicable",
+      "value": true,
+      "unit": "boolean",
+      "description": "The deductible shall not apply to covered insulin products.",
+      "effective_date": "2023-01-01",
+      "evidence": [
+        {
+          "source": "IRA_InsulinVaccines_Memo_09262022-2.pdf",
+          "page": 3,
+          "evidence_quote": "the deductible shall not apply to covered insulin products, and cost sharing for a one-month supply of each covered insulin product must not exceed $35 for all enrollees in all coverage phases."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "out_of_network_differential_cap",
+      "value": 35,
+      "unit": "USD",
+      "description": "Total cost sharing for a one-month supply of a covered insulin product, inclusive of any out-of-network differential, must not exceed $35.",
+      "effective_date": "2023-01-01",
+      "evidence": [
+        {
+          "source": "IRA_InsulinVaccines_Memo_09262022-2.pdf",
+          "page": 5,
+          "evidence_quote": "in no event may a plan require an enrollee to pay more than $35 in total cost sharing for a one-month supply of a covered insulin product, inclusive of any OON differential charged to the enrollee."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    },
+    {
+      "name": "lis_category_4_threshold",
+      "value": 35,
+      "unit": "USD",
+      "description": "LIS cost sharing that exceeds $35 (e.g., LIS Category 4) is eligible for the temporary retrospective subsidy.",
+      "effective_date": "2023-01-01",
+      "evidence": [
+        {
+          "source": "IRA_InsulinVaccines_Memo_09262022-2.pdf",
+          "page": 6,
+          "evidence_quote": "the temporary retrospective subsidy is available for any applicable LIS cost sharing that exceeds $0 for ACIPrecommended vaccines and any applicable LIS cost sharing that exceeds $35 (e.g., LIS Category 4) but is less than the plan’s cost sharing, as reflected in the CY 2023 PBP, for covered insulin products."
+        }
+      ],
+      "validation_status": "validated",
+      "validation_notes": []
+    }
+  ],
+  "summary": "Document-grounded initial state. Inputs: monthly_cost_sharing_cap=35 USD; reimbursement_deadline_days=30 days. Fixed policy parameters: effective_date=2023-01-01 date; transition_period_end=2023-03-31 date; deductible_not_applicable=True boolean; out_of_network_differential_cap=35 USD; lis_category_4_threshold=35 USD.",
+  "source_documents": [
+    "IRA_InsulinVaccines_Memo_09262022-2.pdf"
+  ],
+  "excluded_candidates": [
+    {
+      "name": "temporary_retrospective_subsidy_amount",
+      "reason": "The subsidy amount is not a fixed numeric value; it is calculated based on PDE records and approved PBPs, making it an outcome rather than an input."
+    },
+    {
+      "name": "number_of_part_d_sponsors",
+      "reason": "The document does not provide a count of Part D sponsors; it only addresses 'All Part D Sponsors' without a numeric value."
+    },
+    {
+      "name": "number_of_beneficiaries",
+      "reason": "The document does not provide a count of Medicare Part D enrollees using insulin."
+    },
+    {
+      "name": "implementation_cost",
+      "reason": "The document does not provide any numeric implementation cost estimates."
+    },
+    {
+      "name": "extended_day_supply_cap_two_months",
+      "reason": "not selected: overlaps the existing_users mechanism family or falls below the 3-field limit"
+    },
+    {
+      "name": "extended_day_supply_cap_three_months",
+      "reason": "not selected: overlaps the existing_users mechanism family or falls below the 3-field limit"
+    }
+  ],
+  "unresolved_candidates": [
+    {
+      "name": "one_month_supply_definition",
+      "reason": "The document references 'plan-defined one-month supply' but does not specify a numeric duration, making it a categorical parameter rather than a numeric field."
+    },
+    {
+      "name": "sep_start_date",
+      "reason": "value 20221208 is not explicitly supported by quote: This SEP will be available for all beneficiaries who use a covered insulin product and begins on December 8th, 2022 and ends on December 31, 2023."
+    },
+    {
+      "name": "sep_end_date",
+      "reason": "value 20231231 is not explicitly supported by quote: This SEP will be available for all beneficiaries who use a covered insulin product and begins on December 8th, 2022 and ends on December 31, 2023."
+    }
+  ],
+  "extraction_metadata": {
+    "model": "deepseek-chat",
+    "max_fields": 3,
+    "candidate_limit": 6,
+    "candidate_field_count": 6,
+    "validated_candidate_count": 4,
+    "validated_field_count": 2,
+    "deduplicated_field_count": 2,
+    "rejected_field_count": 2,
+    "candidate_parameter_count": 5,
+    "validated_parameter_count": 5,
+    "policy_graph": "outputs/usa/chi_ira/stage1/20260811001158_deepseek-chat_result_local_kg_insulin_only/policy_graph.json"
+  }
+}

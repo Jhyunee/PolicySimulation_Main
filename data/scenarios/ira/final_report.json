@@ -1,0 +1,28 @@
+{
+  "simulation_target": "Relative reductions in mean out-of-pocket insulin cost and within-year out-of-pocket cost variation in 2023 compared with the 2021-2022 pre-policy period among Medicare Part D insulin users.",
+  "aggregated_final": {},
+  "implementation_gap_report": [
+    {
+      "phase": "Inputs",
+      "variable": "monthly_cost_sharing_cap",
+      "forward_agg": null,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": null
+    },
+    {
+      "phase": "Inputs",
+      "variable": "reimbursement_deadline_days",
+      "forward_agg": null,
+      "backward_agg": null,
+      "gap": null,
+      "relative_gap": null,
+      "consistency": null,
+      "aggregated_value": null
+    }
+  ],
+  "narrative_synthesis": "",
+  "phase_stakeholder_summaries": {}
+}

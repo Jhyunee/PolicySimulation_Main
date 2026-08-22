@@ -10,7 +10,9 @@ const tocContinue = document.getElementById("continueToAnalysis");
 let tocCondition = "baseline";
 
 function normalizedTocCondition(value){
-  return ["framework", "full"].includes(String(value || "").toLowerCase()) ? "framework" : "baseline";
+  const condition = String(value || "").toLowerCase();
+  if(["framework", "full"].includes(condition)) return "framework";
+  return condition === "3path" ? "3path" : "baseline";
 }
 
 function frameworkGuideKey(){
@@ -19,6 +21,10 @@ function frameworkGuideKey(){
 
 function baselineGuideKey(){
   return `policy-baseline-guide:${tocParticipantId || tocVariantId || "preview"}`;
+}
+
+function threePathGuideKey(){
+  return `policy-3path-guide:${tocParticipantId || tocVariantId || "preview"}`;
 }
 
 function analysisHref(){
@@ -34,9 +40,13 @@ function analysisHref(){
   if(tocParticipantId) query.set("participant", tocParticipantId);
   if(tocPreviewMode) query.set("previewStudy", "1");
   if(tocVariantId) query.set("variant", tocVariantId);
-  const guideKey = tocCondition === "framework" ? frameworkGuideKey() : baselineGuideKey();
-  if(localStorage.getItem(guideKey) !== "1") query.set("guide", "1");
-  const page = tocCondition === "framework" ? "pathway_tree.html" : "baseline_report.html";
+  const guideKey = tocCondition === "framework"
+    ? frameworkGuideKey()
+    : tocCondition === "3path"
+      ? threePathGuideKey()
+      : baselineGuideKey();
+  if(guideKey && localStorage.getItem(guideKey) !== "1") query.set("guide", "1");
+  const page = tocCondition === "framework" ? "pathway_tree.html" : tocCondition === "3path" ? "3path.html" : "baseline_report.html";
   return `${page}?${query.toString()}`;
 }
 
@@ -70,7 +80,9 @@ async function loadTocIntro(){
     : 'Continue to policy analysis <i data-lucide="arrow-right"></i>';
   document.getElementById("tocConditionCopy").textContent = tocCondition === "framework"
     ? (tocStudyIntro ? "The next guide explains how to select development conditions and explore multiple policy pathways." : "The next screen lets you select alternative developments at each phase.")
-    : "The next screen presents one policy development across the same five phases so that you can review its conditions, explanations, and projected effects.";
+    : tocCondition === "3path"
+      ? (tocStudyIntro ? "The next guide introduces the stakeholder discussion, summarized reports, and chat available while comparing three different policy developments." : "The next screen presents Enabling-only, Baseline-only, and Constraining-only developments for comparison.")
+      : "The next screen presents one policy development across the same five phases so that you can review its conditions, explanations, and projected effects.";
   tocContinue.disabled = false;
   await PolicyStudy.event("toc_introduction_viewed", {condition:tocCondition, policy_index:tocStudyIntro ? null : tocPolicyIndex, scope:tocStudyIntro ? "study" : "policy"});
   if(window.lucide) lucide.createIcons();

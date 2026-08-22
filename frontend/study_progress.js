@@ -34,7 +34,7 @@
       return 2 + policyIndex;
     }
     if(path === "toc_intro.html" && params.get("stage") === "study_intro") return 0;
-    if(path === "toc_intro.html" || path === "pathway_tree.html" || path === "baseline_report.html") return 2 + policyIndex;
+    if(path === "toc_intro.html" || path === "pathway_tree.html" || path === "baseline_report.html" || path === "3path.html") return 2 + policyIndex;
     if(path === "dashboard.html") return 2;
     return 0;
   }

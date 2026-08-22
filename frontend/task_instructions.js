@@ -6,31 +6,47 @@ const taskStatus = document.getElementById("taskStatus");
 const continueTask = document.getElementById("continueTask");
 
 function normalizeCondition(value){
-  return ["framework", "full"].includes(String(value || "").toLowerCase()) ? "framework" : "baseline";
+  const condition = String(value || "").toLowerCase();
+  if(["framework", "full"].includes(condition)) return "framework";
+  return condition === "3path" ? "3path" : "baseline";
+}
+
+function conditionLegendMarkup(){
+  return `<div class="task-condition-legend task-step-condition-legend" aria-label="Development condition definitions">
+    <span class="enabling"><b>Enabling</b> Positive development and recovery from bottlenecks</span>
+    <span class="baseline"><b>Baseline</b> Continuation under typical conditions</span>
+    <span class="constraining"><b>Constraining</b> Intensified bottlenecks and potential failure to meet policy goals</span>
+  </div>`;
 }
 
 function stepMarkup(items){
-  return items.map((item,index)=>`<li><b>${String(index + 1).padStart(2,"0")}</b><div><strong>${item.title}</strong><span>${item.detail}</span>${item.note ? `<span class="task-step-note"><b aria-hidden="true">→</b>${item.note}</span>` : ""}</div></li>`).join("");
+  return items.map((item,index)=>`<li><b>${String(index + 1).padStart(2,"0")}</b><div><strong>${item.title}</strong><span>${item.detail}</span>${item.legend ? conditionLegendMarkup() : ""}${item.note ? `<span class="task-step-note"><b aria-hidden="true">→</b>${item.note}</span>` : ""}</div></li>`).join("");
 }
 
 function renderTask(condition){
   const framework = condition === "framework";
+  const threePath = condition === "3path";
+  const exploratory = framework || threePath;
   document.body.dataset.condition = condition;
-  document.getElementById("taskModeHeader").hidden = framework;
-  document.getElementById("taskTitle").hidden = !framework;
-  document.getElementById("taskModeLabel").textContent = framework ? "Exploring policy pathways" : "Reviewing a policy development";
-  document.getElementById("taskModeTitle").textContent = framework ? "Explore how a policy unfolds under different conditions" : "Examine the complete pathway presented";
+  document.getElementById("taskModeHeader").hidden = exploratory;
+  document.getElementById("taskTitle").hidden = !exploratory;
+  document.getElementById("taskModeLabel").textContent = framework ? "Exploring policy pathways" : threePath ? "Comparing fixed policy pathways" : "Reviewing a policy development";
+  document.getElementById("taskModeTitle").textContent = framework ? "Explore how a policy unfolds under different conditions" : threePath ? "Compare three policy developments under consistent conditions" : "Examine the complete pathway presented";
   const taskTermCopy = document.getElementById("taskTermCopy");
   taskTermCopy.hidden = true;
   taskTermCopy.textContent = "";
   document.getElementById("taskFrameworkGuide").hidden = !framework;
-  continueTask.innerHTML = framework
+  continueTask.innerHTML = exploratory
     ? 'Continue <i data-lucide="arrow-right"></i>'
     : 'Continue to assigned policies <i data-lucide="arrow-right"></i>';
   const items = framework ? [
     {title:"Choose how the policy develops", detail:"At each phase, select an Enabling, Baseline, or Constraining development condition."},
     {title:"Build a pathway to Impact", detail:"Continue the selected development through Impact and review its projected effects."},
     {title:"Explore different pathways", detail:"Repeat the process to examine how the policy unfolds under different conditions."},
+  ] : threePath ? [
+    {title:"Compare three different developments", detail:"Review Enabling-only, Baseline-only, and Constraining-only pathways presented side by side.", legend:true},
+    {title:"Follow each pathway to Impact", detail:"Trace how each condition continues from Inputs through Activities, Outputs, Outcomes, and Impact."},
+    {title:"Review and compare results", detail:"Open at least two Impact reports, examine stakeholder perspectives, and compare projected effects."},
   ] : [
     {title:"Review the complete pathway", detail:"Follow the presented analysis from Inputs through the Impact phase."},
     {title:"Review stakeholder discussion", detail:"Each node includes a stakeholder discussion. Open the discussion for at least one node to examine the perspectives represented there."},
@@ -72,7 +88,7 @@ continueTask.addEventListener("click", async ()=>{
   }else{
     query.set("participant",taskParticipantId);
   }
-  const nextPage = condition === "framework" ? "feature_instructions.html" : "dashboard.html";
+  const nextPage = ["framework","3path"].includes(condition) ? "feature_instructions.html" : "dashboard.html";
   location.href = `${nextPage}?${query.toString()}`;
 });
 

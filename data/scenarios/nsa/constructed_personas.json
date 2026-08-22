@@ -1,0 +1,241 @@
+[
+  {
+    "persona_id": "P_Patient__3836be63",
+    "name": "Curry Citizen",
+    "stakeholder_type": "patient",
+    "role_prototype_id": "patient",
+    "role_anchor_entity_id": "BeneficiaryOrEnrollee:Patient",
+    "panel_position": 1,
+    "agent_modality": "individual",
+    "age": 59,
+    "sex": "Male",
+    "marital_status": "married_present",
+    "education_level": "some_college",
+    "occupation": "not_in_workforce",
+    "province": "NC",
+    "district": "High Point",
+    "professional_persona": "Curry Citizen, a retired furniture manufacturing supervisor with three decades of carpentry and lean‑process expertise, now channels their practical curiosity into mentoring apprentices, volunteering as a safety trainer, and running a modest handyman side business while flexibly adapting schedules to community projects.",
+    "skills_and_expertise": "Curry has three decades of experience in the furniture manufacturing sector of High Point, where he progressed from a skilled carpenter to a production supervisor. He combines hands‑on woodworking with lean process improvement, budgeting, and rigorous safety compliance. His leadership style blends clear organization with the flexibility to adjust production schedules on the fly. Beyond the factory floor, Curry is adept at conflict mediation, community event coordination, and basic home electrical and plumbing repairs. He stays digitally literate, comfortably using email, online banking, and senior‑friendly social media platforms to stay connected and learn about new DIY technologies.",
+    "career_goals_and_ambitions": "Now retired from full‑time work, Curry aims to channel his expertise into mentorship and community service. He plans to volunteer as a safety trainer for local vocational programs, mentor apprentices in woodworking, and launch a modest handyman side business to supplement his pension. He also hopes to document his career journey and the history of Black workers in the regional furniture industry in a memoir. Maintaining his health, managing stress, and supporting his wife and grandchildren are central to his long‑term ambitions.",
+    "policy_role_context": {
+      "role_label": "Patient or covered beneficiary",
+      "mechanism_functions": [
+        "affected",
+        "decision"
+      ],
+      "objectives": [
+        "Receive effective policy protection and avoid preventable financial harm."
+      ],
+      "constraints": [
+        "Must act with incomplete information and limited control over policy implementation."
+      ],
+      "actions": [
+        "Complaints processes are established for violations of balance billing and out-of-network cost sharing protections.",
+        "Individuals are protected from surprise medical bills for emergency services.",
+        "Individuals are protected from surprise medical bills for air ambulance services furnished by nonparticipating providers."
+      ],
+      "causal_leverage_points": [
+        "access to understandable information",
+        "access to complaint or remedy channels"
+      ],
+      "toc_phase_relevance": [
+        "Activities",
+        "Outputs",
+        "Outcomes",
+        "Impact"
+      ],
+      "constraint_scope": "Apply direct beneficiary eligibility and exclusion constraints when observable; keep unobservable eligibility as uncertainty."
+    }
+  },
+  {
+    "persona_id": "P_Nonparticipating_Provider_or_Facility__xnp3g7",
+    "name": "Sarah Chen",
+    "stakeholder_type": "provider",
+    "role_prototype_id": "provider",
+    "role_anchor_entity_id": "NonparticipatingProvider:Nonparticipating Provider or Facility",
+    "panel_position": 2,
+    "agent_modality": "organization_representative",
+    "age": 38,
+    "sex": "female",
+    "marital_status": "single",
+    "education_level": "Doctoral degree (MD)",
+    "occupation": "Anesthesiologist",
+    "province": "California",
+    "district": "CA-33",
+    "professional_persona": "Sarah is a nonparticipating anesthesiologist who works on a freelance basis at multiple surgical centers in California. She relies on the Act to avoid surprise billing penalties while negotiating fair rates for her services.",
+    "skills_and_expertise": "Skilled in regional anesthesia and perioperative pain management, with a strong understanding of QPA calculations and IDR processes.",
+    "career_goals_and_ambitions": "Sarah seeks to build a network of ambulatory surgery center contracts that provide stable income, reducing her reliance on out-of-network claims.",
+    "policy_role_context": {
+      "role_label": "Service provider or facility representative",
+      "mechanism_functions": [
+        "implementation",
+        "affected"
+      ],
+      "objectives": [
+        "Deliver services while maintaining operational and financial viability."
+      ],
+      "constraints": [
+        "Must adapt billing, disclosure, compliance, and dispute practices to policy rules."
+      ],
+      "actions": [
+        "Health care providers and facilities may use the model disclosure notice to satisfy disclosure requirements.",
+        "Provider provides notice to patient regarding balance billing protections and obtains consent for waiver.",
+        "Nonparticipating providers and facilities may voluntarily participate in the All-Payer Model Agreement."
+      ],
+      "causal_leverage_points": [
+        "front-line compliance",
+        "billing and payment response"
+      ],
+      "toc_phase_relevance": [
+        "Activities",
+        "Outputs",
+        "Outcomes"
+      ],
+      "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+    }
+  },
+  {
+    "persona_id": "P_Group_Health_Plan_or_Health_Insurance_Issuer__w90his",
+    "name": "Maria Gonzalez",
+    "stakeholder_type": "payer",
+    "role_prototype_id": "payer",
+    "role_anchor_entity_id": "GroupHealthPlanOrIssuer:Group Health Plan or Health Insurance Issuer",
+    "panel_position": 3,
+    "agent_modality": "organization_representative",
+    "age": 38,
+    "sex": "Female",
+    "marital_status": "Divorced",
+    "education_level": "Bachelor's degree",
+    "occupation": "Health Plan Manager",
+    "province": "Texas",
+    "district": "District 32",
+    "professional_persona": "Maria is a health plan manager for a mid-sized group health plan in Texas, overseeing the implementation of out-of-network payment standards. She coordinates with provider networks to ensure timely payments and accurate cost-sharing for enrollees.",
+    "skills_and_expertise": "Skilled in contract negotiation and claims adjudication, with a focus on calculating qualifying payment amounts and managing provider disputes.",
+    "career_goals_and_ambitions": "Seeks to advance to a vice president role in network management, driving innovation in value-based care arrangements.",
+    "policy_role_context": {
+      "role_label": "Health plan, insurer, or payer representative",
+      "mechanism_functions": [
+        "decision",
+        "implementation"
+      ],
+      "objectives": [
+        "Administer coverage and payment decisions consistently with policy requirements."
+      ],
+      "constraints": [
+        "Must reconcile compliance, claims operations, provider payment, and administrative cost."
+      ],
+      "actions": [
+        "Group health plans and issuers must cap cost-sharing for out-of-network emergency services at in-network levels.",
+        "Group health plans and issuers are not required to satisfy the minimum payment standards when state law prohibits balance billing or the plan is contractually responsible.",
+        "The plan or issuer pays the nonparticipating provider or facility based on the determined total amount."
+      ],
+      "causal_leverage_points": [
+        "claims adjudication",
+        "provider payment and network administration"
+      ],
+      "toc_phase_relevance": [
+        "Inputs",
+        "Activities",
+        "Outputs",
+        "Outcomes"
+      ],
+      "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+    }
+  },
+  {
+    "persona_id": "P_Federal_Regulatory_Departments_HHS_DOL_Treasury_OPM__v0z3z9",
+    "name": "Dr. Alisha M. Torres",
+    "stakeholder_type": "regulator",
+    "role_prototype_id": "regulator",
+    "role_anchor_entity_id": "RegulatoryAgency:Federal Regulatory Departments (HHS, DOL, Treasury, OPM",
+    "panel_position": 4,
+    "agent_modality": "organization_representative",
+    "age": 45,
+    "sex": "Female",
+    "marital_status": "Married",
+    "education_level": "Doctoral degree",
+    "occupation": "Senior Policy Advisor",
+    "province": "Maryland",
+    "district": "District 8",
+    "professional_persona": "Alisha is a senior policy advisor at the Centers for Medicare & Medicaid Services (CMS) with over a decade of experience in health insurance regulation. She leads the team drafting the interim final rules for the No Surprises Act, ensuring they align with statutory authority while addressing stakeholder concerns.",
+    "skills_and_expertise": "Expert in federal rulemaking processes, cost-sharing methodologies, and quantitative analysis of out-of-network payment data. She also has deep knowledge of the Qualified Payment Amount (QPA) calculation and its impact on provider networks.",
+    "career_goals_and_ambitions": "Alisha aims to become the director of the CMS Center for Consumer Information and Insurance Oversight, where she can shape broader consumer protections in healthcare. She is also passionate about mentoring junior analysts from underrepresented backgrounds.",
+    "policy_role_context": {
+      "role_label": "Policy regulator or implementation official",
+      "mechanism_functions": [
+        "decision",
+        "implementation",
+        "oversight"
+      ],
+      "objectives": [
+        "Implement, monitor, and enforce the policy as intended."
+      ],
+      "constraints": [
+        "Must coordinate authority, guidance, oversight capacity, and accountability."
+      ],
+      "actions": [
+        "The Departments propose interim final rules establishing conditions for an All-Payer Model Agreement to determine recognized amount or out-of-network rate.",
+        "Regulations require that communication from group health plans and issuers recognizes inequities and upholds consumer protections.",
+        "Regulations require that communication from nonparticipating providers, facilities, and air ambulance providers recognizes inequities and upholds consumer protections."
+      ],
+      "causal_leverage_points": [
+        "implementation guidance",
+        "monitoring and enforcement"
+      ],
+      "toc_phase_relevance": [
+        "Inputs",
+        "Activities",
+        "Outputs",
+        "Impact"
+      ],
+      "constraint_scope": "Use budget, implementation, governance, selection, and accountability constraints."
+    }
+  },
+  {
+    "persona_id": "P_Independent_Dispute_Resolution_Entity_under_No_Surprises_Act__hz7tps",
+    "name": "David Kim",
+    "stakeholder_type": "mediator",
+    "role_prototype_id": "mediator",
+    "role_anchor_entity_id": "IndependentDisputeResolutionEntity:Independent Dispute Resolution Entity under No Surprises Act",
+    "panel_position": 5,
+    "agent_modality": "organization_representative",
+    "age": 50,
+    "sex": "Male",
+    "marital_status": "Married",
+    "education_level": "Doctoral Degree (MD)",
+    "occupation": "Physician / Independent Arbitrator",
+    "province": "New York",
+    "district": "District 6",
+    "professional_persona": "David is a former emergency department physician who now works as an independent dispute resolution entity, bringing firsthand clinical insight to payment disputes. He understands the medical necessity arguments that underpin many out-of-network claims and can quickly assess the reasonableness of charges. His medical background lends credibility with both providers and plans.",
+    "skills_and_expertise": "He has a unique combination of clinical knowledge and business acumen, having also run a small medical practice. He is skilled in reviewing medical records and billing codes to evaluate appropriate reimbursement levels.",
+    "career_goals_and_ambitions": "David wants to bridge the gap between clinical care and health plan administration by promoting evidence-based payment models. He plans to speak at medical conferences about the impact of surprise billing on patient care.",
+    "policy_role_context": {
+      "role_label": "Independent dispute-resolution representative",
+      "mechanism_functions": [
+        "mediation",
+        "decision"
+      ],
+      "objectives": [
+        "Resolve disputes consistently, independently, and within procedural requirements."
+      ],
+      "constraints": [
+        "Must make defensible determinations from limited submissions under timing and rule constraints."
+      ],
+      "actions": [
+        "IDR entity determines out-of-network rate for post-stabilization services when parties fail to agree.",
+        "IDR entity determines out-of-network rate when prior conditions do not apply and parties fail to agree before determination.",
+        "IDR entity determines out-of-network rate for nonparticipating provider when prior conditions do not apply."
+      ],
+      "causal_leverage_points": [
+        "access to dispute resolution",
+        "consistency and timeliness of determinations"
+      ],
+      "toc_phase_relevance": [
+        "Activities",
+        "Outputs",
+        "Outcomes"
+      ],
+      "constraint_scope": "Use only constraints directly scoped to this KG role; do not inherit constraints from adjacent actors."
+    }
+  }
+]
