@@ -390,6 +390,11 @@ const CTC_PERSONA_AVATARS = {
   "Linda Chen":"assets/persona_avatars/persona-4.svg",
   "James Thompson (iq3h88)":"assets/persona_avatars/persona-5.svg",
 };
+function displayPersonaNameTree(name){
+  const raw = String(name || "");
+  if(currentPolicyKey === "usa/chi_ctc" && raw === "James Thompson (iq3h88)") return "James Thompson";
+  return raw;
+}
 const PROFILE_AVATARS = [
   "assets/persona_avatars/persona-1.svg",
   "assets/persona_avatars/persona-2.svg",
@@ -1760,7 +1765,7 @@ function stakeholderAvatarTree(post, i){
   const seat = stakeholderSeatTree(post);
   const ctcAvatar = currentPolicyKey === "usa/chi_ctc" ? CTC_PERSONA_AVATARS[post?.persona_name] : null;
   const avatar = ctcAvatar || PROFILE_AVATARS[i % PROFILE_AVATARS.length];
-  return `<img class="persona-image profile-avatar" src="${avatar}" alt="${escTree(post?.persona_name || seat?.role || "Stakeholder")}" />`;
+  return `<img class="persona-image profile-avatar" src="${avatar}" alt="${escTree(displayPersonaNameTree(post?.persona_name) || seat?.role || "Stakeholder")}" />`;
 }
 function answerParagraphsTree(text){
   return String(text || "")
@@ -1855,7 +1860,7 @@ function renderPathwayChatModal(){
     const seat = stakeholderSeatTree(post);
     return `<button class="${active}" type="button" data-path-chat-persona="${escTree(post.persona_name || "")}" style="--persona:${seat?.color || PIXEL_COLORS[i % PIXEL_COLORS.length]}">
       ${stakeholderAvatarTree(post, i)}
-      <span>${escTree(post.persona_name || "Stakeholder")}</span>
+      <span>${escTree(displayPersonaNameTree(post.persona_name) || "Stakeholder")}</span>
       <small>${escTree(post.stakeholder_type || "")}</small>
     </button>`;
   }).join("");
@@ -1879,7 +1884,7 @@ function renderPathwayChatModal(){
       return `<div class="path-chat-message persona" style="--bubble:${seat?.color || PIXEL_COLORS[i % PIXEL_COLORS.length]}">
         <div class="path-chat-avatar">${stakeholderAvatarTree(post, i)}</div>
         <div class="path-chat-stack">
-          <div class="path-chat-meta"><b>${escTree(a.personaName || post.persona_name || "Stakeholder")}</b><span>${escTree(post.stakeholder_type || "")}</span></div>
+          <div class="path-chat-meta"><b>${escTree(displayPersonaNameTree(a.personaName || post.persona_name) || "Stakeholder")}</b><span>${escTree(post.stakeholder_type || "")}</span></div>
           <div class="path-chat-bubble">${body}</div>
         </div>
       </div>`;
@@ -1890,7 +1895,7 @@ function renderPathwayChatModal(){
       </div>
       ${answers}
     </section>`;
-  }).join("") : `<div class="path-chat-empty">Select an example question below, or type your own question for ${escTree(selectedPersona || "the selected stakeholder")} about this pathway.</div>`;
+  }).join("") : `<div class="path-chat-empty">Select an example question below, or type your own question for ${escTree(displayPersonaNameTree(selectedPersona) || "the selected stakeholder")} about this pathway.</div>`;
   return `<div class="tree-modal-backdrop" data-close-path-chat="1">
     <section class="tree-chat-modal" style="--lane:${tone.color}" role="dialog" aria-modal="true" aria-label="Pathway stakeholder chat">
       <div class="tree-modal-head">
@@ -1903,14 +1908,14 @@ function renderPathwayChatModal(){
       <div class="path-chat-route">${escTree(pathLabelTree(pathwayChatPath || node.path))}</div>
       <div class="path-chat-persona-picker">${personaTabs}</div>
       <div class="path-chat-current" style="--persona:${selectedSeat?.color || tone.color}">
-        <b>${escTree(selectedPost.persona_name || "Stakeholder")}</b>
+        <b>${escTree(displayPersonaNameTree(selectedPost.persona_name) || "Stakeholder")}</b>
         <span>${escTree(selectedPost.stakeholder_type || "")}</span>
         <em>${frameworkChatUsage.used} / ${frameworkChatUsage.limit} questions</em>
       </div>
       <div class="path-chat-starters">${starters}</div>
       <div class="path-chat-list">${turns}</div>
       <form id="pathwayChatForm" class="path-chat-compose">
-        <input name="question" autocomplete="off" ${chatLimitReached ? "disabled" : ""} placeholder="${chatLimitReached ? "Question limit reached for this policy case" : `Ask ${escTree(selectedPost.persona_name || "this stakeholder")} about this complete pathway...`}" />
+        <input name="question" autocomplete="off" ${chatLimitReached ? "disabled" : ""} placeholder="${chatLimitReached ? "Question limit reached for this policy case" : `Ask ${escTree(displayPersonaNameTree(selectedPost.persona_name) || "this stakeholder")} about this complete pathway...`}" />
         <button type="submit" ${chatLimitReached ? "disabled" : ""}>Send</button>
       </form>
       ${chatLimitReached ? '<p class="path-chat-limit-note">You have used all 5 stakeholder-chat questions for this policy case.</p>' : ""}
@@ -1931,7 +1936,7 @@ function renderDiscussionModal(){
   const people = entries.map(({post:p, seat},i)=>`
     <button class="round-person seat-${i} revealed" type="button" style="--bubble:${seat?.color || PIXEL_COLORS[i % PIXEL_COLORS.length]};--delay:${i*.68}s">
       ${stakeholderAvatarTree(p, i)}
-      <span>${escTree(p.persona_name || seat?.role || "Stakeholder")}</span>
+      <span>${escTree(displayPersonaNameTree(p.persona_name) || seat?.role || "Stakeholder")}</span>
     </button>
   `).join("");
   const speechCards = entries.map(({post:p, seat},i)=>{
@@ -1952,7 +1957,7 @@ function renderDiscussionModal(){
     <div class="discussion-rationale-head">
       <div>
         <span>${escTree(stakeholderViewpointTree(expandedPost))}</span>
-        <h3>${escTree(expandedPost.persona_name || "Stakeholder")}</h3>
+        <h3>${escTree(displayPersonaNameTree(expandedPost.persona_name) || "Stakeholder")}</h3>
       </div>
       <button data-close-rationale="1" type="button">Hide full rationale</button>
     </div>
