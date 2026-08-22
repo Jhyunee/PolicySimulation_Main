@@ -2056,6 +2056,7 @@ html:has(body.toc-intro-page) { scrollbar-gutter:stable; }
 .tree-practice-mode .node-discussion-button.practice-locked { opacity:.34; filter:saturate(.45); cursor:not-allowed; }
 .tree-practice-mode .tree-node.practice-target,
 .tree-practice-mode .node-discussion-button.practice-target,
+.tree-practice-mode .pathway-chat-button.practice-target,
 .tree-practice-mode .tree-phase-inspector.practice-target,
 .tree-practice-mode .practice-completion-link { z-index:12002; outline:3px solid #ec8c47; outline-offset:4px; box-shadow:0 0 0 8px rgba(236,140,71,.15),0 10px 24px rgba(92,57,26,.16); }
 .tree-practice-mode .tree-phase-inspector.practice-target,

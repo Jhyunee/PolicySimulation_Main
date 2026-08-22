@@ -321,9 +321,19 @@ const TREE_PRACTICE_GUIDES = [
     copy:"The report brings the selected phases together and summarizes their projected outcomes, mechanisms, constraints, and uncertainty. Review it, then close the report.",
   },
   {
+    target:".pathway-chat-button",
+    title:"Preview the stakeholder chat",
+    copy:"Open Chat to preview the stakeholder conversation interface for the completed pathway.",
+  },
+  {
+    target:'.tree-chat-modal [data-close-path-chat="1"]',
+    title:"Review the chat, then close it",
+    copy:"This is the same stakeholder chat available in the study. Review the interface, then select Close to finish the practice. You do not need to ask a question during practice.",
+  },
+  {
     target:".practice-completion-link",
     title:"Practice complete",
-    copy:"You have used the same pathway interface, stakeholder discussion, and Final Report that appear in the study. Continue to your first policy case.",
+    copy:"You have used the same pathway interface, stakeholder discussion, Final Report, and stakeholder chat that appear in the study. Continue to your first policy case.",
   },
 ];
 
@@ -1798,7 +1808,7 @@ function renderDiscussionButton(positions){
   </button>`;
 }
 function renderPathwayChatButton(positions){
-  if(treePracticeMode) return "";
+  if(treePracticeMode && treePracticeStep < 8) return "";
   const node = TREE_BASELINE_MODE
     ? [...treeNodes.values()].find(n=>n.col === TREE_PHASES.length - 1)
     : (focusedNode || focusedTreeNode());
@@ -1808,7 +1818,9 @@ function renderPathwayChatButton(positions){
   if(!pos || !postCount || node.col !== TREE_PHASES.length - 1) return "";
   const w = nodeWidthTree(node);
   const yOffset = TREE_BASELINE_MODE ? 31 : -24;
-  return `<button class="pathway-chat-button" data-open-path-chat="1" type="button"
+  const practiceTarget = treePracticeMode && treePracticeStep === 8;
+  const practiceLocked = treePracticeMode && !practiceTarget;
+  return `<button class="pathway-chat-button ${practiceTarget?"practice-target":""} ${practiceLocked?"practice-locked":""}" data-open-path-chat="1" type="button"${practiceLocked?' disabled aria-disabled="true"':""}
     style="--x:${pos.x + w + 18}px;--y:${pos.y + yOffset}px;">
     Chat!
   </button>`;
@@ -2214,7 +2226,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     ? `<header class="baseline-report-toolbar tree-study-toolbar tree-practice-toolbar"><span><i data-lucide="mouse-pointer-click"></i> Interactive practice</span><b>Illustrative example data</b></header>`
     : `<header class="baseline-report-toolbar tree-study-toolbar"><a href="${dashboardHrefTree(false)}"><i data-lucide="layout-dashboard"></i><span>Policies</span></a><span>Policy ${currentPolicyIndex + 1} of 2</span></header>`;
   const studyCompletion = treeDemoMode ? "" : treePracticeMode
-    ? (treePracticeStep === 8 ? `<section class="baseline-report-complete tree-exploration-complete practice-completion"><a class="finish-link practice-completion-link" data-finish-practice="1" href="#">Continue to first policy <i data-lucide="arrow-right"></i></a></section>` : "")
+    ? (treePracticeStep === 10 ? `<section class="baseline-report-complete tree-exploration-complete practice-completion"><a class="finish-link practice-completion-link" data-finish-practice="1" href="#">Continue to first policy <i data-lucide="arrow-right"></i></a></section>` : "")
     : `<section class="baseline-report-complete tree-exploration-complete"><a class="finish-link" data-finish-policy="1" href="${policySurveyHrefTree()}">${TREE_BASELINE_MODE ? "Finish Reviewing" : "Finish Exploring"} <i data-lucide="arrow-right"></i></a></section>`;
   const afterWorkspace = studyCompletion && !TREE_BASELINE_MODE
     ? `<div class="tree-after-workspace">${studyCompletion}</div>`
@@ -2428,6 +2440,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     renderTree();
   });
   root.querySelectorAll("[data-open-path-chat]").forEach(btn=>btn.onclick=()=>{
+    if(treePracticeMode && treePracticeStep !== 8) return;
     if(discussionOpen) closeTimedPanel("discussion");
     if(reportPath) closeTimedPanel("report");
     const node = TREE_BASELINE_MODE
@@ -2442,6 +2455,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     reportPath = "";
     chatOpenedAt = performance.now();
     logTreeEvent("chat_opened", {path:pathwayChatPath, persona:pathwayChatPersona});
+    if(treePracticeMode) treePracticeStep = 9;
     renderTree();
   });
   root.querySelectorAll("[data-close-discussion]").forEach(el=>el.onclick=(event)=>{
@@ -2572,6 +2586,7 @@ function renderTree(preserveViewport=true, viewportAnchor=null){
     if(event.target !== el && !el.matches("button")) return;
     closeTimedPanel("chat");
     pathwayChatOpen = false;
+    if(treePracticeMode && treePracticeStep === 9) treePracticeStep = 10;
     renderTree();
   });
   root.querySelectorAll("[data-path-chat-q]").forEach(btn=>btn.onclick=()=>{
